@@ -1,0 +1,11 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 256" width="306" height="256">
+	<style>
+		.s0 { fill: #5e7396 } 
+	</style>
+	<g id="Calque 1">
+		<path id="&lt;Path&gt;" class="s0" d="m226.9 0.2v170.08h29.32z"/>
+		<path id="&lt;Path&gt;" class="s0" d="m56.67 226.97v-170.08l24.44 28.35z"/>
+		<path id="&lt;Path&gt;" class="s0" d="m0.13 56.89v-56.69h170.08v28.35h-151.29v28.34z"/>
+		<path id="&lt;Path&gt;" class="s0" d="m305.01 193.62v61.7h-191.5v-28.35h170.34v-57.35z"/>
+	</g>
+</svg>
