@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* ============================================
+   FONTS T2A � @font-face
+   ============================================ */
+
+@font-face {
+  font-family: "T2A";
+  src: url("/fonts/T2A-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: "T2A";
+  src: url("/fonts/T2A-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "T2A";
+  src: url("/fonts/T2A-Demi-Bold.ttf") format("truetype");
+  font-weight: 600;
+  font-display: swap;
+}
+
+/* ============================================
+   TAILWIND v4 � Theme tokens
+   ============================================ */
+
+@theme {
+  /* Couleurs T2A */
+  /* Couleur principale, liens, accents */
+  --color-t2a-blue: #5e7396;
+  /* Hover léger, sous-titres, étymologies */
+  --color-t2a-blue-light: #8a9bb5;
+  /* Fonds accent, bordures actives */
+  --color-t2a-blue-pale: #c8d1de;
+  /* Fond sections highlight (presque blanc bleuté) */
+  --color-t2a-blue-wash: #edf0f5;
+  /*  Texte sur fond clair, titres forts, active states */
+  --color-t2a-blue-dark: #3e5170;
+
+  /* Font family */
+  --font-sans: "T2A", "DM Sans", sans-serif;
+}
+
+/* ============================================
+   CSS VARIABLES � Light / Dark mode
+   ============================================ */
+
+:root {
+  /* Fond principal */
+  --bg-primary: #ffffff;
+  /* Fond sections alternées (blanc bleuté très subtil) */
+  --bg-secondary: #f7f8fa;
+  /* Texte principal (noir bleuté, pas noir pur) */
+  --text-primary: #1a1d24;
+  /* Texte secondaire (descriptions, dates, lieux) */
+  --text-secondary: #6b7280;
+  /* Texte discret (légendes, metas) */
+  --text-muted: #9ca3af;
+  /* Bordures, séparateurs (gris bleuté doux) */
+  --border: #e2e5eb;
+  /* Le trait (séparateurs, lignes, underlines) */
+  --trait: #5e7396;
+
+  font-family: "T2A", "DM Sans", sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b25;
+    --text-primary: #e2e5eb;
+    --text-secondary: #8b95a5;
+    --text-muted: #5a6474;
+    --border: #252d3a;
+    --trait: #8a9bb5;
+  }
+}
+
+/* border-radius: 0px partout */
+*,
+*::before,
+*::after {
+  border-radius: 0px;
+}
