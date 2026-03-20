@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useReducedMotion } from "../../../../hooks/useReducedMotion";
 
@@ -8,8 +8,8 @@ interface UseLandingIntroAnimationOptions {
   forceAnimate?: boolean;
 }
 
-// columns appear at 25%, 50% and 75% of the logo animation
 const LANDING_COLUMN_THRESHOLDS = [0.55, 0.62, 0.69] as const;
+const VERTICAL_TRAIT_DELAY_MS = 200;
 
 function getColumnVisibility(
   shouldAnimate: boolean,
@@ -53,23 +53,44 @@ export function useLandingIntroAnimation(
   const [logoProgress, setLogoProgress] = useState<number>(() =>
     shouldAnimate ? 0 : 1,
   );
+  const [verticalTraitStarted, setVerticalTraitStarted] =
+    useState<boolean>(false);
+  const verticalTraitTimeoutRef = useRef<number | null>(null);
 
   // update logo progress
   const handleLogoProgress = useCallback((progress: number) => {
     setLogoProgress((previous) => (progress > previous ? progress : previous));
   }, []);
 
+  const handleLogoComplete = useCallback(() => {
+    verticalTraitTimeoutRef.current = window.setTimeout(() => {
+      setVerticalTraitStarted(true);
+    }, VERTICAL_TRAIT_DELAY_MS);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (verticalTraitTimeoutRef.current !== null) {
+        window.clearTimeout(verticalTraitTimeoutRef.current);
+      }
+    };
+  }, []);
+
   // column visibility based on logo progress
   const colsVisible = useMemo(
-    () => getColumnVisibility(shouldAnimate, logoProgress),
+    () => getColumnVisibility(shouldAnimate, shouldAnimate ? logoProgress : 1),
     [logoProgress, shouldAnimate],
   );
+  const verticalTraitVisible = !shouldAnimate || verticalTraitStarted;
 
   return {
     colsVisible,
+    handleLogoComplete,
     handleLogoProgress,
     isFirstVisit,
+    logoProgress,
     reducedMotion,
     shouldAnimate,
+    verticalTraitVisible,
   };
 }

@@ -8,7 +8,9 @@ interface LandingColumn {
 }
 
 const FORCE_ANIMATION = true;
-const COLUMN_REVEAL_TRANSITION = { duration: 0.4, ease: 'easeOut' } as const;
+const COLUMN_INDEX_TRANSITION = { duration: 0.24, ease: 'easeOut' } as const;
+const COLUMN_LABEL_MASK_TRANSITION = { duration: 0.38, ease: 'easeOut' } as const;
+const COLUMN_LABEL_TEXT_TRANSITION = { duration: 0.42, ease: 'easeOut' } as const;
 const LANDING_COLUMNS: readonly LandingColumn[] = [
   { index: '01', label: 'ATELIER' },
   { index: '02', label: 'TraiT' },
@@ -16,8 +18,13 @@ const LANDING_COLUMNS: readonly LandingColumn[] = [
 ] as const;
 
 export function LandingScreen() {
-  const { colsVisible, handleLogoProgress, shouldAnimate } =
-    useLandingIntroAnimation({ forceAnimate: FORCE_ANIMATION });
+  const {
+    colsVisible,
+    handleLogoComplete,
+    handleLogoProgress,
+    shouldAnimate,
+    verticalTraitVisible,
+  } = useLandingIntroAnimation({ forceAnimate: FORCE_ANIMATION });
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-(--bg-primary)">
@@ -30,6 +37,7 @@ export function LandingScreen() {
         <T2ALogo
           className="w-(--landing-logo) shrink-0 text-(--trait)"
           animated={shouldAnimate}
+          onComplete={handleLogoComplete}
           onProgress={handleLogoProgress}
         />
         {/* text columns */}
@@ -38,20 +46,34 @@ export function LandingScreen() {
           style={{ marginTop: 'calc(var(--landing-offset) * -1)' }}
         >
           {LANDING_COLUMNS.map((column, index) => (
-            <motion.div
+            <div
               key={column.index}
               className="w-(--landing-col) flex flex-col items-start"
-              initial={false}
-              animate={{ opacity: colsVisible[index] ? 1 : 0 }}
-              transition={COLUMN_REVEAL_TRANSITION}
             >
-              <span className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">
+              <motion.span
+                className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)"
+                initial={false}
+                animate={{ opacity: colsVisible[index] ? 1 : 0, y: colsVisible[index] ? 0 : 4 }}
+                transition={COLUMN_INDEX_TRANSITION}
+              >
                 {column.index}
-              </span>
-              <span className="font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">
-                {column.label}
-              </span>
-            </motion.div>
+              </motion.span>
+              <motion.span
+                className="block overflow-hidden whitespace-nowrap"
+                initial={false}
+                animate={{ clipPath: colsVisible[index] ? 'inset(0% 0% 0% 0%)' : 'inset(0% 100% 0% 0%)' }}
+                transition={COLUMN_LABEL_MASK_TRANSITION}
+              >
+                <motion.span
+                  className="block font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)"
+                  initial={false}
+                  animate={{ opacity: colsVisible[index] ? 1 : 0, y: colsVisible[index] ? 0 : -12 }}
+                  transition={COLUMN_LABEL_TEXT_TRANSITION}
+                >
+                  {column.label}
+                </motion.span>
+              </motion.span>
+            </div>
           ))}
         </div>
         {/* noms */}
@@ -67,8 +89,16 @@ export function LandingScreen() {
       {/* vertical trait */}
       <div
         className="absolute left-1/2 bottom-0"
-        style={{ transform: 'translateX(-50%)', width: '1px', height: '25%', background: 'var(--trait)' }}
-      />
+        style={{ transform: 'translateX(-50%)', width: '1px', height: '25%' }}
+      >
+        <motion.div
+          className="h-full w-full bg-(--trait)"
+          initial={false}
+          animate={{ scaleY: verticalTraitVisible ? 1 : 0 }}
+          transition={{ duration: 0.48, ease: 'easeOut' }}
+          style={{ transformOrigin: 'bottom center' }}
+        />
+      </div>
     </section>
   );
 }
