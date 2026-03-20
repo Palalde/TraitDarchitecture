@@ -96,12 +96,12 @@
 
 /* Base : mobile small (<425px) */
 :root {
-  --landing-logo: 72px;
-  --landing-col: 52px;
-  --landing-text: 1rem; /* text-base = 16px */
-  --landing-leading: 1.5rem; /* line-height de text-base */
-  --landing-offset: 24px;
-  --landing-center: 139px;
+  --landing-logo: 90px;
+  --landing-col: 65px;
+  --landing-text: 1.25rem; /* text-xl = 20px */
+  --landing-leading: 1.75rem; /* line-height de text-xl */
+  --landing-offset: 27px;
+  --landing-center: 174px;
 }
 
 /* Mobile large */
