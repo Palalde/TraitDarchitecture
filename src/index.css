@@ -89,3 +89,20 @@
 *::after {
   border-radius: 0px;
 }
+
+/* ============================================
+   LANDING — Tailles fixes par breakpoint
+   Ratios de référence (laptop) :
+     col       = logo × 0.40
+     offset    = logo × 0.14
+     translate = logo × 1.475
+   ============================================ */
+
+/* Mobile — logo 100px */
+:root {
+  --landing-logo: 100px;
+  --landing-col: 40px;
+  --landing-text: 11px;
+  --landing-offset: 14px;
+  --landing-translate: 148px;
+}
