@@ -55,6 +55,8 @@ export function useLandingIntroAnimation(
   );
   const [verticalTraitStarted, setVerticalTraitStarted] =
     useState<boolean>(false);
+  const [verticalTraitCompleted, setVerticalTraitCompleted] =
+    useState<boolean>(false);
   const verticalTraitTimeoutRef = useRef<number | null>(null);
 
   // update logo progress
@@ -66,6 +68,10 @@ export function useLandingIntroAnimation(
     verticalTraitTimeoutRef.current = window.setTimeout(() => {
       setVerticalTraitStarted(true);
     }, VERTICAL_TRAIT_DELAY_MS);
+  }, []);
+
+  const handleVerticalTraitComplete = useCallback(() => {
+    setVerticalTraitCompleted(true);
   }, []);
 
   useEffect(() => {
@@ -82,13 +88,16 @@ export function useLandingIntroAnimation(
     [logoProgress, shouldAnimate],
   );
   const verticalTraitVisible = !shouldAnimate || verticalTraitStarted;
+  const namesVisible = !shouldAnimate || verticalTraitCompleted;
 
   return {
     colsVisible,
     handleLogoComplete,
     handleLogoProgress,
+    handleVerticalTraitComplete,
     isFirstVisit,
     logoProgress,
+    namesVisible,
     reducedMotion,
     shouldAnimate,
     verticalTraitVisible,

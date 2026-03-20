@@ -22,6 +22,8 @@ export function LandingScreen() {
     colsVisible,
     handleLogoComplete,
     handleLogoProgress,
+    handleVerticalTraitComplete,
+    namesVisible,
     shouldAnimate,
     verticalTraitVisible,
   } = useLandingIntroAnimation({ forceAnimate: FORCE_ANIMATION });
@@ -77,14 +79,17 @@ export function LandingScreen() {
           ))}
         </div>
         {/* noms */}
-        <div
+        <motion.div
           className="absolute bottom-0 text-center whitespace-nowrap"
+          initial={false}
+          animate={{ opacity: namesVisible ? 1 : 0 }}
+          transition={{ duration: 0.36, ease: 'easeOut' }}
           style={{ left: 'var(--landing-center)', transform: 'translateX(-50%)' }}
         >
           <span className="block font-normal text-(--t2a-blue-light) text-(length:--landing-names) leading-none" style={{ transform: 'translateY(0.2em)' }}>
             Théa BATTISTINI & Titouan GRANET
           </span>
-        </div>
+        </motion.div>
       </div>
       {/* vertical trait */}
       <div
@@ -95,6 +100,7 @@ export function LandingScreen() {
           className="h-full w-full bg-(--trait)"
           initial={false}
           animate={{ scaleY: verticalTraitVisible ? 1 : 0 }}
+          onAnimationComplete={verticalTraitVisible ? handleVerticalTraitComplete : undefined}
           transition={{ duration: 0.48, ease: 'easeOut' }}
           style={{ transformOrigin: 'bottom center' }}
         />
