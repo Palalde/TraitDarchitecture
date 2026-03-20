@@ -98,11 +98,11 @@
      translate = logo × 1.475
    ============================================ */
 
-/* Mobile — logo 100px */
+/* Mobile — logo 155px (texte hero 14px, ratios ×0.78 vs laptop) */
 :root {
-  --landing-logo: 100px;
-  --landing-col: 40px;
-  --landing-text: 11px;
-  --landing-offset: 14px;
-  --landing-translate: 148px;
+  --landing-logo: 155px;
+  --landing-col: 62px;
+  --landing-text: 15px;
+  --landing-offset: 22px;
+  --landing-translate: 230px;
 }
