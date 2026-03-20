@@ -28,18 +28,6 @@
    ============================================ */
 
 @theme {
-  /* Couleurs T2A */
-  /* Couleur principale, liens, accents */
-  --color-t2a-blue: #5e7396;
-  /* Hover léger, sous-titres, étymologies */
-  --color-t2a-blue-light: #8a9bb5;
-  /* Fonds accent, bordures actives */
-  --color-t2a-blue-pale: #c8d1de;
-  /* Fond sections highlight (presque blanc bleuté) */
-  --color-t2a-blue-wash: #edf0f5;
-  /*  Texte sur fond clair, titres forts, active states */
-  --color-t2a-blue-dark: #3e5170;
-
   /* Font family */
   --font-sans: "T2A", "DM Sans", sans-serif;
 }
@@ -49,6 +37,18 @@
    ============================================ */
 
 :root {
+  /* Couleurs T2A */
+  /* Couleur principale, liens, accents */
+  --t2a-blue: #5e7396;
+  /* Hover léger, sous-titres, étymologies */
+  --t2a-blue-light: #8a9bb5;
+  /* Fonds accent, bordures actives */
+  --t2a-blue-pale: #c8d1de;
+  /* Fond sections highlight (presque blanc bleuté) */
+  --t2a-blue-wash: #edf0f5;
+  /*  Texte sur fond clair, titres forts, active states */
+  --t2a-blue-dark: #3e5170;
+
   /* Fond principal */
   --bg-primary: #ffffff;
   /* Fond sections alternées (blanc bleuté très subtil) */
@@ -73,6 +73,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --t2a-blue: #8a9bb5;
+    --t2a-blue-light: #a8b5c8;
+    --t2a-blue-pale: #2d3748;
+    --t2a-blue-wash: #1a2030;
+    --t2a-blue-dark: #c8d1de;
+
     --bg-primary: #0d1117;
     --bg-secondary: #161b25;
     --text-primary: #e2e5eb;
@@ -102,6 +108,7 @@
   --landing-leading: 1.75rem; /* line-height de text-xl */
   --landing-offset: 27px;
   --landing-center: 174px;
+  --landing-names: 0.833rem;
 }
 
 /* Mobile large */
@@ -113,6 +120,7 @@
     --landing-leading: 2rem; /* line-height de text-2xl */
     --landing-offset: 30px;
     --landing-center: 196px;
+    --landing-names: 1rem;
   }
 }
 
@@ -125,6 +133,7 @@
     --landing-leading: 2.25rem; /* line-height de text-3xl */
     --landing-offset: 34px;
     --landing-center: 259px;
+    --landing-names: 1.245rem;
   }
 }
 
@@ -137,6 +146,7 @@
     --landing-leading: 2.5rem; /* line-height de text-4xl */
     --landing-offset: 38px; /* -mt-9.5 */
     --landing-center: 314px; /* offset pour centrer "TraiT" sur l'axe */
+    --landing-names: 1.5rem;
   }
 }
 
@@ -149,5 +159,6 @@
     --landing-leading: 5rem; /* line-height ×2 */
     --landing-offset: 76px;
     --landing-center: 628px;
+    --landing-names: 3rem;
   }
 }

@@ -17,21 +17,35 @@ export function LandingScreen() {
         >
             {/* 01 / ATELIER */}
           <div className="w-(--landing-col) flex flex-col items-start">
-            <span className="font-light text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">01</span>
-            <span className="font-semibold text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">ATELIER</span>
+            <span className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">01</span>
+            <span className="font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">ATELIER</span>
           </div>
           {/* 02 / TraiT */}
           <div className="w-(--landing-col) flex flex-col items-start">
-            <span className="font-light text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">02</span>
-            <span className="font-semibold text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">TraiT</span>
+            <span className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">02</span>
+            <span className="font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">TraiT</span>
           </div>
           {/* 03 / D'ARCHITECTURE */}
           <div className="w-(--landing-col) flex flex-col items-start">
-            <span className="font-light text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">03</span>
-            <span className="font-semibold text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">D'ARCHITECTURE</span>
+            <span className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)">03</span>
+            <span className="font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">D'ARCHITECTURE</span>
           </div>
         </div>
+        {/* noms */}
+        <div
+          className="absolute bottom-0 text-center whitespace-nowrap"
+          style={{ left: 'var(--landing-center)', transform: 'translateX(-50%)' }}
+        >
+          <span className="block font-normal text-(--t2a-blue-light) text-(length:--landing-names) leading-none" style={{ transform: 'translateY(0.2em)' }}>
+            Théa BATTISTINI & Titouan GRANET
+          </span>
+        </div>
       </div>
+      {/* vertical trait */}
+      <div
+        className="absolute left-1/2 bottom-0"
+        style={{ transform: 'translateX(-50%)', width: '1px', height: '25%', background: 'var(--trait)' }}
+      />
     </section>
   );
 }
