@@ -1,10 +1,19 @@
 import { motion } from 'framer-motion';
-import { LANDING_COLUMNS } from '../constants/landingIntro.constants';
 import { useLandingIntroAnimation } from '../hooks/useLandingIntroAnimation';
 import { T2ALogo } from './T2ALogo';
 
+interface LandingColumn {
+  index: string;
+  label: string;
+}
+
 const FORCE_ANIMATION = true;
 const COLUMN_REVEAL_TRANSITION = { duration: 0.4, ease: 'easeOut' } as const;
+const LANDING_COLUMNS: readonly LandingColumn[] = [
+  { index: '01', label: 'ATELIER' },
+  { index: '02', label: 'TraiT' },
+  { index: '03', label: "D'ARCHITECTURE" },
+] as const;
 
 export function LandingScreen() {
   const { colsVisible, handleLogoProgress, shouldAnimate } =

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useReducedMotion } from "../../../../hooks/useReducedMotion";
-import { LANDING_COLUMN_THRESHOLDS } from "../constants/landingIntro.constants";
 
 type ColumnVisibility = [boolean, boolean, boolean];
 
@@ -10,6 +9,8 @@ interface UseLandingIntroAnimationOptions {
 }
 
 // columns appear at 25%, 50% and 75% of the logo animation
+const LANDING_COLUMN_THRESHOLDS = [0.55, 0.62, 0.69] as const;
+
 function getColumnVisibility(
   shouldAnimate: boolean,
   logoProgress: number,
