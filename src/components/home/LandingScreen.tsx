@@ -1,6 +1,24 @@
+import { useEffect, useState } from 'react';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { T2ALogo } from '../ui/T2ALogo';
 
 export function LandingScreen() {
+  const reducedMotion = useReducedMotion();
+
+  // first visit detection state
+  const [isFirstVisit] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return !sessionStorage.getItem('t2a-visited');
+  });
+
+  // Mark the site as visited on first load
+  useEffect(() => {
+    if (isFirstVisit) sessionStorage.setItem('t2a-visited', '1');
+  }, [isFirstVisit]);
+
+  //dev ! for testing animation
+  const shouldAnimate = !reducedMotion && !isFirstVisit;
+
   return (
     <section className="relative h-screen w-full overflow-hidden bg-(--bg-primary)">
         {/* wrapper */}
@@ -9,7 +27,7 @@ export function LandingScreen() {
         style={{ transform: 'translate(calc(var(--landing-center) * -1), -50%)' }}
       >
         {/* logo */}
-        <T2ALogo className="w-(--landing-logo) shrink-0 text-(--trait)" />
+        <T2ALogo className="w-(--landing-logo) shrink-0 text-(--trait)" animated={shouldAnimate} />
         {/* text columns */}
         <div
           className="flex"
