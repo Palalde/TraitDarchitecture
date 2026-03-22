@@ -103,8 +103,8 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
                   label="Instagram"
                   onClick={onClose}
                   style={{
-                    height: "calc(var(--header-height) * 0.42)",
-                    width: "calc(var(--header-height) * 0.42)",
+                    height: "calc(var(--header-height) * 0.7)",
+                    width: "calc(var(--header-height) * 0.7)",
                   }}
                 >
                   <InstagramLogo
@@ -118,8 +118,8 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
                   label="Facebook"
                   onClick={onClose}
                   style={{
-                    height: "calc(var(--header-height) * 0.42)",
-                    width: "calc(var(--header-height) * 0.42)",
+                    height: "calc(var(--header-height) * 0.7)",
+                    width: "calc(var(--header-height) * 0.7)",
                   }}
                 >
                   <FacebookLogo
@@ -133,8 +133,8 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
                   label="LinkedIn"
                   onClick={onClose}
                   style={{
-                    height: "calc(var(--header-height) * 0.42)",
-                    width: "calc(var(--header-height) * 0.42)",
+                    height: "calc(var(--header-height) * 0.7)",
+                    width: "calc(var(--header-height) * 0.7)",
                   }}
                 >
                   <LinkedInLogo
