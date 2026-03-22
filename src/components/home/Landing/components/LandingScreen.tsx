@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { T2ALogo } from './T2ALogo';
+import { motion } from "framer-motion";
+import { T2ALogo } from "./T2ALogo";
 
 interface LandingColumn {
   index: string;
@@ -20,13 +20,19 @@ interface LandingScreenProps {
   verticalTraitVisible: boolean;
 }
 
-const COLUMN_INDEX_TRANSITION = { duration: 0.24, ease: 'easeOut' } as const;
-const COLUMN_LABEL_MASK_TRANSITION = { duration: 0.38, ease: 'easeOut' } as const;
-const COLUMN_LABEL_TEXT_TRANSITION = { duration: 0.42, ease: 'easeOut' } as const;
+const COLUMN_INDEX_TRANSITION = { duration: 0.24, ease: "easeOut" } as const;
+const COLUMN_LABEL_MASK_TRANSITION = {
+  duration: 0.38,
+  ease: "easeOut",
+} as const;
+const COLUMN_LABEL_TEXT_TRANSITION = {
+  duration: 0.42,
+  ease: "easeOut",
+} as const;
 const LANDING_COLUMNS: readonly LandingColumn[] = [
-  { index: '01', label: 'ATELIER' },
-  { index: '02', label: 'TraiT' },
-  { index: '03', label: "D'ARCHITECTURE" },
+  { index: "01", label: "ATELIER" },
+  { index: "02", label: "TraiT" },
+  { index: "03", label: "D'ARCHITECTURE" },
 ] as const;
 
 export function LandingScreen({
@@ -46,19 +52,21 @@ export function LandingScreen({
     <motion.section
       className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary)"
       initial={false}
-      animate={{ y: isSlidingUp ? '-100%' : 0 }}
+      animate={{ y: isSlidingUp ? "-100%" : 0 }}
       onAnimationComplete={isSlidingUp ? handleSlideUpComplete : undefined}
-      transition={{ duration: landingSlideUpDuration, ease: 'easeOut' }}
+      transition={{ duration: landingSlideUpDuration, ease: "easeOut" }}
     >
-        {/* wrapper */}
+      {/* wrapper */}
       <div
         className="absolute top-1/2 left-1/2 flex items-start"
-        style={{ transform: 'translate(calc(var(--landing-center) * -1), -50%)' }}
+        style={{
+          transform: "translate(calc(var(--landing-center) * -1), -50%)",
+        }}
       >
         {/* logo */}
         <T2ALogo
           className="w-(--landing-logo) shrink-0"
-          style={{ color: 'var(--trait)' }}
+          style={{ color: "var(--trait)" }}
           animated={shouldAnimate}
           onComplete={handleLogoComplete}
           onProgress={handleLogoProgress}
@@ -66,7 +74,7 @@ export function LandingScreen({
         {/* text columns */}
         <div
           className="flex"
-          style={{ marginTop: 'calc(var(--landing-offset) * -1)' }}
+          style={{ marginTop: "calc(var(--landing-offset) * -1)" }}
         >
           {LANDING_COLUMNS.map((column, index) => (
             <div
@@ -76,7 +84,10 @@ export function LandingScreen({
               <motion.span
                 className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)"
                 initial={false}
-                animate={{ opacity: colsVisible[index] ? 1 : 0, y: colsVisible[index] ? 0 : 4 }}
+                animate={{
+                  opacity: colsVisible[index] ? 1 : 0,
+                  y: colsVisible[index] ? 0 : 4,
+                }}
                 transition={COLUMN_INDEX_TRANSITION}
               >
                 {column.index}
@@ -84,13 +95,20 @@ export function LandingScreen({
               <motion.span
                 className="block overflow-hidden whitespace-nowrap"
                 initial={false}
-                animate={{ clipPath: colsVisible[index] ? 'inset(0% 0% 0% 0%)' : 'inset(0% 100% 0% 0%)' }}
+                animate={{
+                  clipPath: colsVisible[index]
+                    ? "inset(0% 0% 0% 0%)"
+                    : "inset(0% 100% 0% 0%)",
+                }}
                 transition={COLUMN_LABEL_MASK_TRANSITION}
               >
                 <motion.span
                   className="block font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)"
                   initial={false}
-                  animate={{ opacity: colsVisible[index] ? 1 : 0, y: colsVisible[index] ? 0 : -12 }}
+                  animate={{
+                    opacity: colsVisible[index] ? 1 : 0,
+                    y: colsVisible[index] ? 0 : -12,
+                  }}
                   transition={COLUMN_LABEL_TEXT_TRANSITION}
                 >
                   {column.label}
@@ -105,10 +123,16 @@ export function LandingScreen({
           initial={false}
           animate={{ opacity: namesVisible ? 1 : 0 }}
           onAnimationComplete={handleNamesAnimationComplete}
-          transition={{ duration: 0.36, ease: 'easeOut' }}
-          style={{ left: 'var(--landing-center)', transform: 'translateX(-50%)' }}
+          transition={{ duration: 0.36, ease: "easeOut" }}
+          style={{
+            left: "var(--landing-center)",
+            transform: "translateX(-50%)",
+          }}
         >
-          <span className="block font-normal text-(--t2a-blue-light) text-(length:--landing-names) leading-none" style={{ transform: 'translateY(0.2em)' }}>
+          <span
+            className="block font-normal text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
+            style={{ transform: "translateY(0.2em)" }}
+          >
             Théa BATTISTINI & Titouan GRANET
           </span>
         </motion.div>
@@ -116,15 +140,17 @@ export function LandingScreen({
       {/* vertical trait */}
       <div
         className="absolute left-1/2 bottom-0"
-        style={{ transform: 'translateX(-50%)', width: '1px', height: '25%' }}
+        style={{ transform: "translateX(-50%)", width: "1px", height: "25%" }}
       >
         <motion.div
           className="h-full w-full bg-(--trait)"
           initial={false}
           animate={{ scaleY: verticalTraitVisible ? 1 : 0 }}
-          onAnimationComplete={verticalTraitVisible ? handleVerticalTraitComplete : undefined}
-          transition={{ duration: 0.48, ease: 'easeOut' }}
-          style={{ transformOrigin: 'bottom center' }}
+          onAnimationComplete={
+            verticalTraitVisible ? handleVerticalTraitComplete : undefined
+          }
+          transition={{ duration: 0.48, ease: "easeOut" }}
+          style={{ transformOrigin: "bottom center" }}
         />
       </div>
     </motion.section>
