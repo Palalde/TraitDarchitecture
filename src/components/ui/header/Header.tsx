@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderHamburger } from "./HeaderHamburger";
 import { HeaderMobileMenu } from "./HeaderMobileMenu";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
+import { useHeaderMobileMenu } from "./hook/useHeaderMobileMenu";
 import { FacebookLogo } from "./logo/FacebookLogo";
 import { InstagramLogo } from "./logo/InstagramLogo";
 import { LinkedInLogo } from "./logo/LinkedInLogo";
@@ -12,9 +12,8 @@ import { HeaderNavItem } from "./HeaderNavItem";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight";
 
 export function Header() {
-  const { pathname } = useLocation();
-  const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null);
-  const isMobileMenuOpen = mobileMenuPath === pathname;
+  const { closeMobileMenu, isMobileMenuOpen, toggleMobileMenu } =
+    useHeaderMobileMenu();
 
   return (
     <header
@@ -22,7 +21,7 @@ export function Header() {
       className="fixed inset-x-0 top-0 z-50 h-(--header-height)"
     >
       {/* wrapper */}
-      <div className="relative flex h-full w-full items-start justify-end overflow-hidden bg-(--bg-primary) text-(--t2a-blue)">
+      <div className="relative flex h-full w-full items-start justify-end overflow-x-hidden bg-(--bg-primary) text-(--t2a-blue)">
         {/* leftLogo */}
         <div className="absolute inset-y-0 left-0 z-10 flex items-center pl-3 sm:pl-4 md:pl-5 lg:pl-6">
           <Link
@@ -78,11 +77,7 @@ export function Header() {
         <div className="absolute right-2 top-0 z-20 flex md:hidden">
           <HeaderHamburger
             isOpen={isMobileMenuOpen}
-            onClick={() =>
-              setMobileMenuPath((previousPath) =>
-                previousPath === pathname ? null : pathname,
-              )
-            }
+            onClick={toggleMobileMenu}
           />
         </div>
 
@@ -92,10 +87,7 @@ export function Header() {
         </div>
         {/* mobile menu */}
       </div>
-      <HeaderMobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setMobileMenuPath(null)}
-      />
+      <HeaderMobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
     </header>
   );
 }
