@@ -57,7 +57,8 @@ export function LandingScreen({
       >
         {/* logo */}
         <T2ALogo
-          className="w-(--landing-logo) shrink-0 text-(--trait)"
+          className="w-(--landing-logo) shrink-0"
+          style={{ color: 'var(--trait)' }}
           animated={shouldAnimate}
           onComplete={handleLogoComplete}
           onProgress={handleLogoProgress}

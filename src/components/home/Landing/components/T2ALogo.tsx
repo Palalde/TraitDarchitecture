@@ -1,7 +1,9 @@
+import type { CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 
 interface T2ALogoProps {
   className?: string;
+  style?: CSSProperties;
   animated?: boolean;
   onComplete?: () => void;
   /** Progress callback, receives a value between 0 and 1 */
@@ -10,7 +12,7 @@ interface T2ALogoProps {
 
 const DRAW_DURATION = 3;
 
-export function T2ALogo({ className, animated = false, onComplete, onProgress }: T2ALogoProps) {
+export function T2ALogo({ className, style, animated = false, onComplete, onProgress }: T2ALogoProps) {
   return (
     <svg
       viewBox="0 0 754 302"
@@ -22,6 +24,7 @@ export function T2ALogo({ className, animated = false, onComplete, onProgress }:
       overflow="visible"
       aria-hidden="true"
       className={className}
+      style={style}
     >
       <motion.path
         vectorEffect="none"
