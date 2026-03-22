@@ -1,4 +1,13 @@
+import { Header } from '../components/ui/Header'
+
 export default function TraitMethode() {
-  return <main><p>TraitMethode</p></main>
+  return (
+    <>
+      <Header />
+      <main style={{ paddingTop: 'var(--header-height)' }}>
+        <p>TraitMethode</p>
+      </main>
+    </>
+  )
 }
 

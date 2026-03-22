@@ -1,4 +1,5 @@
 import { T2ALogoBrut } from './T2ALogoBrut'
+import { HeaderNavItem } from './HeaderNavItem.tsx'
 import { T2ALogoLineRight } from './T2ALogoLineRight'
 
 export function Header() {
@@ -21,6 +22,15 @@ export function Header() {
             style={{ height: 'calc(var(--header-height) * 0.5)' }}
           />
         </div>
+            {/* nav */}
+        <nav
+          aria-label="Navigation principale"
+          className="absolute inset-y-0 left-[calc(var(--header-height)*1.2)] z-20 flex items-center gap-0.5 sm:gap-1 md:gap-2 lg:gap-3"
+        >
+          <HeaderNavItem label="ATELIER" to="/atelier" />
+          <HeaderNavItem label="TraiT" to="/trait/philosophie" />
+          <HeaderNavItem label="D'ARCHITECTURE" to="/architecture" />
+        </nav>
 
         {/* rightLogo */}
         <T2ALogoLineRight className="h-full w-auto max-w-none shrink-0" />
