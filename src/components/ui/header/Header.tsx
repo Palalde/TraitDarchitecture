@@ -1,8 +1,10 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderHamburger } from "./HeaderHamburger";
 import { HeaderMobileMenu } from "./HeaderMobileMenu";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
+import { useHeaderAutoHide } from "./hook/useHeaderAutoHide";
 import { useHeaderMobileMenu } from "./hook/useHeaderMobileMenu";
 import { FacebookLogo } from "./logo/FacebookLogo";
 import { InstagramLogo } from "./logo/InstagramLogo";
@@ -10,22 +12,29 @@ import { LinkedInLogo } from "./logo/LinkedInLogo";
 import { T2ALogoBrut } from "./logo/T2ALogoBrut";
 import { HeaderNavItem } from "./HeaderNavItem";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight";
+import { useReducedMotion } from "../../../hooks/useReducedMotion";
 
 interface HeaderProps {
-  fixed?: boolean;
+  animateEntrance?: boolean;
 }
 
-export function Header({ fixed = true }: HeaderProps) {
+export function Header({ animateEntrance = false }: HeaderProps) {
   const { closeMobileMenu, isMobileMenuOpen, toggleMobileMenu } =
     useHeaderMobileMenu();
+  const { isHeaderVisible } = useHeaderAutoHide();
+  const reducedMotion = useReducedMotion();
+  const headerVisible = isHeaderVisible || isMobileMenuOpen;
 
   return (
-    <header
+    <motion.header
       aria-label="En-tête principal"
-      className={[
-        "h-(--header-height)",
-        fixed ? "fixed inset-x-0 top-0 z-50" : "relative w-full",
-      ].join(" ")}
+      animate={{ y: headerVisible ? 0 : "-100%" }}
+      className="fixed inset-x-0 top-0 z-50 h-(--header-height)"
+      initial={animateEntrance ? { y: "-100%" } : false}
+      transition={{
+        duration: reducedMotion ? 0 : 0.42,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
       {/* wrapper */}
       <div className="relative flex h-full w-full items-start justify-end overflow-x-hidden bg-(--bg-primary) text-(--t2a-blue)">
@@ -95,6 +104,6 @@ export function Header({ fixed = true }: HeaderProps) {
         {/* mobile menu */}
       </div>
       <HeaderMobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
-    </header>
+    </motion.header>
   );
 }

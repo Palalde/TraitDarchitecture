@@ -12,7 +12,7 @@ interface UseHeaderAutoHideResult {
 export function useHeaderAutoHide(
   options: UseHeaderAutoHideOptions = {},
 ): UseHeaderAutoHideResult {
-  const { minDelta = 12, topOffset = 0 } = options;
+  const { minDelta = 20, topOffset = 0 } = options;
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const lastScrollYRef = useRef(0);
   const downwardDistanceRef = useRef(0);
