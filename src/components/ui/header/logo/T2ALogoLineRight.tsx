@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 interface T2ALogoLineRightProps {
   className?: string;
   title?: string;
 }
 
-export function T2ALogoLineRight({
+export const T2ALogoLineRight = memo(function T2ALogoLineRight({
   className,
   title = "Logo ligne droite ATELIER TraiT D'ARCHITECTURE",
 }: T2ALogoLineRightProps) {
@@ -45,4 +47,4 @@ export function T2ALogoLineRight({
       />
     </svg>
   );
-}
+});

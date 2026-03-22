@@ -1,9 +1,15 @@
+import { memo } from "react";
+import type { CSSProperties } from "react";
+
 interface InstagramLogoProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-export function InstagramLogo({ className, style }: InstagramLogoProps) {
+export const InstagramLogo = memo(function InstagramLogo({
+  className,
+  style,
+}: InstagramLogoProps) {
   return (
     <svg className={className} style={style} viewBox="0 -0.5 25 25">
       <path
@@ -43,4 +49,4 @@ export function InstagramLogo({ className, style }: InstagramLogoProps) {
       />
     </svg>
   );
-}
+});

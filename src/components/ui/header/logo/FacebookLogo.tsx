@@ -1,9 +1,15 @@
+import { memo } from "react";
+import type { CSSProperties } from "react";
+
 interface FacebookLogoProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-export function FacebookLogo({ className, style }: FacebookLogoProps) {
+export const FacebookLogo = memo(function FacebookLogo({
+  className,
+  style,
+}: FacebookLogoProps) {
   return (
     <svg
       className={className}
@@ -17,4 +23,4 @@ export function FacebookLogo({ className, style }: FacebookLogoProps) {
       />
     </svg>
   );
-}
+});

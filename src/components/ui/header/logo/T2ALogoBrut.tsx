@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 interface T2ALogoBrutProps {
   className?: string;
   title?: string;
 }
 
-export function T2ALogoBrut({
+export const T2ALogoBrut = memo(function T2ALogoBrut({
   className,
   title = "Logo ATELIER TraiT D'ARCHITECTURE",
 }: T2ALogoBrutProps) {
@@ -27,4 +29,4 @@ export function T2ALogoBrut({
       />
     </svg>
   );
-}
+});

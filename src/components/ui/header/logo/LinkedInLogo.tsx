@@ -1,9 +1,15 @@
+import { memo } from "react";
+import type { CSSProperties } from "react";
+
 interface LinkedInLogoProps {
   className?: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
-export function LinkedInLogo({ className, style }: LinkedInLogoProps) {
+export const LinkedInLogo = memo(function LinkedInLogo({
+  className,
+  style,
+}: LinkedInLogoProps) {
   return (
     <svg
       className={className}
@@ -18,4 +24,4 @@ export function LinkedInLogo({ className, style }: LinkedInLogoProps) {
       />
     </svg>
   );
-}
+});
