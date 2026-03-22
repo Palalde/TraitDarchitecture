@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { HeaderExtraitItem } from "./HeaderExtraitItem";
+import { HeaderHamburger } from "./HeaderHamburger";
 import { HeaderSocialIcon } from "./HeaderSocialIcon.tsx";
 import { FacebookLogo } from "./logo/FacebookLogo.tsx";
 import { InstagramLogo } from "./logo/InstagramLogo.tsx";
@@ -9,6 +11,7 @@ import { HeaderNavItem } from "./HeaderNavItem.tsx";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight.tsx";
 
 export function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const PincipalColor = "var(--t2a-blue)";
 
   return (
@@ -91,6 +94,16 @@ export function Header() {
           className="h-full w-auto max-w-none shrink-0"
           style={{ color: PincipalColor }}
         />
+
+        {/* mobile hamburger */}
+        <div className="absolute right-2 top-0 z-20 flex md:hidden lg:-right-2">
+          <HeaderHamburger
+            isOpen={isMobileMenuOpen}
+            onClick={() =>
+              setIsMobileMenuOpen((previousState) => !previousState)
+            }
+          />
+        </div>
 
         {/* extrait */}
         <div className="absolute -right-3 z-20 hidden top-4 md:flex lg:-right-2">
