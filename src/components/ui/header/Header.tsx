@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderSocialIcon } from "./HeaderSocialIcon.tsx";
 import { FacebookLogo } from "./logo/FacebookLogo.tsx";
 import { InstagramLogo } from "./logo/InstagramLogo.tsx";
@@ -8,6 +9,8 @@ import { HeaderNavItem } from "./HeaderNavItem.tsx";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight.tsx";
 
 export function Header() {
+  const PincipalColor = "var(--t2a-blue)";
+
   return (
     <header
       aria-label="En-tete principal"
@@ -17,7 +20,10 @@ export function Header() {
       {/* wrapper */}
       <div
         className="relative flex h-full w-full items-start justify-end overflow-hidden"
-        style={{ backgroundColor: "var(--bg-primary)", color: "var(--trait)" }}
+        style={{
+          backgroundColor: "var(--bg-primary)",
+          color: PincipalColor,
+        }}
       >
         {/* leftLogo */}
         <div className="absolute inset-y-0 left-0 z-10 flex items-center pl-3 sm:pl-4 md:pl-5 lg:pl-6">
@@ -31,7 +37,7 @@ export function Header() {
               title="Logo gauche ATELIER TraiT D'ARCHITECTURE"
               style={{
                 height: "calc(var(--header-height) * 0.5)",
-                color: "var(--t2a-blue)",
+                color: PincipalColor,
               }}
             />
           </Link>
@@ -49,24 +55,47 @@ export function Header() {
         <div className="absolute inset-y-0 right-[calc(var(--header-height)*4)] z-20 hidden items-center md:flex">
           <HeaderNavItem label="Contact" to="/contact" />
         </div>
-
+        {/* social */}
         <div className="absolute inset-y-0 right-[calc(var(--header-height)*2.5)] z-20 hidden items-center gap-2 md:flex lg:gap-2.5">
-          <HeaderSocialIcon label="Instagram">
-            <InstagramLogo className="h-full w-full" />
+          <HeaderSocialIcon
+            href="https://www.instagram.com/atelier.trait.darchitecture/"
+            label="Instagram"
+          >
+            <InstagramLogo
+              className="h-full w-full"
+              style={{ color: PincipalColor }}
+            />
           </HeaderSocialIcon>
-          <HeaderSocialIcon label="Facebook">
-            <FacebookLogo className="h-full w-full" />
+          <HeaderSocialIcon
+            href="https://www.facebook.com/profile.php?id=61578637113872#"
+            label="Facebook"
+          >
+            <FacebookLogo
+              className="h-full w-full"
+              style={{ color: PincipalColor }}
+            />
           </HeaderSocialIcon>
-          <HeaderSocialIcon label="LinkedIn">
-            <LinkedInLogo className="h-full w-full" />
+          <HeaderSocialIcon
+            href="https://www.linkedin.com/company/atelier-trait-d-architecture/"
+            label="LinkedIn"
+          >
+            <LinkedInLogo
+              className="h-full w-full"
+              style={{ color: PincipalColor }}
+            />
           </HeaderSocialIcon>
         </div>
 
         {/* rightLogo */}
         <T2ALogoLineRight
           className="h-full w-auto max-w-none shrink-0"
-          style={{ color: "var(--t2a-blue)" }}
+          style={{ color: PincipalColor }}
         />
+
+        {/* extrait */}
+        <div className="absolute -right-3 z-20 hidden top-4 md:flex lg:-right-2">
+          <HeaderExtraitItem label="EXTraiT" to="/extrait" />
+        </div>
       </div>
     </header>
   );

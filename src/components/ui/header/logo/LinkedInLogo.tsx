@@ -1,11 +1,13 @@
 interface LinkedInLogoProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function LinkedInLogo({ className }: LinkedInLogoProps) {
+export function LinkedInLogo({ className, style }: LinkedInLogoProps) {
   return (
     <svg
       className={className}
+      style={style}
       fill="none"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"

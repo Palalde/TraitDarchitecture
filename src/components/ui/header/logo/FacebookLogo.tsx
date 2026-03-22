@@ -1,11 +1,13 @@
 interface FacebookLogoProps {
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function FacebookLogo({ className }: FacebookLogoProps) {
+export function FacebookLogo({ className, style }: FacebookLogoProps) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="-5.5 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
     >
