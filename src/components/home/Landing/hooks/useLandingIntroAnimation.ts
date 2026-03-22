@@ -17,7 +17,7 @@ const LANDING_DISMISS_KEYS = new Set([
   " ",
   "Spacebar",
 ]);
-const LANDING_SLIDE_UP_DURATION_S = 1.5;
+const LANDING_SLIDE_UP_DURATION_S = 1.25;
 const VERTICAL_TRAIT_DELAY_MS = 200;
 
 function getColumnVisibility(
