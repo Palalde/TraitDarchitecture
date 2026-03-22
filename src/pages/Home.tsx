@@ -13,7 +13,9 @@ export default function Home() {
     handleLogoComplete,
     handleLogoProgress,
     handleNamesAnimationComplete,
+    handleSlideUpComplete,
     handleVerticalTraitComplete,
+    isDismissed,
     isSlidingUp,
     landingCollapsed,
     landingSlideUpDuration,
@@ -30,18 +32,21 @@ export default function Home() {
         animate={{ height: landingCollapsed ? 0 : '100vh' }}
         transition={{ duration: landingSlideUpDuration, ease: 'easeOut' }}
       >
-        <LandingScreen
-          colsVisible={colsVisible}
-          handleLogoComplete={handleLogoComplete}
-          handleLogoProgress={handleLogoProgress}
-          handleNamesAnimationComplete={handleNamesAnimationComplete}
-          handleVerticalTraitComplete={handleVerticalTraitComplete}
-          isSlidingUp={isSlidingUp}
-          landingSlideUpDuration={landingSlideUpDuration}
-          namesVisible={namesVisible}
-          shouldAnimate={shouldAnimate}
-          verticalTraitVisible={verticalTraitVisible}
-        />
+        {!isDismissed ? (
+          <LandingScreen
+            colsVisible={colsVisible}
+            handleLogoComplete={handleLogoComplete}
+            handleLogoProgress={handleLogoProgress}
+            handleNamesAnimationComplete={handleNamesAnimationComplete}
+            handleSlideUpComplete={handleSlideUpComplete}
+            handleVerticalTraitComplete={handleVerticalTraitComplete}
+            isSlidingUp={isSlidingUp}
+            landingSlideUpDuration={landingSlideUpDuration}
+            namesVisible={namesVisible}
+            shouldAnimate={shouldAnimate}
+            verticalTraitVisible={verticalTraitVisible}
+          />
+        ) : null}
       </motion.div>
       {contentVisible ? <HomeContentShell /> : null}
     </main>

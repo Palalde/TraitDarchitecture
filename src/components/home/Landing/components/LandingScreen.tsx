@@ -11,6 +11,7 @@ interface LandingScreenProps {
   handleLogoComplete: () => void;
   handleLogoProgress: (progress: number) => void;
   handleNamesAnimationComplete: () => void;
+  handleSlideUpComplete: () => void;
   handleVerticalTraitComplete: () => void;
   isSlidingUp: boolean;
   landingSlideUpDuration: number;
@@ -33,6 +34,7 @@ export function LandingScreen({
   handleLogoComplete,
   handleLogoProgress,
   handleNamesAnimationComplete,
+  handleSlideUpComplete,
   handleVerticalTraitComplete,
   isSlidingUp,
   landingSlideUpDuration,
@@ -45,6 +47,7 @@ export function LandingScreen({
       className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary)"
       initial={false}
       animate={{ y: isSlidingUp ? '-100%' : 0 }}
+      onAnimationComplete={isSlidingUp ? handleSlideUpComplete : undefined}
       transition={{ duration: landingSlideUpDuration, ease: 'easeOut' }}
     >
         {/* wrapper */}

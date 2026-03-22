@@ -3,13 +3,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "../../../../hooks/useReducedMotion";
 
 type ColumnVisibility = [boolean, boolean, boolean];
-type LandingPhase = "intro" | "ready" | "sliding-up";
+type LandingPhase = "intro" | "ready" | "sliding-up" | "dismissed";
 
 interface UseLandingIntroAnimationOptions {
   forceAnimate?: boolean;
 }
 
 const LANDING_COLUMN_THRESHOLDS = [0.55, 0.62, 0.69] as const;
+const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
 const LANDING_DISMISS_KEYS = new Set([
   "ArrowDown",
   "PageDown",
@@ -55,9 +56,21 @@ export function useLandingIntroAnimation(
     }
   }, [isFirstVisit]);
 
+  const isLandingDismissed = useMemo(() => {
+    if (typeof window === "undefined" || forceAnimate) {
+      return false;
+    }
+
+    return sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) === "1";
+  }, [forceAnimate]);
+
   // should we animate the logo drawing ?
   const shouldAnimate = !reducedMotion && (forceAnimate || isFirstVisit);
-  const initialPhase: LandingPhase = shouldAnimate ? "intro" : "ready";
+  const initialPhase: LandingPhase = isLandingDismissed
+    ? "dismissed"
+    : shouldAnimate
+      ? "intro"
+      : "ready";
   // logo animation progress (0 to 1)
   const [logoProgress, setLogoProgress] = useState<number>(() =>
     shouldAnimate ? 0 : 1,
@@ -88,8 +101,9 @@ export function useLandingIntroAnimation(
   const namesVisible = !shouldAnimate || verticalTraitCompleted;
   const introCompleted = phase !== "intro";
   const isSlidingUp = phase === "sliding-up";
+  const isDismissed = phase === "dismissed";
   const contentVisible = introCompleted;
-  const landingCollapsed = isSlidingUp;
+  const landingCollapsed = isSlidingUp || isDismissed;
 
   // complete intro when names animation is done
   const completeIntro = useCallback(() => {
@@ -116,6 +130,22 @@ export function useLandingIntroAnimation(
 
     setPhase("sliding-up");
   }, [phase]);
+
+  const handleSlideUpComplete = useCallback(() => {
+    if (phase !== "sliding-up") {
+      return;
+    }
+
+    setPhase("dismissed");
+  }, [phase]);
+
+  useEffect(() => {
+    if (!isDismissed || forceAnimate || typeof window === "undefined") {
+      return;
+    }
+
+    sessionStorage.setItem(LANDING_DISMISSED_STORAGE_KEY, "1");
+  }, [forceAnimate, isDismissed]);
 
   // listen for user interaction to dismiss the landing
   useEffect(() => {
@@ -173,8 +203,11 @@ export function useLandingIntroAnimation(
     handleLogoComplete,
     handleLogoProgress,
     handleNamesAnimationComplete,
+    handleSlideUpComplete,
     handleVerticalTraitComplete,
     introCompleted,
+    isDismissed,
+    isLandingDismissed,
     isSlidingUp,
     isFirstVisit,
     landingCollapsed,
