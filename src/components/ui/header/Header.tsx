@@ -11,14 +11,21 @@ import { T2ALogoBrut } from "./logo/T2ALogoBrut";
 import { HeaderNavItem } from "./HeaderNavItem";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight";
 
-export function Header() {
+interface HeaderProps {
+  fixed?: boolean;
+}
+
+export function Header({ fixed = true }: HeaderProps) {
   const { closeMobileMenu, isMobileMenuOpen, toggleMobileMenu } =
     useHeaderMobileMenu();
 
   return (
     <header
       aria-label="En-tête principal"
-      className="fixed inset-x-0 top-0 z-50 h-(--header-height)"
+      className={[
+        "h-(--header-height)",
+        fixed ? "fixed inset-x-0 top-0 z-50" : "relative w-full",
+      ].join(" ")}
     >
       {/* wrapper */}
       <div className="relative flex h-full w-full items-start justify-end overflow-x-hidden bg-(--bg-primary) text-(--t2a-blue)">

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { HomeContentShell } from "../components/home/content/components/HomeContentShell";
 import { LandingScreen } from "../components/home/Landing/components/LandingScreen";
@@ -27,7 +27,19 @@ export default function Home() {
 
   return (
     <main className="flex flex-col bg-(--bg-primary)">
-      <Header />
+      <AnimatePresence initial={false}>
+        {isDismissed ? (
+          <motion.div
+            className="fixed inset-x-0 top-0 z-50"
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -24, opacity: 0 }}
+            initial={{ y: -24, opacity: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Header fixed={false} />
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       <motion.div
         className="relative w-full overflow-hidden"
         initial={false}
