@@ -4,6 +4,7 @@ import { HomeContentShell } from "../components/home/content/components/HomeCont
 import { LandingScreen } from "../components/home/Landing/components/LandingScreen";
 import { useLandingIntroAnimation } from "../components/home/Landing/hooks/useLandingIntroAnimation";
 import { Header } from "../components/ui/header/Header";
+import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 
 const FORCE_ANIMATION = true;
 
@@ -24,6 +25,8 @@ export default function Home() {
     shouldAnimate,
     verticalTraitVisible,
   } = useLandingIntroAnimation({ forceAnimate: FORCE_ANIMATION });
+
+  useBodyScrollLock(!isDismissed);
 
   return (
     <main className="flex flex-col bg-(--bg-primary)">
