@@ -12,11 +12,11 @@ export function T2ALogoLineRight({
       aria-label={title}
       className={className}
       role="img"
-      viewBox="0 0 1191 57"
+      viewBox="-620 0 1811 57"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="m-14.31 50.77h1091.64v-37.15h-12.39v-12.38h37.15v37.14h-12.38v12.39h37.14v-12.39h-12.38v-37.14h84.46"
+        d="m-620.31 50.77h1697.64v-37.15h-12.39v-12.38h37.15v37.14h-12.38v12.39h37.14v-12.39h-12.38v-37.14h84.46"
         fill="none"
         stroke="currentColor"
         strokeMiterlimit="10"

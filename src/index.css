@@ -97,6 +97,42 @@
 }
 
 /* ============================================
+   HEADER — Tailles fixes par breakpoint
+   ============================================ */
+
+:root {
+  --header-height: 44px;
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  :root {
+    --header-height: 50px;
+  }
+}
+
+/* Laptop */
+@media (min-width: 768px) {
+  :root {
+    --header-height: 57px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  :root {
+    --header-height: 64px;
+  }
+}
+
+/* 2K */
+@media (min-width: 1536px) {
+  :root {
+    --header-height: 86px;
+  }
+}
+
+/* ============================================
    LANDING — Tailles fixes par breakpoint
    ============================================ */
 
