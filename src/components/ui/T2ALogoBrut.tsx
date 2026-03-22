@@ -1,10 +1,14 @@
+import type { CSSProperties } from 'react'
+
 interface T2ALogoBrutProps {
   className?: string
+  style?: CSSProperties
   title?: string
 }
 
 export function T2ALogoBrut({
   className,
+  style,
   title = "Logo ATELIER TraiT D'ARCHITECTURE",
 }: T2ALogoBrutProps) {
   return (
@@ -12,6 +16,7 @@ export function T2ALogoBrut({
       aria-label={title}
       className={className}
       role="img"
+      style={style}
       viewBox="0 0 306 256"
       xmlns="http://www.w3.org/2000/svg"
     >
