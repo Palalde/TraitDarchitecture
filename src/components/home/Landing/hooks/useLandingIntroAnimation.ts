@@ -6,6 +6,7 @@ type ColumnVisibility = [boolean, boolean, boolean];
 
 interface UseLandingIntroAnimationOptions {
   forceAnimate?: boolean;
+  onIntroComplete?: () => void;
 }
 
 const LANDING_COLUMN_THRESHOLDS = [0.55, 0.62, 0.69] as const;
@@ -28,7 +29,7 @@ function getColumnVisibility(
 export function useLandingIntroAnimation(
   options: UseLandingIntroAnimationOptions = {},
 ) {
-  const { forceAnimate = false } = options;
+  const { forceAnimate = false, onIntroComplete } = options;
   const reducedMotion = useReducedMotion();
 
   // first visit ?
@@ -57,6 +58,7 @@ export function useLandingIntroAnimation(
     useState<boolean>(false);
   const [verticalTraitCompleted, setVerticalTraitCompleted] =
     useState<boolean>(false);
+  const hasCompletedIntroRef = useRef(false);
   const verticalTraitTimeoutRef = useRef<number | null>(null);
 
   // update logo progress
@@ -74,6 +76,25 @@ export function useLandingIntroAnimation(
     setVerticalTraitCompleted(true);
   }, []);
 
+  const verticalTraitVisible = !shouldAnimate || verticalTraitStarted;
+  const namesVisible = !shouldAnimate || verticalTraitCompleted;
+
+  const handleNamesAnimationComplete = useCallback(() => {
+    if (!namesVisible || hasCompletedIntroRef.current) {
+      return;
+    }
+
+    hasCompletedIntroRef.current = true;
+    onIntroComplete?.();
+  }, [namesVisible, onIntroComplete]);
+
+  useEffect(() => {
+    if (!shouldAnimate && !hasCompletedIntroRef.current) {
+      hasCompletedIntroRef.current = true;
+      onIntroComplete?.();
+    }
+  }, [onIntroComplete, shouldAnimate]);
+
   useEffect(() => {
     return () => {
       if (verticalTraitTimeoutRef.current !== null) {
@@ -87,13 +108,12 @@ export function useLandingIntroAnimation(
     () => getColumnVisibility(shouldAnimate, shouldAnimate ? logoProgress : 1),
     [logoProgress, shouldAnimate],
   );
-  const verticalTraitVisible = !shouldAnimate || verticalTraitStarted;
-  const namesVisible = !shouldAnimate || verticalTraitCompleted;
 
   return {
     colsVisible,
     handleLogoComplete,
     handleLogoProgress,
+    handleNamesAnimationComplete,
     handleVerticalTraitComplete,
     isFirstVisit,
     logoProgress,

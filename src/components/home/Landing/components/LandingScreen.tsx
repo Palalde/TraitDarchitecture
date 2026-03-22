@@ -7,6 +7,10 @@ interface LandingColumn {
   label: string;
 }
 
+interface LandingScreenProps {
+  onIntroComplete?: () => void;
+}
+
 const FORCE_ANIMATION = true;
 const COLUMN_INDEX_TRANSITION = { duration: 0.24, ease: 'easeOut' } as const;
 const COLUMN_LABEL_MASK_TRANSITION = { duration: 0.38, ease: 'easeOut' } as const;
@@ -17,16 +21,20 @@ const LANDING_COLUMNS: readonly LandingColumn[] = [
   { index: '03', label: "D'ARCHITECTURE" },
 ] as const;
 
-export function LandingScreen() {
+export function LandingScreen({ onIntroComplete }: LandingScreenProps) {
   const {
     colsVisible,
     handleLogoComplete,
     handleLogoProgress,
+    handleNamesAnimationComplete,
     handleVerticalTraitComplete,
     namesVisible,
     shouldAnimate,
     verticalTraitVisible,
-  } = useLandingIntroAnimation({ forceAnimate: FORCE_ANIMATION });
+  } = useLandingIntroAnimation({
+    forceAnimate: FORCE_ANIMATION,
+    onIntroComplete,
+  });
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-(--bg-primary)">
@@ -83,6 +91,7 @@ export function LandingScreen() {
           className="absolute bottom-0 text-center whitespace-nowrap"
           initial={false}
           animate={{ opacity: namesVisible ? 1 : 0 }}
+          onAnimationComplete={handleNamesAnimationComplete}
           transition={{ duration: 0.36, ease: 'easeOut' }}
           style={{ left: 'var(--landing-center)', transform: 'translateX(-50%)' }}
         >
