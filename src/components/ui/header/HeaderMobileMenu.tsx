@@ -1,6 +1,9 @@
+import { useRef } from "react";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
-import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
 import { FacebookLogo } from "./logo/FacebookLogo";
 import { InstagramLogo } from "./logo/InstagramLogo";
@@ -53,6 +56,9 @@ function MobileMenuLink({
 
 export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
   const prefersReducedMotion = useReducedMotion();
+  const navigationRef = useRef<HTMLElement | null>(null);
+  useBodyScrollLock(isOpen);
+  useFocusTrap(navigationRef, isOpen);
   const transition = prefersReducedMotion
     ? { duration: 0 }
     : { duration: 0.28, ease: [0.22, 1, 0.36, 1] as const };
@@ -78,7 +84,12 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -16 }}
             transition={transition}
           >
-            <nav aria-label="Menu mobile" className="px-6 pb-6 pt-5">
+            <nav
+              aria-label="Menu mobile"
+              className="px-6 pb-6 pt-5"
+              ref={navigationRef}
+              tabIndex={-1}
+            >
               <div className="flex flex-col items-center gap-5">
                 <MobileMenuLink
                   label="Contact"
