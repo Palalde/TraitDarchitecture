@@ -1,13 +1,26 @@
-import { useState } from 'react';
-
 import { motion } from 'framer-motion';
 
 import { HomeContentShell } from '../components/home/content/components/HomeContentShell';
 import { LandingScreen } from '../components/home/Landing/components/LandingScreen';
+import { useLandingIntroAnimation } from '../components/home/Landing/hooks/useLandingIntroAnimation';
+
+const FORCE_ANIMATION = true;
 
 export default function Home() {
-  const [contentVisible, setContentVisible] = useState(false);
-  const [landingCollapsed, setLandingCollapsed] = useState(false);
+  const {
+    colsVisible,
+    contentVisible,
+    handleLogoComplete,
+    handleLogoProgress,
+    handleNamesAnimationComplete,
+    handleVerticalTraitComplete,
+    isSlidingUp,
+    landingCollapsed,
+    landingSlideUpDuration,
+    namesVisible,
+    shouldAnimate,
+    verticalTraitVisible,
+  } = useLandingIntroAnimation({ forceAnimate: FORCE_ANIMATION });
 
   return (
     <main className="flex flex-col bg-(--bg-primary)">
@@ -15,11 +28,19 @@ export default function Home() {
         className="relative w-full overflow-hidden"
         initial={false}
         animate={{ height: landingCollapsed ? 0 : '100vh' }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
+        transition={{ duration: landingSlideUpDuration, ease: 'easeOut' }}
       >
         <LandingScreen
-          onIntroComplete={() => setContentVisible(true)}
-          onSlideUpStart={() => setLandingCollapsed(true)}
+          colsVisible={colsVisible}
+          handleLogoComplete={handleLogoComplete}
+          handleLogoProgress={handleLogoProgress}
+          handleNamesAnimationComplete={handleNamesAnimationComplete}
+          handleVerticalTraitComplete={handleVerticalTraitComplete}
+          isSlidingUp={isSlidingUp}
+          landingSlideUpDuration={landingSlideUpDuration}
+          namesVisible={namesVisible}
+          shouldAnimate={shouldAnimate}
+          verticalTraitVisible={verticalTraitVisible}
         />
       </motion.div>
       {contentVisible ? <HomeContentShell /> : null}

@@ -3,11 +3,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useReducedMotion } from "../../../../hooks/useReducedMotion";
 
 type ColumnVisibility = [boolean, boolean, boolean];
+type LandingPhase = "intro" | "ready" | "sliding-up";
 
 interface UseLandingIntroAnimationOptions {
   forceAnimate?: boolean;
-  onIntroComplete?: () => void;
-  onSlideUpStart?: () => void;
 }
 
 const LANDING_COLUMN_THRESHOLDS = [0.55, 0.62, 0.69] as const;
@@ -37,7 +36,7 @@ function getColumnVisibility(
 export function useLandingIntroAnimation(
   options: UseLandingIntroAnimationOptions = {},
 ) {
-  const { forceAnimate = false, onIntroComplete, onSlideUpStart } = options;
+  const { forceAnimate = false } = options;
   const reducedMotion = useReducedMotion();
 
   // first visit ?
@@ -58,6 +57,7 @@ export function useLandingIntroAnimation(
 
   // should we animate the logo drawing ?
   const shouldAnimate = !reducedMotion && (forceAnimate || isFirstVisit);
+  const initialPhase: LandingPhase = shouldAnimate ? "intro" : "ready";
   // logo animation progress (0 to 1)
   const [logoProgress, setLogoProgress] = useState<number>(() =>
     shouldAnimate ? 0 : 1,
@@ -66,12 +66,7 @@ export function useLandingIntroAnimation(
     useState<boolean>(false);
   const [verticalTraitCompleted, setVerticalTraitCompleted] =
     useState<boolean>(false);
-  const [introCompleted, setIntroCompleted] = useState<boolean>(!shouldAnimate);
-  const [isSlidingUp, setIsSlidingUp] = useState<boolean>(false);
-  const hasCompletedIntroRef = useRef(!shouldAnimate);
-  const hasDismissedRef = useRef(false);
-  const hasNotifiedIntroRef = useRef(false);
-  const hasNotifiedSlideUpRef = useRef(false);
+  const [phase, setPhase] = useState<LandingPhase>(initialPhase);
   const verticalTraitTimeoutRef = useRef<number | null>(null);
 
   // update logo progress
@@ -91,15 +86,19 @@ export function useLandingIntroAnimation(
 
   const verticalTraitVisible = !shouldAnimate || verticalTraitStarted;
   const namesVisible = !shouldAnimate || verticalTraitCompleted;
+  const introCompleted = phase !== "intro";
+  const isSlidingUp = phase === "sliding-up";
+  const contentVisible = introCompleted;
+  const landingCollapsed = isSlidingUp;
 
+  // complete intro when names animation is done
   const completeIntro = useCallback(() => {
-    if (hasCompletedIntroRef.current) {
+    if (phase !== "intro") {
       return;
     }
 
-    hasCompletedIntroRef.current = true;
-    setIntroCompleted(true);
-  }, []);
+    setPhase("ready");
+  }, [phase]);
 
   const handleNamesAnimationComplete = useCallback(() => {
     if (!namesVisible) {
@@ -109,35 +108,18 @@ export function useLandingIntroAnimation(
     completeIntro();
   }, [completeIntro, namesVisible]);
 
-  useEffect(() => {
-    if (!introCompleted || hasNotifiedIntroRef.current) {
-      return;
-    }
-
-    hasNotifiedIntroRef.current = true;
-    onIntroComplete?.();
-  }, [introCompleted, onIntroComplete]);
-
-  useEffect(() => {
-    if (!isSlidingUp || hasNotifiedSlideUpRef.current) {
-      return;
-    }
-
-    hasNotifiedSlideUpRef.current = true;
-    onSlideUpStart?.();
-  }, [isSlidingUp, onSlideUpStart]);
-
+  // dismiss landing on user interaction
   const dismissLanding = useCallback(() => {
-    if (!introCompleted || hasDismissedRef.current) {
+    if (phase !== "ready") {
       return;
     }
 
-    hasDismissedRef.current = true;
-    setIsSlidingUp(true);
-  }, [introCompleted]);
+    setPhase("sliding-up");
+  }, [phase]);
 
+  // listen for user interaction to dismiss the landing
   useEffect(() => {
-    if (!introCompleted || isSlidingUp) {
+    if (phase !== "ready") {
       return;
     }
 
@@ -168,8 +150,9 @@ export function useLandingIntroAnimation(
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [dismissLanding, introCompleted, isSlidingUp]);
+  }, [dismissLanding, phase]);
 
+  // cleanup timeouts on unmount
   useEffect(() => {
     return () => {
       if (verticalTraitTimeoutRef.current !== null) {
@@ -186,6 +169,7 @@ export function useLandingIntroAnimation(
 
   return {
     colsVisible,
+    contentVisible,
     handleLogoComplete,
     handleLogoProgress,
     handleNamesAnimationComplete,
@@ -193,9 +177,11 @@ export function useLandingIntroAnimation(
     introCompleted,
     isSlidingUp,
     isFirstVisit,
+    landingCollapsed,
     landingSlideUpDuration: LANDING_SLIDE_UP_DURATION_S,
     logoProgress,
     namesVisible,
+    phase,
     reducedMotion,
     shouldAnimate,
     verticalTraitVisible,

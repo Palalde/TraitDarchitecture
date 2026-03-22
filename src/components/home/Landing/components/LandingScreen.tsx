@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { useLandingIntroAnimation } from '../hooks/useLandingIntroAnimation';
 import { T2ALogo } from './T2ALogo';
 
 interface LandingColumn {
@@ -8,11 +7,18 @@ interface LandingColumn {
 }
 
 interface LandingScreenProps {
-  onIntroComplete?: () => void;
-  onSlideUpStart?: () => void;
+  colsVisible: [boolean, boolean, boolean];
+  handleLogoComplete: () => void;
+  handleLogoProgress: (progress: number) => void;
+  handleNamesAnimationComplete: () => void;
+  handleVerticalTraitComplete: () => void;
+  isSlidingUp: boolean;
+  landingSlideUpDuration: number;
+  namesVisible: boolean;
+  shouldAnimate: boolean;
+  verticalTraitVisible: boolean;
 }
 
-const FORCE_ANIMATION = true;
 const COLUMN_INDEX_TRANSITION = { duration: 0.24, ease: 'easeOut' } as const;
 const COLUMN_LABEL_MASK_TRANSITION = { duration: 0.38, ease: 'easeOut' } as const;
 const COLUMN_LABEL_TEXT_TRANSITION = { duration: 0.42, ease: 'easeOut' } as const;
@@ -22,24 +28,18 @@ const LANDING_COLUMNS: readonly LandingColumn[] = [
   { index: '03', label: "D'ARCHITECTURE" },
 ] as const;
 
-export function LandingScreen({ onIntroComplete, onSlideUpStart }: LandingScreenProps) {
-  const {
-    colsVisible,
-    handleLogoComplete,
-    handleLogoProgress,
-    handleNamesAnimationComplete,
-    handleVerticalTraitComplete,
-    isSlidingUp,
-    landingSlideUpDuration,
-    namesVisible,
-    shouldAnimate,
-    verticalTraitVisible,
-  } = useLandingIntroAnimation({
-    forceAnimate: FORCE_ANIMATION,
-    onIntroComplete,
-    onSlideUpStart,
-  });
-
+export function LandingScreen({
+  colsVisible,
+  handleLogoComplete,
+  handleLogoProgress,
+  handleNamesAnimationComplete,
+  handleVerticalTraitComplete,
+  isSlidingUp,
+  landingSlideUpDuration,
+  namesVisible,
+  shouldAnimate,
+  verticalTraitVisible,
+}: LandingScreenProps) {
   return (
     <motion.section
       className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary)"
