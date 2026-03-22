@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
-import { HomeContentShell } from '../components/home/content/components/HomeContentShell';
-import { LandingScreen } from '../components/home/Landing/components/LandingScreen';
-import { useLandingIntroAnimation } from '../components/home/Landing/hooks/useLandingIntroAnimation';
-import { Header } from '../components/ui/Header';
+import { HomeContentShell } from "../components/home/content/components/HomeContentShell";
+import { LandingScreen } from "../components/home/Landing/components/LandingScreen";
+import { useLandingIntroAnimation } from "../components/home/Landing/hooks/useLandingIntroAnimation";
+import { Header } from "../components/ui/header/Header";
 
 const FORCE_ANIMATION = true;
 
@@ -31,8 +31,8 @@ export default function Home() {
       <motion.div
         className="relative w-full overflow-hidden"
         initial={false}
-        animate={{ height: landingCollapsed ? 0 : '100vh' }}
-        transition={{ duration: landingSlideUpDuration, ease: 'easeOut' }}
+        animate={{ height: landingCollapsed ? 0 : "100vh" }}
+        transition={{ duration: landingSlideUpDuration, ease: "easeOut" }}
       >
         {!isDismissed ? (
           <LandingScreen
@@ -54,4 +54,3 @@ export default function Home() {
     </main>
   );
 }
-

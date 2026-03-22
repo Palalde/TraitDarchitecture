@@ -12,10 +12,8 @@ export function HeaderNavItem({ label, to }: HeaderNavItemProps) {
         [
           "group relative inline-flex h-full items-center justify-center whitespace-nowrap px-2 sm:px-3 md:px-4",
           "text-[10px] sm:text-xs md:text-sm lg:text-base 2xl:text-[1.35rem]",
-          "tracking-[0.08em] transition-colors duration-200 ease-out",
-          isActive
-            ? "font-semibold text-(--t2a-blue-dark)"
-            : "text-(--t2a-blue) font-normal hover:font-semibold hover:text-(--t2a-blue-dark)",
+          "tracking-[0.08em] transition-colors duration-200 ease-out text-(--t2a-blue-dark)",
+          isActive ? "font-semibold" : " font-normal hover:font-semibold",
         ].join(" ")
       }
       to={to}

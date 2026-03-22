@@ -1,13 +1,12 @@
-import { Header } from '../components/ui/Header'
+import { Header } from "../components/ui/header/Header";
 
 export default function Architecture() {
   return (
     <>
       <Header />
-      <main style={{ paddingTop: 'var(--header-height)' }}>
+      <main style={{ paddingTop: "var(--header-height)" }}>
         <p>Architecture</p>
       </main>
     </>
-  )
+  );
 }
-
