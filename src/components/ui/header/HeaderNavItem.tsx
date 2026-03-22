@@ -11,7 +11,7 @@ export function HeaderNavItem({ label, to }: HeaderNavItemProps) {
       className={({ isActive }) =>
         [
           "group relative inline-flex h-full items-center justify-center whitespace-nowrap px-2 sm:px-3 md:px-4",
-          "text-[10px] sm:text-xs md:text-sm lg:text-base 2xl:text-[1.35rem]",
+          "text-sm sm:text-sm md:text-base lg:text-base 2xl:text-[1.35rem]",
           "tracking-[0.08em] transition-colors duration-200 ease-out text-(--t2a-blue-dark)",
           isActive ? "font-semibold" : " font-normal hover:font-semibold",
         ].join(" ")

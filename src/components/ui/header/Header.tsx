@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderHamburger } from "./HeaderHamburger";
+import { HeaderMobileMenu } from "./HeaderMobileMenu";
 import { HeaderSocialIcon } from "./HeaderSocialIcon.tsx";
 import { FacebookLogo } from "./logo/FacebookLogo.tsx";
 import { InstagramLogo } from "./logo/InstagramLogo.tsx";
@@ -11,7 +12,9 @@ import { HeaderNavItem } from "./HeaderNavItem.tsx";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight.tsx";
 
 export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+  const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null);
+  const isMobileMenuOpen = mobileMenuPath === pathname;
   const PincipalColor = "var(--t2a-blue)";
 
   return (
@@ -100,7 +103,9 @@ export function Header() {
           <HeaderHamburger
             isOpen={isMobileMenuOpen}
             onClick={() =>
-              setIsMobileMenuOpen((previousState) => !previousState)
+              setMobileMenuPath((previousPath) =>
+                previousPath === pathname ? null : pathname,
+              )
             }
           />
         </div>
@@ -109,7 +114,12 @@ export function Header() {
         <div className="absolute -right-3 z-20 hidden top-4 md:flex lg:-right-2">
           <HeaderExtraitItem label="EXTraiT" to="/extrait" />
         </div>
+        {/* mobile menu */}
       </div>
+      <HeaderMobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setMobileMenuPath(null)}
+      />
     </header>
   );
 }
