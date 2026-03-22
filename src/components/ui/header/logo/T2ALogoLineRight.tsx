@@ -1,13 +1,11 @@
 interface T2ALogoLineRightProps {
   className?: string;
   title?: string;
-  style?: React.CSSProperties;
 }
 
 export function T2ALogoLineRight({
   className,
   title = "Logo ligne droite ATELIER TraiT D'ARCHITECTURE",
-  style,
 }: T2ALogoLineRightProps) {
   return (
     <svg
@@ -16,7 +14,6 @@ export function T2ALogoLineRight({
       role="img"
       viewBox="-620 0 1811 57"
       xmlns="http://www.w3.org/2000/svg"
-      style={style}
     >
       <path
         d="m-620.31 50.77h1697.64v-37.15h-12.39v-12.38h37.15v37.14h-12.38v12.39h37.14v-12.39h-12.38v-37.14h84.46"

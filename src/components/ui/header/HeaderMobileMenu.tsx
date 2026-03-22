@@ -98,49 +98,28 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
               </div>
               <div className="mt-6 flex items-center justify-center gap-5 border-t border-(--trait) pt-5">
                 <HeaderSocialIcon
-                  className="[&>svg]:h-full [&>svg]:w-full"
+                  className="h-[calc(var(--header-height)*0.7)] w-[calc(var(--header-height)*0.7)] [&>svg]:h-full [&>svg]:w-full"
                   href="https://www.instagram.com/atelier.trait.darchitecture/"
                   label="Instagram"
                   onClick={onClose}
-                  style={{
-                    height: "calc(var(--header-height) * 0.7)",
-                    width: "calc(var(--header-height) * 0.7)",
-                  }}
                 >
-                  <InstagramLogo
-                    className="h-full w-full"
-                    style={{ color: "var(--t2a-blue)" }}
-                  />
+                  <InstagramLogo className="h-full w-full text-(--t2a-blue)" />
                 </HeaderSocialIcon>
                 <HeaderSocialIcon
-                  className="[&>svg]:h-full [&>svg]:w-full"
+                  className="h-[calc(var(--header-height)*0.7)] w-[calc(var(--header-height)*0.7)] [&>svg]:h-full [&>svg]:w-full"
                   href="https://www.facebook.com/profile.php?id=61578637113872#"
                   label="Facebook"
                   onClick={onClose}
-                  style={{
-                    height: "calc(var(--header-height) * 0.7)",
-                    width: "calc(var(--header-height) * 0.7)",
-                  }}
                 >
-                  <FacebookLogo
-                    className="h-full w-full"
-                    style={{ color: "var(--t2a-blue)" }}
-                  />
+                  <FacebookLogo className="h-full w-full text-(--t2a-blue)" />
                 </HeaderSocialIcon>
                 <HeaderSocialIcon
-                  className="[&>svg]:h-full [&>svg]:w-full"
+                  className="h-[calc(var(--header-height)*0.7)] w-[calc(var(--header-height)*0.7)] [&>svg]:h-full [&>svg]:w-full"
                   href="https://www.linkedin.com/company/atelier-trait-d-architecture/"
                   label="LinkedIn"
                   onClick={onClose}
-                  style={{
-                    height: "calc(var(--header-height) * 0.7)",
-                    width: "calc(var(--header-height) * 0.7)",
-                  }}
                 >
-                  <LinkedInLogo
-                    className="h-full w-full"
-                    style={{ color: "var(--t2a-blue)" }}
-                  />
+                  <LinkedInLogo className="h-full w-full text-(--t2a-blue)" />
                 </HeaderSocialIcon>
               </div>
             </nav>

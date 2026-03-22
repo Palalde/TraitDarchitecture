@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 interface HeaderSocialIconProps {
   children: ReactNode;
@@ -6,7 +6,6 @@ interface HeaderSocialIconProps {
   href: string;
   label: string;
   onClick?: () => void;
-  style?: CSSProperties;
 }
 
 export function HeaderSocialIcon({
@@ -15,13 +14,12 @@ export function HeaderSocialIcon({
   href,
   label,
   onClick,
-  style,
 }: HeaderSocialIconProps) {
   return (
     <a
       aria-label={label}
       className={[
-        "inline-flex items-center justify-center transition-transform duration-200 ease-out hover:scale-110",
+        "inline-flex h-[calc(var(--header-height)*0.32)] w-[calc(var(--header-height)*0.32)] items-center justify-center transition-transform duration-200 ease-out hover:scale-110",
         className ?? "",
       ].join(" ")}
       href={href}
@@ -29,11 +27,6 @@ export function HeaderSocialIcon({
       rel="noreferrer"
       target="_blank"
       title={label}
-      style={{
-        height: "calc(var(--header-height) * 0.32)",
-        width: "calc(var(--header-height) * 0.32)",
-        ...style,
-      }}
     >
       {children}
     </a>
