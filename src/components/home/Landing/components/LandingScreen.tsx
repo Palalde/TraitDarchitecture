@@ -9,6 +9,7 @@ interface LandingColumn {
 
 interface LandingScreenProps {
   onIntroComplete?: () => void;
+  onSlideUpStart?: () => void;
 }
 
 const FORCE_ANIMATION = true;
@@ -21,23 +22,31 @@ const LANDING_COLUMNS: readonly LandingColumn[] = [
   { index: '03', label: "D'ARCHITECTURE" },
 ] as const;
 
-export function LandingScreen({ onIntroComplete }: LandingScreenProps) {
+export function LandingScreen({ onIntroComplete, onSlideUpStart }: LandingScreenProps) {
   const {
     colsVisible,
     handleLogoComplete,
     handleLogoProgress,
     handleNamesAnimationComplete,
     handleVerticalTraitComplete,
+    isSlidingUp,
+    landingSlideUpDuration,
     namesVisible,
     shouldAnimate,
     verticalTraitVisible,
   } = useLandingIntroAnimation({
     forceAnimate: FORCE_ANIMATION,
     onIntroComplete,
+    onSlideUpStart,
   });
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-(--bg-primary)">
+    <motion.section
+      className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary)"
+      initial={false}
+      animate={{ y: isSlidingUp ? '-100%' : 0 }}
+      transition={{ duration: landingSlideUpDuration, ease: 'easeOut' }}
+    >
         {/* wrapper */}
       <div
         className="absolute top-1/2 left-1/2 flex items-start"
@@ -114,6 +123,6 @@ export function LandingScreen({ onIntroComplete }: LandingScreenProps) {
           style={{ transformOrigin: 'bottom center' }}
         />
       </div>
-    </section>
+    </motion.section>
   );
 }

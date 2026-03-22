@@ -7,9 +7,17 @@ type ColumnVisibility = [boolean, boolean, boolean];
 interface UseLandingIntroAnimationOptions {
   forceAnimate?: boolean;
   onIntroComplete?: () => void;
+  onSlideUpStart?: () => void;
 }
 
 const LANDING_COLUMN_THRESHOLDS = [0.55, 0.62, 0.69] as const;
+const LANDING_DISMISS_KEYS = new Set([
+  "ArrowDown",
+  "PageDown",
+  " ",
+  "Spacebar",
+]);
+const LANDING_SLIDE_UP_DURATION_S = 1.5;
 const VERTICAL_TRAIT_DELAY_MS = 200;
 
 function getColumnVisibility(
@@ -29,7 +37,7 @@ function getColumnVisibility(
 export function useLandingIntroAnimation(
   options: UseLandingIntroAnimationOptions = {},
 ) {
-  const { forceAnimate = false, onIntroComplete } = options;
+  const { forceAnimate = false, onIntroComplete, onSlideUpStart } = options;
   const reducedMotion = useReducedMotion();
 
   // first visit ?
@@ -58,7 +66,12 @@ export function useLandingIntroAnimation(
     useState<boolean>(false);
   const [verticalTraitCompleted, setVerticalTraitCompleted] =
     useState<boolean>(false);
-  const hasCompletedIntroRef = useRef(false);
+  const [introCompleted, setIntroCompleted] = useState<boolean>(!shouldAnimate);
+  const [isSlidingUp, setIsSlidingUp] = useState<boolean>(false);
+  const hasCompletedIntroRef = useRef(!shouldAnimate);
+  const hasDismissedRef = useRef(false);
+  const hasNotifiedIntroRef = useRef(false);
+  const hasNotifiedSlideUpRef = useRef(false);
   const verticalTraitTimeoutRef = useRef<number | null>(null);
 
   // update logo progress
@@ -79,21 +92,83 @@ export function useLandingIntroAnimation(
   const verticalTraitVisible = !shouldAnimate || verticalTraitStarted;
   const namesVisible = !shouldAnimate || verticalTraitCompleted;
 
-  const handleNamesAnimationComplete = useCallback(() => {
-    if (!namesVisible || hasCompletedIntroRef.current) {
+  const completeIntro = useCallback(() => {
+    if (hasCompletedIntroRef.current) {
       return;
     }
 
     hasCompletedIntroRef.current = true;
-    onIntroComplete?.();
-  }, [namesVisible, onIntroComplete]);
+    setIntroCompleted(true);
+  }, []);
+
+  const handleNamesAnimationComplete = useCallback(() => {
+    if (!namesVisible) {
+      return;
+    }
+
+    completeIntro();
+  }, [completeIntro, namesVisible]);
 
   useEffect(() => {
-    if (!shouldAnimate && !hasCompletedIntroRef.current) {
-      hasCompletedIntroRef.current = true;
-      onIntroComplete?.();
+    if (!introCompleted || hasNotifiedIntroRef.current) {
+      return;
     }
-  }, [onIntroComplete, shouldAnimate]);
+
+    hasNotifiedIntroRef.current = true;
+    onIntroComplete?.();
+  }, [introCompleted, onIntroComplete]);
+
+  useEffect(() => {
+    if (!isSlidingUp || hasNotifiedSlideUpRef.current) {
+      return;
+    }
+
+    hasNotifiedSlideUpRef.current = true;
+    onSlideUpStart?.();
+  }, [isSlidingUp, onSlideUpStart]);
+
+  const dismissLanding = useCallback(() => {
+    if (!introCompleted || hasDismissedRef.current) {
+      return;
+    }
+
+    hasDismissedRef.current = true;
+    setIsSlidingUp(true);
+  }, [introCompleted]);
+
+  useEffect(() => {
+    if (!introCompleted || isSlidingUp) {
+      return;
+    }
+
+    const handlePointerDown = () => {
+      dismissLanding();
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      dismissLanding();
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!LANDING_DISMISS_KEYS.has(event.key)) {
+        return;
+      }
+
+      event.preventDefault();
+      dismissLanding();
+    };
+
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [dismissLanding, introCompleted, isSlidingUp]);
 
   useEffect(() => {
     return () => {
@@ -115,7 +190,10 @@ export function useLandingIntroAnimation(
     handleLogoProgress,
     handleNamesAnimationComplete,
     handleVerticalTraitComplete,
+    introCompleted,
+    isSlidingUp,
     isFirstVisit,
+    landingSlideUpDuration: LANDING_SLIDE_UP_DURATION_S,
     logoProgress,
     namesVisible,
     reducedMotion,
