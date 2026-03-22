@@ -15,7 +15,7 @@ export function Header() {
   const { pathname } = useLocation();
   const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null);
   const isMobileMenuOpen = mobileMenuPath === pathname;
-  const PincipalColor = "var(--t2a-blue)";
+  const principalColor = "var(--t2a-blue)";
 
   return (
     <header
@@ -28,7 +28,7 @@ export function Header() {
         className="relative flex h-full w-full items-start justify-end overflow-hidden"
         style={{
           backgroundColor: "var(--bg-primary)",
-          color: PincipalColor,
+          color: principalColor,
         }}
       >
         {/* leftLogo */}
@@ -43,7 +43,7 @@ export function Header() {
               title="Logo gauche ATELIER TraiT D'ARCHITECTURE"
               style={{
                 height: "calc(var(--header-height) * 0.5)",
-                color: PincipalColor,
+                color: principalColor,
               }}
             />
           </Link>
@@ -69,7 +69,7 @@ export function Header() {
           >
             <InstagramLogo
               className="h-full w-full"
-              style={{ color: PincipalColor }}
+              style={{ color: principalColor }}
             />
           </HeaderSocialIcon>
           <HeaderSocialIcon
@@ -78,7 +78,7 @@ export function Header() {
           >
             <FacebookLogo
               className="h-full w-full"
-              style={{ color: PincipalColor }}
+              style={{ color: principalColor }}
             />
           </HeaderSocialIcon>
           <HeaderSocialIcon
@@ -87,7 +87,7 @@ export function Header() {
           >
             <LinkedInLogo
               className="h-full w-full"
-              style={{ color: PincipalColor }}
+              style={{ color: principalColor }}
             />
           </HeaderSocialIcon>
         </div>
@@ -95,11 +95,11 @@ export function Header() {
         {/* rightLogo */}
         <T2ALogoLineRight
           className="h-full w-auto max-w-none shrink-0"
-          style={{ color: PincipalColor }}
+          style={{ color: principalColor }}
         />
 
         {/* mobile hamburger */}
-        <div className="absolute right-2 top-0 z-20 flex md:hidden lg:-right-2">
+        <div className="absolute right-2 top-0 z-20 flex md:hidden">
           <HeaderHamburger
             isOpen={isMobileMenuOpen}
             onClick={() =>

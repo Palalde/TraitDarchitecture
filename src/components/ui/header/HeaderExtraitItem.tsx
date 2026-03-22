@@ -11,10 +11,10 @@ export function HeaderExtraitItem({ label, to }: HeaderExtraitItemProps) {
       className={({ isActive }) =>
         [
           "group relative inline-flex h-full items-center justify-center whitespace-nowrap pr-5 pl-2",
-          "text-[10px] sm:text-xs md:text-sm lg:text-base 2xl:text-[1.35rem]",
+          "md:text-sm lg:text-base 2xl:text-[1.35rem]",
           "tracking-[0.08em] transition-colors duration-200 ease-out ",
           isActive
-            ? "text-(--t2a-blue-) font-semibold"
+            ? "text-(--t2a-blue) font-semibold"
             : "font-normal hover:font-semibold text-(--t2a-blue-dark) hover:text-(--t2a-blue-dark)",
         ].join(" ")
       }
