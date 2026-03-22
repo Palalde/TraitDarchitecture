@@ -70,7 +70,7 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
           <motion.button
             animate={{ opacity: 1 }}
             aria-label="Fermer le menu mobile"
-            className="fixed inset-x-0 bottom-0 top-(--header-height) bg-(--bg-primary)/50 md:hidden"
+            className="fixed inset-x-0 bottom-0 top-(--header-height) bg-(--bg-primary)/20 backdrop-blur-sm md:hidden"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
             onClick={onClose}
@@ -109,7 +109,7 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
               </div>
               <div className="mt-6 flex items-center justify-center gap-5 border-t border-(--trait) pt-5">
                 <HeaderSocialIcon
-                  className="h-[calc(var(--header-height)*0.7)] w-[calc(var(--header-height)*0.7)] [&>svg]:h-full [&>svg]:w-full"
+                  className="h-[calc(var(--header-height)*0.85)] w-[calc(var(--header-height)*0.85)] [&>svg]:h-full [&>svg]:w-full"
                   href="https://www.instagram.com/atelier.trait.darchitecture/"
                   label="Instagram"
                   onClick={onClose}
@@ -117,7 +117,7 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
                   <InstagramLogo className="h-full w-full text-(--t2a-blue)" />
                 </HeaderSocialIcon>
                 <HeaderSocialIcon
-                  className="h-[calc(var(--header-height)*0.7)] w-[calc(var(--header-height)*0.7)] [&>svg]:h-full [&>svg]:w-full"
+                  className="h-[calc(var(--header-height)*0.85)] w-[calc(var(--header-height)*0.85)] [&>svg]:h-full [&>svg]:w-full"
                   href="https://www.facebook.com/profile.php?id=61578637113872#"
                   label="Facebook"
                   onClick={onClose}
@@ -125,7 +125,7 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
                   <FacebookLogo className="h-full w-full text-(--t2a-blue)" />
                 </HeaderSocialIcon>
                 <HeaderSocialIcon
-                  className="h-[calc(var(--header-height)*0.7)] w-[calc(var(--header-height)*0.7)] [&>svg]:h-full [&>svg]:w-full"
+                  className="h-[calc(var(--header-height)*0.85)] w-[calc(var(--header-height)*0.85)] [&>svg]:h-full [&>svg]:w-full"
                   href="https://www.linkedin.com/company/atelier-trait-d-architecture/"
                   label="LinkedIn"
                   onClick={onClose}
