@@ -1,3 +1,4 @@
+import { HomeContentShell } from "@/components/home/content/components/HomeContentShell";
 import { Header } from "../components/ui/header/Header";
 
 export default function Atelier() {
@@ -6,6 +7,7 @@ export default function Atelier() {
       <Header />
       <main style={{ paddingTop: "var(--header-height)" }}>
         <p>Atelier</p>
+        <HomeContentShell />
       </main>
     </>
   );

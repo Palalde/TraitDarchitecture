@@ -198,3 +198,35 @@
     --landing-names: 3rem;
   }
 }
+
+/* ============================================
+   SCROLLBAR — OverlayScrollbars desktop only
+   ============================================ */
+
+@media (min-width: 1024px) {
+  .os-theme-t2a.os-scrollbar {
+    --os-size: 6px;
+    --os-padding-perpendicular: 0;
+    --os-padding-axis: 0;
+    --os-track-bg: transparent;
+    --os-track-bg-hover: transparent;
+    --os-track-bg-active: transparent;
+    --os-track-border: none;
+    --os-track-border-hover: none;
+    --os-track-border-active: none;
+    --os-track-border-radius: 0;
+    --os-handle-bg: color-mix(in srgb, var(--t2a-blue-pale) 72%, transparent);
+    --os-handle-bg-hover: var(--trait);
+    --os-handle-bg-active: var(--trait);
+    --os-handle-border: none;
+    --os-handle-border-hover: none;
+    --os-handle-border-active: none;
+    --os-handle-border-radius: 0;
+    --os-handle-min-size: 44px;
+    --os-handle-interactive-area-offset: 2px;
+  }
+
+  .os-theme-t2a.os-scrollbar-horizontal {
+    display: none;
+  }
+}
