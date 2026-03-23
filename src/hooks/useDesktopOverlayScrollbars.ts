@@ -13,7 +13,7 @@ const overlayScrollbarsOptions = {
     theme: "os-theme-t2a",
     visibility: "auto" as const,
     autoHide: "move" as const,
-    autoHideDelay: 900,
+    autoHideDelay: 400,
     autoHideSuspend: false,
     dragScroll: true,
     clickScroll: false as const,

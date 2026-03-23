@@ -207,7 +207,6 @@
   .os-theme-t2a.os-scrollbar {
     --os-size: 6px;
     --os-padding-perpendicular: 0;
-    --os-padding-axis: 0;
     --os-track-bg: transparent;
     --os-track-bg-hover: transparent;
     --os-track-bg-active: transparent;
@@ -221,9 +220,13 @@
     --os-handle-border: none;
     --os-handle-border-hover: none;
     --os-handle-border-active: none;
-    --os-handle-border-radius: 0;
+    --os-handle-border-radius: 1px;
     --os-handle-min-size: 44px;
     --os-handle-interactive-area-offset: 2px;
+  }
+
+  .os-theme-t2a.os-scrollbar-vertical {
+    padding: var(--header-height) 0 0;
   }
 
   .os-theme-t2a.os-scrollbar-horizontal {

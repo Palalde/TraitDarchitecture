@@ -73,7 +73,7 @@ export function LandingScreen({
         />
         {/* text columns */}
         <div
-          className="flex"
+          className="flex select-none"
           style={{ marginTop: "calc(var(--landing-offset) * -1)" }}
         >
           {LANDING_COLUMNS.map((column, index) => (
@@ -119,7 +119,7 @@ export function LandingScreen({
         </div>
         {/* noms */}
         <motion.div
-          className="absolute bottom-0 text-center whitespace-nowrap"
+          className="absolute bottom-0 select-none text-center whitespace-nowrap"
           initial={false}
           animate={{ opacity: namesVisible ? 1 : 0 }}
           onAnimationComplete={handleNamesAnimationComplete}
