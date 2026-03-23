@@ -12,7 +12,7 @@ export function HomeContentShell() {
       >
         <PlanTopoTerritoire
           decorative
-          className="mt-0 h-auto w-100 sm:w-250 max-w-none opacity-[0.05] dark:opacity-[0.05]"
+          className="mt-0 h-auto w-100 lg:w-350 max-w-none opacity-[0.20] dark:opacity-[0.08]"
         />
       </div>
       <div
