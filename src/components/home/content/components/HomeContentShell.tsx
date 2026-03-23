@@ -1,5 +1,3 @@
-import { PlanTopoTerritoire } from "../../../ui/illustrations/PlanTopoTerritoire";
-
 export function HomeContentShell() {
   return (
     <section
@@ -10,10 +8,18 @@ export function HomeContentShell() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 flex items-start justify-center overflow-hidden"
       >
-        <PlanTopoTerritoire
-          decorative
-          className="mt-0 h-auto w-100 lg:w-350 max-w-none opacity-[0.20] dark:opacity-[0.08]"
-        />
+        <div className="relative mt-0 w-160 sm:w-200 lg:w-350 xl:w-640 max-w-none overflow-hidden opacity-[0.20] dark:opacity-[0.10]">
+          <img
+            alt=""
+            className="h-auto w-full max-w-none grayscale"
+            draggable={false}
+            src="/media/illustrations/T2A_Plan_Topo%20territoire.webp"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 mix-blend-multiply "
+          />
+        </div>
       </div>
       <div
         aria-hidden="true"
