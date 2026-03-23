@@ -8,6 +8,7 @@ export function HomeContentShell() {
       }}
       aria-label="Contenu principal de l'accueil"
     >
+      {/* Illustration header */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 flex items-start justify-center overflow-hidden"
@@ -30,7 +31,7 @@ export function HomeContentShell() {
         className="absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-(--trait)"
       />
 
-      {/* Illustration coupe mer — bas de section */}
+      {/* Illustration footer */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center overflow-hidden"

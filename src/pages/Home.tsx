@@ -5,6 +5,7 @@ import { LandingScreen } from "../components/home/Landing/components/LandingScre
 import { useLandingIntroAnimation } from "../components/home/Landing/hooks/useLandingIntroAnimation";
 import { Header } from "../components/ui/header/Header";
 import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
+import { Footer } from "@/components/ui/footer/Footer";
 
 const FORCE_ANIMATION = true;
 
@@ -53,7 +54,12 @@ export default function Home() {
           />
         ) : null}
       </motion.div>
-      {contentVisible ? <HomeContentShell /> : null}
+      {contentVisible ? (
+        <>
+          <HomeContentShell />
+          <Footer />
+        </>
+      ) : null}
     </main>
   );
 }
