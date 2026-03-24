@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
 
 import { HomeContentShell } from "../components/home/content/components/HomeContentShell";
-import { LandingScreen } from "../components/home/Landing/components/LandingScreen";
+import {
+  LandingScreen,
+  LANDING_SLIDE_UP_DURATION_S,
+} from "../components/home/Landing/components/LandingScreen";
 import { useLandingIntroAnimation } from "../components/home/Landing/hooks/useLandingIntroAnimation";
 import { Header } from "../components/ui/header/Header";
 import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
@@ -17,7 +20,6 @@ export default function Home() {
     isDismissed,
     isSlidingUp,
     landingCollapsed,
-    landingSlideUpDuration,
   } = useLandingIntroAnimation({
     forceReplayAnimation: FORCE_REPLAY_LANDING_ANIMATION,
     showStaticEndState: SHOW_STATIC_END_STATE,
@@ -32,13 +34,12 @@ export default function Home() {
         className="relative w-full overflow-hidden"
         initial={false}
         animate={{ height: landingCollapsed ? 0 : "100vh" }}
-        transition={{ duration: landingSlideUpDuration, ease: "easeOut" }}
+        transition={{ duration: LANDING_SLIDE_UP_DURATION_S, ease: "easeOut" }}
       >
         {!isDismissed ? (
           <LandingScreen
             handleSlideUpComplete={handleSlideUpComplete}
             isSlidingUp={isSlidingUp}
-            landingSlideUpDuration={landingSlideUpDuration}
           />
         ) : null}
       </motion.div>

@@ -14,7 +14,6 @@ const LANDING_DISMISS_KEYS = new Set([
   " ",
   "Spacebar",
 ]);
-const LANDING_SLIDE_UP_DURATION_S = 1.25;
 
 export function useLandingIntroAnimation(
   options: UseLandingIntroAnimationOptions = {},
@@ -102,7 +101,6 @@ export function useLandingIntroAnimation(
     isLandingDismissed,
     isSlidingUp,
     landingCollapsed,
-    landingSlideUpDuration: LANDING_SLIDE_UP_DURATION_S,
     phase,
     forceReplayAnimation,
     showStaticEndState,

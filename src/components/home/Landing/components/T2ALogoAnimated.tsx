@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 type TraitSequencePhase = "draw" | "erase" | "complete";
 
 interface T2ALogoAnimatedProps {
+  animateFinal?: boolean;
   animateTrait?: boolean;
   animateShadow?: boolean;
   className?: string;
   eraseDuration?: number;
+  finalDuration?: number;
+  onFinalComplete?: () => void;
   onEraseComplete?: () => void;
   onEraseProgress?: (progress: number) => void;
   onShadowComplete?: () => void;
@@ -28,16 +31,19 @@ interface T2ALogoAnimatedProps {
  * - Layer 3 (logo final): 4 fill paths forming the solid logo
  */
 export function T2ALogoAnimated({
+  animateFinal = false,
   animateShadow = false,
   animateTrait = false,
   className,
   eraseDuration = 2,
+  finalDuration = 3,
+  onFinalComplete,
   onEraseComplete,
   onEraseProgress,
   onShadowComplete,
   onTraitComplete,
   onTraitProgress,
-  shadowDuration = 4,
+  shadowDuration = 3,
   showFinal = true,
   showShadow = true,
   showTrait = true,
@@ -511,55 +517,69 @@ export function T2ALogoAnimated({
       </defs>
 
       {/* Couche 3 — Logo final (4 fill paths) */}
-      <g
-        id="layer-logo-final"
-        style={{ display: showFinal ? undefined : "none" }}
-      >
-        <path
-          id="path1"
-          d="M 0,0 V -75.142 H 12.955 Z"
-          style={{
-            fill: "var(--logo-fill)",
-            fillOpacity: 1,
-            fillRule: "nonzero",
-            stroke: "none",
-          }}
-          transform="matrix(1.3333333,0,0,-1.3333333,616.53187,317.0912)"
-        />
-        <path
-          id="path2"
-          d="M 0,0 V 75.142 L 10.796,62.618 Z"
-          style={{
-            fill: "var(--logo-fill)",
-            fillOpacity: 1,
-            fillRule: "nonzero",
-            stroke: "none",
-          }}
-          transform="matrix(1.3333333,0,0,-1.3333333,516.25413,450.6772)"
-        />
-        <path
-          id="path3"
-          d="M 0,0 V 25.047 H 75.142 V 12.524 H 8.302 L 8.302,0 Z"
-          style={{
-            fill: "var(--logo-fill)",
-            fillOpacity: 1,
-            fillRule: "nonzero",
-            stroke: "none",
-          }}
-          transform="matrix(1.3333333,0,0,-1.3333333,482.94587,350.48773)"
-        />
-        <path
-          id="path4"
-          d="m 0,0 v -27.256 h -84.603 v 12.523 h 75.255 v 25.336 z"
-          style={{
-            fill: "var(--logo-fill)",
-            fillOpacity: 1,
-            fillRule: "nonzero",
-            stroke: "none",
-          }}
-          transform="matrix(1.3333333,0,0,-1.3333333,662.54267,431.03347)"
-        />
-      </g>
+      {showFinal ? (
+        <motion.g
+          key={animateFinal ? "final-animated" : "final-static"}
+          id="layer-logo-final"
+          vectorEffect="none"
+          initial={animateFinal ? { opacity: 0 } : false}
+          animate={animateFinal ? { opacity: 1 } : { opacity: 1 }}
+          transition={
+            animateFinal
+              ? {
+                  duration: finalDuration,
+                  ease: "linear",
+                }
+              : { duration: 0 }
+          }
+          onAnimationComplete={animateFinal ? onFinalComplete : undefined}
+        >
+          <path
+            id="path1"
+            d="M 0,0 V -75.142 H 12.955 Z"
+            style={{
+              fill: "var(--logo-fill)",
+              fillOpacity: 1,
+              fillRule: "nonzero",
+              stroke: "none",
+            }}
+            transform="matrix(1.3333333,0,0,-1.3333333,616.53187,317.0912)"
+          />
+          <path
+            id="path2"
+            d="M 0,0 V 75.142 L 10.796,62.618 Z"
+            style={{
+              fill: "var(--logo-fill)",
+              fillOpacity: 1,
+              fillRule: "nonzero",
+              stroke: "none",
+            }}
+            transform="matrix(1.3333333,0,0,-1.3333333,516.25413,450.6772)"
+          />
+          <path
+            id="path3"
+            d="M 0,0 V 25.047 H 75.142 V 12.524 H 8.302 L 8.302,0 Z"
+            style={{
+              fill: "var(--logo-fill)",
+              fillOpacity: 1,
+              fillRule: "nonzero",
+              stroke: "none",
+            }}
+            transform="matrix(1.3333333,0,0,-1.3333333,482.94587,350.48773)"
+          />
+          <path
+            id="path4"
+            d="m 0,0 v -27.256 h -84.603 v 12.523 h 75.255 v 25.336 z"
+            style={{
+              fill: "var(--logo-fill)",
+              fillOpacity: 1,
+              fillRule: "nonzero",
+              stroke: "none",
+            }}
+            transform="matrix(1.3333333,0,0,-1.3333333,662.54267,431.03347)"
+          />
+        </motion.g>
+      ) : null}
 
       {/* Couche 2 — Ombrage (shadow paths) */}
       {showShadow ? (
@@ -572,7 +592,7 @@ export function T2ALogoAnimated({
             animateShadow
               ? {
                   duration: shadowDuration,
-                  ease: [0.22, 1, 0.36, 1],
+                  ease: "linear",
                   times: [0, 0.45, 1],
                 }
               : { duration: 0 }
@@ -1376,7 +1396,7 @@ export function T2ALogoAnimated({
           style={{
             fill: "none",
             stroke: "var(--trait)",
-            strokeWidth: 1,
+            strokeWidth: 2,
             strokeLinecap: "butt",
             strokeLinejoin: "miter",
             strokeMiterlimit: 10,

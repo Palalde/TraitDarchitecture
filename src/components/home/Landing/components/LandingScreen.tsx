@@ -3,30 +3,49 @@ import { useState } from "react";
 import { T2ALogoAnimated } from "./T2ALogoAnimated";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
+// step 1
+const LANDING_TRAIT_DRAW_DURATION_S = 2;
+
+// step 2
+const LANDING_TRAIT_ERASE_DURATION_S = 2;
+
+// step 3
+// text
+const LANDING_TITLE_MASK_DURATION_S = 0.38;
+const LANDING_TITLE_TEXT_DURATION_S = 0.42;
+
 const WORD_MASK_TRANSITION = {
-  duration: 0.38,
+  duration: LANDING_TITLE_MASK_DURATION_S,
   ease: [0.22, 1, 0.36, 1] as const,
 };
 const WORD_TEXT_TRANSITION = {
-  duration: 0.42,
+  duration: LANDING_TITLE_TEXT_DURATION_S,
   ease: [0.22, 1, 0.36, 1] as const,
 };
+
+//shadow
+const LANDING_SHADOW_DURATION_S = 3;
+
+// step 4
+const LANDING_FINAL_LOGO_DURATION_S = 4;
+
+// exit
+export const LANDING_SLIDE_UP_DURATION_S = 1.25;
 
 interface LandingScreenProps {
   handleSlideUpComplete: () => void;
   isSlidingUp: boolean;
-  landingSlideUpDuration: number;
 }
 
 export function LandingScreen({
   handleSlideUpComplete,
   isSlidingUp,
-  landingSlideUpDuration,
 }: LandingScreenProps) {
   const prefersReducedMotion = useReducedMotion();
   const [eraseProgress, setEraseProgress] = useState(
     prefersReducedMotion ? 1 : 0,
   );
+  const finalLogoStarted = prefersReducedMotion || eraseProgress >= 0.1;
   const shadowStarted = !prefersReducedMotion && eraseProgress >= 0.1;
 
   const atelierVisible = prefersReducedMotion || eraseProgress >= 0.49;
@@ -39,7 +58,7 @@ export function LandingScreen({
       initial={false}
       animate={{ y: isSlidingUp ? "-100%" : 0 }}
       onAnimationComplete={isSlidingUp ? handleSlideUpComplete : undefined}
-      transition={{ duration: landingSlideUpDuration, ease: "easeOut" }}
+      transition={{ duration: LANDING_SLIDE_UP_DURATION_S, ease: "easeOut" }}
     >
       {/* wrapper */}
       <div
@@ -50,13 +69,18 @@ export function LandingScreen({
       >
         {/* logo */}
         <T2ALogoAnimated
+          animateFinal={!prefersReducedMotion && finalLogoStarted}
           animateShadow={shadowStarted}
           animateTrait={!prefersReducedMotion}
           className="w-(--landing-logo) shrink-0"
+          eraseDuration={LANDING_TRAIT_ERASE_DURATION_S}
+          finalDuration={LANDING_FINAL_LOGO_DURATION_S}
           onEraseProgress={setEraseProgress}
-          showFinal={false}
+          shadowDuration={LANDING_SHADOW_DURATION_S}
+          showFinal={finalLogoStarted}
           showShadow={shadowStarted}
           showTrait
+          traitDuration={LANDING_TRAIT_DRAW_DURATION_S}
         />
         {/* title */}
         <div
