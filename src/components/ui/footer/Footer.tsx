@@ -18,6 +18,12 @@ const FOOTER_OFFICES = [
   },
 ] as const;
 
+const footerLinkClassName =
+  "font-medium underline decoration-current/35 underline-offset-4 transition-[color,text-decoration-color] hover:text-(--t2a-blue-light) hover:decoration-current";
+
+const footerMetaLinkClassName =
+  "font-medium underline decoration-current/35 underline-offset-4 transition-[color,text-decoration-color] hover:text-(--t2a-blue-dark) hover:decoration-current dark:hover:text-(--t2a-blue)";
+
 export function Footer() {
   return (
     <footer
@@ -52,7 +58,7 @@ export function Footer() {
         </div>
       </div>
 
-      {/* Nom atelier — gigantesque */}
+      {/* name title*/}
       <div
         aria-hidden
         className="pointer-events-none mt-6 flex w-full select-none items-baseline justify-center px-4 md:mt-10"
@@ -69,43 +75,44 @@ export function Footer() {
         </p>
       </div>
 
-      {/* Ligne basse */}
-      <div className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-6 px-6 py-6 text-center text-[0.8rem] leading-relaxed text-(--t2a-blue) sm:grid-cols-3 sm:items-start sm:gap-4 sm:px-8 sm:text-left md:max-w-4xl lg:px-10">
-        {/* Description compacte */}
+      {/* under line */}
+      <div className="mx-auto grid w-full max-w-3xl grid-cols-1 gap-6 px-6 py-6 text-center text-[0.8rem] leading-relaxed text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:grid-cols-3 sm:items-start sm:gap-4 sm:px-8 sm:text-left md:max-w-4xl lg:px-10">
+        {/* compact description */}
         <div className="space-y-2 sm:text-left">
           <p className="font-light">
-            Architecture sensible, contextuelle et engagee.
+            Architecture sensible, contextuelle et engagée.
           </p>
-          <div className="flex items-center justify-center gap-3 text-(--t2a-blue-light) sm:justify-start">
-            <span className="text-[0.72rem] uppercase tracking-[0.18em]">
-              Suivez nous
+          {/* social links */}
+          <div className="flex items-center justify-center gap-2 text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) sm:justify-start">
+            <span className="text-[0.72rem] uppercase tracking-[0.12em]">
+              Suivez-nous
             </span>
             <a
               aria-label="Instagram de l'atelier"
               href="https://www.instagram.com/atelier.trait.darchitecture/"
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:text-(--t2a-blue)"
+              className="inline-flex h-7 w-7 items-center justify-center transition-[color,transform] hover:scale-110 hover:text-(--t2a-blue)"
             >
-              <InstagramLogo className="h-4 w-4" />
+              <InstagramLogo className="h-4.5 w-4.5" />
             </a>
             <a
               aria-label="Facebook de l'atelier"
               href="https://www.facebook.com/profile.php?id=61578637113872#"
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:text-(--t2a-blue)"
+              className="inline-flex h-7 w-7 items-center justify-center transition-[color,transform] hover:scale-110 hover:text-(--t2a-blue)"
             >
-              <FacebookLogo className="h-4 w-4" />
+              <FacebookLogo className="h-4.5 w-4.5" />
             </a>
             <a
               aria-label="LinkedIn de l'atelier"
               href="https://www.linkedin.com/company/atelier-trait-d-architecture/"
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:text-(--t2a-blue)"
+              className="inline-flex h-7 w-7 items-center justify-center transition-[color,transform] hover:scale-110 hover:text-(--t2a-blue)"
             >
-              <LinkedInLogo className="h-4 w-4" />
+              <LinkedInLogo className="h-4.5 w-4.5" />
             </a>
           </div>
         </div>
@@ -113,49 +120,40 @@ export function Footer() {
         {/* Contact */}
         <div className="space-y-1 sm:text-center">
           <p>
-            <a
-              href="tel:+33672310421"
-              className="transition-colors hover:text-(--t2a-blue-light)"
-            >
+            <a href="tel:+33672310421" className={footerLinkClassName}>
               Titouan +33.6.72.31.04.21
             </a>
           </p>
           <p>
-            <a
-              href="tel:+33630589981"
-              className="transition-colors hover:text-(--t2a-blue-light)"
-            >
-              Thea +33.6.30.58.99.81
+            <a href="tel:+33630589981" className={footerLinkClassName}>
+              Théa +33.6.30.58.99.81
             </a>
           </p>
           <p>
             <a
               href="mailto:atelier@traitdarchitecture.com"
-              className="transition-colors hover:text-(--t2a-blue-light)"
+              className={footerLinkClassName}
             >
               atelier[at]traitdarchitecture.com
             </a>
           </p>
-          <p>Lundi a vendredi : 9h-18h</p>
+          <p>Lundi à vendredi : 9h-18h</p>
         </div>
 
-        {/* Copyright + liens */}
+        {/* Copyright + link */}
         <div className="space-y-2 sm:text-right">
           <p>© {new Date().getFullYear()} ATELIER TraiT D'ARCHITECTURE</p>
           <p className="space-x-2 text-(--t2a-blue-light)">
-            <Link
-              to="/mentions-legales"
-              className="transition-colors hover:text-(--t2a-blue)"
-            >
-              Mentions legales
+            <Link to="/mentions-legales" className={footerMetaLinkClassName}>
+              Mentions légales
             </Link>
             <span aria-hidden>·</span>
-            <span>Site realise par:</span>
+            <span>Site réalisé par:</span>
             <a
               href="https://www.linkedin.com/in/paul-alessandrini"
               target="_blank"
               rel="noreferrer"
-              className="transition-colors hover:text-(--t2a-blue)"
+              className={footerMetaLinkClassName}
             >
               Paul Alessandrini
             </a>

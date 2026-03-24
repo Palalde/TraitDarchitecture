@@ -64,7 +64,7 @@
   /* Le trait (séparateurs, lignes, underlines) */
   --trait: #5e7396;
   /* Fin du gradient homepage (light: blue-pale, dark: blue-wash) */
-  --gradient-end: #c8d1de;
+  --gradient-end: #edf0f5;
 
   font-family: "T2A", "DM Sans", sans-serif;
   color: var(--text-primary);
