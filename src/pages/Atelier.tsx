@@ -6,9 +6,7 @@ export default function Atelier() {
   return (
     <>
       <Header />
-      <main style={{ paddingTop: "var(--header-height)" }}>
-        <HomeContentShell />
-      </main>
+      <HomeContentShell />
       <Footer />
     </>
   );

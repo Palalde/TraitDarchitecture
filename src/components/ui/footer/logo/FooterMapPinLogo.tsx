@@ -14,25 +14,13 @@ export const FooterMapPinLogo = memo(function FooterMapPinLogo({
       aria-label={title}
       className={className}
       role="img"
-      viewBox="0 0 28 36"
+      viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M14 2H9v2H7v2H5v4H3v8h2v4h2v4h2v4h2v4h6v-4h2v-4h2v-4h2v-4h2v-8h-2V6h-2V4h-2V2h-5Z"
-        fill="none"
-        stroke="currentColor"
-        strokeMiterlimit="10"
-        strokeWidth="1.5"
+        d="M22.75 8c0-0.01 0-0.022 0-0.034 0-3.728-3.022-6.75-6.75-6.75S9.25 4.238 9.25 7.966c0 3.464 2.609 6.318 5.969 6.705l0.031 0.003V30c0 0.414 0.336 0.75 0.75 0.75s0.75-0.336 0.75-0.75V14.674c3.383-0.382 5.989-3.222 6-6.673V8ZM16 13.25c-2.899 0-5.25-2.351-5.25-5.25S13.101 2.75 16 2.75 21.25 5.101 21.25 8v0c-0.004 2.898-2.352 5.246-5.25 5.25Z"
+        fill="currentColor"
       />
-      <path
-        d="M14 10h-3v2H9v4h2v2h6v-2h2v-4h-2v-2h-3Z"
-        fill="none"
-        stroke="currentColor"
-        strokeMiterlimit="10"
-        strokeWidth="1.5"
-      />
-      <path d="M20 6v4h4z" fill="currentColor" opacity="0.28" />
-      <path d="M9 26v4h2v4h2v-6z" fill="currentColor" opacity="0.18" />
     </svg>
   );
 });
