@@ -27,6 +27,7 @@ export function LandingScreen({
   const [eraseProgress, setEraseProgress] = useState(
     prefersReducedMotion ? 1 : 0,
   );
+  const shadowStarted = !prefersReducedMotion && eraseProgress >= 0.1;
 
   const atelierVisible = prefersReducedMotion || eraseProgress >= 0.49;
   const traitVisible = prefersReducedMotion || eraseProgress >= 0.56;
@@ -49,11 +50,12 @@ export function LandingScreen({
       >
         {/* logo */}
         <T2ALogoAnimated
+          animateShadow={shadowStarted}
           animateTrait={!prefersReducedMotion}
           className="w-(--landing-logo) shrink-0"
           onEraseProgress={setEraseProgress}
           showFinal={false}
-          showShadow={false}
+          showShadow={shadowStarted}
           showTrait
         />
         {/* title */}
