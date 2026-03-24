@@ -23,8 +23,9 @@ export function T2ALogoAnimated({
 }: T2ALogoAnimatedProps) {
   return (
     <svg
-      viewBox="0 0 1122.52 793.70135"
+      viewBox="393 292 360 200"
       fill="none"
+      overflow="visible"
       aria-hidden="true"
       className={className}
       style={style}
@@ -1285,7 +1286,7 @@ export function T2ALogoAnimated({
       <g id="layer-trait" style={{ display: showTrait ? undefined : "none" }}>
         <path
           id="path130"
-          d="m 0,0 h -397.653 v -75.023 h 25.007 v -25.007 h -75.023 v 25.007 h 25.008 V 0 h -75.023 v -25.008 h 25.008 v -75.022 h -398.003"
+          d="m 2500,0 h -2897.653 v -75.023 h 25.007 v -25.007 h -75.023 v 25.007 h 25.008 V 0 h -75.023 v -25.008 h 25.008 v -75.022 h -2898.003"
           vectorEffect="none"
           style={{
             fill: "none",
@@ -1298,7 +1299,6 @@ export function T2ALogoAnimated({
             strokeOpacity: 1,
           }}
           transform="matrix(1.3333333,0,0,-1.3333333,1146.3948,317.41027)"
-          clipPath="url(#clipPath131)"
         />
       </g>
     </svg>

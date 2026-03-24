@@ -216,37 +216,34 @@
 
 /* Base : mobile small (<425px) */
 :root {
-  --landing-logo: 90px;
-  --landing-col: 65px;
-  --landing-text: 1.25rem; /* text-xl = 20px */
-  --landing-leading: 1.75rem; /* line-height de text-xl */
-  --landing-offset: 27px;
+  --landing-logo: 100px;
+  --landing-text: 1.35rem;
+  --landing-leading: 1.75rem;
+  --landing-offset: -5.5px;
   --landing-center: 174px;
-  --landing-names: 0.833rem;
+  --landing-names: 0.9rem;
 }
 
 /* Mobile large */
 @media (min-width: 425px) {
   :root {
-    --landing-logo: 100px;
-    --landing-col: 75px;
-    --landing-text: 1.5rem; /* text-2xl = 24px */
-    --landing-leading: 2rem; /* line-height de text-2xl */
-    --landing-offset: 30px;
-    --landing-center: 196px;
-    --landing-names: 1rem;
+    --landing-logo: 110px;
+    --landing-text: 1.435rem;
+    --landing-leading: 1.9rem;
+    --landing-offset: -6px;
+    --landing-center: 192px;
+    --landing-names: 0.99rem;
   }
 }
 
 /* Laptop */
 @media (min-width: 768px) {
   :root {
-    --landing-logo: 132px;
-    --landing-col: 100px;
-    --landing-text: 1.875rem; /* text-3xl = 30px */
-    --landing-leading: 2.25rem; /* line-height de text-3xl */
-    --landing-offset: 34px;
-    --landing-center: 259px;
+    --landing-logo: 145px;
+    --landing-text: 1.875rem;
+    --landing-leading: 2.25rem;
+    --landing-offset: -9px;
+    --landing-center: 255px;
     --landing-names: 1.245rem;
   }
 }
@@ -254,12 +251,11 @@
 /* Desktop */
 @media (min-width: 1024px) {
   :root {
-    --landing-logo: 160px; /* w-40 */
-    --landing-col: 120px; /* w-30 */
-    --landing-text: 2.25rem; /* text-4xl = 36px */
-    --landing-leading: 2.5rem; /* line-height de text-4xl */
-    --landing-offset: 38px; /* -mt-9.5 */
-    --landing-center: 314px; /* offset pour centrer "TraiT" sur l'axe */
+    --landing-logo: 176px;
+    --landing-text: 2.25rem;
+    --landing-leading: 2.5rem;
+    --landing-offset: -14px;
+    --landing-center: 314px;
     --landing-names: 1.5rem;
   }
 }
@@ -267,12 +263,11 @@
 /* 2K — ×2 exact */
 @media (min-width: 1536px) {
   :root {
-    --landing-logo: 320px;
-    --landing-col: 240px;
-    --landing-text: 4.5rem; /* text-7xl = 72px */
-    --landing-leading: 5rem; /* line-height ×2 */
-    --landing-offset: 76px;
-    --landing-center: 628px;
+    --landing-logo: 352px;
+    --landing-text: 4.5rem;
+    --landing-leading: 5rem;
+    --landing-offset: -30px;
+    --landing-center: 640px;
     --landing-names: 3rem;
   }
 }

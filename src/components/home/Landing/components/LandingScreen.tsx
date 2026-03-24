@@ -30,18 +30,21 @@ export function LandingScreen({
         {/* logo */}
         <T2ALogoAnimated
           className="w-(--landing-logo) shrink-0"
-          style={{ color: "var(--trait)" }}
           showFinal
           showShadow={false}
           showTrait={false}
         />
         {/* title */}
         <div
-          className="select-none"
-          style={{ marginTop: "calc(var(--landing-offset) * -1)" }}
+          className="-ml-4 select-none"
+          style={{
+            marginTop: "calc(var(--landing-offset) * -1)",
+          }}
         >
-          <span className="block font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading) whitespace-nowrap">
-            ATELIER TraiT D'ARCHITECTURE
+          <span className="flex items-baseline gap-[0.7em] whitespace-nowrap text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">
+            <span className="font-normal">ATELIER</span>
+            <span className="font-semibold">TraiT</span>
+            <span className="font-normal">D'ARCHITECTURE</span>
           </span>
         </div>
         {/* noms */}
@@ -53,8 +56,8 @@ export function LandingScreen({
           }}
         >
           <span
-            className="block font-normal text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
-            style={{ transform: "translateY(0.2em)" }}
+            className="block font-light text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
+            style={{ transform: "translateY(-0.7em)" }}
           >
             Théa BATTISTINI & Titouan GRANET
           </span>
