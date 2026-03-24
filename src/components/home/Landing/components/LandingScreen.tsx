@@ -3,6 +3,15 @@ import { useState } from "react";
 import { T2ALogoAnimated } from "./T2ALogoAnimated";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
+const WORD_MASK_TRANSITION = {
+  duration: 0.38,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+const WORD_TEXT_TRANSITION = {
+  duration: 0.42,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
 interface LandingScreenProps {
   handleSlideUpComplete: () => void;
   isSlidingUp: boolean;
@@ -19,9 +28,9 @@ export function LandingScreen({
     prefersReducedMotion ? 1 : 0,
   );
 
-  const atelierVisible = prefersReducedMotion || eraseProgress >= 0.14;
-  const traitVisible = prefersReducedMotion || eraseProgress >= 0.43;
-  const architectureVisible = prefersReducedMotion || eraseProgress >= 0.72;
+  const atelierVisible = prefersReducedMotion || eraseProgress >= 0.49;
+  const traitVisible = prefersReducedMotion || eraseProgress >= 0.56;
+  const architectureVisible = prefersReducedMotion || eraseProgress >= 0.61;
 
   return (
     <motion.section
@@ -55,27 +64,72 @@ export function LandingScreen({
           }}
         >
           <span className="flex items-baseline gap-[0.7em] whitespace-nowrap text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">
-            <span
-              className={
-                atelierVisible ? "font-normal" : "font-normal opacity-0"
-              }
+            <motion.span
+              className="block overflow-hidden whitespace-nowrap"
+              initial={false}
+              animate={{
+                clipPath: atelierVisible
+                  ? "inset(0% 0% 0% 0%)"
+                  : "inset(0% 100% 0% 0%)",
+              }}
+              transition={WORD_MASK_TRANSITION}
             >
-              ATELIER
-            </span>
-            <span
-              className={
-                traitVisible ? "font-semibold" : "font-semibold opacity-0"
-              }
+              <motion.span
+                className="block font-normal"
+                initial={false}
+                animate={{
+                  opacity: atelierVisible ? 1 : 0,
+                  y: atelierVisible ? 0 : -12,
+                }}
+                transition={WORD_TEXT_TRANSITION}
+              >
+                ATELIER
+              </motion.span>
+            </motion.span>
+            <motion.span
+              className="block overflow-hidden whitespace-nowrap"
+              initial={false}
+              animate={{
+                clipPath: traitVisible
+                  ? "inset(0% 0% 0% 0%)"
+                  : "inset(0% 100% 0% 0%)",
+              }}
+              transition={WORD_MASK_TRANSITION}
             >
-              TraiT
-            </span>
-            <span
-              className={
-                architectureVisible ? "font-normal" : "font-normal opacity-0"
-              }
+              <motion.span
+                className="block font-semibold"
+                initial={false}
+                animate={{
+                  opacity: traitVisible ? 1 : 0,
+                  y: traitVisible ? 0 : -12,
+                }}
+                transition={WORD_TEXT_TRANSITION}
+              >
+                TraiT
+              </motion.span>
+            </motion.span>
+            <motion.span
+              className="block overflow-hidden whitespace-nowrap"
+              initial={false}
+              animate={{
+                clipPath: architectureVisible
+                  ? "inset(0% 0% 0% 0%)"
+                  : "inset(0% 100% 0% 0%)",
+              }}
+              transition={WORD_MASK_TRANSITION}
             >
-              D'ARCHITECTURE
-            </span>
+              <motion.span
+                className="block font-normal"
+                initial={false}
+                animate={{
+                  opacity: architectureVisible ? 1 : 0,
+                  y: architectureVisible ? 0 : -12,
+                }}
+                transition={WORD_TEXT_TRANSITION}
+              >
+                D'ARCHITECTURE
+              </motion.span>
+            </motion.span>
           </span>
         </div>
         {/* noms */}
