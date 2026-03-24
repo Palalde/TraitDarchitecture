@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { T2ALogoAnimated } from "./T2ALogoAnimated";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -29,6 +29,11 @@ const LANDING_SHADOW_DURATION_S = 3;
 // step 4
 const LANDING_FINAL_LOGO_DURATION_S = 4;
 
+// step 5
+const LANDING_PHASE_FIVE_DELAY_MS = 150;
+const LANDING_VERTICAL_TRAIT_DURATION_S = 0.5;
+const LANDING_NAMES_DURATION_S = 0.55;
+
 // exit
 export const LANDING_SLIDE_UP_DURATION_S = 1.25;
 
@@ -45,6 +50,24 @@ export function LandingScreen({
   const [eraseProgress, setEraseProgress] = useState(
     prefersReducedMotion ? 1 : 0,
   );
+  const [eraseCompleted, setEraseCompleted] = useState(prefersReducedMotion);
+  const [phaseFiveStarted, setPhaseFiveStarted] =
+    useState(prefersReducedMotion);
+
+  useEffect(() => {
+    if (prefersReducedMotion || !eraseCompleted) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setPhaseFiveStarted(true);
+    }, LANDING_PHASE_FIVE_DELAY_MS);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [eraseCompleted, prefersReducedMotion]);
+
   const finalLogoStarted = prefersReducedMotion || eraseProgress >= 0.1;
   const shadowStarted = !prefersReducedMotion && eraseProgress >= 0.1;
 
@@ -75,6 +98,7 @@ export function LandingScreen({
           className="w-(--landing-logo) shrink-0"
           eraseDuration={LANDING_TRAIT_ERASE_DURATION_S}
           finalDuration={LANDING_FINAL_LOGO_DURATION_S}
+          onEraseComplete={() => setEraseCompleted(true)}
           onEraseProgress={setEraseProgress}
           shadowDuration={LANDING_SHADOW_DURATION_S}
           showFinal={finalLogoStarted}
@@ -166,11 +190,21 @@ export function LandingScreen({
             transform: "translateX(-50%)",
           }}
         >
-          <span
-            className="block font-light text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
-            style={{ transform: "translateY(-0.7em)" }}
-          >
-            Théa BATTISTINI & Titouan GRANET
+          <span style={{ display: "block", transform: "translateY(-0.7em)" }}>
+            <motion.span
+              className="block font-light text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
+              initial={false}
+              animate={{
+                opacity: phaseFiveStarted ? 1 : 0,
+              }}
+              transition={{
+                delay: LANDING_VERTICAL_TRAIT_DURATION_S,
+                duration: LANDING_NAMES_DURATION_S,
+                ease: "linear",
+              }}
+            >
+              Théa BATTISTINI & Titouan GRANET
+            </motion.span>
           </span>
         </div>
       </div>
@@ -179,8 +213,17 @@ export function LandingScreen({
         className="absolute left-1/2 bottom-0"
         style={{ transform: "translateX(-50%)", width: "1px", height: "25%" }}
       >
-        <div
+        <motion.div
           className="h-full w-full bg-(--trait)"
+          initial={false}
+          animate={{
+            scaleY: phaseFiveStarted ? 1 : 0,
+            opacity: phaseFiveStarted ? 1 : 0,
+          }}
+          transition={{
+            duration: LANDING_VERTICAL_TRAIT_DURATION_S,
+            ease: "linear",
+          }}
           style={{ transformOrigin: "bottom center" }}
         />
       </div>
