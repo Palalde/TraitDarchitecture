@@ -7,7 +7,8 @@ import { Header } from "../components/ui/header/Header";
 import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 import { Footer } from "@/components/ui/footer/Footer";
 
-const SHOW_STATIC_END_STATE = true;
+const SHOW_STATIC_END_STATE = false;
+const FORCE_REPLAY_LANDING_ANIMATION = true;
 
 export default function Home() {
   const {
@@ -18,6 +19,7 @@ export default function Home() {
     landingCollapsed,
     landingSlideUpDuration,
   } = useLandingIntroAnimation({
+    forceReplayAnimation: FORCE_REPLAY_LANDING_ANIMATION,
     showStaticEndState: SHOW_STATIC_END_STATE,
   });
 

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 type LandingPhase = "ready" | "sliding-up" | "dismissed";
 
 interface UseLandingIntroAnimationOptions {
+  forceReplayAnimation?: boolean;
   showStaticEndState?: boolean;
 }
 
@@ -18,15 +19,15 @@ const LANDING_SLIDE_UP_DURATION_S = 1.25;
 export function useLandingIntroAnimation(
   options: UseLandingIntroAnimationOptions = {},
 ) {
-  const { showStaticEndState = false } = options;
+  const { forceReplayAnimation = false, showStaticEndState = false } = options;
 
   const isLandingDismissed = useMemo(() => {
-    if (typeof window === "undefined") {
+    if (forceReplayAnimation || typeof window === "undefined") {
       return false;
     }
 
     return sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) === "1";
-  }, []);
+  }, [forceReplayAnimation]);
 
   const initialPhase: LandingPhase = isLandingDismissed ? "dismissed" : "ready";
   const [phase, setPhase] = useState<LandingPhase>(initialPhase);
@@ -53,12 +54,12 @@ export function useLandingIntroAnimation(
   }, [phase]);
 
   useEffect(() => {
-    if (!isDismissed || typeof window === "undefined") {
+    if (forceReplayAnimation || !isDismissed || typeof window === "undefined") {
       return;
     }
 
     sessionStorage.setItem(LANDING_DISMISSED_STORAGE_KEY, "1");
-  }, [isDismissed]);
+  }, [forceReplayAnimation, isDismissed]);
 
   useEffect(() => {
     if (phase !== "ready") {
@@ -66,12 +67,12 @@ export function useLandingIntroAnimation(
     }
 
     const handlePointerDown = () => {
-      // dismissLanding();
+      dismissLanding();
     };
 
     const handleWheel = (event: WheelEvent) => {
       event.preventDefault();
-      // dismissLanding();
+      dismissLanding();
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -103,6 +104,7 @@ export function useLandingIntroAnimation(
     landingCollapsed,
     landingSlideUpDuration: LANDING_SLIDE_UP_DURATION_S,
     phase,
+    forceReplayAnimation,
     showStaticEndState,
   };
 }

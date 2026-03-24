@@ -1,11 +1,16 @@
 import type { CSSProperties } from "react";
+import { motion } from "framer-motion";
 
 interface T2ALogoAnimatedProps {
+  animateTrait?: boolean;
   className?: string;
+  onTraitComplete?: () => void;
+  onTraitProgress?: (progress: number) => void;
   showFinal?: boolean;
   showShadow?: boolean;
   showTrait?: boolean;
   style?: CSSProperties;
+  traitDuration?: number;
 }
 
 /**
@@ -15,11 +20,15 @@ interface T2ALogoAnimatedProps {
  * - Layer 3 (logo final): 4 fill paths forming the solid logo
  */
 export function T2ALogoAnimated({
+  animateTrait = false,
   className,
+  onTraitComplete,
+  onTraitProgress,
   showFinal = true,
   showShadow = true,
   showTrait = true,
   style,
+  traitDuration = 3,
 }: T2ALogoAnimatedProps) {
   return (
     <svg
@@ -1284,10 +1293,23 @@ export function T2ALogoAnimated({
 
       {/* Couche 1 — Trait (stroke path) */}
       <g id="layer-trait" style={{ display: showTrait ? undefined : "none" }}>
-        <path
+        <motion.path
           id="path130"
-          d="m 2500,0 h -2897.653 v -75.023 h 25.007 v -25.007 h -75.023 v 25.007 h 25.008 V 0 h -75.023 v -25.008 h 25.008 v -75.022 h -2898.003"
+          d="m -3370.679,-100.03 h 2898.003 v 75.022 h -25.008 v 25.008 h 75.023 V -75.023 h -25.008 v -25.007 h 75.023 v 25.007 h -25.007 V 0 h 2897.653"
           vectorEffect="none"
+          initial={{ pathLength: animateTrait ? 0 : 1 }}
+          animate={{ pathLength: 1 }}
+          transition={
+            animateTrait
+              ? { duration: traitDuration, ease: "linear" }
+              : { duration: 0 }
+          }
+          onUpdate={
+            animateTrait && onTraitProgress
+              ? (latest) => onTraitProgress(latest.pathLength as number)
+              : undefined
+          }
+          onAnimationComplete={animateTrait ? onTraitComplete : undefined}
           style={{
             fill: "none",
             stroke: "var(--trait)",
@@ -1295,7 +1317,6 @@ export function T2ALogoAnimated({
             strokeLinecap: "butt",
             strokeLinejoin: "miter",
             strokeMiterlimit: 10,
-            strokeDasharray: "none",
             strokeOpacity: 1,
           }}
           transform="matrix(1.3333333,0,0,-1.3333333,1146.3948,317.41027)"

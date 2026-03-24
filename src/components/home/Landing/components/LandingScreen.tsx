@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { T2ALogoAnimated } from "./T2ALogoAnimated";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface LandingScreenProps {
   handleSlideUpComplete: () => void;
@@ -12,6 +13,8 @@ export function LandingScreen({
   isSlidingUp,
   landingSlideUpDuration,
 }: LandingScreenProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.section
       className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary)"
@@ -29,10 +32,11 @@ export function LandingScreen({
       >
         {/* logo */}
         <T2ALogoAnimated
+          animateTrait={!prefersReducedMotion}
           className="w-(--landing-logo) shrink-0"
-          showFinal
+          showFinal={false}
           showShadow={false}
-          showTrait={false}
+          showTrait
         />
         {/* title */}
         <div
