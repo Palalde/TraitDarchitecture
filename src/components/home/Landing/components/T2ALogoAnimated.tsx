@@ -1,9 +1,14 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { motion } from "framer-motion";
+
+type TraitSequencePhase = "draw" | "erase" | "complete";
 
 interface T2ALogoAnimatedProps {
   animateTrait?: boolean;
   className?: string;
+  eraseDuration?: number;
+  onEraseComplete?: () => void;
+  onEraseProgress?: (progress: number) => void;
   onTraitComplete?: () => void;
   onTraitProgress?: (progress: number) => void;
   showFinal?: boolean;
@@ -22,14 +27,23 @@ interface T2ALogoAnimatedProps {
 export function T2ALogoAnimated({
   animateTrait = false,
   className,
+  eraseDuration = 2,
+  onEraseComplete,
+  onEraseProgress,
   onTraitComplete,
   onTraitProgress,
   showFinal = true,
   showShadow = true,
   showTrait = true,
   style,
-  traitDuration = 3,
+  traitDuration = 2,
 }: T2ALogoAnimatedProps) {
+  const [traitSequencePhase, setTraitSequencePhase] =
+    useState<TraitSequencePhase>(animateTrait ? "draw" : "complete");
+
+  const isDrawing = animateTrait && traitSequencePhase === "draw";
+  const isErasing = animateTrait && traitSequencePhase === "erase";
+
   return (
     <svg
       viewBox="393 292 360 200"
@@ -1295,21 +1309,47 @@ export function T2ALogoAnimated({
       <g id="layer-trait" style={{ display: showTrait ? undefined : "none" }}>
         <motion.path
           id="path130"
-          d="m -3370.679,-100.03 h 2898.003 v 75.022 h -25.008 v 25.008 h 75.023 V -75.023 h -25.008 v -25.007 h 75.023 v 25.007 h -25.007 V 0 h 2897.653"
+          d="m -1072.676,-100.03 h 600 v 75.022 h -25.008 v 25.008 h 75.023 V -75.023 h -25.008 v -25.007 h 75.023 v 25.007 h -25.007 V 0 h 1350"
           vectorEffect="none"
-          initial={{ pathLength: animateTrait ? 0 : 1 }}
-          animate={{ pathLength: 1 }}
+          initial={animateTrait ? { pathLength: 0, pathOffset: 0 } : false}
+          animate={
+            isErasing
+              ? { pathLength: 0, pathOffset: 1 }
+              : traitSequencePhase === "complete"
+                ? {
+                    pathLength: animateTrait ? 0 : 1,
+                    pathOffset: animateTrait ? 1 : 0,
+                  }
+                : { pathLength: 1, pathOffset: 0 }
+          }
           transition={
-            animateTrait
+            isDrawing
               ? { duration: traitDuration, ease: "linear" }
-              : { duration: 0 }
+              : isErasing
+                ? { duration: eraseDuration, ease: "linear" }
+                : { duration: 0 }
           }
-          onUpdate={
-            animateTrait && onTraitProgress
-              ? (latest) => onTraitProgress(latest.pathLength as number)
-              : undefined
-          }
-          onAnimationComplete={animateTrait ? onTraitComplete : undefined}
+          onUpdate={(latest) => {
+            if (isDrawing && onTraitProgress) {
+              onTraitProgress((latest.pathLength as number) ?? 0);
+            }
+
+            if (isErasing && onEraseProgress) {
+              onEraseProgress((latest.pathOffset as number) ?? 0);
+            }
+          }}
+          onAnimationComplete={() => {
+            if (isDrawing) {
+              onTraitComplete?.();
+              setTraitSequencePhase("erase");
+              return;
+            }
+
+            if (isErasing) {
+              onEraseComplete?.();
+              setTraitSequencePhase("complete");
+            }
+          }}
           style={{
             fill: "none",
             stroke: "var(--trait)",

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { T2ALogoAnimated } from "./T2ALogoAnimated";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -14,6 +15,13 @@ export function LandingScreen({
   landingSlideUpDuration,
 }: LandingScreenProps) {
   const prefersReducedMotion = useReducedMotion();
+  const [eraseProgress, setEraseProgress] = useState(
+    prefersReducedMotion ? 1 : 0,
+  );
+
+  const atelierVisible = prefersReducedMotion || eraseProgress >= 0.14;
+  const traitVisible = prefersReducedMotion || eraseProgress >= 0.43;
+  const architectureVisible = prefersReducedMotion || eraseProgress >= 0.72;
 
   return (
     <motion.section
@@ -34,6 +42,7 @@ export function LandingScreen({
         <T2ALogoAnimated
           animateTrait={!prefersReducedMotion}
           className="w-(--landing-logo) shrink-0"
+          onEraseProgress={setEraseProgress}
           showFinal={false}
           showShadow={false}
           showTrait
@@ -46,9 +55,27 @@ export function LandingScreen({
           }}
         >
           <span className="flex items-baseline gap-[0.7em] whitespace-nowrap text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">
-            <span className="font-normal">ATELIER</span>
-            <span className="font-semibold">TraiT</span>
-            <span className="font-normal">D'ARCHITECTURE</span>
+            <span
+              className={
+                atelierVisible ? "font-normal" : "font-normal opacity-0"
+              }
+            >
+              ATELIER
+            </span>
+            <span
+              className={
+                traitVisible ? "font-semibold" : "font-semibold opacity-0"
+              }
+            >
+              TraiT
+            </span>
+            <span
+              className={
+                architectureVisible ? "font-normal" : "font-normal opacity-0"
+              }
+            >
+              D'ARCHITECTURE
+            </span>
           </span>
         </div>
         {/* noms */}
