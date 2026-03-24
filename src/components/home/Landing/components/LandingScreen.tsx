@@ -39,11 +39,13 @@ export const LANDING_SLIDE_UP_DURATION_S = 1.25;
 
 interface LandingScreenProps {
   handleSlideUpComplete: () => void;
+  onIntroComplete: () => void;
   isSlidingUp: boolean;
 }
 
 export function LandingScreen({
   handleSlideUpComplete,
+  onIntroComplete,
   isSlidingUp,
 }: LandingScreenProps) {
   const prefersReducedMotion = useReducedMotion();
@@ -67,6 +69,27 @@ export function LandingScreen({
       window.clearTimeout(timeoutId);
     };
   }, [eraseCompleted, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      onIntroComplete();
+      return;
+    }
+
+    if (!phaseFiveStarted) {
+      return;
+    }
+
+    const completionDelayMs =
+      (LANDING_VERTICAL_TRAIT_DURATION_S + LANDING_NAMES_DURATION_S) * 1000;
+    const timeoutId = window.setTimeout(() => {
+      onIntroComplete();
+    }, completionDelayMs);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [onIntroComplete, phaseFiveStarted, prefersReducedMotion]);
 
   const finalLogoStarted = prefersReducedMotion || eraseProgress >= 0.1;
   const shadowStarted = !prefersReducedMotion && eraseProgress >= 0.1;

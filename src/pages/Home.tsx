@@ -16,6 +16,7 @@ const FORCE_REPLAY_LANDING_ANIMATION = true;
 export default function Home() {
   const {
     contentVisible,
+    handleIntroComplete,
     handleSlideUpComplete,
     isDismissed,
     isSlidingUp,
@@ -40,6 +41,7 @@ export default function Home() {
           <LandingScreen
             handleSlideUpComplete={handleSlideUpComplete}
             isSlidingUp={isSlidingUp}
+            onIntroComplete={handleIntroComplete}
           />
         ) : null}
       </motion.div>

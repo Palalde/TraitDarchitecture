@@ -30,19 +30,26 @@ export function useLandingIntroAnimation(
 
   const initialPhase: LandingPhase = isLandingDismissed ? "dismissed" : "ready";
   const [phase, setPhase] = useState<LandingPhase>(initialPhase);
+  const [isIntroComplete, setIsIntroComplete] = useState(
+    isLandingDismissed || showStaticEndState,
+  );
 
   const isSlidingUp = phase === "sliding-up";
   const isDismissed = phase === "dismissed";
-  const contentVisible = showStaticEndState || phase === "ready" || isDismissed;
+  const contentVisible = isIntroComplete || isDismissed;
   const landingCollapsed = isSlidingUp || isDismissed;
 
   const dismissLanding = useCallback(() => {
-    if (phase !== "ready") {
+    if (phase !== "ready" || !isIntroComplete) {
       return;
     }
 
     setPhase("sliding-up");
-  }, [phase]);
+  }, [isIntroComplete, phase]);
+
+  const handleIntroComplete = useCallback(() => {
+    setIsIntroComplete(true);
+  }, []);
 
   const handleSlideUpComplete = useCallback(() => {
     if (phase !== "sliding-up") {
@@ -61,7 +68,7 @@ export function useLandingIntroAnimation(
   }, [forceReplayAnimation, isDismissed]);
 
   useEffect(() => {
-    if (phase !== "ready") {
+    if (phase !== "ready" || !isIntroComplete) {
       return;
     }
 
@@ -92,13 +99,15 @@ export function useLandingIntroAnimation(
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [dismissLanding, phase]);
+  }, [dismissLanding, isIntroComplete, phase]);
 
   return {
     contentVisible,
+    handleIntroComplete,
     handleSlideUpComplete,
     isDismissed,
     isLandingDismissed,
+    isIntroComplete,
     isSlidingUp,
     landingCollapsed,
     phase,
