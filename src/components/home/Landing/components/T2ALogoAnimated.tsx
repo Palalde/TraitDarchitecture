@@ -10,12 +10,8 @@ interface T2ALogoAnimatedProps {
   className?: string;
   eraseDuration?: number;
   finalDuration?: number;
-  onFinalComplete?: () => void;
   onEraseComplete?: () => void;
   onEraseProgress?: (progress: number) => void;
-  onShadowComplete?: () => void;
-  onTraitComplete?: () => void;
-  onTraitProgress?: (progress: number) => void;
   shadowDuration?: number;
   showFinal?: boolean;
   showShadow?: boolean;
@@ -37,12 +33,8 @@ export function T2ALogoAnimated({
   className,
   eraseDuration = 2,
   finalDuration = 3,
-  onFinalComplete,
   onEraseComplete,
   onEraseProgress,
-  onShadowComplete,
-  onTraitComplete,
-  onTraitProgress,
   shadowDuration = 3,
   showFinal = true,
   showShadow = true,
@@ -532,7 +524,6 @@ export function T2ALogoAnimated({
                 }
               : { duration: 0 }
           }
-          onAnimationComplete={animateFinal ? onFinalComplete : undefined}
         >
           <path
             id="path1"
@@ -597,7 +588,6 @@ export function T2ALogoAnimated({
                 }
               : { duration: 0 }
           }
-          onAnimationComplete={animateShadow ? onShadowComplete : undefined}
         >
           <g id="g128" clipPath="url(#clipPath129)">
             <path
@@ -1373,17 +1363,12 @@ export function T2ALogoAnimated({
                 : { duration: 0 }
           }
           onUpdate={(latest) => {
-            if (isDrawing && onTraitProgress) {
-              onTraitProgress((latest.pathLength as number) ?? 0);
-            }
-
             if (isErasing && onEraseProgress) {
               onEraseProgress((latest.pathOffset as number) ?? 0);
             }
           }}
           onAnimationComplete={() => {
             if (isDrawing) {
-              onTraitComplete?.();
               setTraitSequencePhase("erase");
               return;
             }

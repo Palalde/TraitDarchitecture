@@ -5,7 +5,7 @@ import {
   LandingScreen,
   LANDING_SLIDE_UP_DURATION_S,
 } from "../components/home/Landing/components/LandingScreen";
-import { useLandingIntroAnimation } from "../components/home/Landing/hooks/useLandingIntroAnimation";
+import { useLandingLifecycle } from "../components/home/Landing/hooks/useLandingLifecycle";
 import { Header } from "../components/ui/header/Header";
 import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 import { Footer } from "@/components/ui/footer/Footer";
@@ -21,7 +21,7 @@ export default function Home() {
     isDismissed,
     isSlidingUp,
     landingCollapsed,
-  } = useLandingIntroAnimation({
+  } = useLandingLifecycle({
     forceReplayAnimation: FORCE_REPLAY_LANDING_ANIMATION,
     showStaticEndState: SHOW_STATIC_END_STATE,
   });

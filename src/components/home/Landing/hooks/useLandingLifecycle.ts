@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 type LandingPhase = "ready" | "sliding-up" | "dismissed";
 
-interface UseLandingIntroAnimationOptions {
+interface UseLandingLifecycleOptions {
   forceReplayAnimation?: boolean;
   showStaticEndState?: boolean;
 }
@@ -15,9 +15,7 @@ const LANDING_DISMISS_KEYS = new Set([
   "Spacebar",
 ]);
 
-export function useLandingIntroAnimation(
-  options: UseLandingIntroAnimationOptions = {},
-) {
+export function useLandingLifecycle(options: UseLandingLifecycleOptions = {}) {
   const { forceReplayAnimation = false, showStaticEndState = false } = options;
 
   const isLandingDismissed = useMemo(() => {
@@ -106,12 +104,7 @@ export function useLandingIntroAnimation(
     handleIntroComplete,
     handleSlideUpComplete,
     isDismissed,
-    isLandingDismissed,
-    isIntroComplete,
     isSlidingUp,
     landingCollapsed,
-    phase,
-    forceReplayAnimation,
-    showStaticEndState,
   };
 }

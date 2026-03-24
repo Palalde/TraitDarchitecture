@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { T2ALogoAnimated } from "./T2ALogoAnimated";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useLandingScreenAnimation } from "../hooks/useLandingScreenAnimation";
 
 // step 1
 const LANDING_TRAIT_DRAW_DURATION_S = 2;
@@ -34,6 +33,13 @@ const LANDING_PHASE_FIVE_DELAY_MS = 150;
 const LANDING_VERTICAL_TRAIT_DURATION_S = 0.5;
 const LANDING_NAMES_DURATION_S = 0.55;
 
+const LANDING_ERASE_THRESHOLDS = {
+  logoRevealStarted: 0.1,
+  atelierVisible: 0.49,
+  traitVisible: 0.56,
+  architectureVisible: 0.61,
+} as const;
+
 // exit
 export const LANDING_SLIDE_UP_DURATION_S = 1.25;
 
@@ -48,55 +54,23 @@ export function LandingScreen({
   onIntroComplete,
   isSlidingUp,
 }: LandingScreenProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const [eraseProgress, setEraseProgress] = useState(
-    prefersReducedMotion ? 1 : 0,
-  );
-  const [eraseCompleted, setEraseCompleted] = useState(prefersReducedMotion);
-  const [phaseFiveStarted, setPhaseFiveStarted] =
-    useState(prefersReducedMotion);
-
-  useEffect(() => {
-    if (prefersReducedMotion || !eraseCompleted) {
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      setPhaseFiveStarted(true);
-    }, LANDING_PHASE_FIVE_DELAY_MS);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [eraseCompleted, prefersReducedMotion]);
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      onIntroComplete();
-      return;
-    }
-
-    if (!phaseFiveStarted) {
-      return;
-    }
-
-    const completionDelayMs =
-      (LANDING_VERTICAL_TRAIT_DURATION_S + LANDING_NAMES_DURATION_S) * 1000;
-    const timeoutId = window.setTimeout(() => {
-      onIntroComplete();
-    }, completionDelayMs);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [onIntroComplete, phaseFiveStarted, prefersReducedMotion]);
-
-  const finalLogoStarted = prefersReducedMotion || eraseProgress >= 0.1;
-  const shadowStarted = !prefersReducedMotion && eraseProgress >= 0.1;
-
-  const atelierVisible = prefersReducedMotion || eraseProgress >= 0.49;
-  const traitVisible = prefersReducedMotion || eraseProgress >= 0.56;
-  const architectureVisible = prefersReducedMotion || eraseProgress >= 0.61;
+  const {
+    architectureVisible,
+    atelierVisible,
+    finalLogoStarted,
+    handleEraseComplete,
+    handleEraseProgress,
+    phaseFiveVisible,
+    prefersReducedMotion,
+    shadowStarted,
+    traitVisible,
+  } = useLandingScreenAnimation({
+    eraseThresholds: LANDING_ERASE_THRESHOLDS,
+    namesDurationS: LANDING_NAMES_DURATION_S,
+    onIntroComplete,
+    phaseFiveDelayMs: LANDING_PHASE_FIVE_DELAY_MS,
+    verticalTraitDurationS: LANDING_VERTICAL_TRAIT_DURATION_S,
+  });
 
   return (
     <motion.section
@@ -121,8 +95,8 @@ export function LandingScreen({
           className="w-(--landing-logo) shrink-0"
           eraseDuration={LANDING_TRAIT_ERASE_DURATION_S}
           finalDuration={LANDING_FINAL_LOGO_DURATION_S}
-          onEraseComplete={() => setEraseCompleted(true)}
-          onEraseProgress={setEraseProgress}
+          onEraseComplete={handleEraseComplete}
+          onEraseProgress={handleEraseProgress}
           shadowDuration={LANDING_SHADOW_DURATION_S}
           showFinal={finalLogoStarted}
           showShadow={shadowStarted}
@@ -218,7 +192,7 @@ export function LandingScreen({
               className="block font-light text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
               initial={false}
               animate={{
-                opacity: phaseFiveStarted ? 1 : 0,
+                opacity: phaseFiveVisible ? 1 : 0,
               }}
               transition={{
                 delay: LANDING_VERTICAL_TRAIT_DURATION_S,
@@ -240,8 +214,8 @@ export function LandingScreen({
           className="h-full w-full bg-(--trait)"
           initial={false}
           animate={{
-            scaleY: phaseFiveStarted ? 1 : 0,
-            opacity: phaseFiveStarted ? 1 : 0,
+            scaleY: phaseFiveVisible ? 1 : 0,
+            opacity: phaseFiveVisible ? 1 : 0,
           }}
           transition={{
             duration: LANDING_VERTICAL_TRAIT_DURATION_S,
