@@ -1,52 +1,16 @@
 import { motion } from "framer-motion";
-import { T2ALogo } from "./T2ALogo";
-
-interface LandingColumn {
-  index: string;
-  label: string;
-}
+import { T2ALogoAnimated } from "./T2ALogoAnimated";
 
 interface LandingScreenProps {
-  colsVisible: [boolean, boolean, boolean];
-  handleLogoComplete: () => void;
-  handleLogoProgress: (progress: number) => void;
-  handleNamesAnimationComplete: () => void;
   handleSlideUpComplete: () => void;
-  handleVerticalTraitComplete: () => void;
   isSlidingUp: boolean;
   landingSlideUpDuration: number;
-  namesVisible: boolean;
-  shouldAnimate: boolean;
-  verticalTraitVisible: boolean;
 }
 
-const COLUMN_INDEX_TRANSITION = { duration: 0.24, ease: "easeOut" } as const;
-const COLUMN_LABEL_MASK_TRANSITION = {
-  duration: 0.38,
-  ease: "easeOut",
-} as const;
-const COLUMN_LABEL_TEXT_TRANSITION = {
-  duration: 0.42,
-  ease: "easeOut",
-} as const;
-const LANDING_COLUMNS: readonly LandingColumn[] = [
-  { index: "01", label: "ATELIER" },
-  { index: "02", label: "TraiT" },
-  { index: "03", label: "D'ARCHITECTURE" },
-] as const;
-
 export function LandingScreen({
-  colsVisible,
-  handleLogoComplete,
-  handleLogoProgress,
-  handleNamesAnimationComplete,
   handleSlideUpComplete,
-  handleVerticalTraitComplete,
   isSlidingUp,
   landingSlideUpDuration,
-  namesVisible,
-  shouldAnimate,
-  verticalTraitVisible,
 }: LandingScreenProps) {
   return (
     <motion.section
@@ -64,66 +28,25 @@ export function LandingScreen({
         }}
       >
         {/* logo */}
-        <T2ALogo
+        <T2ALogoAnimated
           className="w-(--landing-logo) shrink-0"
           style={{ color: "var(--trait)" }}
-          animated={shouldAnimate}
-          onComplete={handleLogoComplete}
-          onProgress={handleLogoProgress}
+          showFinal
+          showShadow={false}
+          showTrait={false}
         />
-        {/* text columns */}
+        {/* title */}
         <div
-          className="flex select-none"
+          className="select-none"
           style={{ marginTop: "calc(var(--landing-offset) * -1)" }}
         >
-          {LANDING_COLUMNS.map((column, index) => (
-            <div
-              key={column.index}
-              className="w-(--landing-col) flex flex-col items-start"
-            >
-              <motion.span
-                className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)"
-                initial={false}
-                animate={{
-                  opacity: colsVisible[index] ? 1 : 0,
-                  y: colsVisible[index] ? 0 : 4,
-                }}
-                transition={COLUMN_INDEX_TRANSITION}
-              >
-                {column.index}
-              </motion.span>
-              <motion.span
-                className="block overflow-hidden whitespace-nowrap"
-                initial={false}
-                animate={{
-                  clipPath: colsVisible[index]
-                    ? "inset(0% 0% 0% 0%)"
-                    : "inset(0% 100% 0% 0%)",
-                }}
-                transition={COLUMN_LABEL_MASK_TRANSITION}
-              >
-                <motion.span
-                  className="block font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)"
-                  initial={false}
-                  animate={{
-                    opacity: colsVisible[index] ? 1 : 0,
-                    y: colsVisible[index] ? 0 : -12,
-                  }}
-                  transition={COLUMN_LABEL_TEXT_TRANSITION}
-                >
-                  {column.label}
-                </motion.span>
-              </motion.span>
-            </div>
-          ))}
+          <span className="block font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading) whitespace-nowrap">
+            ATELIER TraiT D'ARCHITECTURE
+          </span>
         </div>
         {/* noms */}
-        <motion.div
+        <div
           className="absolute bottom-0 select-none text-center whitespace-nowrap"
-          initial={false}
-          animate={{ opacity: namesVisible ? 1 : 0 }}
-          onAnimationComplete={handleNamesAnimationComplete}
-          transition={{ duration: 0.36, ease: "easeOut" }}
           style={{
             left: "var(--landing-center)",
             transform: "translateX(-50%)",
@@ -135,21 +58,15 @@ export function LandingScreen({
           >
             Théa BATTISTINI & Titouan GRANET
           </span>
-        </motion.div>
+        </div>
       </div>
       {/* vertical trait */}
       <div
         className="absolute left-1/2 bottom-0"
         style={{ transform: "translateX(-50%)", width: "1px", height: "25%" }}
       >
-        <motion.div
+        <div
           className="h-full w-full bg-(--trait)"
-          initial={false}
-          animate={{ scaleY: verticalTraitVisible ? 1 : 0 }}
-          onAnimationComplete={
-            verticalTraitVisible ? handleVerticalTraitComplete : undefined
-          }
-          transition={{ duration: 0.48, ease: "easeOut" }}
           style={{ transformOrigin: "bottom center" }}
         />
       </div>

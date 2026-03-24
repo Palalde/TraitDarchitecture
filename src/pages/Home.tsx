@@ -8,24 +8,20 @@ import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 import { Footer } from "@/components/ui/footer/Footer";
 
 const FORCE_ANIMATION = true;
+const SHOW_STATIC_END_STATE = true;
 
 export default function Home() {
   const {
-    colsVisible,
     contentVisible,
-    handleLogoComplete,
-    handleLogoProgress,
-    handleNamesAnimationComplete,
     handleSlideUpComplete,
-    handleVerticalTraitComplete,
     isDismissed,
     isSlidingUp,
     landingCollapsed,
     landingSlideUpDuration,
-    namesVisible,
-    shouldAnimate,
-    verticalTraitVisible,
-  } = useLandingIntroAnimation({ forceAnimate: FORCE_ANIMATION });
+  } = useLandingIntroAnimation({
+    forceAnimate: FORCE_ANIMATION,
+    showStaticEndState: SHOW_STATIC_END_STATE,
+  });
 
   useBodyScrollLock(!isDismissed);
 
@@ -40,17 +36,9 @@ export default function Home() {
       >
         {!isDismissed ? (
           <LandingScreen
-            colsVisible={colsVisible}
-            handleLogoComplete={handleLogoComplete}
-            handleLogoProgress={handleLogoProgress}
-            handleNamesAnimationComplete={handleNamesAnimationComplete}
             handleSlideUpComplete={handleSlideUpComplete}
-            handleVerticalTraitComplete={handleVerticalTraitComplete}
             isSlidingUp={isSlidingUp}
             landingSlideUpDuration={landingSlideUpDuration}
-            namesVisible={namesVisible}
-            shouldAnimate={shouldAnimate}
-            verticalTraitVisible={verticalTraitVisible}
           />
         ) : null}
       </motion.div>

@@ -1,10 +1,11 @@
+import { T2ALogoAnimated } from "../../Landing/components/T2ALogoAnimated";
+
 export function HomeContentShell() {
   return (
     <section
       className="relative min-h-[200vh] w-full overflow-hidden"
       style={{
-        background:
-          "linear-gradient(to bottom, var(--bg-primary) 0%, var(--bg-primary) 40%, var(--gradient-end) 100%)",
+        background: "var(--bg-primary) 40%, var(--gradient-end) 100%)",
       }}
       aria-label="Contenu principal de l'accueil"
     >
@@ -26,10 +27,11 @@ export function HomeContentShell() {
           />
         </div>
       </div>
-      <div
+      <T2ALogoAnimated />
+      {/* <div
         aria-hidden="true"
         className="absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-(--trait)"
-      />
+      /> */}
 
       {/* Illustration footer */}
       <div

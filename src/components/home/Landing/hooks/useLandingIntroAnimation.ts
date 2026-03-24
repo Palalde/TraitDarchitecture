@@ -7,6 +7,7 @@ type LandingPhase = "intro" | "ready" | "sliding-up" | "dismissed";
 
 interface UseLandingIntroAnimationOptions {
   forceAnimate?: boolean;
+  showStaticEndState?: boolean;
 }
 
 const LANDING_COLUMN_THRESHOLDS = [0.55, 0.62, 0.69] as const;
@@ -37,7 +38,7 @@ function getColumnVisibility(
 export function useLandingIntroAnimation(
   options: UseLandingIntroAnimationOptions = {},
 ) {
-  const { forceAnimate = false } = options;
+  const { forceAnimate = false, showStaticEndState = false } = options;
   const reducedMotion = useReducedMotion();
 
   // first visit ?
@@ -65,12 +66,15 @@ export function useLandingIntroAnimation(
   }, [forceAnimate]);
 
   // should we animate the logo drawing ?
-  const shouldAnimate = !reducedMotion && (forceAnimate || isFirstVisit);
+  const shouldAnimate =
+    !showStaticEndState && !reducedMotion && (forceAnimate || isFirstVisit);
   const initialPhase: LandingPhase = isLandingDismissed
     ? "dismissed"
-    : shouldAnimate
-      ? "intro"
-      : "ready";
+    : showStaticEndState
+      ? "ready"
+      : shouldAnimate
+        ? "intro"
+        : "ready";
   // logo animation progress (0 to 1)
   const [logoProgress, setLogoProgress] = useState<number>(() =>
     shouldAnimate ? 0 : 1,
@@ -97,8 +101,10 @@ export function useLandingIntroAnimation(
     setVerticalTraitCompleted(true);
   }, []);
 
-  const verticalTraitVisible = !shouldAnimate || verticalTraitStarted;
-  const namesVisible = !shouldAnimate || verticalTraitCompleted;
+  const verticalTraitVisible =
+    showStaticEndState || !shouldAnimate || verticalTraitStarted;
+  const namesVisible =
+    showStaticEndState || !shouldAnimate || verticalTraitCompleted;
   const introCompleted = phase !== "intro";
   const isSlidingUp = phase === "sliding-up";
   const isDismissed = phase === "dismissed";
@@ -216,6 +222,7 @@ export function useLandingIntroAnimation(
     namesVisible,
     phase,
     reducedMotion,
+    showStaticEndState,
     shouldAnimate,
     verticalTraitVisible,
   };

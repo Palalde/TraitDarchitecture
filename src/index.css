@@ -65,6 +65,44 @@
   --trait: #5e7396;
   /* Fin du gradient homepage (light: blue-pale, dark: blue-wash) */
   --gradient-end: #edf0f5;
+  /* Logo landing */
+  --logo-fill: #5e7396;
+  --logo-shadow-fcfbfc: #fcfbfc;
+  --logo-shadow-faf9fa: #faf9fa;
+  --logo-shadow-f9f8f9: #f9f8f9;
+  --logo-shadow-f8f7f8: #f8f7f8;
+  --logo-shadow-f7f6f8: #f7f6f8;
+  --logo-shadow-f7f6f7: #f7f6f7;
+  --logo-shadow-f5f5f6: #f5f5f6;
+  --logo-shadow-f5f4f7: #f5f4f7;
+  --logo-shadow-f3f3f5: #f3f3f5;
+  --logo-shadow-f1f1f4: #f1f1f4;
+  --logo-shadow-f1f0f3: #f1f0f3;
+  --logo-shadow-f0eff3: #f0eff3;
+  --logo-shadow-eff0f3: #eff0f3;
+  --logo-shadow-ededf2: #ededf2;
+  --logo-shadow-ececf1: #ececf1;
+  --logo-shadow-eaecf0: #eaecf0;
+  --logo-shadow-eaebf0: #eaebf0;
+  --logo-shadow-e9ebf0: #e9ebf0;
+  --logo-shadow-e8eaef: #e8eaef;
+  --logo-shadow-e6e7ed: #e6e7ed;
+  --logo-shadow-e5e5ea: #e5e5ea;
+  --logo-shadow-e5e4e9: #e5e4e9;
+  --logo-shadow-e2e3e9: #e2e3e9;
+  --logo-shadow-e2e3e8: #e2e3e8;
+  --logo-shadow-e1e2e9: #e1e2e9;
+  --logo-shadow-d8dbe3: #d8dbe3;
+  --logo-shadow-d8dae2: #d8dae2;
+  --logo-shadow-d7d9e1: #d7d9e1;
+  --logo-shadow-d4d7df: #d4d7df;
+  --logo-shadow-d2d5de: #d2d5de;
+  --logo-shadow-d0d3dd: #d0d3dd;
+  --logo-shadow-d0d2dc: #d0d2dc;
+  --logo-shadow-d0d2db: #d0d2db;
+  --logo-shadow-ccced9: #ccced9;
+  --logo-shadow-cdd0da: #cdd0da;
+  --logo-shadow-c8cbd6: #c8cbd6;
 
   font-family: "T2A", "DM Sans", sans-serif;
   color: var(--text-primary);
@@ -89,6 +127,43 @@
     --border: #252d3a;
     --trait: #8a9bb5;
     --gradient-end: #1a2030;
+    --logo-fill: #8a9bb5;
+    --logo-shadow-fcfbfc: #0e1218;
+    --logo-shadow-faf9fa: #0e1319;
+    --logo-shadow-f9f8f9: #0f1319;
+    --logo-shadow-f8f7f8: #0f141a;
+    --logo-shadow-f7f6f8: #10151b;
+    --logo-shadow-f7f6f7: #10151b;
+    --logo-shadow-f5f5f6: #11161c;
+    --logo-shadow-f5f4f7: #11161d;
+    --logo-shadow-f3f3f5: #12171d;
+    --logo-shadow-f1f1f4: #12181e;
+    --logo-shadow-f1f0f3: #13181f;
+    --logo-shadow-f0eff3: #131920;
+    --logo-shadow-eff0f3: #131a20;
+    --logo-shadow-ededf2: #141a21;
+    --logo-shadow-ececf1: #141b22;
+    --logo-shadow-eaecf0: #151b22;
+    --logo-shadow-eaebf0: #151c23;
+    --logo-shadow-e9ebf0: #161d24;
+    --logo-shadow-e8eaef: #161d24;
+    --logo-shadow-e6e7ed: #171e25;
+    --logo-shadow-e5e5ea: #171f26;
+    --logo-shadow-e5e4e9: #181f26;
+    --logo-shadow-e2e3e9: #182027;
+    --logo-shadow-e2e3e8: #192028;
+    --logo-shadow-e1e2e9: #192128;
+    --logo-shadow-d8dbe3: #192229;
+    --logo-shadow-d8dae2: #1a222a;
+    --logo-shadow-d7d9e1: #1a232b;
+    --logo-shadow-d4d7df: #1b242b;
+    --logo-shadow-d2d5de: #1b242c;
+    --logo-shadow-d0d3dd: #1c252d;
+    --logo-shadow-d0d2dc: #1c252d;
+    --logo-shadow-d0d2db: #1d262e;
+    --logo-shadow-ccced9: #1d272f;
+    --logo-shadow-cdd0da: #1e272f;
+    --logo-shadow-c8cbd6: #1e2830;
   }
 }
 
