@@ -5,9 +5,7 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { AnimatePresence, motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
-import { FacebookLogo } from "./logo/FacebookLogo";
-import { InstagramLogo } from "./logo/InstagramLogo";
-import { LinkedInLogo } from "./logo/LinkedInLogo";
+import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
 
 interface HeaderMobileMenuProps {
   isOpen: boolean;

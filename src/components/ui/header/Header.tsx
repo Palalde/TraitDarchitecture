@@ -6,13 +6,11 @@ import { HeaderMobileMenu } from "./HeaderMobileMenu";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
 import { useHeaderAutoHide } from "./hook/useHeaderAutoHide";
 import { useHeaderMobileMenu } from "./hook/useHeaderMobileMenu";
-import { FacebookLogo } from "./logo/FacebookLogo";
-import { InstagramLogo } from "./logo/InstagramLogo";
-import { LinkedInLogo } from "./logo/LinkedInLogo";
 import { T2ALogoBrut } from "./logo/T2ALogoBrut";
 import { HeaderNavItem } from "./HeaderNavItem";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight";
 import { useReducedMotion } from "../../../hooks/useReducedMotion";
+import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
 
 interface HeaderProps {
   animateEntrance?: boolean;
