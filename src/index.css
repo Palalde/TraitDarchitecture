@@ -220,6 +220,7 @@
   --landing-text: 1.35rem;
   --landing-leading: 1.75rem;
   --landing-offset: -5.5px;
+  --landing-names-offset: -0.6em;
   --landing-center: 174px;
   --landing-names: 0.9rem;
 }
@@ -243,6 +244,7 @@
     --landing-text: 1.875rem;
     --landing-leading: 2.25rem;
     --landing-offset: -9px;
+    --landing-names-offset: -0.8em;
     --landing-center: 255px;
     --landing-names: 1.245rem;
   }
@@ -255,6 +257,7 @@
     --landing-text: 2.25rem;
     --landing-leading: 2.5rem;
     --landing-offset: -14px;
+    --landing-names-offset: -1.1em;
     --landing-center: 314px;
     --landing-names: 1.5rem;
   }
@@ -267,6 +270,7 @@
     --landing-text: 4.5rem;
     --landing-leading: 5rem;
     --landing-offset: -30px;
+    --landing-names-offset: -2em;
     --landing-center: 640px;
     --landing-names: 3rem;
   }

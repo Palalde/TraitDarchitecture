@@ -183,7 +183,7 @@ export function LandingScreen({
             </motion.span>
           </span>
         </div>
-        {/* noms */}
+        {/* names */}
         <div
           className="absolute bottom-0 select-none text-center whitespace-nowrap"
           style={{
@@ -191,7 +191,12 @@ export function LandingScreen({
             transform: "translateX(-50%)",
           }}
         >
-          <span style={{ display: "block", transform: "translateY(-0.7em)" }}>
+          <span
+            style={{
+              display: "block",
+              transform: "translateY(var(--landing-names-offset))",
+            }}
+          >
             <motion.span
               className="block font-light text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
               initial={false}
