@@ -108,17 +108,6 @@ export function useLandingScreenAnimation({
   }, []);
 
   useEffect(() => {
-    if (!prefersReducedMotion) {
-      return;
-    }
-
-    milestoneStateRef.current = createMilestonesState(true);
-    setMilestones(createMilestonesState(true));
-    setEraseCompleted(true);
-    setPhaseFiveStarted(true);
-  }, [prefersReducedMotion]);
-
-  useEffect(() => {
     if (prefersReducedMotion || !eraseCompleted) {
       return;
     }
