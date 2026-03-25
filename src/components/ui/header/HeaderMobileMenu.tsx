@@ -77,14 +77,18 @@ export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
           />
           <motion.div
             animate={{ opacity: 1, y: 0 }}
-            className="absolute inset-x-0 top-full border-b border-(--trait) bg-(--bg-primary) md:hidden"
+            className="absolute inset-x-0 top-full z-0 border-b border-(--trait) md:hidden"
             exit={{ opacity: 0, y: prefersReducedMotion ? 0 : -10 }}
             initial={{ opacity: 0, y: prefersReducedMotion ? 0 : -16 }}
             transition={transition}
           >
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 top-[calc(var(--header-height)*-1)] bg-(--bg-primary)"
+            />
             <nav
               aria-label="Menu mobile"
-              className="px-6 pb-6 pt-5"
+              className="relative z-10 px-6 pb-6 pt-5"
               ref={navigationRef}
               tabIndex={-1}
             >

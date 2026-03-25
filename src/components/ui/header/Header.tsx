@@ -35,7 +35,7 @@ export function Header({ animateEntrance = false }: HeaderProps) {
       }}
     >
       {/* wrapper */}
-      <div className="relative flex h-full w-full items-start justify-end overflow-x-hidden bg-transparent text-(--t2a-blue)">
+      <div className="relative z-10 flex h-full w-full items-start justify-end overflow-x-hidden bg-transparent text-(--t2a-blue)">
         {/* leftLogo */}
         <div className="absolute inset-y-0 left-0 z-10 flex items-center pl-3 sm:pl-4 md:pl-5 lg:pl-6">
           <Link
