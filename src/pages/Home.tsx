@@ -10,7 +10,6 @@ import { Header } from "../components/ui/header/Header";
 import { useBodyScrollLock } from "../hooks/useBodyScrollLock";
 import { Footer } from "@/components/ui/footer/Footer";
 
-const SHOW_STATIC_END_STATE = false;
 const FORCE_REPLAY_LANDING_ANIMATION = true;
 
 export default function Home() {
@@ -21,9 +20,9 @@ export default function Home() {
     isDismissed,
     isSlidingUp,
     landingCollapsed,
+    skipAnimation,
   } = useLandingLifecycle({
     forceReplayAnimation: FORCE_REPLAY_LANDING_ANIMATION,
-    showStaticEndState: SHOW_STATIC_END_STATE,
   });
 
   useBodyScrollLock(!isDismissed);
@@ -42,6 +41,7 @@ export default function Home() {
             handleSlideUpComplete={handleSlideUpComplete}
             isSlidingUp={isSlidingUp}
             onIntroComplete={handleIntroComplete}
+            skipAnimation={skipAnimation}
           />
         ) : null}
       </motion.div>

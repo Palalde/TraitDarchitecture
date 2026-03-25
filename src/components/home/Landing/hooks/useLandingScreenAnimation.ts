@@ -20,6 +20,7 @@ interface UseLandingScreenAnimationOptions {
   namesDurationS: number;
   onIntroComplete: () => void;
   phaseFiveDelayMs: number;
+  skipAnimation?: boolean;
   verticalTraitDurationS: number;
 }
 
@@ -39,22 +40,41 @@ export function useLandingScreenAnimation({
   namesDurationS,
   onIntroComplete,
   phaseFiveDelayMs,
+  skipAnimation = false,
   verticalTraitDurationS,
 }: UseLandingScreenAnimationOptions) {
   const prefersReducedMotion = useReducedMotion();
+  const shouldSkipAnimation = prefersReducedMotion || skipAnimation;
   const milestoneStateRef = useRef<LandingEraseMilestones>(
-    createMilestonesState(prefersReducedMotion),
+    createMilestonesState(shouldSkipAnimation),
   );
   const [milestones, setMilestones] = useState<LandingEraseMilestones>(() =>
-    createMilestonesState(prefersReducedMotion),
+    createMilestonesState(shouldSkipAnimation),
   );
-  const [eraseCompleted, setEraseCompleted] = useState(prefersReducedMotion);
-  const [phaseFiveStarted, setPhaseFiveStarted] =
-    useState(prefersReducedMotion);
+  const [eraseCompleted, setEraseCompleted] = useState(shouldSkipAnimation);
+  const [phaseFiveStarted, setPhaseFiveStarted] = useState(shouldSkipAnimation);
+
+  useEffect(() => {
+    if (!shouldSkipAnimation) {
+      return;
+    }
+
+    const completedMilestones = createMilestonesState(true);
+    const syncId = window.requestAnimationFrame(() => {
+      milestoneStateRef.current = completedMilestones;
+      setMilestones(completedMilestones);
+      setEraseCompleted(true);
+      setPhaseFiveStarted(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(syncId);
+    };
+  }, [shouldSkipAnimation]);
 
   const handleEraseProgress = useCallback(
     (progress: number) => {
-      if (prefersReducedMotion) {
+      if (prefersReducedMotion || shouldSkipAnimation) {
         return;
       }
 
@@ -100,7 +120,7 @@ export function useLandingScreenAnimation({
         }));
       }
     },
-    [eraseThresholds, prefersReducedMotion],
+    [eraseThresholds, prefersReducedMotion, shouldSkipAnimation],
   );
 
   const handleEraseComplete = useCallback(() => {
@@ -108,7 +128,7 @@ export function useLandingScreenAnimation({
   }, []);
 
   useEffect(() => {
-    if (prefersReducedMotion || !eraseCompleted) {
+    if (shouldSkipAnimation || !eraseCompleted) {
       return;
     }
 
@@ -119,10 +139,10 @@ export function useLandingScreenAnimation({
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [eraseCompleted, phaseFiveDelayMs, prefersReducedMotion]);
+  }, [eraseCompleted, phaseFiveDelayMs, shouldSkipAnimation]);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
+    if (shouldSkipAnimation) {
       onIntroComplete();
       return;
     }
@@ -143,19 +163,19 @@ export function useLandingScreenAnimation({
     namesDurationS,
     onIntroComplete,
     phaseFiveStarted,
-    prefersReducedMotion,
+    shouldSkipAnimation,
     verticalTraitDurationS,
   ]);
 
   return {
-    architectureVisible: prefersReducedMotion || milestones.architectureVisible,
-    atelierVisible: prefersReducedMotion || milestones.atelierVisible,
-    finalLogoStarted: prefersReducedMotion || milestones.logoRevealStarted,
+    architectureVisible: shouldSkipAnimation || milestones.architectureVisible,
+    atelierVisible: shouldSkipAnimation || milestones.atelierVisible,
+    finalLogoStarted: shouldSkipAnimation || milestones.logoRevealStarted,
     handleEraseComplete,
     handleEraseProgress,
-    phaseFiveVisible: prefersReducedMotion || phaseFiveStarted,
+    phaseFiveVisible: shouldSkipAnimation || phaseFiveStarted,
     prefersReducedMotion,
-    shadowStarted: !prefersReducedMotion && milestones.logoRevealStarted,
-    traitVisible: prefersReducedMotion || milestones.traitVisible,
+    shadowStarted: !shouldSkipAnimation && milestones.logoRevealStarted,
+    traitVisible: shouldSkipAnimation || milestones.traitVisible,
   };
 }

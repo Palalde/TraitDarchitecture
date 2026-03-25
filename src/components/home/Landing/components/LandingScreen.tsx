@@ -23,10 +23,10 @@ const WORD_TEXT_TRANSITION = {
 };
 
 //shadow
-const LANDING_SHADOW_DURATION_S = 3;
+const LANDING_SHADOW_DURATION_S = 1.5;
 
 // step 4
-const LANDING_FINAL_LOGO_DURATION_S = 4;
+const LANDING_FINAL_LOGO_DURATION_S = 3.5;
 
 // step 5
 const LANDING_PHASE_FIVE_DELAY_MS = 150;
@@ -47,12 +47,14 @@ interface LandingScreenProps {
   handleSlideUpComplete: () => void;
   onIntroComplete: () => void;
   isSlidingUp: boolean;
+  skipAnimation?: boolean;
 }
 
 export function LandingScreen({
   handleSlideUpComplete,
   onIntroComplete,
   isSlidingUp,
+  skipAnimation = false,
 }: LandingScreenProps) {
   const {
     architectureVisible,
@@ -69,8 +71,10 @@ export function LandingScreen({
     namesDurationS: LANDING_NAMES_DURATION_S,
     onIntroComplete,
     phaseFiveDelayMs: LANDING_PHASE_FIVE_DELAY_MS,
+    skipAnimation,
     verticalTraitDurationS: LANDING_VERTICAL_TRAIT_DURATION_S,
   });
+  const shouldAnimateLogoLayers = !prefersReducedMotion && !skipAnimation;
 
   return (
     <motion.section
@@ -89,9 +93,9 @@ export function LandingScreen({
       >
         {/* logo */}
         <T2ALogoAnimated
-          animateFinal={!prefersReducedMotion && finalLogoStarted}
-          animateShadow={shadowStarted}
-          animateTrait={!prefersReducedMotion}
+          animateFinal={shouldAnimateLogoLayers && finalLogoStarted}
+          animateShadow={shouldAnimateLogoLayers && shadowStarted}
+          animateTrait={shouldAnimateLogoLayers}
           className="w-(--landing-logo) shrink-0"
           eraseDuration={LANDING_TRAIT_ERASE_DURATION_S}
           finalDuration={LANDING_FINAL_LOGO_DURATION_S}
@@ -100,7 +104,7 @@ export function LandingScreen({
           shadowDuration={LANDING_SHADOW_DURATION_S}
           showFinal={finalLogoStarted}
           showShadow={shadowStarted}
-          showTrait
+          showTrait={shouldAnimateLogoLayers}
           traitDuration={LANDING_TRAIT_DRAW_DURATION_S}
         />
         {/* title */}
