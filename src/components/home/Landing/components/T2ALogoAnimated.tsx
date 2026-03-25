@@ -578,7 +578,7 @@ export function T2ALogoAnimated({
           key={animateShadow ? "shadow-animated" : "shadow-static"}
           id="layer-shadow"
           initial={animateShadow ? { opacity: 0 } : false}
-          animate={animateShadow ? { opacity: [0, 1, 0] } : { opacity: 1 }}
+          animate={animateShadow ? { opacity: [0, 0.7, 0] } : { opacity: 1 }}
           transition={
             animateShadow
               ? {
