@@ -232,6 +232,7 @@
     --landing-text: 1.435rem;
     --landing-leading: 1.9rem;
     --landing-offset: -6px;
+    --landing-names-offset: -0.65em;
     --landing-center: 192px;
     --landing-names: 0.99rem;
   }
@@ -244,7 +245,7 @@
     --landing-text: 1.875rem;
     --landing-leading: 2.25rem;
     --landing-offset: -9px;
-    --landing-names-offset: -0.8em;
+    --landing-names-offset: -0.9em;
     --landing-center: 255px;
     --landing-names: 1.245rem;
   }
