@@ -1,60 +1,88 @@
 import { motion } from "framer-motion";
-import { T2ALogo } from "./T2ALogo";
+import { T2ALogoAnimated } from "./T2ALogoAnimated";
+import { useLandingScreenAnimation } from "../hooks/useLandingScreenAnimation";
 
-interface LandingColumn {
-  index: string;
-  label: string;
-}
+// step 1
+const LANDING_TRAIT_DRAW_DURATION_S = 2;
+
+// step 2
+const LANDING_TRAIT_ERASE_DURATION_S = 2;
+
+// step 3
+// text
+const LANDING_TITLE_MASK_DURATION_S = 0.38;
+const LANDING_TITLE_TEXT_DURATION_S = 0.42;
+
+const WORD_MASK_TRANSITION = {
+  duration: LANDING_TITLE_MASK_DURATION_S,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+const WORD_TEXT_TRANSITION = {
+  duration: LANDING_TITLE_TEXT_DURATION_S,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
+//shadow
+const LANDING_SHADOW_DURATION_S = 1.5;
+
+// step 4
+const LANDING_FINAL_LOGO_DURATION_S = 3.5;
+
+// step 5
+const LANDING_PHASE_FIVE_DELAY_MS = 150;
+const LANDING_VERTICAL_TRAIT_DURATION_S = 0.5;
+const LANDING_NAMES_DURATION_S = 0.55;
+
+const LANDING_ERASE_THRESHOLDS = {
+  logoRevealStarted: 0.1,
+  atelierVisible: 0.49,
+  traitVisible: 0.56,
+  architectureVisible: 0.61,
+} as const;
+
+// exit
+export const LANDING_SLIDE_UP_DURATION_S = 1.25;
 
 interface LandingScreenProps {
-  colsVisible: [boolean, boolean, boolean];
-  handleLogoComplete: () => void;
-  handleLogoProgress: (progress: number) => void;
-  handleNamesAnimationComplete: () => void;
   handleSlideUpComplete: () => void;
-  handleVerticalTraitComplete: () => void;
+  onIntroComplete: () => void;
   isSlidingUp: boolean;
-  landingSlideUpDuration: number;
-  namesVisible: boolean;
-  shouldAnimate: boolean;
-  verticalTraitVisible: boolean;
+  skipAnimation?: boolean;
 }
 
-const COLUMN_INDEX_TRANSITION = { duration: 0.24, ease: "easeOut" } as const;
-const COLUMN_LABEL_MASK_TRANSITION = {
-  duration: 0.38,
-  ease: "easeOut",
-} as const;
-const COLUMN_LABEL_TEXT_TRANSITION = {
-  duration: 0.42,
-  ease: "easeOut",
-} as const;
-const LANDING_COLUMNS: readonly LandingColumn[] = [
-  { index: "01", label: "ATELIER" },
-  { index: "02", label: "TraiT" },
-  { index: "03", label: "D'ARCHITECTURE" },
-] as const;
-
 export function LandingScreen({
-  colsVisible,
-  handleLogoComplete,
-  handleLogoProgress,
-  handleNamesAnimationComplete,
   handleSlideUpComplete,
-  handleVerticalTraitComplete,
+  onIntroComplete,
   isSlidingUp,
-  landingSlideUpDuration,
-  namesVisible,
-  shouldAnimate,
-  verticalTraitVisible,
+  skipAnimation = false,
 }: LandingScreenProps) {
+  const {
+    architectureVisible,
+    atelierVisible,
+    finalLogoStarted,
+    handleEraseComplete,
+    handleEraseProgress,
+    phaseFiveVisible,
+    prefersReducedMotion,
+    shadowStarted,
+    traitVisible,
+  } = useLandingScreenAnimation({
+    eraseThresholds: LANDING_ERASE_THRESHOLDS,
+    namesDurationS: LANDING_NAMES_DURATION_S,
+    onIntroComplete,
+    phaseFiveDelayMs: LANDING_PHASE_FIVE_DELAY_MS,
+    skipAnimation,
+    verticalTraitDurationS: LANDING_VERTICAL_TRAIT_DURATION_S,
+  });
+  const shouldAnimateLogoLayers = !prefersReducedMotion && !skipAnimation;
+
   return (
     <motion.section
       className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary)"
       initial={false}
       animate={{ y: isSlidingUp ? "-100%" : 0 }}
       onAnimationComplete={isSlidingUp ? handleSlideUpComplete : undefined}
-      transition={{ duration: landingSlideUpDuration, ease: "easeOut" }}
+      transition={{ duration: LANDING_SLIDE_UP_DURATION_S, ease: "easeOut" }}
     >
       {/* wrapper */}
       <div
@@ -64,78 +92,122 @@ export function LandingScreen({
         }}
       >
         {/* logo */}
-        <T2ALogo
+        <T2ALogoAnimated
+          animateFinal={shouldAnimateLogoLayers && finalLogoStarted}
+          animateShadow={shouldAnimateLogoLayers && shadowStarted}
+          animateTrait={shouldAnimateLogoLayers}
           className="w-(--landing-logo) shrink-0"
-          style={{ color: "var(--trait)" }}
-          animated={shouldAnimate}
-          onComplete={handleLogoComplete}
-          onProgress={handleLogoProgress}
+          eraseDuration={LANDING_TRAIT_ERASE_DURATION_S}
+          finalDuration={LANDING_FINAL_LOGO_DURATION_S}
+          onEraseComplete={handleEraseComplete}
+          onEraseProgress={handleEraseProgress}
+          shadowDuration={LANDING_SHADOW_DURATION_S}
+          showFinal={finalLogoStarted}
+          showShadow={shadowStarted}
+          showTrait={shouldAnimateLogoLayers}
+          traitDuration={LANDING_TRAIT_DRAW_DURATION_S}
         />
-        {/* text columns */}
+        {/* title */}
         <div
-          className="flex select-none"
-          style={{ marginTop: "calc(var(--landing-offset) * -1)" }}
+          className="-ml-4 select-none"
+          style={{
+            marginTop: "calc(var(--landing-offset) * -1)",
+          }}
         >
-          {LANDING_COLUMNS.map((column, index) => (
-            <div
-              key={column.index}
-              className="w-(--landing-col) flex flex-col items-start"
+          <span className="flex items-baseline gap-[0.7em] whitespace-nowrap text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">
+            <motion.span
+              className="block overflow-hidden whitespace-nowrap"
+              initial={false}
+              animate={{
+                clipPath: atelierVisible
+                  ? "inset(0% 0% 0% 0%)"
+                  : "inset(0% 100% 0% 0%)",
+              }}
+              transition={WORD_MASK_TRANSITION}
             >
               <motion.span
-                className="font-light text-(--t2a-blue-light) text-(length:--landing-text) leading-(--landing-leading)"
+                className="block font-normal"
                 initial={false}
                 animate={{
-                  opacity: colsVisible[index] ? 1 : 0,
-                  y: colsVisible[index] ? 0 : 4,
+                  opacity: atelierVisible ? 1 : 0,
+                  y: atelierVisible ? 0 : -12,
                 }}
-                transition={COLUMN_INDEX_TRANSITION}
+                transition={WORD_TEXT_TRANSITION}
               >
-                {column.index}
+                ATELIER
               </motion.span>
+            </motion.span>
+            <motion.span
+              className="block overflow-hidden whitespace-nowrap"
+              initial={false}
+              animate={{
+                clipPath: traitVisible
+                  ? "inset(0% 0% 0% 0%)"
+                  : "inset(0% 100% 0% 0%)",
+              }}
+              transition={WORD_MASK_TRANSITION}
+            >
               <motion.span
-                className="block overflow-hidden whitespace-nowrap"
+                className="block font-semibold"
                 initial={false}
                 animate={{
-                  clipPath: colsVisible[index]
-                    ? "inset(0% 0% 0% 0%)"
-                    : "inset(0% 100% 0% 0%)",
+                  opacity: traitVisible ? 1 : 0,
+                  y: traitVisible ? 0 : -12,
                 }}
-                transition={COLUMN_LABEL_MASK_TRANSITION}
+                transition={WORD_TEXT_TRANSITION}
               >
-                <motion.span
-                  className="block font-semibold text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)"
-                  initial={false}
-                  animate={{
-                    opacity: colsVisible[index] ? 1 : 0,
-                    y: colsVisible[index] ? 0 : -12,
-                  }}
-                  transition={COLUMN_LABEL_TEXT_TRANSITION}
-                >
-                  {column.label}
-                </motion.span>
+                TraiT
               </motion.span>
-            </div>
-          ))}
+            </motion.span>
+            <motion.span
+              className="block overflow-hidden whitespace-nowrap"
+              initial={false}
+              animate={{
+                clipPath: architectureVisible
+                  ? "inset(0% 0% 0% 0%)"
+                  : "inset(0% 100% 0% 0%)",
+              }}
+              transition={WORD_MASK_TRANSITION}
+            >
+              <motion.span
+                className="block font-normal"
+                initial={false}
+                animate={{
+                  opacity: architectureVisible ? 1 : 0,
+                  y: architectureVisible ? 0 : -12,
+                }}
+                transition={WORD_TEXT_TRANSITION}
+              >
+                D'ARCHITECTURE
+              </motion.span>
+            </motion.span>
+          </span>
         </div>
         {/* noms */}
-        <motion.div
+        <div
           className="absolute bottom-0 select-none text-center whitespace-nowrap"
-          initial={false}
-          animate={{ opacity: namesVisible ? 1 : 0 }}
-          onAnimationComplete={handleNamesAnimationComplete}
-          transition={{ duration: 0.36, ease: "easeOut" }}
           style={{
             left: "var(--landing-center)",
             transform: "translateX(-50%)",
           }}
         >
-          <span
-            className="block font-normal text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
-            style={{ transform: "translateY(0.2em)" }}
-          >
-            Théa BATTISTINI & Titouan GRANET
+          <span style={{ display: "block", transform: "translateY(-0.7em)" }}>
+            <motion.span
+              className="block font-light text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
+              initial={false}
+              animate={{
+                opacity: phaseFiveVisible ? 1 : 0,
+              }}
+              transition={{
+                delay: LANDING_VERTICAL_TRAIT_DURATION_S,
+                duration: LANDING_NAMES_DURATION_S,
+                ease: "linear",
+              }}
+            >
+              Théa BATTISTINI & Titouan GRANET
+            </motion.span>
           </span>
-        </motion.div>
+        </div>
       </div>
       {/* vertical trait */}
       <div
@@ -145,11 +217,14 @@ export function LandingScreen({
         <motion.div
           className="h-full w-full bg-(--trait)"
           initial={false}
-          animate={{ scaleY: verticalTraitVisible ? 1 : 0 }}
-          onAnimationComplete={
-            verticalTraitVisible ? handleVerticalTraitComplete : undefined
-          }
-          transition={{ duration: 0.48, ease: "easeOut" }}
+          animate={{
+            scaleY: phaseFiveVisible ? 1 : 0,
+            opacity: phaseFiveVisible ? 1 : 0,
+          }}
+          transition={{
+            duration: LANDING_VERTICAL_TRAIT_DURATION_S,
+            ease: "linear",
+          }}
           style={{ transformOrigin: "bottom center" }}
         />
       </div>
