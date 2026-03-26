@@ -1,4 +1,6 @@
 ---
+import OverlayScrollbarsSetup from "@/components/ui/overlay/OverlayScrollbarsSetup";
+import "overlayscrollbars/styles/overlayscrollbars.css";
 import "../styles/index.css";
 
 interface Props {
@@ -61,6 +63,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <slot name="head" />
   </head>
   <body class="bg-(--bg-primary) font-sans text-(--text-primary) antialiased">
+    <OverlayScrollbarsSetup client:load />
     <slot />
   </body>
 </html>
