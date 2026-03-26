@@ -2,16 +2,16 @@ import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useDesktopOverlayScrollbars } from "./hooks/useDesktopOverlayScrollbars";
 
-const Home = lazy(() => import("./pages/Home"));
-const Atelier = lazy(() => import("./pages/Atelier"));
-const TraitPhilosophie = lazy(() => import("./pages/TraitPhilosophie"));
-const TraitMethode = lazy(() => import("./pages/TraitMethode"));
-const Architecture = lazy(() => import("./pages/Architecture"));
-const Project = lazy(() => import("./pages/Project"));
-const Extrait = lazy(() => import("./pages/Extrait"));
-const Article = lazy(() => import("./pages/Article"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Legal = lazy(() => import("./pages/Legal"));
+const Home = lazy(() => import("./legacy-pages/Home"));
+const Atelier = lazy(() => import("./legacy-pages/Atelier"));
+const TraitPhilosophie = lazy(() => import("./legacy-pages/TraitPhilosophie"));
+const TraitMethode = lazy(() => import("./legacy-pages/TraitMethode"));
+const Architecture = lazy(() => import("./legacy-pages/Architecture"));
+const Project = lazy(() => import("./legacy-pages/Project"));
+const Extrait = lazy(() => import("./legacy-pages/Extrait"));
+const Article = lazy(() => import("./legacy-pages/Article"));
+const Contact = lazy(() => import("./legacy-pages/Contact"));
+const Legal = lazy(() => import("./legacy-pages/Legal"));
 
 export default function App() {
   useDesktopOverlayScrollbars();
