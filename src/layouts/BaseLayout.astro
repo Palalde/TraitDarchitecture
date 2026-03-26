@@ -4,12 +4,18 @@ import "../index.css";
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "ATELIER TraiT D'ARCHITECTURE",
   description = "Migration Astro en cours pour le site vitrine de l'atelier.",
+  ogImage = "/media/favicon/favicon.svg",
+  noindex = false,
 } = Astro.props;
+
+const robots = noindex ? "noindex, nofollow" : "index, follow";
 ---
 
 <!doctype html>
@@ -18,26 +24,43 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/media/favicon/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/T2A-Light.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/T2A-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/T2A-Demi-Bold.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <script is:inline>
-      if (window.matchMedia("(min-width: 1024px)").matches) {
-        document.documentElement.setAttribute(
-          "data-overlayscrollbars-initialize",
-          "",
-        );
-
-        window.addEventListener(
-          "DOMContentLoaded",
-          function () {
-            document.body.setAttribute("data-overlayscrollbars-initialize", "");
-          },
-          { once: true },
-        );
-      }
-    </script>
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#5E7396" />
+    <meta property="og:site_name" content="ATELIER TraiT D'ARCHITECTURE" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <slot name="head" />
   </head>
-  <body class="bg-(--bg-primary) text-(--text-primary)">
+  <body class="bg-(--bg-primary) font-sans text-(--text-primary) antialiased">
     <slot />
   </body>
 </html>
