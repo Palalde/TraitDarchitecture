@@ -1,0 +1,25 @@
+---
+import { FooterMapPinLogo } from "./logo/FooterMapPinLogo";
+
+interface Props {
+  addressLines: readonly string[];
+  city: string;
+}
+
+const { addressLines, city } = Astro.props;
+---
+
+<section
+  aria-label={`Atelier ${city}`}
+  class="flex flex-col items-center text-center"
+>
+  <div class="flex items-center justify-center gap-2">
+    <FooterMapPinLogo className="-mt-0.75 h-3 w-3 shrink-0 text-(--trait)" />
+    <h2 class="text-[0.78rem] font-semibold tracking-[0.24em] text-(--t2a-blue-dark) uppercase dark:text-(--t2a-blue)">
+      {city}
+    </h2>
+  </div>
+  <address class="mt-4 space-y-1 text-[0.95rem] leading-[1.75] not-italic text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+    {addressLines.map((line) => <p>{line}</p>)}
+  </address>
+</section>

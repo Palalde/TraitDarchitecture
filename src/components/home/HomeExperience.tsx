@@ -7,7 +7,6 @@ import {
 } from "./Landing/components/LandingScreen";
 import { useLandingLifecycle } from "./Landing/hooks/useLandingLifecycle";
 import { Header } from "../ui/header/Header";
-import { Footer } from "../ui/footer/Footer";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
 const FORCE_REPLAY_LANDING_ANIMATION = true;
@@ -45,12 +44,7 @@ export function HomeExperience() {
           />
         ) : null}
       </motion.div>
-      {contentVisible ? (
-        <>
-          <HomeContentShell />
-          <Footer />
-        </>
-      ) : null}
+      {contentVisible ? <HomeContentShell /> : null}
     </main>
   );
 }
