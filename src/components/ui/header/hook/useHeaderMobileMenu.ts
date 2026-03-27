@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useCurrentPathname } from "@/hooks/useCurrentPathname";
 
 interface UseHeaderMobileMenuResult {
   closeMobileMenu: () => void;
@@ -8,7 +8,7 @@ interface UseHeaderMobileMenuResult {
 }
 
 export function useHeaderMobileMenu(): UseHeaderMobileMenuResult {
-  const { pathname } = useLocation();
+  const pathname = useCurrentPathname();
   const [mobileMenuPath, setMobileMenuPath] = useState<string | null>(null);
   const isMobileMenuOpen = mobileMenuPath === pathname;
 

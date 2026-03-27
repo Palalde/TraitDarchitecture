@@ -18,6 +18,7 @@ export function HomeContentShell() {
             alt=""
             className="h-auto w-full max-w-none grayscale"
             draggable={false}
+            loading="lazy"
             src="/media/illustrations/T2A_Plan_Topo%20territoire.webp"
           />
           <div
@@ -40,6 +41,7 @@ export function HomeContentShell() {
           alt=""
           className="w-full max-w-none object-cover object-bottom grayscale opacity-[0.7] dark:opacity-[0.5]"
           draggable={false}
+          loading="lazy"
           src="/media/illustrations/T2A_Coupe_Mer-elargie.webp"
         />
       </div>

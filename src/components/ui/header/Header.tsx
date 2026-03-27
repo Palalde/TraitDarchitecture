@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderHamburger } from "./HeaderHamburger";
 import { HeaderMobileMenu } from "./HeaderMobileMenu";
@@ -38,16 +37,16 @@ export function Header({ animateEntrance = false }: HeaderProps) {
       <div className="relative z-10 flex h-full w-full items-start justify-end overflow-x-hidden bg-transparent text-(--t2a-blue)">
         {/* leftLogo */}
         <div className="absolute inset-y-0 left-0 z-10 flex items-center pl-3 sm:pl-4 md:pl-5 lg:pl-6">
-          <Link
+          <a
             aria-label="Retour à l'accueil"
             className="inline-flex items-center transition-transform duration-200 ease-out hover:scale-105"
-            to="/"
+            href="/"
           >
             <T2ALogoBrut
               className="h-[calc(var(--header-height)*0.5)] w-auto text-(--t2a-blue)"
               title="Logo gauche ATELIER TraiT D'ARCHITECTURE"
             />
-          </Link>
+          </a>
         </div>
         {/* nav */}
         <nav

@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { FooterOffice } from "./FooterOffice";
 import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
 import { T2ALogoLineLeft } from "./logo/T2ALogoLineLeft";
@@ -144,9 +143,9 @@ export function Footer() {
         <div className="space-y-2 sm:text-right">
           <p>© {new Date().getFullYear()} ATELIER TraiT D'ARCHITECTURE</p>
           <p className="space-x-2 text-(--t2a-blue-light)">
-            <Link to="/mentions-legales" className={footerMetaLinkClassName}>
+            <a href="/mentions-legales" className={footerMetaLinkClassName}>
               Mentions légales
-            </Link>
+            </a>
             <span aria-hidden>·</span>
             <span>Site réalisé par:</span>
             <a
