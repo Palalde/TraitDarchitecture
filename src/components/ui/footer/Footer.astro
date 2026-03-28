@@ -1,7 +1,9 @@
 ---
-import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
+import FacebookLogo from "../social/logo/FacebookLogo.astro";
+import InstagramLogo from "../social/logo/InstagramLogo.astro";
+import LinkedInLogo from "../social/logo/LinkedInLogo.astro";
 import FooterOffice from "./FooterOffice.astro";
-import { T2ALogoLineLeft } from "./logo/T2ALogoLineLeft";
+import T2ALogoLineLeft from "./logo/T2ALogoLineLeft.astro";
 
 const FOOTER_OFFICES = [
   {
@@ -31,24 +33,31 @@ const currentYear = new Date().getFullYear();
   aria-label="Pied de page"
   class="relative w-full overflow-hidden bg-(--gradient-end)"
 >
-  <div class="pointer-events-none absolute top-3 -left-30 flex h-8 items-start md:-left-48 md:h-12.5 lg:top-4">
-    <T2ALogoLineLeft className="h-full w-auto max-w-none shrink-0 text-(--trait)" />
+  <div
+    class="pointer-events-none absolute top-3 -left-30 flex h-8 items-start md:-left-48 md:h-12.5 lg:top-4"
+  >
+    <T2ALogoLineLeft class="h-full w-auto max-w-none shrink-0 text-(--trait)" />
   </div>
 
   <div class="relative z-10 px-6 pt-18 sm:px-8 md:pt-24 lg:px-10 lg:pt-16">
     <div class="mx-auto w-full max-w-3xl md:max-w-4xl">
       <div class="grid grid-cols-1 sm:grid-cols-3">
-        {FOOTER_OFFICES.map((office, index) => (
-          <div
-            class={
-              index === 0
-                ? "px-5 py-5 md:px-8"
-                : "border-t border-(--trait) px-5 py-5 sm:border-t-0 sm:border-l md:px-8"
-            }
-          >
-            <FooterOffice addressLines={office.addressLines} city={office.city} />
-          </div>
-        ))}
+        {
+          FOOTER_OFFICES.map((office, index) => (
+            <div
+              class:list={[
+                "px-5 py-5 md:px-8",
+                index > 0 &&
+                  "border-t border-(--trait) sm:border-t-0 sm:border-l",
+              ]}
+            >
+              <FooterOffice
+                addressLines={office.addressLines}
+                city={office.city}
+              />
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -66,11 +75,17 @@ const currentYear = new Date().getFullYear();
     </p>
   </div>
 
-  <div class="mx-auto grid w-full max-w-3xl grid-cols-1 gap-6 px-6 py-6 text-center text-[0.8rem] leading-relaxed text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:grid-cols-3 sm:items-start sm:gap-4 sm:px-8 sm:text-left md:max-w-4xl lg:px-10">
+  <div
+    class="mx-auto grid w-full max-w-3xl grid-cols-1 gap-6 px-6 py-6 text-center text-[0.8rem] leading-relaxed text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:grid-cols-3 sm:items-start sm:gap-4 sm:px-8 sm:text-left md:max-w-4xl lg:px-10"
+  >
     <div class="space-y-2 sm:text-left">
       <p class="font-light">Architecture sensible, contextuelle et engagée.</p>
-      <div class="flex items-center justify-center gap-2 text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) sm:justify-start">
-        <span class="text-[0.72rem] uppercase tracking-[0.12em]">Suivez-nous</span>
+      <div
+        class="flex items-center justify-center gap-2 text-(--t2a-blue-dark) dark:text-(--t2a-blue-light) sm:justify-start"
+      >
+        <span class="text-[0.72rem] uppercase tracking-[0.12em]"
+          >Suivez-nous</span
+        >
         <a
           aria-label="Instagram de l'atelier"
           href="https://www.instagram.com/atelier.trait.darchitecture/"
@@ -78,7 +93,7 @@ const currentYear = new Date().getFullYear();
           rel="noreferrer"
           class="inline-flex h-7 w-7 items-center justify-center transition-[color,transform] hover:scale-110 hover:text-(--t2a-blue)"
         >
-          <InstagramLogo className="h-4.5 w-4.5" />
+          <InstagramLogo class="h-4.5 w-4.5" />
         </a>
         <a
           aria-label="Facebook de l'atelier"
@@ -87,7 +102,7 @@ const currentYear = new Date().getFullYear();
           rel="noreferrer"
           class="inline-flex h-7 w-7 items-center justify-center transition-[color,transform] hover:scale-110 hover:text-(--t2a-blue)"
         >
-          <FacebookLogo className="h-4.5 w-4.5" />
+          <FacebookLogo class="h-4.5 w-4.5" />
         </a>
         <a
           aria-label="LinkedIn de l'atelier"
@@ -96,7 +111,7 @@ const currentYear = new Date().getFullYear();
           rel="noreferrer"
           class="inline-flex h-7 w-7 items-center justify-center transition-[color,transform] hover:scale-110 hover:text-(--t2a-blue)"
         >
-          <LinkedInLogo className="h-4.5 w-4.5" />
+          <LinkedInLogo class="h-4.5 w-4.5" />
         </a>
       </div>
     </div>
@@ -113,7 +128,10 @@ const currentYear = new Date().getFullYear();
         </a>
       </p>
       <p>
-        <a href="mailto:atelier@traitdarchitecture.com" class={footerLinkClassName}>
+        <a
+          href="mailto:atelier@traitdarchitecture.com"
+          class={footerLinkClassName}
+        >
           atelier[at]traitdarchitecture.com
         </a>
       </p>
