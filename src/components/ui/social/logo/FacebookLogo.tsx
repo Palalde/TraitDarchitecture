@@ -12,6 +12,7 @@ export const FacebookLogo = memo(function FacebookLogo({
 }: FacebookLogoProps) {
   return (
     <svg
+      aria-hidden="true"
       className={className}
       style={style}
       viewBox="-5.5 0 32 32"

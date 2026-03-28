@@ -79,7 +79,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <slot name="head" />
   </head>
   <body class="bg-(--bg-primary) font-sans text-(--text-primary) antialiased">
-    <OverlayScrollbarsSetup client:load />
+    <OverlayScrollbarsSetup client:idle />
     <slot />
   </body>
 </html>

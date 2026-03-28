@@ -57,5 +57,3 @@ export function LandingIsland({ forceReplay = false }: LandingIslandProps) {
     </motion.div>
   );
 }
-
-export default LandingIsland;

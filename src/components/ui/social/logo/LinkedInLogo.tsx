@@ -12,6 +12,7 @@ export const LinkedInLogo = memo(function LinkedInLogo({
 }: LinkedInLogoProps) {
   return (
     <svg
+      aria-hidden="true"
       className={className}
       style={style}
       fill="none"

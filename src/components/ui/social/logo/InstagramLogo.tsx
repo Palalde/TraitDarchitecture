@@ -11,7 +11,12 @@ export const InstagramLogo = memo(function InstagramLogo({
   style,
 }: InstagramLogoProps) {
   return (
-    <svg className={className} style={style} viewBox="0 -0.5 25 25">
+    <svg
+      aria-hidden="true"
+      className={className}
+      style={style}
+      viewBox="0 -0.5 25 25"
+    >
       <path
         d="M15.5 5H9.5C7.29086 5 5.5 6.79086 5.5 9V15C5.5 17.2091 7.29086 19 9.5 19H15.5C17.7091 19 19.5 17.2091 19.5 15V9C19.5 6.79086 17.7091 5 15.5 5Z"
         fill="none"

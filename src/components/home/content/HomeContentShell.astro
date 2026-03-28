@@ -1,3 +1,9 @@
+---
+import { Image } from "astro:assets";
+import topoImg from "@/assets/illustrations/T2A_Plan_Topo_territoire.webp";
+import coupeMerImg from "@/assets/illustrations/T2A_Coupe_Mer-elargie.webp";
+---
+
 <section
   aria-label="Contenu principal de l'accueil"
   class="relative min-h-[200vh] w-full overflow-hidden"
@@ -10,12 +16,12 @@
     <div
       class="relative mt-0 max-w-none overflow-hidden w-160 opacity-[0.20] sm:w-200 lg:w-350 xl:w-640 dark:opacity-[0.10]"
     >
-      <img
+      <Image
         alt=""
         class="h-auto w-full max-w-none grayscale"
         draggable="false"
         loading="lazy"
-        src="/media/illustrations/T2A_Plan_Topo%20territoire.webp"
+        src={topoImg}
       />
       <div aria-hidden="true" class="absolute inset-0 mix-blend-multiply"></div>
     </div>
@@ -31,12 +37,12 @@
     aria-hidden="true"
     class="pointer-events-none absolute inset-x-0 bottom-0 flex justify-center overflow-hidden"
   >
-    <img
+    <Image
       alt=""
       class="w-full max-w-none object-cover object-bottom grayscale opacity-[0.7] dark:opacity-[0.5]"
       draggable="false"
       loading="lazy"
-      src="/media/illustrations/T2A_Coupe_Mer-elargie.webp"
+      src={coupeMerImg}
     />
   </div>
 </section>
