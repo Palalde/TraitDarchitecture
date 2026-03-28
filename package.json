@@ -5,12 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "dev:legacy": "vite",
     "build": "astro build",
-    "build:legacy": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "astro preview",
-    "preview:legacy": "vite preview",
     "astro": "astro"
   },
   "dependencies": {
@@ -19,8 +16,6 @@
     "overlayscrollbars": "^2.14.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.13.1",
     "tailwindcss": "^4.2.2"
   },
   "overrides": {
@@ -32,7 +27,6 @@
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.2.0",
     "astro": "^6.1.1",
     "astro-eslint-parser": "^1.4.0",
     "eslint": "^9.39.4",
