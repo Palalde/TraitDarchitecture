@@ -12,15 +12,20 @@ const FORCE_REPLAY_LANDING = true;
   title="ATELIER TraiT D'ARCHITECTURE"
   description="Atelier d'architecture sensible, contextuelle et engagée. Théa Battistini & Titouan Granet."
 >
-  {
-    !FORCE_REPLAY_LANDING ? (
-      <script is:inline>
-        if (sessionStorage.getItem("t2a-landing-dismissed") === "1") {
-          document.body.classList.add("landing-dismissed");
-        }
-      </script>
-    ) : null
-  }
+  <script define:vars={{ forceReplay: FORCE_REPLAY_LANDING }}>
+    const isDismissed =
+      !forceReplay && sessionStorage.getItem("t2a-landing-dismissed") === "1";
+
+    if (isDismissed) {
+      document.body.classList.add("landing-dismissed");
+    } else {
+      // Landing va jouer — empêcher la restauration de scroll du navigateur
+      if (history.scrollRestoration) {
+        history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+    }
+  </script>
   <main class="flex flex-col bg-(--bg-primary)">
     <div id="landing-wrapper">
       <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
