@@ -111,6 +111,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.landing-dismissed #landing-wrapper {
+  display: none;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --t2a-blue: #8a9bb5;

@@ -1,13 +1,32 @@
 ---
-import HomeExperience from "@/components/home/HomeExperience";
+import LandingIsland from "@/components/home/LandingIsland";
+import HomeContentShell from "@/components/home/content/HomeContentShell.astro";
+import { Header } from "@/components/ui/header/Header";
 import Footer from "@/components/ui/footer/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const FORCE_REPLAY_LANDING = true;
 ---
 
 <BaseLayout
   title="ATELIER TraiT D'ARCHITECTURE"
   description="Atelier d'architecture sensible, contextuelle et engagée. Théa Battistini & Titouan Granet."
 >
-  <HomeExperience client:load />
+  {
+    !FORCE_REPLAY_LANDING ? (
+      <script is:inline>
+        if (sessionStorage.getItem("t2a-landing-dismissed") === "1") {
+          document.body.classList.add("landing-dismissed");
+        }
+      </script>
+    ) : null
+  }
+  <main class="flex flex-col bg-(--bg-primary)">
+    <div id="landing-wrapper">
+      <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
+    </div>
+    <Header client:load waitForLanding />
+    <HomeContentShell />
+  </main>
   <Footer />
 </BaseLayout>

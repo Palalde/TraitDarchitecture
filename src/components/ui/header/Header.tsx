@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderHamburger } from "./HeaderHamburger";
 import { HeaderMobileMenu } from "./HeaderMobileMenu";
@@ -13,21 +14,54 @@ import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
 
 interface HeaderProps {
   animateEntrance?: boolean;
+  waitForLanding?: boolean;
 }
 
-export function Header({ animateEntrance = false }: HeaderProps) {
+export function Header({
+  animateEntrance = false,
+  waitForLanding = false,
+}: HeaderProps) {
   const { closeMobileMenu, isMobileMenuOpen, toggleMobileMenu } =
     useHeaderMobileMenu();
   const { isHeaderVisible } = useHeaderAutoHide();
   const reducedMotion = useReducedMotion();
   const headerVisible = isHeaderVisible || isMobileMenuOpen;
+  const [hasEnteredFromLanding, setHasEnteredFromLanding] =
+    useState(animateEntrance);
+  const [isReadyToRender, setIsReadyToRender] = useState(!waitForLanding);
+
+  useEffect(() => {
+    if (!waitForLanding) {
+      return;
+    }
+
+    const revealHeader = () => {
+      setHasEnteredFromLanding(true);
+      setIsReadyToRender(true);
+    };
+
+    if (document.body.classList.contains("landing-dismissed")) {
+      revealHeader();
+      return;
+    }
+
+    window.addEventListener("landing:dismissed", revealHeader);
+
+    return () => {
+      window.removeEventListener("landing:dismissed", revealHeader);
+    };
+  }, [waitForLanding]);
+
+  if (!isReadyToRender) {
+    return null;
+  }
 
   return (
     <motion.header
       aria-label="En-tête principal"
       animate={{ y: headerVisible ? 0 : "-100%" }}
       className="fixed inset-x-0 top-0 z-50 h-(--header-height)"
-      initial={animateEntrance ? { y: "-100%" } : false}
+      initial={hasEnteredFromLanding ? { y: "-100%" } : false}
       transition={{
         duration: reducedMotion ? 0 : 0.42,
         ease: [0.22, 1, 0.36, 1],

@@ -25,17 +25,8 @@ export function useLandingLifecycle(options: UseLandingLifecycleOptions = {}) {
     return localStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) === "1";
   }, []);
 
-  const isLandingDismissed = useMemo(() => {
-    if (forceReplayAnimation || typeof window === "undefined") {
-      return false;
-    }
-
-    return sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) === "1";
-  }, [forceReplayAnimation]);
-
-  const initialPhase: LandingPhase = isLandingDismissed ? "dismissed" : "ready";
-  const [phase, setPhase] = useState<LandingPhase>(initialPhase);
-  const [isIntroComplete, setIsIntroComplete] = useState(isLandingDismissed);
+  const [phase, setPhase] = useState<LandingPhase>("ready");
+  const [isIntroComplete, setIsIntroComplete] = useState(false);
   const [skipAnimation, setSkipAnimation] = useState(false);
 
   const isSlidingUp = phase === "sliding-up";
@@ -75,6 +66,19 @@ export function useLandingLifecycle(options: UseLandingLifecycleOptions = {}) {
 
     setPhase("dismissed");
   }, [phase]);
+
+  useEffect(() => {
+    if (forceReplayAnimation || typeof window === "undefined") {
+      return;
+    }
+
+    if (sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) !== "1") {
+      return;
+    }
+
+    setPhase("dismissed");
+    setIsIntroComplete(true);
+  }, [forceReplayAnimation]);
 
   useEffect(() => {
     if (forceReplayAnimation || !isDismissed || typeof window === "undefined") {
