@@ -26,11 +26,11 @@ const FORCE_REPLAY_LANDING = true;
       window.scrollTo(0, 0);
     }
   </script>
+  <Header client:load waitForLanding />
   <main class="flex flex-col bg-(--bg-primary)">
     <div id="landing-wrapper">
       <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
     </div>
-    <Header client:load waitForLanding />
     <HomeContentShell />
   </main>
   <Footer />
