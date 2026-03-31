@@ -1,0 +1,17 @@
+---
+import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
+import Footer from "@/components/ui/footer/Footer.astro";
+import { Header } from "@/components/ui/header/Header";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Atelier | ATELIER TraiT D'ARCHITECTURE"
+  description="Page atelier en cours de migration Astro."
+>
+  <Header client:load />
+  <main class="relative min-h-[200vh] overflow-hidden bg-(--bg-primary)">
+    <BackgroundDecorations />
+  </main>
+  <Footer />
+</BaseLayout>
