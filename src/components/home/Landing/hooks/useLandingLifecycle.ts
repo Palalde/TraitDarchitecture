@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 type LandingPhase = "ready" | "sliding-up" | "dismissed";
 
@@ -14,8 +20,25 @@ const LANDING_DISMISS_KEYS = new Set([
   "Spacebar",
 ]);
 
+function subscribeToBrowserStorage() {
+  return () => {};
+}
+
+function getHasDismissedLanding(forceReplayAnimation: boolean) {
+  if (forceReplayAnimation || typeof window === "undefined") {
+    return false;
+  }
+
+  return sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) === "1";
+}
+
 export function useLandingLifecycle(options: UseLandingLifecycleOptions = {}) {
   const { forceReplayAnimation = false } = options;
+  const hasDismissedLanding = useSyncExternalStore(
+    subscribeToBrowserStorage,
+    () => getHasDismissedLanding(forceReplayAnimation),
+    () => false,
+  );
 
   const isReturningVisitor = useMemo(() => {
     if (typeof window === "undefined") {
@@ -30,9 +53,9 @@ export function useLandingLifecycle(options: UseLandingLifecycleOptions = {}) {
   const [skipAnimation, setSkipAnimation] = useState(false);
 
   const isSlidingUp = phase === "sliding-up";
-  const isDismissed = phase === "dismissed";
-  const contentVisible = isIntroComplete || isDismissed;
-  const landingCollapsed = isSlidingUp || isDismissed;
+  const isDismissed = hasDismissedLanding || phase === "dismissed";
+  const contentVisible = hasDismissedLanding || isIntroComplete || isDismissed;
+  const landingCollapsed = hasDismissedLanding || isSlidingUp || isDismissed;
 
   const dismissLanding = useCallback(() => {
     if (phase !== "ready" || !isIntroComplete) {
@@ -66,19 +89,6 @@ export function useLandingLifecycle(options: UseLandingLifecycleOptions = {}) {
 
     setPhase("dismissed");
   }, [phase]);
-
-  useEffect(() => {
-    if (forceReplayAnimation || typeof window === "undefined") {
-      return;
-    }
-
-    if (sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) !== "1") {
-      return;
-    }
-
-    setPhase("dismissed");
-    setIsIntroComplete(true);
-  }, [forceReplayAnimation]);
 
   useEffect(() => {
     if (forceReplayAnimation || !isDismissed || typeof window === "undefined") {
