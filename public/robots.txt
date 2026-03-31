@@ -1,0 +1,3 @@
+# Temporary pre-launch policy. Review before production.
+User-agent: *
+Disallow: /
