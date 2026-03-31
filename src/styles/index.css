@@ -215,6 +215,60 @@ body.landing-dismissed #landing-wrapper {
 }
 
 /* ============================================
+   FOOTER — Logo baseline and overlap
+   ============================================ */
+
+:root {
+  --footer-logo-height: 32px;
+  --footer-logo-overlap: 28.5px;
+  --footer-root-overlap: 28.5px;
+  --footer-logo-top-offset: 0px;
+  --footer-content-start: 60px;
+  --footer-logo-scale: 0.5;
+}
+
+/* tablet */
+@media (min-width: 640px) {
+  :root {
+    --footer-logo-height: 32px;
+    --footer-logo-overlap: 28.5px;
+    --footer-root-overlap: 28.5px;
+    --footer-logo-top-offset: 0px;
+    --footer-content-start: 60px;
+    --footer-logo-scale: 0.8;
+  }
+}
+
+/* Laptop */
+@media (min-width: 768px) {
+  :root {
+    --footer-logo-height: 50px;
+    --footer-logo-overlap: 44.5px;
+    --footer-root-overlap: 44.5px;
+    --footer-logo-top-offset: 0px;
+    --footer-content-start: 84px;
+    --footer-logo-scale: 0.8;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  :root {
+    --footer-content-start: 88px;
+  }
+}
+
+/* 2K */
+@media (min-width: 1536px) {
+  :root {
+    --footer-root-overlap: 89px;
+    --footer-logo-top-offset: 44.5px;
+    --footer-content-start: 140.5px;
+    --footer-logo-scale: 2;
+  }
+}
+
+/* ============================================
    LANDING — Tailles fixes par breakpoint
    ============================================ */
 

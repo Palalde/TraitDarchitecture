@@ -31,15 +31,30 @@ const currentYear = new Date().getFullYear();
 
 <footer
   aria-label="Pied de page"
-  class="relative w-full overflow-hidden bg-(--gradient-end)"
+  class="relative w-full overflow-hidden bg-transparent"
+  style="margin-top: calc(var(--footer-root-overlap) * -1)"
 >
   <div
-    class="pointer-events-none absolute top-3 -left-30 flex h-8 items-start md:-left-48 md:h-12.5 lg:top-4"
+    aria-hidden="true"
+    class="absolute inset-x-0 bottom-0 bg-(--gradient-end)"
+    style="top: var(--footer-root-overlap)"
   >
-    <T2ALogoLineLeft class="h-full w-auto max-w-none shrink-0 text-(--trait)" />
   </div>
 
-  <div class="relative z-10 px-6 pt-18 sm:px-8 md:pt-24 lg:px-10 lg:pt-16">
+  <div
+    class="pointer-events-none absolute top-0 -left-15 z-10 flex h-(--footer-logo-height) items-start sm:-left-20 md:-left-38 2xl:-left-100"
+    style="top: var(--footer-logo-top-offset)"
+  >
+    <T2ALogoLineLeft
+      class="h-full w-auto max-w-none shrink-0 text-(--trait)"
+      style="transform: scale(var(--footer-logo-scale)); transform-origin: left 89.12%;"
+    />
+  </div>
+
+  <div
+    class="relative z-20 px-6 sm:px-8 lg:px-10"
+    style="padding-top: var(--footer-content-start)"
+  >
     <div class="mx-auto w-full max-w-3xl md:max-w-4xl">
       <div class="grid grid-cols-1 sm:grid-cols-3">
         {
@@ -64,7 +79,7 @@ const currentYear = new Date().getFullYear();
 
   <div
     aria-hidden="true"
-    class="pointer-events-none mt-6 flex w-full select-none items-baseline justify-center px-4 md:mt-10"
+    class="pointer-events-none relative z-10 mt-6 flex w-full select-none items-baseline justify-center px-4 md:mt-10"
   >
     <p
       class="w-full text-center font-normal leading-none tracking-[0.12em] text-(--t2a-blue-dark) opacity-50"
@@ -76,7 +91,7 @@ const currentYear = new Date().getFullYear();
   </div>
 
   <div
-    class="mx-auto grid w-full max-w-3xl grid-cols-1 gap-6 px-6 py-6 text-center text-[0.8rem] leading-relaxed text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:grid-cols-3 sm:items-start sm:gap-4 sm:px-8 sm:text-left md:max-w-4xl lg:px-10"
+    class="relative z-20 mx-auto grid w-full max-w-3xl grid-cols-1 gap-6 px-6 py-6 text-center text-[0.8rem] leading-relaxed text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:grid-cols-3 sm:items-start sm:gap-4 sm:px-8 sm:text-left md:max-w-4xl lg:px-10"
   >
     <div class="space-y-2 sm:text-left">
       <p class="font-light">Architecture sensible, contextuelle et engagée.</p>
