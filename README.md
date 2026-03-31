@@ -1,6 +1,6 @@
-# Trait D'Architecture
+# ATELIER TraiT D'ARCHITECTURE
 
-Site vitrine de l'ATELIER TraiT D'ARCHITECTURE, migré vers Astro.
+Site vitrine de l'atelier d'architecture de Théa Battistini & Titouan Granet.
 
 ## Stack
 
@@ -10,6 +10,7 @@ Site vitrine de l'ATELIER TraiT D'ARCHITECTURE, migré vers Astro.
 - TailwindCSS v4
 - Framer Motion
 - OverlayScrollbars
+- ESLint
 
 ## Scripts
 
@@ -21,12 +22,23 @@ Site vitrine de l'ATELIER TraiT D'ARCHITECTURE, migré vers Astro.
 ## Structure
 
 - `src/pages/` : routes Astro
-- `src/layouts/` : layouts Astro
+- `src/layouts/` : layout principal
 - `src/components/` : composants Astro et islands React
-- `public/` : médias, polices, favicon
+- `src/styles/index.css` : tokens et styles globaux
+- `public/` : polices, favicon, fichiers statiques
 
-## Notes
+## Principes
 
-- Le site suit une migration SPA React/Vite vers Astro.
-- Les composants purement statiques doivent rester en `.astro`.
-- Les composants React sont réservés aux parties nécessitant de l'interactivité client.
+- Architecture Astro-first
+- React réservé aux besoins d'interactivité client
+- HTML pré-rendu par défaut
+- Tailwind inline et tokens centralisés dans `src/styles/index.css`
+
+## Documentation
+
+- `.github/ARCHITECTURE.md` : structure du projet et conventions
+- `.github/ASTRO.md` : règles Astro-first et usage des islands
+- `.github/UI.md` : système visuel
+- `.github/UX.md` : interactions, animation, scroll
+- `.github/CONTENT.md` : contenu éditorial
+- `.github/ROADMAP.md` : phases du projet
