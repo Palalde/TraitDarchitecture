@@ -4,6 +4,7 @@ import InstagramLogo from "../social/logo/InstagramLogo.astro";
 import LinkedInLogo from "../social/logo/LinkedInLogo.astro";
 import FooterOffice from "./FooterOffice.astro";
 import T2ALogoLineLeft from "./logo/T2ALogoLineLeft.astro";
+import T2ANordLogo from "./logo/T2ANordLogo.astro";
 
 const FOOTER_OFFICES = [
   {
@@ -81,8 +82,16 @@ const currentYear = new Date().getFullYear();
     aria-hidden="true"
     class="pointer-events-none relative z-10 mt-6 flex w-full select-none items-baseline justify-center px-4 md:mt-10"
   >
+    <div
+      class="absolute left-1/2 top-1/2 z-0 w-(--footer-nord-width)"
+      style="margin-top: var(--footer-nord-offset-y); transform: translate(calc(-50% + var(--footer-nord-offset-x)), -50%);"
+    >
+      <T2ANordLogo
+        class="h-auto w-full text-(--t2a-blue-dark) opacity-(--footer-nord-opacity) dark:text-(--t2a-blue)"
+      />
+    </div>
     <p
-      class="w-full text-center font-normal leading-none tracking-[0.12em] text-(--t2a-blue-dark) opacity-50"
+      class="relative z-10 w-full text-center font-normal leading-none tracking-[0.12em] text-(--t2a-blue-dark) opacity-50"
       style="font-size: clamp(2.75rem, 7.5vw, 7.5rem)"
     >
       ATELIER <span class="font-semibold" style="font-size: 1.15em">TraiT</span>

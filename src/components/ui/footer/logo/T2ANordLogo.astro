@@ -1,0 +1,40 @@
+---
+import nordSvgSource from "@/assets/logo/compas/T2A-NORD.svg?raw";
+
+interface Props {
+  class?: string;
+  title?: string;
+  [attribute: string]: unknown;
+}
+
+const { class: className, title, ...svgAttributes }: Props = Astro.props;
+
+const cleanedSvgSource = nordSvgSource
+  .replace(/^<\?xml[\s\S]*?\?>\s*/i, "")
+  .replace(/<!--[\s\S]*?-->\s*/g, "")
+  .trim();
+
+const svgMatch = cleanedSvgSource.match(/^<svg\b([^>]*)>([\s\S]*)<\/svg>$/i);
+
+if (!svgMatch) {
+  throw new Error("Invalid SVG source for T2ANordLogo");
+}
+
+const [, rootAttributes, innerSvgMarkup] = svgMatch;
+const viewBox =
+  rootAttributes.match(/\bviewBox="([^"]+)"/i)?.[1] ?? "0 0 793.70135 1122.52";
+const themedInnerSvgMarkup = innerSvgMarkup
+  .replace(/#51638b/gi, "currentColor")
+  .replace(/#ffffff/gi, "var(--gradient-end)");
+---
+
+<svg
+  {...svgAttributes}
+  aria-hidden={title ? undefined : "true"}
+  aria-label={title}
+  class={className}
+  role={title ? "img" : undefined}
+  viewBox={viewBox}
+  xmlns="http://www.w3.org/2000/svg"
+  set:html={themedInnerSvgMarkup}
+/>
