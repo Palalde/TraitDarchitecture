@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
-import { isPathActive, useCurrentPathname } from "@/hooks/useCurrentPathname";
+import { isPathActive } from "@/hooks/useCurrentPathname";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { AnimatePresence, motion } from "framer-motion";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
@@ -10,6 +10,7 @@ import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
 interface HeaderMobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  pathname: string;
 }
 
 interface MobileMenuLinkProps {
@@ -53,9 +54,12 @@ function MobileMenuLink({
   );
 }
 
-export function HeaderMobileMenu({ isOpen, onClose }: HeaderMobileMenuProps) {
+export function HeaderMobileMenu({
+  isOpen,
+  onClose,
+  pathname,
+}: HeaderMobileMenuProps) {
   const prefersReducedMotion = useReducedMotion();
-  const pathname = useCurrentPathname();
   const navigationRef = useRef<HTMLElement | null>(null);
   useBodyScrollLock(isOpen);
   useFocusTrap(navigationRef, isOpen);

@@ -10,19 +10,23 @@ import { T2ALogoBrut } from "./logo/T2ALogoBrut";
 import { HeaderNavItem } from "./HeaderNavItem";
 import { T2ALogoLineRight } from "./logo/T2ALogoLineRight";
 import { useReducedMotion } from "../../../hooks/useReducedMotion";
+import { useCurrentPathname } from "@/hooks/useCurrentPathname";
 import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
 
 interface HeaderProps {
   animateEntrance?: boolean;
+  pathname: string;
   waitForLanding?: boolean;
 }
 
 export function Header({
   animateEntrance = false,
+  pathname,
   waitForLanding = false,
 }: HeaderProps) {
+  const currentPathname = useCurrentPathname(pathname);
   const { closeMobileMenu, isMobileMenuOpen, toggleMobileMenu } =
-    useHeaderMobileMenu();
+    useHeaderMobileMenu(currentPathname);
   const { isHeaderVisible } = useHeaderAutoHide();
   const reducedMotion = useReducedMotion();
   const headerVisible = isHeaderVisible || isMobileMenuOpen;
@@ -87,13 +91,30 @@ export function Header({
           aria-label="Navigation principale"
           className="absolute inset-y-0 left-[calc(var(--header-height)*1.2)] z-20 flex items-center gap-0.5 sm:gap-1 md:gap-2 lg:gap-3"
         >
-          <HeaderNavItem label="ATELIER" to="/atelier" />
-          <HeaderNavItem label="TraiT" to="/trait/philosophie" />
-          <HeaderNavItem label="D'ARCHITECTURE" to="/architecture" />
+          <HeaderNavItem
+            label="ATELIER"
+            pathname={currentPathname}
+            to="/atelier"
+          />
+          <HeaderNavItem
+            activePath="/trait"
+            label="TraiT"
+            pathname={currentPathname}
+            to="/trait/philosophie"
+          />
+          <HeaderNavItem
+            label="D'ARCHITECTURE"
+            pathname={currentPathname}
+            to="/architecture"
+          />
         </nav>
         {/* contact */}
         <div className="absolute inset-y-0 right-[calc(var(--header-height)*4)] z-20 hidden items-center md:flex">
-          <HeaderNavItem label="Contact" to="/contact" />
+          <HeaderNavItem
+            label="Contact"
+            pathname={currentPathname}
+            to="/contact"
+          />
         </div>
         {/* social */}
         <div className="absolute inset-y-0 right-[calc(var(--header-height)*2.5)] z-20 hidden items-center gap-2 md:flex lg:gap-2.5">
@@ -130,11 +151,19 @@ export function Header({
 
         {/* extrait */}
         <div className="absolute -right-3 z-20 hidden top-4 md:flex lg:-right-2">
-          <HeaderExtraitItem label="EXTraiT" to="/extrait" />
+          <HeaderExtraitItem
+            label="EXTraiT"
+            pathname={currentPathname}
+            to="/extrait"
+          />
         </div>
         {/* mobile menu */}
       </div>
-      <HeaderMobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
+      <HeaderMobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={closeMobileMenu}
+        pathname={currentPathname}
+      />
     </motion.header>
   );
 }

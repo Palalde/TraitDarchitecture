@@ -1,13 +1,19 @@
-import { isPathActive, useCurrentPathname } from "@/hooks/useCurrentPathname";
+import { isPathActive } from "@/hooks/useCurrentPathname";
 
 interface HeaderNavItemProps {
+  activePath?: string;
   label: string;
+  pathname: string;
   to: string;
 }
 
-export function HeaderNavItem({ label, to }: HeaderNavItemProps) {
-  const pathname = useCurrentPathname();
-  const isActive = isPathActive(pathname, to);
+export function HeaderNavItem({
+  activePath,
+  label,
+  pathname,
+  to,
+}: HeaderNavItemProps) {
+  const isActive = isPathActive(pathname, activePath ?? to);
 
   return (
     <a

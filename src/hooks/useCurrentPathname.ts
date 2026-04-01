@@ -1,23 +1,43 @@
 import { useEffect, useState } from "react";
 
+export function normalizePathname(pathname: string) {
+  if (!pathname) {
+    return "/";
+  }
+
+  if (pathname.length > 1 && pathname.endsWith("/")) {
+    return pathname.slice(0, -1);
+  }
+
+  return pathname;
+}
+
 function getCurrentPathname() {
   if (typeof window === "undefined") {
     return "/";
   }
 
-  return window.location.pathname || "/";
+  return normalizePathname(window.location.pathname || "/");
 }
 
 export function isPathActive(pathname: string, href: string) {
-  if (href === "/") {
-    return pathname === href;
+  const normalizedPathname = normalizePathname(pathname);
+  const normalizedHref = normalizePathname(href);
+
+  if (normalizedHref === "/") {
+    return normalizedPathname === normalizedHref;
   }
 
-  return pathname === href || pathname.startsWith(`${href}/`);
+  return (
+    normalizedPathname === normalizedHref ||
+    normalizedPathname.startsWith(`${normalizedHref}/`)
+  );
 }
 
-export function useCurrentPathname() {
-  const [pathname, setPathname] = useState(getCurrentPathname);
+export function useCurrentPathname(initialPathname: string) {
+  const [pathname, setPathname] = useState(() =>
+    normalizePathname(initialPathname),
+  );
 
   useEffect(() => {
     const updatePathname = () => {

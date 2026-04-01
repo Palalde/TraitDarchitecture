@@ -1,0 +1,15 @@
+---
+import { Header } from "./Header";
+
+interface Props {
+  waitForLanding?: boolean;
+}
+
+const { waitForLanding = false }: Props = Astro.props;
+---
+
+<Header
+  client:load
+  pathname={Astro.url.pathname}
+  waitForLanding={waitForLanding}
+/>

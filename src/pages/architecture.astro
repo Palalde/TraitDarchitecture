@@ -1,7 +1,7 @@
 ---
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
-import { Header } from "@/components/ui/header/Header";
+import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
@@ -9,7 +9,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   title="Architecture | ATELIER TraiT D'ARCHITECTURE"
   description="Projets et réalisations de l'ATELIER TraiT D'ARCHITECTURE."
 >
-  <Header client:load />
+  <HeaderShell />
   <main class="relative min-h-[200vh] overflow-hidden bg-(--bg-primary)">
     <BackgroundDecorations />
   </main>
