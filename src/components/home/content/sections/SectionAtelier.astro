@@ -1,0 +1,70 @@
+---
+import TeaserContentBlock from "@/components/home/content/blocks/TeaserContentBlock.astro";
+import TeaserMediaBlock from "@/components/home/content/blocks/TeaserMediaBlock.astro";
+
+interface Props {
+  className?: string;
+}
+
+const { className }: Props = Astro.props;
+---
+
+<section id="atelier" aria-labelledby="home-section-atelier" class={className}>
+  <h2 id="home-section-atelier" class="sr-only">ATELIER</h2>
+
+  <div class="relative z-10 mb-10 sm:mb-12 lg:hidden">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute bottom-full left-1/2 h-24 w-px -translate-x-1/2 bg-(--trait) sm:h-28"
+    >
+    </div>
+
+    <div class="flex items-center gap-4">
+      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <span
+        aria-hidden="true"
+        class="shrink-0 text-center text-[1.5rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      >
+        ATELIER
+      </span>
+      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+    </div>
+  </div>
+
+  <div
+    class="relative mt-10 grid h-full grid-cols-1 items-center gap-10 sm:mt-12 lg:mt-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute left-1/2 z-0 w-px -translate-x-1/2 bg-(--trait) -top-10 -bottom-12 sm:-top-12 sm:-bottom-14 lg:hidden"
+    >
+    </div>
+
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute left-1/2 z-0 hidden w-px -translate-x-1/2 bg-(--trait) lg:block lg:-top-32 lg:-bottom-16"
+    >
+    </div>
+
+    <div
+      class="relative z-10 order-2 flex h-full flex-col justify-center lg:order-1 lg:pr-12"
+    >
+      <div class="hidden items-center gap-4 lg:flex lg:justify-start">
+        <span
+          aria-hidden="true"
+          class="shrink-0 text-center text-[1.5rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-left lg:text-[2.25rem]"
+        >
+          ATELIER
+        </span>
+        <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      </div>
+
+      <TeaserContentBlock />
+    </div>
+
+    <TeaserMediaBlock
+      containerClassName="relative z-10 order-1 flex h-full items-center lg:order-2 lg:pl-12"
+      label="Emplacement visuel atelier"
+    />
+  </div>
+</section>

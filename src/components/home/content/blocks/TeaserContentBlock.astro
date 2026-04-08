@@ -1,0 +1,41 @@
+---
+interface Props {
+  className?: string;
+  panelLabel?: string;
+  footerLabel?: string;
+  lineWidths?: string[];
+}
+
+const {
+  className,
+  panelLabel = "Structure teaser",
+  footerLabel = "Zone texte",
+  lineWidths = ["w-10/12", "w-full", "w-11/12", "w-8/12"],
+}: Props = Astro.props;
+
+const placeholderClassName = "border border-(--border) bg-(--bg-secondary)";
+---
+
+<div
+  class:list={[
+    "mt-8 border border-(--border) bg-(--bg-primary) p-6 sm:p-8 lg:mt-10 lg:p-10",
+    className,
+  ]}
+>
+  <p class="text-[0.8rem] uppercase tracking-[0.16em] text-(--text-muted)">
+    {panelLabel}
+  </p>
+  <div class="mt-5 space-y-3" aria-hidden="true">
+    {
+      lineWidths.map((width) => (
+        <div class:list={[placeholderClassName, "h-3", width]} />
+      ))
+    }
+  </div>
+  <div
+    class="mt-8 flex items-center gap-3 text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+  >
+    <span>{footerLabel}</span>
+    <span aria-hidden="true" class="h-px flex-1 bg-(--trait)"></span>
+  </div>
+</div>

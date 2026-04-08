@@ -1,0 +1,86 @@
+---
+interface Props {
+  className?: string;
+}
+
+const { className }: Props = Astro.props;
+---
+
+<section
+  id="architecture"
+  aria-labelledby="home-section-architecture"
+  class={className}
+>
+  <div class="flex h-full flex-col justify-center">
+    <div class="relative z-10 mx-auto flex w-full max-w-4xl items-center gap-4">
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute bottom-full left-1/2 h-12 w-px -translate-x-1/2 bg-(--trait) sm:h-14 lg:h-16"
+      >
+      </div>
+      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <h2
+        id="home-section-architecture"
+        class="shrink-0 text-center text-[1.5rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
+      >
+        D'ARCHITECTURE
+      </h2>
+      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+    </div>
+
+    <div
+      class="relative z-10 mt-10 grid grid-cols-1 gap-6 sm:mt-12 lg:mt-14 lg:grid-cols-3 lg:gap-8"
+    >
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute left-1/2 z-0 w-px -translate-x-1/2 bg-(--trait) -top-10 -bottom-12 sm:-top-12 sm:-bottom-14 lg:-top-14 lg:-bottom-20 xl:-bottom-24"
+      >
+      </div>
+
+      <article
+        class="relative z-10 border border-(--border) bg-(--bg-primary) p-4 sm:p-5"
+      >
+        <div
+          class="aspect-4/5 w-full border border-(--trait) bg-(--t2a-blue-wash)"
+        >
+        </div>
+        <div class="mt-5 space-y-3" aria-hidden="true">
+          <div class="h-3 w-8/12 border border-(--border) bg-(--bg-secondary)">
+          </div>
+          <div class="h-3 w-10/12 border border-(--border) bg-(--bg-secondary)">
+          </div>
+        </div>
+      </article>
+
+      <article
+        class="relative z-10 border border-(--border) bg-(--bg-primary) p-4 sm:p-5"
+      >
+        <div
+          class="aspect-4/5 w-full border border-(--trait) bg-(--t2a-blue-wash)"
+        >
+        </div>
+        <div class="mt-5 space-y-3" aria-hidden="true">
+          <div class="h-3 w-8/12 border border-(--border) bg-(--bg-secondary)">
+          </div>
+          <div class="h-3 w-10/12 border border-(--border) bg-(--bg-secondary)">
+          </div>
+        </div>
+      </article>
+
+      <article
+        class="relative z-10 border border-(--border) bg-(--bg-primary) p-4 sm:p-5"
+      >
+        <div
+          class="aspect-4/5 w-full border border-(--trait) bg-(--t2a-blue-wash)"
+        >
+        </div>
+        <div class="mt-5 space-y-3" aria-hidden="true">
+          <div class="h-3 w-8/12 border border-(--border) bg-(--bg-secondary)">
+          </div>
+          <div class="h-3 w-10/12 border border-(--border) bg-(--bg-secondary)">
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
