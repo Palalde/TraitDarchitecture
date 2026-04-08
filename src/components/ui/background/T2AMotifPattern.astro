@@ -1,0 +1,32 @@
+---
+import motifSvgRaw from "@/assets/logo/motif/T2A-MOTIFS.svg?raw";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className }: Props = Astro.props;
+
+const motifSvg = motifSvgRaw
+  .replace(/<\?xml[\s\S]*?\?>/g, "")
+  .replace(/<!--[\s\S]*?-->/g, "")
+  .replace(/fill:#51638b/g, "fill:none")
+  .replace(/stroke:#ffffff/g, "stroke:currentColor")
+  .replace(
+    /<svg([^>]*)>/,
+    '<svg$1 preserveAspectRatio="xMidYMid slice" focusable="false" aria-hidden="true">',
+  );
+---
+
+<div
+  aria-hidden="true"
+  class:list={[
+    "pointer-events-none absolute inset-0 overflow-hidden text-(--t2a-blue-dark) opacity-[0.06] dark:text-(--t2a-blue-light) dark:opacity-[0.10]",
+    className,
+  ]}
+>
+  <div
+    class="h-full w-full opacity-[0.8] dark:opacity-[0.5] [&>svg]:h-full [&>svg]:w-full [&>svg]:scale-[1.08] [&>svg]:origin-center"
+    set:html={motifSvg}
+  />
+</div>
