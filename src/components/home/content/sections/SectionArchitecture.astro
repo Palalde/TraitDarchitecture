@@ -47,7 +47,7 @@ const architectureCards = [
     >
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute left-1/2 z-0 w-px -translate-x-1/2 bg-(--trait) -top-10 -bottom-12 sm:-top-12 sm:-bottom-14 lg:-top-14 lg:-bottom-20 xl:-bottom-24"
+        class="architecture-center-trait pointer-events-none absolute left-1/2 z-0 w-px -translate-x-1/2 bg-(--trait) -top-10 -bottom-12 sm:-top-12 sm:-bottom-14 lg:-top-14 lg:-bottom-49 xl:-bottom-24"
       >
       </div>
 
@@ -59,3 +59,11 @@ const architectureCards = [
     </div>
   </div>
 </section>
+
+<style>
+  @media (min-width: 1210px) and (max-width: 1279px) {
+    .architecture-center-trait {
+      bottom: -8rem;
+    }
+  }
+</style>
