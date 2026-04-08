@@ -1,0 +1,36 @@
+---
+import T2AMotifPattern from "@/components/ui/background/T2AMotifPattern.astro";
+
+interface Props {
+  className?: string;
+  lineWidths?: readonly string[];
+}
+
+const { className, lineWidths = ["w-8/12", "w-10/12"] }: Props = Astro.props;
+---
+
+<article
+  class:list={[
+    "relative z-10 overflow-hidden border border-(--border) bg-(--bg-primary) p-4 sm:p-5",
+    className,
+  ]}
+>
+  <T2AMotifPattern />
+
+  <div
+    class="relative z-10 aspect-4/5 w-full border border-(--trait) bg-(--t2a-blue-wash)"
+  >
+  </div>
+  <div class="relative z-10 mt-5 space-y-3" aria-hidden="true">
+    {
+      lineWidths.map((width) => (
+        <div
+          class:list={[
+            "h-3 border border-(--border) bg-(--bg-secondary)",
+            width,
+          ]}
+        />
+      ))
+    }
+  </div>
+</article>

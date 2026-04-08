@@ -9,6 +9,7 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   imageClassName?: string;
+  imageLoading?: "lazy" | "eager";
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   image,
   imageAlt = "",
   imageClassName = "object-cover object-center",
+  imageLoading = "lazy",
 }: Props = Astro.props;
 ---
 
@@ -35,7 +37,7 @@ const {
             alt={imageAlt}
             class:list={["h-full w-full", imageClassName]}
             draggable="false"
-            loading="eager"
+            loading={imageLoading}
             src={image}
           />
         )

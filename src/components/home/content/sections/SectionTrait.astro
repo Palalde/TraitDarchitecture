@@ -1,6 +1,7 @@
 ---
 import TeaserContentBlock from "@/components/home/content/blocks/TeaserContentBlock.astro";
 import TeaserMediaBlock from "@/components/home/content/blocks/TeaserMediaBlock.astro";
+import carnetPhoto from "@/assets/photos/home/carnet.jpg";
 
 interface Props {
   className?: string;
@@ -48,7 +49,10 @@ const { className }: Props = Astro.props;
 
     <TeaserMediaBlock
       containerClassName="relative z-10 order-1 flex h-full items-center lg:order-1 lg:pr-12"
-      label="Emplacement visuel TraiT"
+      image={carnetPhoto}
+      imageAlt="Carnet de relevé, plans et ordinateur posés sur des rochers face à la mer"
+      imageClassName="object-cover object-[70%_center]"
+      label="Philosophie & Méthode"
     />
 
     <div
