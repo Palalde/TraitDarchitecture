@@ -57,8 +57,8 @@
   --text-primary: #1a1d24;
   /* Texte secondaire (descriptions, dates, lieux) */
   --text-secondary: #6b7280;
-  /* Texte discret (légendes, metas) */
-  --text-muted: #9ca3af;
+  /* Texte discret (légendes, metas) — WCAG AA sur fond clair */
+  --text-muted: #6b7585;
   /* Bordures, séparateurs (gris bleuté doux) */
   --border: #e2e5eb;
   /* Le trait (séparateurs, lignes, underlines) */
@@ -127,7 +127,7 @@ body.landing-dismissed #landing-wrapper {
     --bg-secondary: #161b25;
     --text-primary: #e2e5eb;
     --text-secondary: #8b95a5;
-    --text-muted: #5a6474;
+    --text-muted: #8691a0;
     --border: #252d3a;
     --trait: #8a9bb5;
     --gradient-end: #1a2030;

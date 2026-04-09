@@ -25,7 +25,7 @@ const footerLinkClassName =
   "font-medium underline decoration-current/35 underline-offset-4 transition-[color,text-decoration-color] hover:text-(--t2a-blue-light) hover:decoration-current";
 
 const footerMetaLinkClassName =
-  "font-medium underline decoration-current/35 underline-offset-4 transition-[color,text-decoration-color] hover:text-(--t2a-blue-dark) hover:decoration-current dark:hover:text-(--t2a-blue)";
+  "font-medium underline decoration-current/35 underline-offset-4 text-(--t2a-blue-dark) transition-[color,text-decoration-color] hover:text-(--text-primary) hover:decoration-current dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)";
 
 const currentYear = new Date().getFullYear();
 ---
@@ -164,7 +164,7 @@ const currentYear = new Date().getFullYear();
 
     <div class="space-y-2 sm:text-right">
       <p>© {currentYear} ATELIER TraiT D'ARCHITECTURE</p>
-      <p class="space-x-2 text-(--t2a-blue-light)">
+      <p class="space-x-2">
         <a href="/mentions-legales" class={footerMetaLinkClassName}>
           Mentions légales
         </a>
