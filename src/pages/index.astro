@@ -6,15 +6,33 @@ import Footer from "@/components/ui/footer/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const FORCE_REPLAY_LANDING = false;
+const HOME_STAGE_SLIDE_DISTANCE = "-100vh";
+const HOME_STAGE_SLIDE_DURATION_MS = 1250;
 ---
 
 <BaseLayout
   title="ATELIER TraiT D'ARCHITECTURE"
   description="Atelier d'architecture sensible, contextuelle et engagée. Théa Battistini & Titouan Granet."
 >
-  <script define:vars={{ forceReplay: FORCE_REPLAY_LANDING }}>
+  <script
+    define:vars={{
+      forceReplay: FORCE_REPLAY_LANDING,
+      homeStageSlideDistance: HOME_STAGE_SLIDE_DISTANCE,
+      homeStageSlideDurationMs: HOME_STAGE_SLIDE_DURATION_MS,
+    }}
+  >
     const isDismissed =
       !forceReplay && sessionStorage.getItem("t2a-landing-dismissed") === "1";
+    const rootStyle = document.documentElement.style;
+    const setHomeStageTransition = (value) => {
+      rootStyle.setProperty("--home-stage-transition", value);
+    };
+    const setHomeStageShift = (value) => {
+      rootStyle.setProperty("--home-stage-shift", value);
+    };
+
+    setHomeStageTransition("none");
+    setHomeStageShift("0px");
 
     if (isDismissed) {
       document.body.classList.add("landing-dismissed");
@@ -24,14 +42,41 @@ const FORCE_REPLAY_LANDING = false;
         history.scrollRestoration = "manual";
       }
       window.scrollTo(0, 0);
+
+      const handleLandingSlidingUp = () => {
+        setHomeStageTransition(
+          `transform ${homeStageSlideDurationMs}ms ease-out`,
+        );
+        setHomeStageShift(homeStageSlideDistance);
+      };
+
+      const handleLandingDismissed = () => {
+        setHomeStageTransition("none");
+        setHomeStageShift("0px");
+        window.removeEventListener(
+          "landing:sliding-up",
+          handleLandingSlidingUp,
+        );
+      };
+
+      window.addEventListener("landing:sliding-up", handleLandingSlidingUp);
+      window.addEventListener("landing:dismissed", handleLandingDismissed, {
+        once: true,
+      });
     }
   </script>
   <HeaderShell waitForLanding />
   <main class="flex flex-col bg-(--bg-primary)">
-    <div id="landing-wrapper">
+    <div id="landing-wrapper" class="relative h-screen overflow-hidden">
       <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
     </div>
-    <HomeContentShell />
+    <div
+      id="home-stage"
+      class="will-change-transform"
+      style="transform: translate3d(0, var(--home-stage-shift, 0px), 0); transition: var(--home-stage-transition, none);"
+    >
+      <HomeContentShell />
+    </div>
   </main>
   <Footer />
 </BaseLayout>

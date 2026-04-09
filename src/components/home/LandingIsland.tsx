@@ -1,10 +1,6 @@
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 
-import {
-  LandingScreen,
-  LANDING_SLIDE_UP_DURATION_S,
-} from "./Landing/components/LandingScreen";
+import { LandingScreen } from "./Landing/components/LandingScreen";
 import { useLandingLifecycle } from "./Landing/hooks/useLandingLifecycle";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 
@@ -18,14 +14,23 @@ export function LandingIsland({ forceReplay = false }: LandingIslandProps) {
     handleSlideUpComplete,
     isDismissed,
     isSlidingUp,
-    landingCollapsed,
     skipAnimation,
   } = useLandingLifecycle({
     forceReplayAnimation: forceReplay,
   });
   const hasDispatchedDismissedRef = useRef(false);
+  const hasDispatchedSlidingUpRef = useRef(false);
 
   useBodyScrollLock(!isDismissed);
+
+  useEffect(() => {
+    if (!isSlidingUp || hasDispatchedSlidingUpRef.current) {
+      return;
+    }
+
+    window.dispatchEvent(new CustomEvent("landing:sliding-up"));
+    hasDispatchedSlidingUpRef.current = true;
+  }, [isSlidingUp]);
 
   useEffect(() => {
     if (!isDismissed || hasDispatchedDismissedRef.current) {
@@ -42,18 +47,13 @@ export function LandingIsland({ forceReplay = false }: LandingIslandProps) {
   }
 
   return (
-    <motion.div
-      className="relative w-full overflow-hidden"
-      initial={false}
-      animate={{ height: landingCollapsed ? 0 : "100vh" }}
-      transition={{ duration: LANDING_SLIDE_UP_DURATION_S, ease: "easeOut" }}
-    >
+    <div className="h-full w-full">
       <LandingScreen
         handleSlideUpComplete={handleSlideUpComplete}
         isSlidingUp={isSlidingUp}
         onIntroComplete={handleIntroComplete}
         skipAnimation={skipAnimation}
       />
-    </motion.div>
+    </div>
   );
 }

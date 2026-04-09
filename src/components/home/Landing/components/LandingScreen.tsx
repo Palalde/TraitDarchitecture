@@ -78,7 +78,7 @@ export function LandingScreen({
 
   return (
     <motion.section
-      className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary)"
+      className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary) will-change-transform"
       initial={false}
       animate={{ y: isSlidingUp ? "-100%" : 0 }}
       onAnimationComplete={isSlidingUp ? handleSlideUpComplete : undefined}
