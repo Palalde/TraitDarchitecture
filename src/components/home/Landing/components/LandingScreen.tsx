@@ -78,10 +78,11 @@ export function LandingScreen({
 
   return (
     <motion.section
-      className="relative z-10 h-screen w-full overflow-hidden bg-(--bg-primary) will-change-transform"
+      className="relative z-10 w-full overflow-hidden bg-(--bg-primary) will-change-transform"
       initial={false}
       animate={{ y: isSlidingUp ? "-100%" : 0 }}
       onAnimationComplete={isSlidingUp ? handleSlideUpComplete : undefined}
+      style={{ height: "var(--landing-vh)" }}
       transition={{ duration: LANDING_SLIDE_UP_DURATION_S, ease: "easeOut" }}
     >
       {/* wrapper */}

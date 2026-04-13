@@ -103,12 +103,19 @@
   --logo-shadow-ccced9: #ccced9;
   --logo-shadow-cdd0da: #cdd0da;
   --logo-shadow-c8cbd6: #c8cbd6;
+  --landing-vh: 100vh;
 
   font-family: "T2A", "DM Sans", sans-serif;
   color: var(--text-primary);
   background-color: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --landing-vh: 100dvh;
+  }
 }
 
 body.landing-dismissed #landing-wrapper {

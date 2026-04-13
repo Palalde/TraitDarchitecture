@@ -6,7 +6,7 @@ import Footer from "@/components/ui/footer/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const FORCE_REPLAY_LANDING = false;
-const HOME_STAGE_SLIDE_DISTANCE = "-100vh";
+const HOME_STAGE_SLIDE_DISTANCE = "calc(var(--landing-vh) * -1)";
 const HOME_STAGE_SLIDE_DURATION_MS = 1250;
 ---
 
@@ -67,7 +67,11 @@ const HOME_STAGE_SLIDE_DURATION_MS = 1250;
   </script>
   <HeaderShell waitForLanding />
   <main class="flex flex-col bg-(--bg-primary)">
-    <div id="landing-wrapper" class="relative h-screen overflow-hidden">
+    <div
+      id="landing-wrapper"
+      class="relative overflow-hidden"
+      style="height: var(--landing-vh);"
+    >
       <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
     </div>
     <div
