@@ -10,24 +10,28 @@ interface Props {
 
 const { className }: Props = Astro.props;
 
+// cards data
 const architectureCards = [
   {
     image: casaVImg,
     imageAlt: "CASA V — Croquis de façade du projet à Olmeta-di-Tuda, Corse",
     imageClassName: "object-cover object-center",
-    lineWidths: ["w-8/12", "w-10/12"],
+    label: "CASA V",
+    subtitle: "Olmeta-di-Tuda, Corse",
   },
   {
     image: bancaouImg,
     imageAlt: "LE BANCAOU — Coupe 3D du projet à Sausset-les-Pins, Côte Bleue",
     imageClassName: "object-cover object-center",
-    lineWidths: ["w-8/12", "w-10/12"],
+    label: "LE BANCAOU",
+    subtitle: "Sausset-les-Pins, Côte Bleue",
   },
   {
     image: secaireImg,
     imageAlt: "U SECAïRE — Croquis axonométrique du projet à Mézel, Provence",
     imageClassName: "object-cover object-center",
-    lineWidths: ["w-8/12", "w-10/12"],
+    label: "U SECAïRE",
+    subtitle: "Mézel, Provence",
   },
 ];
 ---
@@ -37,6 +41,7 @@ const architectureCards = [
   aria-labelledby="home-section-architecture"
   class={className}
 >
+  <!-- trait -->
   <div class="flex h-full flex-col justify-center">
     <div class="relative z-10 mx-auto flex w-full max-w-4xl items-center gap-4">
       <div
@@ -54,6 +59,7 @@ const architectureCards = [
       <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
     </div>
 
+    <!-- cards container -->
     <div
       class="relative z-10 mt-10 grid grid-cols-1 gap-6 sm:mt-12 lg:mt-14 lg:grid-cols-3 lg:gap-8"
     >
@@ -63,20 +69,23 @@ const architectureCards = [
       >
       </div>
 
+      <!-- architecture cards -->
       {
         architectureCards.map(
-          ({ image, imageAlt, imageClassName, lineWidths }) => (
+          ({ image, imageAlt, imageClassName, label, subtitle }) => (
             <ArchitectureCardBlock
               image={image}
               imageAlt={imageAlt}
               imageClassName={imageClassName}
-              lineWidths={lineWidths}
+              label={label}
+              subtitle={subtitle}
             />
           ),
         )
       }
     </div>
 
+    <!-- cta -->
     <div class="relative z-10 mt-10 flex justify-center sm:mt-12">
       <a
         href="/architecture"
