@@ -1,7 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import topoImg from "@/assets/illustrations/T2A_Plan_Topo_territoire.webp";
-import coupeMerImg from "@/assets/illustrations/T2A_Coupe_Mer-elargie.webp";
+import coupeMerDarkPng from "@/assets/illustrations/T2A_Coupe_Mer DARK.png";
+import coupeMerLightPng from "@/assets/illustrations/T2A_Coupe_Mer LIGHT.png";
 
 interface Props {
   class?: string;
@@ -39,12 +40,27 @@ const { class: className }: Props = Astro.props;
   </div>
 
   <div class="absolute inset-x-0 bottom-0 flex justify-center overflow-hidden">
-    <Image
-      alt=""
-      class="w-full max-w-none object-cover object-bottom grayscale opacity-[0.7] dark:opacity-[0.5]"
-      draggable="false"
-      loading="lazy"
-      src={coupeMerImg}
-    />
+    <div class="grid w-full">
+      <Image
+        alt=""
+        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-[0.7] transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-0"
+        decoding="async"
+        draggable="false"
+        format="webp"
+        loading="lazy"
+        quality="high"
+        src={coupeMerLightPng}
+      />
+      <Image
+        alt=""
+        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-0 transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-[0.6]"
+        decoding="async"
+        draggable="false"
+        format="webp"
+        loading="lazy"
+        quality="high"
+        src={coupeMerDarkPng}
+      />
+    </div>
   </div>
 </div>
