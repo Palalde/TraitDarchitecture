@@ -1,0 +1,49 @@
+---
+interface Props {
+  className?: string;
+  title: string;
+  summary: string;
+  href?: string;
+}
+
+const { className, title, summary, href = "#" }: Props = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "group relative block border border-(--border) bg-(--bg-primary) px-4 py-2.5 transition-colors duration-200 hover:border-(--trait) lg:flex lg:h-full lg:flex-col lg:justify-center lg:pl-12",
+    className,
+  ]}
+>
+  <span
+    aria-hidden="true"
+    class="absolute left-0 top-3 hidden -translate-x-[calc(50%-1px)] text-[0.82rem] leading-none text-(--trait) lg:block"
+    >●</span
+  >
+
+  <div class="flex items-start gap-3 lg:block">
+    <span
+      aria-hidden="true"
+      class="mt-[0.28rem] text-[0.9rem] leading-none text-(--trait) lg:hidden"
+      >●</span
+    >
+
+    <div class="pr-6 lg:pr-7">
+      <h3
+        class="text-[0.82rem] font-semibold uppercase tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      >
+        {title}
+      </h3>
+      <p class="mt-1 text-[0.84rem] leading-[1.45] text-(--text-secondary)">
+        {summary}
+      </p>
+    </div>
+  </div>
+
+  <span
+    aria-hidden="true"
+    class="absolute bottom-2.5 right-4 text-[0.9rem] text-(--text-muted) transition-colors duration-200 group-hover:text-(--trait)"
+    >→</span
+  >
+</a>
