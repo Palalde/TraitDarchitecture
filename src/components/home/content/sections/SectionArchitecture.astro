@@ -1,5 +1,8 @@
 ---
 import ArchitectureCardBlock from "@/components/home/content/blocks/ArchitectureCardBlock.astro";
+import bancaouImg from "@/assets/photos/home/le-bancaou-coupe-3d.png";
+import secaireImg from "@/assets/photos/home/u-secaire-croquis.png";
+import casaVImg from "@/assets/photos/home/casa-v-facade-croquis.jpg";
 
 interface Props {
   className?: string;
@@ -9,15 +12,24 @@ const { className }: Props = Astro.props;
 
 const architectureCards = [
   {
+    image: casaVImg,
+    imageAlt: "CASA V — Croquis de façade du projet à Olmeta-di-Tuda, Corse",
+    imageClassName: "object-cover object-center",
     lineWidths: ["w-8/12", "w-10/12"],
   },
   {
+    image: bancaouImg,
+    imageAlt: "LE BANCAOU — Coupe 3D du projet à Sausset-les-Pins, Côte Bleue",
+    imageClassName: "object-cover object-center",
     lineWidths: ["w-8/12", "w-10/12"],
   },
   {
+    image: secaireImg,
+    imageAlt: "U SECAïRE — Croquis axonométrique du projet à Mézel, Provence",
+    imageClassName: "object-cover object-center",
     lineWidths: ["w-8/12", "w-10/12"],
   },
-] as const;
+];
 ---
 
 <section
@@ -52,9 +64,16 @@ const architectureCards = [
       </div>
 
       {
-        architectureCards.map(({ lineWidths }) => (
-          <ArchitectureCardBlock lineWidths={lineWidths} />
-        ))
+        architectureCards.map(
+          ({ image, imageAlt, imageClassName, lineWidths }) => (
+            <ArchitectureCardBlock
+              image={image}
+              imageAlt={imageAlt}
+              imageClassName={imageClassName}
+              lineWidths={lineWidths}
+            />
+          ),
+        )
       }
     </div>
   </div>
