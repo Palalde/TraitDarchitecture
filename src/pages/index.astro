@@ -14,6 +14,7 @@ const HOME_STAGE_SLIDE_DURATION_MS = 1250;
   title="ATELIER TraiT D'ARCHITECTURE"
   description="Atelier d'architecture sensible, contextuelle et engagée. Théa Battistini & Titouan Granet."
 >
+  <!-- landing transition -->
   <script
     define:vars={{
       forceReplay: FORCE_REPLAY_LANDING,
@@ -37,7 +38,6 @@ const HOME_STAGE_SLIDE_DURATION_MS = 1250;
     if (isDismissed) {
       document.body.classList.add("landing-dismissed");
     } else {
-      // Landing va jouer — empêcher la restauration de scroll du navigateur
       if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
       }

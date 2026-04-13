@@ -59,7 +59,7 @@ const architectureCards = [
     >
       <div
         aria-hidden="true"
-        class="architecture-center-trait pointer-events-none absolute left-1/2 z-0 w-px -translate-x-1/2 bg-(--trait) -top-10 -bottom-12 sm:-top-12 sm:-bottom-14 lg:-top-14 lg:-bottom-49 xl:-bottom-24"
+        class="pointer-events-none absolute left-1/2 z-0 w-px -translate-x-1/2 bg-(--trait) -top-10 -bottom-35 sm:-top-12 sm:-bottom-40 lg:-top-14 lg:-bottom-50 xl:-bottom-35"
       >
       </div>
 
@@ -76,13 +76,21 @@ const architectureCards = [
         )
       }
     </div>
+
+    <div class="relative z-10 mt-10 flex justify-center sm:mt-12">
+      <a
+        href="/architecture"
+        class="group inline-flex items-center gap-2 border border-(--border) bg-(--bg-primary) px-6 py-3 text-[0.9rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+      >
+        <span class="relative">
+          Découvrir nos projets
+          <span
+            aria-hidden="true"
+            class="absolute bottom-0 left-0 h-px w-0 bg-(--trait) transition-all duration-300 group-hover:w-full"
+          ></span>
+        </span>
+        <span aria-hidden="true" class="text-[1.1em]">→</span>
+      </a>
+    </div>
   </div>
 </section>
-
-<style>
-  @media (min-width: 1210px) and (max-width: 1279px) {
-    .architecture-center-trait {
-      bottom: -8rem;
-    }
-  }
-</style>
