@@ -21,14 +21,12 @@ const {
 
 const placeholderClassName = "border border-(--border) bg-(--bg-secondary)";
 const hasTeaserContent = Boolean(teaserText);
+const containerClassName = hasTeaserContent
+  ? "mt-8 border border-(--border) bg-(--bg-primary) p-6 sm:p-8 lg:mt-10 lg:border-0 lg:bg-transparent lg:p-0"
+  : "mt-8 border border-(--border) bg-(--bg-primary) p-6 sm:p-8 lg:mt-10 lg:p-10";
 ---
 
-<div
-  class:list={[
-    "mt-8 border border-(--border) bg-(--bg-primary) p-6 sm:p-8 lg:mt-10 lg:p-10",
-    className,
-  ]}
->
+<div class:list={[containerClassName, className]}>
   {
     hasTeaserContent ? (
       <>
