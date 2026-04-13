@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import topoImg from "@/assets/illustrations/T2A_Plan_Topo_territoire.webp";
+import topoDarkPng from "@/assets/illustrations/T2A_Plan_Topo territoire - DARK.png";
+import topoLightPng from "@/assets/illustrations/T2A_Plan_Topo territoire - LIGHT.png";
 import coupeMerDarkPng from "@/assets/illustrations/T2A_Coupe_Mer DARK.png";
 import coupeMerLightPng from "@/assets/illustrations/T2A_Coupe_Mer LIGHT.png";
 
@@ -26,16 +27,30 @@ const { class: className }: Props = Astro.props;
 
   <div class="absolute inset-0 flex items-start justify-center overflow-hidden">
     <div
-      class="relative mt-0 max-w-none overflow-hidden w-160 opacity-[0.20] sm:w-200 lg:w-350 xl:w-640 dark:opacity-[0.10]"
+      class="relative mt-0 max-w-none overflow-hidden w-160 opacity-[0.3] sm:w-200 lg:w-350 xl:w-640 dark:opacity-[0.15]"
     >
-      <Image
-        alt=""
-        class="h-auto w-full max-w-none grayscale"
-        draggable="false"
-        loading="lazy"
-        src={topoImg}
-      />
-      <div aria-hidden="true" class="absolute inset-0 mix-blend-multiply"></div>
+      <div class="grid w-full">
+        <Image
+          alt=""
+          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-100 transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-0"
+          decoding="async"
+          draggable="false"
+          format="webp"
+          loading="lazy"
+          quality="high"
+          src={topoLightPng}
+        />
+        <Image
+          alt=""
+          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-0 transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-100"
+          decoding="async"
+          draggable="false"
+          format="webp"
+          loading="lazy"
+          quality="high"
+          src={topoDarkPng}
+        />
+      </div>
     </div>
   </div>
 
