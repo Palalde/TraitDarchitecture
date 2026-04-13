@@ -1,6 +1,9 @@
 ---
 interface Props {
   className?: string;
+  teaserText?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
   panelLabel?: string;
   footerLabel?: string;
   lineWidths?: string[];
@@ -8,12 +11,16 @@ interface Props {
 
 const {
   className,
+  teaserText,
+  ctaHref,
+  ctaLabel,
   panelLabel = "Structure teaser",
   footerLabel = "Zone texte",
   lineWidths = ["w-10/12", "w-full", "w-11/12", "w-8/12"],
 }: Props = Astro.props;
 
 const placeholderClassName = "border border-(--border) bg-(--bg-secondary)";
+const hasTeaserContent = Boolean(teaserText);
 ---
 
 <div
@@ -22,20 +29,46 @@ const placeholderClassName = "border border-(--border) bg-(--bg-secondary)";
     className,
   ]}
 >
-  <p class="text-[0.8rem] uppercase tracking-[0.16em] text-(--text-muted)">
-    {panelLabel}
-  </p>
-  <div class="mt-5 space-y-3" aria-hidden="true">
-    {
-      lineWidths.map((width) => (
-        <div class:list={[placeholderClassName, "h-3", width]} />
-      ))
-    }
-  </div>
-  <div
-    class="mt-8 flex items-center gap-3 text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
-  >
-    <span>{footerLabel}</span>
-    <span aria-hidden="true" class="h-px flex-1 bg-(--trait)"></span>
-  </div>
+  {
+    hasTeaserContent ? (
+      <>
+        <p class="max-w-xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8">
+          {teaserText}
+        </p>
+
+        {ctaHref && ctaLabel ? (
+          <a
+            href={ctaHref}
+            class="group mt-8 inline-flex items-center gap-2 text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+          >
+            <span class="relative">
+              {ctaLabel}
+              <span
+                aria-hidden="true"
+                class="absolute bottom-0 left-0 h-px w-0 bg-(--trait) transition-all duration-300 group-hover:w-full"
+              />
+            </span>
+            <span aria-hidden="true" class="text-[1.1em]">
+              →
+            </span>
+          </a>
+        ) : null}
+      </>
+    ) : (
+      <>
+        <p class="text-[0.8rem] uppercase tracking-[0.16em] text-(--text-muted)">
+          {panelLabel}
+        </p>
+        <div class="mt-5 space-y-3" aria-hidden="true">
+          {lineWidths.map((width) => (
+            <div class:list={[placeholderClassName, "h-3", width]} />
+          ))}
+        </div>
+        <div class="mt-8 flex items-center gap-3 text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+          <span>{footerLabel}</span>
+          <span aria-hidden="true" class="h-px flex-1 bg-(--trait)" />
+        </div>
+      </>
+    )
+  }
 </div>
