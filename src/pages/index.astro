@@ -5,9 +5,9 @@ import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const FORCE_REPLAY_LANDING = false;
-const HOME_STAGE_SLIDE_DISTANCE = "calc(var(--landing-vh) * -1)";
-const HOME_STAGE_SLIDE_DURATION_MS = 1250;
+const FORCE_REPLAY_LANDING = true;
+const HOME_FLOW_SLIDE_DISTANCE = "calc(var(--landing-vh) * -1)";
+const HOME_FLOW_SLIDE_DURATION_MS = 1250;
 ---
 
 <BaseLayout
@@ -18,22 +18,22 @@ const HOME_STAGE_SLIDE_DURATION_MS = 1250;
   <script
     define:vars={{
       forceReplay: FORCE_REPLAY_LANDING,
-      homeStageSlideDistance: HOME_STAGE_SLIDE_DISTANCE,
-      homeStageSlideDurationMs: HOME_STAGE_SLIDE_DURATION_MS,
+      homeFlowSlideDistance: HOME_FLOW_SLIDE_DISTANCE,
+      homeFlowSlideDurationMs: HOME_FLOW_SLIDE_DURATION_MS,
     }}
   >
     const isDismissed =
       !forceReplay && sessionStorage.getItem("t2a-landing-dismissed") === "1";
     const rootStyle = document.documentElement.style;
-    const setHomeStageTransition = (value) => {
-      rootStyle.setProperty("--home-stage-transition", value);
+    const setHomeFlowTransition = (value) => {
+      rootStyle.setProperty("--home-flow-transition", value);
     };
-    const setHomeStageShift = (value) => {
-      rootStyle.setProperty("--home-stage-shift", value);
+    const setHomeFlowShift = (value) => {
+      rootStyle.setProperty("--home-flow-shift", value);
     };
 
-    setHomeStageTransition("none");
-    setHomeStageShift("0px");
+    setHomeFlowTransition("none");
+    setHomeFlowShift("0px");
 
     if (isDismissed) {
       document.body.classList.add("landing-dismissed");
@@ -44,15 +44,15 @@ const HOME_STAGE_SLIDE_DURATION_MS = 1250;
       window.scrollTo(0, 0);
 
       const handleLandingSlidingUp = () => {
-        setHomeStageTransition(
-          `transform ${homeStageSlideDurationMs}ms ease-out`,
+        setHomeFlowTransition(
+          `transform ${homeFlowSlideDurationMs}ms ease-out`,
         );
-        setHomeStageShift(homeStageSlideDistance);
+        setHomeFlowShift(homeFlowSlideDistance);
       };
 
       const handleLandingDismissed = () => {
-        setHomeStageTransition("none");
-        setHomeStageShift("0px");
+        setHomeFlowTransition("none");
+        setHomeFlowShift("0px");
         window.removeEventListener(
           "landing:sliding-up",
           handleLandingSlidingUp,
@@ -68,18 +68,20 @@ const HOME_STAGE_SLIDE_DURATION_MS = 1250;
   <HeaderShell waitForLanding />
   <main class="flex flex-col bg-(--bg-primary)">
     <div
-      id="landing-wrapper"
-      class="relative overflow-hidden"
-      style="height: var(--landing-vh);"
-    >
-      <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
-    </div>
-    <div
-      id="home-stage"
+      id="home-flow"
       class="will-change-transform"
-      style="transform: translate3d(0, var(--home-stage-shift, 0px), 0); transition: var(--home-stage-transition, none);"
+      style="transform: translate3d(0, var(--home-flow-shift, 0px), 0); transition: var(--home-flow-transition, none);"
     >
-      <HomeContentShell />
+      <div
+        id="landing-wrapper"
+        class="relative overflow-hidden"
+        style="height: var(--landing-vh);"
+      >
+        <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
+      </div>
+      <div id="home-stage">
+        <HomeContentShell />
+      </div>
     </div>
   </main>
   <Footer />

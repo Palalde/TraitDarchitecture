@@ -44,16 +44,12 @@ const LANDING_ERASE_THRESHOLDS = {
 export const LANDING_SLIDE_UP_DURATION_S = 1.25;
 
 interface LandingScreenProps {
-  handleSlideUpComplete: () => void;
   onIntroComplete: () => void;
-  isSlidingUp: boolean;
   skipAnimation?: boolean;
 }
 
 export function LandingScreen({
-  handleSlideUpComplete,
   onIntroComplete,
-  isSlidingUp,
   skipAnimation = false,
 }: LandingScreenProps) {
   const {
@@ -77,13 +73,9 @@ export function LandingScreen({
   const shouldAnimateLogoLayers = !prefersReducedMotion && !skipAnimation;
 
   return (
-    <motion.section
+    <section
       className="relative z-10 w-full overflow-hidden bg-(--bg-primary) will-change-transform"
-      initial={false}
-      animate={{ y: isSlidingUp ? "-100%" : 0 }}
-      onAnimationComplete={isSlidingUp ? handleSlideUpComplete : undefined}
       style={{ height: "var(--landing-vh)" }}
-      transition={{ duration: LANDING_SLIDE_UP_DURATION_S, ease: "easeOut" }}
     >
       {/* wrapper */}
       <div
@@ -234,6 +226,6 @@ export function LandingScreen({
           style={{ transformOrigin: "bottom center" }}
         />
       </div>
-    </motion.section>
+    </section>
   );
 }
