@@ -62,7 +62,10 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <meta name="twitter:image" content={ogImage} />
     <!-- scroll Bar script -->
     <script is:inline>
-      if (window.matchMedia("(min-width: 1024px)").matches) {
+      const overlayScrollbarsMediaQuery =
+        "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
+
+      if (window.matchMedia(overlayScrollbarsMediaQuery).matches) {
         document.documentElement.setAttribute(
           "data-overlayscrollbars-initialize",
           "",

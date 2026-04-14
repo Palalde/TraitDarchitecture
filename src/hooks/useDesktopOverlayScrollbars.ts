@@ -1,7 +1,8 @@
 import { useLayoutEffect } from "react";
 import { OverlayScrollbars } from "overlayscrollbars";
 
-const DESKTOP_MEDIA_QUERY = "(min-width: 1024px)";
+const DESKTOP_MEDIA_QUERY =
+  "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
 const INITIALIZE_ATTRIBUTE = "data-overlayscrollbars-initialize";
 
 const overlayScrollbarsOptions = {
