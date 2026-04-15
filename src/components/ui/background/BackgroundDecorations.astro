@@ -36,8 +36,11 @@ const { class: className }: Props = Astro.props;
           decoding="async"
           draggable="false"
           format="webp"
-          loading="lazy"
-          quality="high"
+          loading="eager"
+          fetchpriority="high"
+          quality={60}
+          widths={[640, 800, 1400, 2560]}
+          sizes="(min-width: 1280px) 2560px, (min-width: 1024px) 1400px, (min-width: 640px) 800px, 640px"
           src={topoLightPng}
         />
         <Image
@@ -46,8 +49,11 @@ const { class: className }: Props = Astro.props;
           decoding="async"
           draggable="false"
           format="webp"
-          loading="lazy"
-          quality="high"
+          loading="eager"
+          fetchpriority="high"
+          quality={60}
+          widths={[640, 800, 1400, 2560]}
+          sizes="(min-width: 1280px) 2560px, (min-width: 1024px) 1400px, (min-width: 640px) 800px, 640px"
           src={topoDarkPng}
         />
       </div>
@@ -63,7 +69,9 @@ const { class: className }: Props = Astro.props;
         draggable="false"
         format="webp"
         loading="lazy"
-        quality="high"
+        quality={60}
+        widths={[800, 1280, 1920, 2560]}
+        sizes="100vw"
         src={coupeMerLightPng}
       />
       <Image
@@ -73,7 +81,9 @@ const { class: className }: Props = Astro.props;
         draggable="false"
         format="webp"
         loading="lazy"
-        quality="high"
+        quality={60}
+        widths={[800, 1280, 1920, 2560]}
+        sizes="100vw"
         src={coupeMerDarkPng}
       />
     </div>
