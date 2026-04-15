@@ -11,37 +11,104 @@ const sectionFrameClassName =
 const extraitSectionFrameClassName =
   "relative min-h-[28rem] sm:min-h-[30rem] lg:min-h-[33rem]";
 
-const HOME_REVEAL_READY_DELAY_MS = 250;
+const HOME_REVEAL_DELAY_AFTER_LANDING_MS = 50;
+const HOME_REVEAL_DELAY_RETURNING_MS = 400;
 ---
 
 <section
   aria-label="Contenu principal de l'accueil"
   class="relative w-full overflow-hidden bg-(--bg-primary)"
 >
-  <script define:vars={{ homeRevealReadyDelayMs: HOME_REVEAL_READY_DELAY_MS }}>
-    let hasMarkedHomeRevealReady = false;
+  <script
+    define:vars={{
+      delayAfterLanding: HOME_REVEAL_DELAY_AFTER_LANDING_MS,
+      delayReturning: HOME_REVEAL_DELAY_RETURNING_MS,
+    }}
+  >
+    (() => {
+      const SELECTOR = "[data-reveal], [data-reveal-stagger]";
+      const observed = new Set();
+      let started = false;
+      let syncRafId = null;
 
-    const markHomeRevealReady = () => {
-      if (hasMarkedHomeRevealReady) {
-        return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const syncTargets = (io) => {
+        document.querySelectorAll(SELECTOR).forEach((el) => {
+          if (
+            el.classList.contains("revealed") ||
+            observed.has(el) ||
+            getComputedStyle(el).display === "none"
+          ) {
+            return;
+          }
+
+          observed.add(el);
+          io.observe(el);
+        });
+      };
+
+      const start = () => {
+        if (started) return;
+
+        // Defer until DOM is fully parsed (data-reveal elements are below this script).
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", start, { once: true });
+          return;
+        }
+
+        started = true;
+
+        if (!document.querySelector(SELECTOR)) return;
+
+        // Default viewport root keeps IO compatible with OverlayScrollbars.
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.intersectionRatio < 0.5) return;
+
+              entry.target.classList.add("revealed");
+              observed.delete(entry.target);
+              io.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.5 },
+        );
+
+        syncTargets(io);
+
+        window.addEventListener(
+          "resize",
+          () => {
+            if (syncRafId !== null) return;
+
+            syncRafId = requestAnimationFrame(() => {
+              syncRafId = null;
+              syncTargets(io);
+            });
+          },
+          { passive: true },
+        );
+      };
+
+      const markReady = () => {
+        document.body.dataset.homeRevealReady = "1";
+        window.dispatchEvent(new CustomEvent("home-reveal:ready"));
+        start();
+      };
+
+      if (document.body.dataset.homeRevealReady === "1") {
+        start();
+      } else if (document.body.classList.contains("landing-dismissed")) {
+        setTimeout(markReady, delayReturning);
+      } else {
+        window.addEventListener(
+          "landing:dismissed",
+          () => setTimeout(markReady, delayAfterLanding),
+          { once: true },
+        );
       }
-
-      hasMarkedHomeRevealReady = true;
-      document.body.dataset.homeRevealReady = "1";
-      window.dispatchEvent(new CustomEvent("home-reveal:ready"));
-    };
-
-    if (document.body.classList.contains("landing-dismissed")) {
-      markHomeRevealReady();
-    } else {
-      window.addEventListener(
-        "landing:dismissed",
-        () => {
-          window.setTimeout(markHomeRevealReady, homeRevealReadyDelayMs);
-        },
-        { once: true },
-      );
-    }
+    })();
   </script>
 
   <BackgroundDecorations />
