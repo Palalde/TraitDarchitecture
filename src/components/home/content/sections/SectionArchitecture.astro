@@ -18,6 +18,7 @@ const architectureCards = [
     imageClassName: "object-cover object-center",
     label: "CASA V",
     subtitle: "Olmeta-di-Tuda, Corse",
+    href: "#", // TODO: remplacer par "/architecture/casa-v"
   },
   {
     image: bancaouImg,
@@ -25,6 +26,7 @@ const architectureCards = [
     imageClassName: "object-cover object-center",
     label: "LE BANCAOU",
     subtitle: "Sausset-les-Pins, Côte Bleue",
+    href: "#", // TODO: remplacer par "/architecture/le-bancaou"
   },
   {
     image: secaireImg,
@@ -32,6 +34,7 @@ const architectureCards = [
     imageClassName: "object-cover object-center",
     label: "U SECAïRE",
     subtitle: "Mézel, Provence",
+    href: "#", // TODO: remplacer par "/architecture/u-secaire"
   },
 ];
 ---
@@ -72,13 +75,14 @@ const architectureCards = [
       <!-- architecture cards -->
       {
         architectureCards.map(
-          ({ image, imageAlt, imageClassName, label, subtitle }) => (
+          ({ image, imageAlt, imageClassName, label, subtitle, href }) => (
             <ArchitectureCardBlock
               image={image}
               imageAlt={imageAlt}
               imageClassName={imageClassName}
               label={label}
               subtitle={subtitle}
+              href={href}
               parallax
             />
           ),

@@ -1,7 +1,14 @@
 @import "tailwindcss";
 
+/* Variant : tablette */
+@custom-variant can-hover {
+  @media (hover: hover) and (pointer: fine) {
+    @slot;
+  }
+}
+
 /* ============================================
-   FONTS T2A � @font-face
+   FONTS T2A — @font-face
    ============================================ */
 
 @font-face {
