@@ -10,6 +10,7 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   imageClassName?: string;
+  imageFetchPriority?: "high" | "low" | "auto";
   imageLoading?: "lazy" | "eager";
   parallax?: boolean;
   parallaxOverflow?: number;
@@ -21,6 +22,7 @@ const {
   image,
   imageAlt = "",
   imageClassName = "object-cover object-center",
+  imageFetchPriority,
   imageLoading = "lazy",
   parallax = false,
   parallaxOverflow = 0.1,
@@ -44,6 +46,7 @@ const {
               class:list={["h-full w-full", imageClassName]}
               draggable="false"
               loading={imageLoading}
+              fetchpriority={imageFetchPriority}
               quality={85}
               widths={[400, 600, 800]}
               sizes="(min-width: 1024px) 50vw, 100vw"
@@ -56,6 +59,7 @@ const {
             class:list={["h-full w-full", imageClassName]}
             draggable="false"
             loading={imageLoading}
+            fetchpriority={imageFetchPriority}
             quality={85}
             widths={[400, 600, 800]}
             sizes="(min-width: 1024px) 50vw, 100vw"

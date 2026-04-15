@@ -20,8 +20,8 @@ import { useReducedMotion } from "./useReducedMotion";
  * @param overflowPercent - Dépassement en fraction de la hauteur du cadre
  *                          (ex. 0.1 = 10% au-dessus et 10% en dessous)
  */
-export function useParallaxScroll(
-  targetRef: RefObject<HTMLElement>,
+export function useParallaxScroll<T extends HTMLElement>(
+  targetRef: RefObject<T | null>,
   overflowPercent: number,
 ) {
   const y = useMotionValue(0);
