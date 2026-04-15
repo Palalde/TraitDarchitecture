@@ -397,7 +397,7 @@ body::after {
 }
 
 [data-reveal="fade-up"] {
-  opacity: 0;
+  opacity: var(--reveal-start-opacity, 0);
   transform: translateY(var(--reveal-offset-y));
   transition:
     opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),

@@ -36,7 +36,10 @@ const labelReveal = frameReveal ? "fade" : undefined;
 ---
 
 <div class={containerClassName}>
-  <div class="w-full" data-reveal={frameReveal}>
+  <div
+    class:list={["w-full", frameReveal && "max-lg:[--reveal-start-opacity:1]"]}
+    data-reveal={frameReveal}
+  >
     <div
       class="relative w-full overflow-hidden border border-(--border) bg-(--bg-secondary) p-4 sm:p-5"
     >

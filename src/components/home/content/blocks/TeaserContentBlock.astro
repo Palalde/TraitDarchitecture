@@ -33,7 +33,11 @@ const containerClassName = hasTeaserContent
 ---
 
 <div
-  class:list={[containerClassName, className]}
+  class:list={[
+    containerClassName,
+    className,
+    containerReveal && "max-lg:[--reveal-start-opacity:1]",
+  ]}
   data-reveal={containerReveal}
   data-reveal-group={containerReveal ? "" : undefined}
 >
