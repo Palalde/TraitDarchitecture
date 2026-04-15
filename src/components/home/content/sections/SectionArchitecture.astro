@@ -19,6 +19,8 @@ const architectureCards = [
     label: "CASA V",
     subtitle: "Olmeta-di-Tuda, Corse",
     href: "#", // TODO: remplacer par "/architecture/casa-v"
+    cardReveal: "fade-up" as const,
+    cardRevealDelay: "lg:[--reveal-delay:200ms]",
   },
   {
     image: bancaouImg,
@@ -27,6 +29,7 @@ const architectureCards = [
     label: "LE BANCAOU",
     subtitle: "Sausset-les-Pins, Côte Bleue",
     href: "#", // TODO: remplacer par "/architecture/le-bancaou"
+    cardReveal: "fade-up" as const,
   },
   {
     image: secaireImg,
@@ -35,6 +38,8 @@ const architectureCards = [
     label: "U SECAïRE",
     subtitle: "Mézel, Provence",
     href: "#", // TODO: remplacer par "/architecture/u-secaire"
+    cardReveal: "fade-up" as const,
+    cardRevealDelay: "lg:[--reveal-delay:200ms]",
   },
 ];
 ---
@@ -50,16 +55,28 @@ const architectureCards = [
       <div
         aria-hidden="true"
         class="pointer-events-none absolute bottom-full left-1/2 h-12 w-px -translate-x-1/2 bg-(--trait) sm:h-14 lg:-h-1"
+        data-reveal="bar-from-top"
       >
       </div>
-      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <div
+        aria-hidden="true"
+        class="h-px flex-1 bg-(--trait)"
+        data-reveal="bar-from-right"
+      >
+      </div>
       <h2
         id="home-section-architecture"
         class="shrink-0 text-center text-[1.5rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
+        data-reveal="fade"
       >
         D'ARCHITECTURE
       </h2>
-      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <div
+        aria-hidden="true"
+        class="h-px flex-1 bg-(--trait)"
+        data-reveal="bar-from-left"
+      >
+      </div>
     </div>
 
     <!-- cards container -->
@@ -69,13 +86,23 @@ const architectureCards = [
       <div
         aria-hidden="true"
         class="pointer-events-none absolute left-1/2 z-0 w-px -translate-x-1/2 bg-(--trait) -top-10 -bottom-35 sm:-top-12 sm:-bottom-40 lg:-top-14 lg:-bottom-50 xl:-bottom-35"
+        data-reveal="bar-from-top"
       >
       </div>
 
       <!-- architecture cards -->
       {
         architectureCards.map(
-          ({ image, imageAlt, imageClassName, label, subtitle, href }) => (
+          ({
+            image,
+            imageAlt,
+            imageClassName,
+            label,
+            subtitle,
+            href,
+            cardReveal,
+            cardRevealDelay,
+          }) => (
             <ArchitectureCardBlock
               image={image}
               imageAlt={imageAlt}
@@ -84,6 +111,8 @@ const architectureCards = [
               subtitle={subtitle}
               href={href}
               parallax
+              cardReveal={cardReveal}
+              cardRevealDelay={cardRevealDelay}
             />
           ),
         )
@@ -95,6 +124,7 @@ const architectureCards = [
       <a
         href="/architecture"
         class="group inline-flex items-center gap-2 border border-(--border) bg-(--bg-primary) px-6 py-3 text-[0.9rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+        data-reveal="fade"
       >
         <span class="relative">
           Découvrir nos projets

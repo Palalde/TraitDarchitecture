@@ -17,6 +17,8 @@ interface Props {
   mobileParallaxOverflow?: number;
   /** Lien vers la page projet. Temporairement "#" tant que les pages n'existent pas. */
   href?: string;
+  cardReveal?: string;
+  cardRevealDelay?: string;
 }
 
 const {
@@ -31,6 +33,8 @@ const {
   parallaxOverflow = 0.025,
   mobileParallaxOverflow = 0.04,
   href = "#",
+  cardReveal,
+  cardRevealDelay,
 }: Props = Astro.props;
 
 const hasLabel = Boolean(label);
@@ -42,7 +46,9 @@ const linkLabel =
   class:list={[
     "group relative z-10 overflow-hidden border border-(--border) bg-(--bg-primary) p-4 sm:p-5 can-hover:cursor-pointer",
     className,
+    cardRevealDelay,
   ]}
+  data-reveal={cardReveal}
 >
   <a
     href={href}
