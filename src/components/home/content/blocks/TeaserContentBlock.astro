@@ -7,6 +7,9 @@ interface Props {
   panelLabel?: string;
   footerLabel?: string;
   lineWidths?: string[];
+  teaserReveal?: string;
+  ctaReveal?: string;
+  containerReveal?: string;
 }
 
 const {
@@ -17,6 +20,9 @@ const {
   panelLabel = "Structure teaser",
   footerLabel = "Zone texte",
   lineWidths = ["w-10/12", "w-full", "w-11/12", "w-8/12"],
+  teaserReveal,
+  ctaReveal,
+  containerReveal,
 }: Props = Astro.props;
 
 const placeholderClassName = "border border-(--border) bg-(--bg-secondary)";
@@ -26,11 +32,18 @@ const containerClassName = hasTeaserContent
   : "mt-8 border border-(--border) bg-(--bg-primary) p-6 sm:p-8 lg:mt-10 lg:p-10";
 ---
 
-<div class:list={[containerClassName, className]}>
+<div
+  class:list={[containerClassName, className]}
+  data-reveal={containerReveal}
+  data-reveal-group={containerReveal ? "" : undefined}
+>
   {
     hasTeaserContent ? (
       <>
-        <p class="max-w-xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8">
+        <p
+          class="max-w-xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8"
+          data-reveal={teaserReveal}
+        >
           {teaserText}
         </p>
 
@@ -38,6 +51,7 @@ const containerClassName = hasTeaserContent
           <a
             href={ctaHref}
             class="group mt-8 inline-flex items-center gap-2 text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+            data-reveal={ctaReveal}
           >
             <span class="relative">
               {ctaLabel}

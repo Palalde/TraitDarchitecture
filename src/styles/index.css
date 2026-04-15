@@ -430,9 +430,8 @@ body::after {
 @media (max-width: 1023px) {
   [data-reveal-container] [data-reveal-frame] {
     clip-path: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+    opacity: 0;
+    transform: translateY(var(--reveal-offset-y, 24px));
   }
 }
 
@@ -487,9 +486,11 @@ body::after {
 @media (max-width: 1023px) {
   [data-reveal-container].revealed [data-reveal-frame] {
     clip-path: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),
+      transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
   }
 }
 
@@ -502,6 +503,24 @@ body::after {
 [data-reveal="fade-right"].revealed {
   opacity: 1;
   transform: translateX(0);
+}
+
+/* Mobile: container animates as one block, children are neutralized */
+@media (max-width: 1023px) {
+  [data-reveal-group] [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Desktop: container is transparent, children animate individually */
+@media (min-width: 1024px) {
+  [data-reveal-group][data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 [data-reveal-stagger] {

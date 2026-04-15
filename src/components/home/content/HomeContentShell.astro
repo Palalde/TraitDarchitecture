@@ -66,14 +66,14 @@ const HOME_REVEAL_DELAY_RETURNING_MS = 400;
         const io = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              if (entry.intersectionRatio < 0.5) return;
+              if (entry.intersectionRatio < 0.6) return;
 
               entry.target.classList.add("revealed");
               observed.delete(entry.target);
               io.unobserve(entry.target);
             });
           },
-          { threshold: 0.5 },
+          { threshold: 0.6 },
         );
 
         syncTargets(io);

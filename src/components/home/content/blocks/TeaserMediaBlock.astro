@@ -16,6 +16,7 @@ interface Props {
   parallaxOverflow?: number;
   mobileParallaxOverflow?: number;
   revealDirection?: "ltr" | "rtl";
+  frameReveal?: string;
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   parallaxOverflow = 0.025,
   mobileParallaxOverflow = 0.04,
   revealDirection,
+  frameReveal,
 }: Props = Astro.props;
 
 const imageReveal =
@@ -39,14 +41,19 @@ const imageReveal =
       ? "clip-ltr"
       : undefined;
 
-const labelReveal = revealDirection ? "fade" : undefined;
+const hasReveal = Boolean(revealDirection || frameReveal);
+const labelReveal = hasReveal ? "fade" : undefined;
 ---
 
 <div class={containerClassName}>
-  <div class="w-full" data-reveal-container={imageReveal}>
+  <div
+    class="w-full"
+    data-reveal-container={imageReveal}
+    data-reveal={frameReveal}
+  >
     <div
       class="relative w-full overflow-hidden border border-(--border) bg-(--bg-secondary) p-4 sm:p-5"
-      data-reveal-frame
+      data-reveal-frame={imageReveal ? "" : undefined}
     >
       <T2AMotifPattern />
 
