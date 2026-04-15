@@ -10,12 +10,40 @@ const sectionFrameClassName =
 
 const extraitSectionFrameClassName =
   "relative min-h-[28rem] sm:min-h-[30rem] lg:min-h-[33rem]";
+
+const HOME_REVEAL_READY_DELAY_MS = 250;
 ---
 
 <section
   aria-label="Contenu principal de l'accueil"
   class="relative w-full overflow-hidden bg-(--bg-primary)"
 >
+  <script define:vars={{ homeRevealReadyDelayMs: HOME_REVEAL_READY_DELAY_MS }}>
+    let hasMarkedHomeRevealReady = false;
+
+    const markHomeRevealReady = () => {
+      if (hasMarkedHomeRevealReady) {
+        return;
+      }
+
+      hasMarkedHomeRevealReady = true;
+      document.body.dataset.homeRevealReady = "1";
+      window.dispatchEvent(new CustomEvent("home-reveal:ready"));
+    };
+
+    if (document.body.classList.contains("landing-dismissed")) {
+      markHomeRevealReady();
+    } else {
+      window.addEventListener(
+        "landing:dismissed",
+        () => {
+          window.setTimeout(markHomeRevealReady, homeRevealReadyDelayMs);
+        },
+        { once: true },
+      );
+    }
+  </script>
+
   <BackgroundDecorations />
 
   <div
