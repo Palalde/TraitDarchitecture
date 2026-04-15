@@ -389,6 +389,42 @@ body::after {
 }
 
 /* ============================================
+   HOME REVEAL — Hidden states
+   ============================================ */
+
+[data-reveal] {
+  --reveal-offset-y: 24px;
+  --reveal-delay: 0ms;
+}
+
+[data-reveal="fade-up"] {
+  opacity: 0;
+  transform: translateY(var(--reveal-offset-y));
+}
+
+[data-reveal="fade"] {
+  opacity: 0;
+}
+
+[data-reveal="clip-ltr"] {
+  clip-path: inset(0 100% 0 0);
+}
+
+[data-reveal="clip-rtl"] {
+  clip-path: inset(0 0 0 100%);
+}
+
+[data-reveal="bar-from-right"] {
+  transform: scaleX(0);
+  transform-origin: right center;
+}
+
+[data-reveal="bar-from-left"] {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* ============================================
    SCROLLBAR — OverlayScrollbars desktop only
    ============================================ */
 
