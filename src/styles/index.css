@@ -451,6 +451,42 @@ body::after {
   transform: scaleX(1);
 }
 
+[data-reveal-stagger] {
+  --reveal-stagger-step: 120ms;
+}
+
+[data-reveal-child] {
+  --reveal-offset-y: 24px;
+  opacity: 0;
+  transform: translateY(var(--reveal-offset-y));
+  transition:
+    opacity var(--reveal-d, 700ms) ease-out
+      calc(
+        var(--reveal-delay, 0ms) + var(--reveal-index, 0) *
+          var(--reveal-stagger-step, 120ms)
+      ),
+    transform var(--reveal-d, 700ms) ease-out
+      calc(
+        var(--reveal-delay, 0ms) + var(--reveal-index, 0) *
+          var(--reveal-stagger-step, 120ms)
+      );
+}
+
+[data-reveal-stagger].revealed [data-reveal-child] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-child] {
+    opacity: 1 !important;
+    clip-path: inset(0 0 0 0) !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 /* ============================================
    SCROLLBAR — OverlayScrollbars desktop only
    ============================================ */
