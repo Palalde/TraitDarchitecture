@@ -394,42 +394,57 @@ body::after {
 
 [data-reveal] {
   --reveal-offset-y: 24px;
-  --reveal-delay: 0ms;
 }
 
 [data-reveal="fade-up"] {
   opacity: 0;
   transform: translateY(var(--reveal-offset-y));
   transition:
-    opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay),
-    transform var(--reveal-d, 700ms) ease-out var(--reveal-delay);
+    opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),
+    transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade"] {
   opacity: 0;
-  transition: opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay);
+  transition: opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="clip-ltr"] {
   clip-path: inset(0 100% 0 0);
-  transition: clip-path var(--reveal-d, 800ms) ease-out var(--reveal-delay);
+  transition: clip-path var(--reveal-d, 800ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="clip-rtl"] {
   clip-path: inset(0 0 0 100%);
-  transition: clip-path var(--reveal-d, 800ms) ease-out var(--reveal-delay);
+  transition: clip-path var(--reveal-d, 800ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-right"] {
   transform: scaleX(0);
   transform-origin: right center;
-  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay);
+  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-left"] {
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay);
+  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
+}
+
+[data-reveal="fade-left"] {
+  opacity: 0;
+  transform: translateX(var(--reveal-offset-x, 24px));
+  transition:
+    opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms),
+    transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
+}
+
+[data-reveal="fade-right"] {
+  opacity: 0;
+  transform: translateX(calc(-1 * var(--reveal-offset-x, 24px)));
+  transition:
+    opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms),
+    transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade-up"].revealed {
@@ -449,6 +464,12 @@ body::after {
 [data-reveal="bar-from-right"].revealed,
 [data-reveal="bar-from-left"].revealed {
   transform: scaleX(1);
+}
+
+[data-reveal="fade-left"].revealed,
+[data-reveal="fade-right"].revealed {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 [data-reveal-stagger] {
