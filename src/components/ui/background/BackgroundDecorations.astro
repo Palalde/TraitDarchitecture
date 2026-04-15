@@ -40,7 +40,7 @@ const { class: className }: Props = Astro.props;
           fetchpriority="high"
           quality={10}
           widths={[640, 800, 1400, 2560]}
-          sizes="(min-width: 1280px) 2560px, (min-width: 1024px) 1400px, (min-width: 640px) 800px, 640px"
+          sizes="(min-width: 1280px) 1280px, (min-width: 1024px) 700px, (min-width: 640px) 400px, 320px"
           src={topoLightPng}
         />
         <Image
@@ -51,9 +51,9 @@ const { class: className }: Props = Astro.props;
           format="webp"
           loading="eager"
           fetchpriority="high"
-          quality={30}
+          quality={10}
           widths={[640, 800, 1400, 2560]}
-          sizes="(min-width: 1280px) 2560px, (min-width: 1024px) 1400px, (min-width: 640px) 800px, 640px"
+          sizes="(min-width: 1280px) 1280px, (min-width: 1024px) 700px, (min-width: 640px) 400px, 320px"
           src={topoDarkPng}
         />
       </div>
