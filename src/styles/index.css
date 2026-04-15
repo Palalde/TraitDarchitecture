@@ -447,6 +447,12 @@ body::after {
   transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
+[data-reveal="bar-from-top"] {
+  transform: scaleY(0);
+  transform-origin: center top;
+  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
+}
+
 [data-reveal="fade-left"] {
   opacity: 0;
   transform: translateX(var(--reveal-offset-x, 24px));
@@ -497,6 +503,10 @@ body::after {
 [data-reveal="bar-from-right"].revealed,
 [data-reveal="bar-from-left"].revealed {
   transform: scaleX(1);
+}
+
+[data-reveal="bar-from-top"].revealed {
+  transform: scaleY(1);
 }
 
 [data-reveal="fade-left"].revealed,

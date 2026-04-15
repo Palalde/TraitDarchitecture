@@ -25,18 +25,30 @@ const traitCtaLabel = "Découvrir notre approche";
     <div
       aria-hidden="true"
       class="pointer-events-none absolute bottom-full left-1/2 h-12 w-px -translate-x-1/2 bg-(--trait) sm:h-14"
+      data-reveal="bar-from-top"
     >
     </div>
 
     <div class="flex items-center gap-4">
-      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <div
+        aria-hidden="true"
+        class="h-px flex-1 bg-(--trait)"
+        data-reveal="bar-from-right"
+      >
+      </div>
       <span
         aria-hidden="true"
         class="shrink-0 text-center text-[1.5rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+        data-reveal="fade"
       >
         TraiT
       </span>
-      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <div
+        aria-hidden="true"
+        class="h-px flex-1 bg-(--trait)"
+        data-reveal="bar-from-left"
+      >
+      </div>
     </div>
   </div>
 
@@ -64,16 +76,23 @@ const traitCtaLabel = "Découvrir notre approche";
       imageClassName="object-cover object-center"
       label="Philosophie & Méthode"
       parallax
+      frameReveal="fade-up"
     />
 
     <div
       class="relative z-10 order-2 flex h-full flex-col justify-center lg:order-2 lg:pl-12"
     >
       <div class="hidden items-center gap-4 lg:flex lg:justify-end">
-        <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+        <div
+          aria-hidden="true"
+          class="h-px flex-1 bg-(--trait)"
+          data-reveal="bar-from-left"
+        >
+        </div>
         <span
           aria-hidden="true"
-          class="shrink-0 text-center text-[1.5rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-right lg:text-[2.25rem]"
+          class="shrink-0 text-center text-[1.5rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-right lg:text-[2.25rem] lg:[--reveal-delay:475ms]"
+          data-reveal="fade-right"
         >
           TraiT
         </span>
@@ -84,6 +103,9 @@ const traitCtaLabel = "Découvrir notre approche";
         teaserText={traitTeaser}
         ctaHref="/trait/philosophie"
         ctaLabel={traitCtaLabel}
+        containerReveal="fade-up"
+        teaserReveal="fade-up"
+        ctaReveal="fade"
       />
     </div>
   </div>
