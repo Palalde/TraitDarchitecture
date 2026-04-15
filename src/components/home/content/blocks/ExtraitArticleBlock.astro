@@ -21,6 +21,7 @@ const {
   class:list={[
     "group relative block border border-(--border) bg-(--bg-primary) px-4 py-2.5 transition-colors duration-200 hover:border-(--trait) lg:flex lg:h-full lg:flex-col lg:justify-center lg:pl-12",
     className,
+    cardReveal && "max-lg:[--reveal-start-opacity:1]",
   ]}
   data-reveal={cardReveal}
 >
