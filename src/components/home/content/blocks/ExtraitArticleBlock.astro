@@ -4,9 +4,16 @@ interface Props {
   title: string;
   summary: string;
   href?: string;
+  cardReveal?: string;
 }
 
-const { className, title, summary, href = "#" }: Props = Astro.props;
+const {
+  className,
+  title,
+  summary,
+  href = "#",
+  cardReveal,
+}: Props = Astro.props;
 ---
 
 <a
@@ -15,6 +22,7 @@ const { className, title, summary, href = "#" }: Props = Astro.props;
     "group relative block border border-(--border) bg-(--bg-primary) px-4 py-2.5 transition-colors duration-200 hover:border-(--trait) lg:flex lg:h-full lg:flex-col lg:justify-center lg:pl-12",
     className,
   ]}
+  data-reveal={cardReveal}
 >
   <span
     aria-hidden="true"
