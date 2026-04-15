@@ -98,6 +98,8 @@ const linkLabel =
         href={href}
         class="relative z-30 mt-5 block can-hover:pointer-events-none"
         aria-label={linkLabel}
+        data-reveal={cardReveal ? "fade" : undefined}
+        data-reveal-independent={cardReveal ? "" : undefined}
       >
         <p class="text-[0.95rem] font-semibold uppercase tracking-widest text-(--t2a-blue-dark) can-hover:transition-colors can-hover:duration-300 can-hover:group-hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:can-hover:group-hover:text-(--t2a-blue-light)">
           <span class="relative inline-block">
