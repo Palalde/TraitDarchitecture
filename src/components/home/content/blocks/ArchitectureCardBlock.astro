@@ -14,6 +14,7 @@ interface Props {
   imageClassName?: string;
   parallax?: boolean;
   parallaxOverflow?: number;
+  mobileParallaxOverflow?: number;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   imageClassName = "object-cover object-center",
   parallax = false,
   parallaxOverflow = 0.025,
+  mobileParallaxOverflow = 0.04,
 }: Props = Astro.props;
 
 const hasLabel = Boolean(label);
@@ -44,7 +46,11 @@ const hasLabel = Boolean(label);
   >
     {
       image && parallax ? (
-        <ParallaxFrame client:visible overflowPercent={parallaxOverflow}>
+        <ParallaxFrame
+          client:visible
+          overflowPercent={parallaxOverflow}
+          mobileOverflowPercent={mobileParallaxOverflow}
+        >
           <Image
             alt={imageAlt}
             class:list={["h-full w-full", imageClassName]}

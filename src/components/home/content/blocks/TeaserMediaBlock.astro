@@ -14,6 +14,7 @@ interface Props {
   imageLoading?: "lazy" | "eager";
   parallax?: boolean;
   parallaxOverflow?: number;
+  mobileParallaxOverflow?: number;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   imageLoading = "lazy",
   parallax = false,
   parallaxOverflow = 0.025,
+  mobileParallaxOverflow = 0.04,
 }: Props = Astro.props;
 ---
 
@@ -40,7 +42,11 @@ const {
     >
       {
         image && parallax ? (
-          <ParallaxFrame client:visible overflowPercent={parallaxOverflow}>
+          <ParallaxFrame
+            client:visible
+            overflowPercent={parallaxOverflow}
+            mobileOverflowPercent={mobileParallaxOverflow}
+          >
             <Image
               alt={imageAlt}
               class:list={["h-full w-full", imageClassName]}
