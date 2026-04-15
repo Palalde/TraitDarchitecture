@@ -415,3 +415,10 @@ body::after {
     display: none;
   }
 }
+
+/* Astro encapsule les enfants passés aux islands React dans <astro-slot>.
+   display:contents permet à ce wrapper de ne pas affecter le layout
+   (utile pour ParallaxFrame dont les enfants doivent remplir le motion.div). */
+astro-slot {
+  display: contents;
+}

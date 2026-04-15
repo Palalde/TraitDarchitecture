@@ -1,7 +1,7 @@
 ---
 import TeaserContentBlock from "@/components/home/content/blocks/TeaserContentBlock.astro";
 import TeaserMediaBlock from "@/components/home/content/blocks/TeaserMediaBlock.astro";
-import atelierPhoto from "@/assets/photos/home/atelier-duo.jpg";
+import atelierPhoto from "@/assets/photos/home/atelier-duo.png";
 
 interface Props {
   className?: string;
@@ -81,8 +81,9 @@ const atelierCtaLabel = "Découvrir l'atelier";
       containerClassName="relative z-10 order-1 flex h-full items-center lg:order-2 lg:pl-12"
       image={atelierPhoto}
       imageAlt="Titouan Granet et Théa Battistini assis face à la mer sur des rochers"
-      imageClassName="object-contain"
+      imageClassName="object-cover object-center"
       label="Titouan & Théa"
+      parallax
     />
   </div>
 </section>
