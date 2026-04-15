@@ -15,6 +15,7 @@ interface Props {
   parallax?: boolean;
   parallaxOverflow?: number;
   mobileParallaxOverflow?: number;
+  revealDirection?: "ltr" | "rtl";
 }
 
 const {
@@ -28,25 +29,50 @@ const {
   parallax = false,
   parallaxOverflow = 0.025,
   mobileParallaxOverflow = 0.04,
+  revealDirection,
 }: Props = Astro.props;
+
+const imageReveal =
+  revealDirection === "rtl"
+    ? "clip-rtl"
+    : revealDirection === "ltr"
+      ? "clip-ltr"
+      : undefined;
+
+const labelReveal = revealDirection ? "fade" : undefined;
 ---
 
 <div class={containerClassName}>
-  <div
-    class="relative w-full overflow-hidden border border-(--border) bg-(--bg-secondary) p-4 sm:p-5"
-  >
-    <T2AMotifPattern />
-
+  <div class="w-full" data-reveal-container={imageReveal}>
     <div
-      class="relative z-10 aspect-square w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
+      class="relative w-full overflow-hidden border border-(--border) bg-(--bg-secondary) p-4 sm:p-5"
+      data-reveal-frame
     >
-      {
-        image && parallax ? (
-          <ParallaxFrame
-            client:visible
-            overflowPercent={parallaxOverflow}
-            mobileOverflowPercent={mobileParallaxOverflow}
-          >
+      <T2AMotifPattern />
+
+      <div
+        class="relative z-10 aspect-square w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
+      >
+        {
+          image && parallax ? (
+            <ParallaxFrame
+              client:visible
+              overflowPercent={parallaxOverflow}
+              mobileOverflowPercent={mobileParallaxOverflow}
+            >
+              <Image
+                alt={imageAlt}
+                class:list={["h-full w-full", imageClassName]}
+                draggable="false"
+                loading={imageLoading}
+                fetchpriority={imageFetchPriority}
+                quality={85}
+                widths={[400, 600, 800]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                src={image}
+              />
+            </ParallaxFrame>
+          ) : image ? (
             <Image
               alt={imageAlt}
               class:list={["h-full w-full", imageClassName]}
@@ -58,26 +84,15 @@ const {
               sizes="(min-width: 1024px) 50vw, 100vw"
               src={image}
             />
-          </ParallaxFrame>
-        ) : image ? (
-          <Image
-            alt={imageAlt}
-            class:list={["h-full w-full", imageClassName]}
-            draggable="false"
-            loading={imageLoading}
-            fetchpriority={imageFetchPriority}
-            quality={85}
-            widths={[400, 600, 800]}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            src={image}
-          />
-        ) : null
-      }
+          ) : null
+        }
+      </div>
+      <p
+        class="relative z-10 mt-4 text-center text-[0.8rem] uppercase tracking-[0.16em] text-(--text-primary)"
+        data-reveal={labelReveal}
+      >
+        {label}
+      </p>
     </div>
-    <p
-      class="relative z-10 mt-4 text-center text-[0.8rem] uppercase tracking-[0.16em] text-(--text-primary)"
-    >
-      {label}
-    </p>
   </div>
 </div>

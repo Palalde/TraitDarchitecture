@@ -419,6 +419,23 @@ body::after {
   transition: clip-path var(--reveal-d, 800ms) ease-out var(--reveal-delay, 0ms);
 }
 
+[data-reveal-container="clip-ltr"] [data-reveal-frame] {
+  clip-path: inset(0 100% 0 0);
+}
+
+[data-reveal-container="clip-rtl"] [data-reveal-frame] {
+  clip-path: inset(0 0 0 100%);
+}
+
+@media (max-width: 1023px) {
+  [data-reveal-container] [data-reveal-frame] {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 [data-reveal="bar-from-right"] {
   transform: scaleX(0);
   transform-origin: right center;
@@ -461,6 +478,21 @@ body::after {
   clip-path: inset(0 0 0 0);
 }
 
+[data-reveal-container="clip-ltr"].revealed [data-reveal-frame],
+[data-reveal-container="clip-rtl"].revealed [data-reveal-frame] {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path var(--reveal-d, 800ms) ease-out var(--reveal-delay, 0ms);
+}
+
+@media (max-width: 1023px) {
+  [data-reveal-container].revealed [data-reveal-frame] {
+    clip-path: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 [data-reveal="bar-from-right"].revealed,
 [data-reveal="bar-from-left"].revealed {
   transform: scaleX(1);
@@ -500,7 +532,8 @@ body::after {
 
 @media (prefers-reduced-motion: reduce) {
   [data-reveal],
-  [data-reveal-child] {
+  [data-reveal-child],
+  [data-reveal-container] [data-reveal-frame] {
     opacity: 1 !important;
     clip-path: inset(0 0 0 0) !important;
     transform: none !important;

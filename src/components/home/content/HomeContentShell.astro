@@ -26,7 +26,8 @@ const HOME_REVEAL_DELAY_RETURNING_MS = 400;
     }}
   >
     (() => {
-      const SELECTOR = "[data-reveal], [data-reveal-stagger]";
+      const SELECTOR =
+        "[data-reveal], [data-reveal-stagger], [data-reveal-container]";
       const observed = new Set();
       let started = false;
       let syncRafId = null;
