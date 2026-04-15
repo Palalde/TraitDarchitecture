@@ -3,22 +3,14 @@ import { useMotionValue } from "framer-motion";
 import type { RefObject } from "react";
 import { useReducedMotion } from "./useReducedMotion";
 
+const OS_VIEWPORT_SELECTOR = "[data-overlayscrollbars-viewport]";
+
 /**
- * Pilote un MotionValue `y` en fonction de la position de l'élément cible
- * dans le viewport, pour créer un effet parallax vertical.
+ * Drives a MotionValue `y` based on element position in the viewport.
+ * progress 0 → y = −maxShift  |  progress 0.5 → y = 0  |  progress 1 → y = +maxShift
  *
- * - progress 0 (entrée par le bas)  → y = −maxShift (bas de l'image visible)
- * - progress 0.5 (centré)           → y = 0 (image centrée)
- * - progress 1 (sortie par le haut) → y = +maxShift (haut de l'image visible)
- *
- * Compatible OverlayScrollbars : écoute à la fois `window` (mobile/natif)
- * et `[data-overlayscrollbars-viewport]` (desktop).
- * getBoundingClientRect() retourne toujours des coordonnées relatives au
- * viewport visuel, quel que soit le conteneur qui scrolle.
- *
- * @param targetRef    - Ref sur l'élément dont on mesure la position
- * @param overflowPercent - Dépassement en fraction de la hauteur du cadre
- *                          (ex. 0.1 = 10% au-dessus et 10% en dessous)
+ * Listens to both `window` scroll (native/mobile) and the OverlayScrollbars
+ * viewport (desktop). A MutationObserver catches late OS initialisation.
  */
 export function useParallaxScroll<T extends HTMLElement>(
   targetRef: RefObject<T | null>,
@@ -37,22 +29,17 @@ export function useParallaxScroll<T extends HTMLElement>(
     if (!el) return;
 
     let rafId: number | null = null;
-    let maxShift = 0;
-
-    const recalcMaxShift = () => {
-      maxShift = el.offsetHeight * overflowPercent;
-    };
+    let maxShift = el.offsetHeight * overflowPercent;
 
     const update = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 = élément qui entre par le bas, 1 = élément qui sort par le haut
       const raw = (vh - rect.top) / (vh + rect.height);
       const clamped = Math.max(0, Math.min(1, raw));
       y.set(maxShift * (2 * clamped - 1));
     };
 
-    const scheduleUpdate = () => {
+    const onScroll = () => {
       if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
         rafId = null;
@@ -61,51 +48,39 @@ export function useParallaxScroll<T extends HTMLElement>(
     };
 
     const onResize = () => {
-      recalcMaxShift();
+      maxShift = el.offsetHeight * overflowPercent;
       update();
     };
 
-    recalcMaxShift();
     update();
 
-    // Scroll natif (mobile + desktop sans OS)
-    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize, { passive: true });
 
-    // OverlayScrollbars viewport (desktop ≥1024px)
-    let osViewport: Element | null = document.querySelector(
-      "[data-overlayscrollbars-viewport]",
-    );
-    if (osViewport) {
-      osViewport.addEventListener("scroll", scheduleUpdate, { passive: true });
-    }
+    // OverlayScrollbars viewport (desktop)
+    let osViewport = document.querySelector(OS_VIEWPORT_SELECTOR);
+    osViewport?.addEventListener("scroll", onScroll, { passive: true });
 
-    // Fallback : MutationObserver si OS n'est pas encore initialisé au mount
-    // (client:idle peut parfois s'exécuter après client:visible)
+    // Late-init fallback: OS may hydrate after this island (client:idle vs client:visible)
     let observer: MutationObserver | null = null;
     if (!osViewport) {
       observer = new MutationObserver(() => {
-        const vp = document.querySelector("[data-overlayscrollbars-viewport]");
+        const vp = document.querySelector(OS_VIEWPORT_SELECTOR);
         if (vp) {
           osViewport = vp;
-          osViewport.addEventListener("scroll", scheduleUpdate, {
-            passive: true,
-          });
+          vp.addEventListener("scroll", onScroll, { passive: true });
           observer?.disconnect();
           observer = null;
         }
       });
-      // Le viewport OS est un enfant direct de body
       observer.observe(document.body, { childList: true });
     }
 
     return () => {
       if (rafId !== null) cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
-      if (osViewport) {
-        osViewport.removeEventListener("scroll", scheduleUpdate);
-      }
+      osViewport?.removeEventListener("scroll", onScroll);
       observer?.disconnect();
     };
   }, [isReduced, overflowPercent, targetRef, y]);
