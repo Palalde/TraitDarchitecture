@@ -11,7 +11,7 @@ const sectionFrameClassName =
 const extraitSectionFrameClassName =
   "relative min-h-[28rem] sm:min-h-[30rem] lg:min-h-[33rem]";
 
-const HOME_REVEAL_DELAY_AFTER_LANDING_MS = 50;
+const HOME_REVEAL_DELAY_AFTER_SLIDING_MS = 0;
 const HOME_REVEAL_DELAY_RETURNING_MS = 400;
 ---
 
@@ -21,7 +21,7 @@ const HOME_REVEAL_DELAY_RETURNING_MS = 400;
 >
   <script
     define:vars={{
-      delayAfterLanding: HOME_REVEAL_DELAY_AFTER_LANDING_MS,
+      delayAfterSliding: HOME_REVEAL_DELAY_AFTER_SLIDING_MS,
       delayReturning: HOME_REVEAL_DELAY_RETURNING_MS,
     }}
   >
@@ -104,8 +104,8 @@ const HOME_REVEAL_DELAY_RETURNING_MS = 400;
         setTimeout(markReady, delayReturning);
       } else {
         window.addEventListener(
-          "landing:dismissed",
-          () => setTimeout(markReady, delayAfterLanding),
+          "landing:sliding-up",
+          () => setTimeout(markReady, delayAfterSliding),
           { once: true },
         );
       }
