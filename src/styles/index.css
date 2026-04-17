@@ -192,16 +192,6 @@ body.landing-dismissed #landing-wrapper {
   border-radius: 0px;
 }
 
-#t2a-page-shell {
-  min-height: 100dvh;
-  background-color: var(--bg-primary);
-}
-
-html[data-t2a-android-vt-fix] #t2a-page-shell {
-  view-transition-name: t2a-page-shell;
-  isolation: isolate;
-}
-
 /* Grain */
 #t2a-grain {
   position: fixed;
@@ -554,23 +544,6 @@ astro-slot {
   navigation: auto;
 }
 
-:root {
-  --t2a-page-vt-duration: 1200ms;
-  --t2a-root-old-name: t2a-page-leave;
-  --t2a-root-new-name: t2a-page-enter;
-  --t2a-root-vt-opacity: 1;
-  --t2a-shell-old-name: none;
-  --t2a-shell-new-name: none;
-}
-
-html[data-t2a-android-vt-fix] {
-  --t2a-root-old-name: none;
-  --t2a-root-new-name: none;
-  --t2a-root-vt-opacity: 0;
-  --t2a-shell-old-name: t2a-page-leave;
-  --t2a-shell-new-name: t2a-page-enter;
-}
-
 /* Persisted header*/
 .t2a-header-persist {
   view-transition-name: t2a-header;
@@ -578,57 +551,22 @@ html[data-t2a-android-vt-fix] {
 
 /* Old page slides slightly up + fades out.
    New page enters from the bottom, covering the old one. */
-::view-transition,
-::view-transition-group(root),
-::view-transition-image-pair(root) {
-  background-color: var(--bg-primary);
-}
-
-::view-transition-group(t2a-page-shell) {
-  z-index: 1;
-}
-
-::view-transition-group(t2a-header) {
-  z-index: 2;
-}
-
 ::view-transition-old(root) {
-  animation-name: var(--t2a-root-old-name);
-  animation-duration: var(--t2a-page-vt-duration);
-  animation-timing-function: cubic-bezier(0.8, 1, 0.9, 1);
-  animation-fill-mode: both;
-  opacity: var(--t2a-root-vt-opacity);
+  animation: t2a-page-leave 1200ms cubic-bezier(0.8, 1, 0.9, 1) both;
   z-index: 1;
 }
 
 ::view-transition-new(root) {
-  animation-name: var(--t2a-root-new-name);
-  animation-duration: var(--t2a-page-vt-duration);
-  animation-timing-function: cubic-bezier(0.8, 1, 0.9, 1);
-  animation-fill-mode: both;
-  opacity: var(--t2a-root-vt-opacity);
-  z-index: 2;
-}
-
-::view-transition-old(t2a-page-shell) {
-  animation-name: var(--t2a-shell-old-name);
-  animation-duration: var(--t2a-page-vt-duration);
-  animation-timing-function: cubic-bezier(0.8, 1, 0.9, 1);
-  animation-fill-mode: both;
-  z-index: 1;
-}
-
-::view-transition-new(t2a-page-shell) {
-  animation-name: var(--t2a-shell-new-name);
-  animation-duration: var(--t2a-page-vt-duration);
-  animation-timing-function: cubic-bezier(0.8, 1, 0.9, 1);
-  animation-fill-mode: both;
+  animation: t2a-page-enter 1200ms cubic-bezier(0.8, 1, 0.9, 1) both;
   z-index: 2;
 }
 
 @media (min-width: 1024px) {
-  :root {
-    --t2a-page-vt-duration: 800ms;
+  ::view-transition-old(root) {
+    animation-duration: 800ms;
+  }
+  ::view-transition-new(root) {
+    animation-duration: 800ms;
   }
 }
 
@@ -654,9 +592,7 @@ html[data-t2a-android-vt-fix] {
 
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
-  ::view-transition-new(root),
-  ::view-transition-old(t2a-page-shell),
-  ::view-transition-new(t2a-page-shell) {
+  ::view-transition-new(root) {
     animation: none;
   }
 }
