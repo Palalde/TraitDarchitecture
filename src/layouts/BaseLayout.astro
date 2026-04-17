@@ -87,6 +87,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
       id="t2a-nav-progress"
       role="progressbar"
       aria-label="Chargement de la page"
+      aria-hidden="true"
     >
     </div>
     <OverlayScrollbarsSetup client:idle />
@@ -134,6 +135,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
           const el = getEl();
           if (!el) return;
           reset(el);
+          el.setAttribute("aria-hidden", "false");
           // force reflow before adding class so transition plays
           void el.offsetWidth;
           el.classList.add("is-loading");
@@ -161,6 +163,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
             el.classList.add("is-hidden");
             hideTimer = window.setTimeout(() => {
               reset(el);
+              el.setAttribute("aria-hidden", "true");
               hideTimer = null;
             }, 220);
           }, DONE_HOLD_MS);

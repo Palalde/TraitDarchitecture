@@ -626,6 +626,14 @@ astro-slot {
   z-index: 10000;
   pointer-events: none;
   overflow: hidden;
+}
+
+/* Promote to its own layer only while active, to avoid a permanent
+   GPU composition layer when idle. */
+#t2a-nav-progress.is-loading,
+#t2a-nav-progress.is-stalled,
+#t2a-nav-progress.is-done,
+#t2a-nav-progress.is-hidden {
   will-change: transform, opacity;
 }
 

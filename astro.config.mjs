@@ -7,7 +7,7 @@ export default defineConfig({
   integrations: [react()],
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "hover",
+    defaultStrategy: "viewport",
   },
   vite: {
     plugins: [tailwindcss()],
