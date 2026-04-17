@@ -562,7 +562,9 @@ astro-slot {
 
 /* Old page slides slightly up + fades out.
    New page enters from the bottom, covering the old one. */
-::view-transition {
+::view-transition,
+::view-transition-group(root),
+::view-transition-image-pair(root) {
   background-color: var(--bg-primary);
 }
 
