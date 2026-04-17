@@ -588,8 +588,10 @@ astro-slot {
      compositor work with a single translating bitmap per frame. */
   from {
     transform: translateY(0);
+    opacity: 1;
   }
   to {
+    opacity: 0;
     transform: translateY(-50%);
   }
 }
