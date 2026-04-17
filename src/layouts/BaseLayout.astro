@@ -29,23 +29,23 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <link rel="icon" type="image/svg+xml" href="/media/favicon/favicon.svg" />
     <link
       rel="preload"
-      href="/fonts/T2A-Light.ttf"
+      href="/fonts/T2A-Light.woff2"
       as="font"
-      type="font/ttf"
+      type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/fonts/T2A-Regular.ttf"
+      href="/fonts/T2A-Regular.woff2"
       as="font"
-      type="font/ttf"
+      type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/fonts/T2A-Demi-Bold.ttf"
+      href="/fonts/T2A-Demi-Bold.woff2"
       as="font"
-      type="font/ttf"
+      type="font/woff2"
       crossorigin
     />
     <title>{title}</title>
@@ -83,7 +83,12 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <slot name="head" />
   </head>
   <body class="bg-(--bg-primary) font-sans text-(--text-primary) antialiased">
-    <div id="t2a-nav-progress" aria-hidden="true"></div>
+    <div
+      id="t2a-nav-progress"
+      role="progressbar"
+      aria-label="Chargement de la page"
+    >
+    </div>
     <OverlayScrollbarsSetup client:idle />
     <slot />
     <script is:inline>

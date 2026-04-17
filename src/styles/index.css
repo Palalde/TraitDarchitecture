@@ -13,19 +13,19 @@
 
 @font-face {
   font-family: "T2A";
-  src: url("/fonts/T2A-Light.ttf") format("truetype");
+  src: url("/fonts/T2A-Light.woff2") format("woff2");
   font-weight: 300;
   font-display: swap;
 }
 @font-face {
   font-family: "T2A";
-  src: url("/fonts/T2A-Regular.ttf") format("truetype");
+  src: url("/fonts/T2A-Regular.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: "T2A";
-  src: url("/fonts/T2A-Demi-Bold.ttf") format("truetype");
+  src: url("/fonts/T2A-Demi-Bold.woff2") format("woff2");
   font-weight: 600;
   font-display: swap;
 }

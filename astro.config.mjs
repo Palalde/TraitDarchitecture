@@ -5,6 +5,10 @@ import path from "node:path";
 
 export default defineConfig({
   integrations: [react()],
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
   vite: {
     plugins: [tailwindcss()],
     resolve: {
