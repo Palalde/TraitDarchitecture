@@ -213,24 +213,6 @@ body.landing-dismissed #landing-wrapper {
   }
 }
 
-/* Android Chromium workaround */
-#t2a-transition-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-  pointer-events: none;
-  opacity: 0;
-  background-color: var(--bg-primary);
-}
-
-html[data-t2a-android-overlay-fix] #t2a-transition-overlay {
-  view-transition-name: t2a-transition-overlay;
-}
-
-html[data-t2a-android-overlay-fix] #t2a-transition-overlay.is-active {
-  opacity: 0.18;
-}
-
 /* ============================================
    HEADER — Tailles fixes par breakpoint
    ============================================ */
@@ -579,36 +561,11 @@ astro-slot {
   z-index: 2;
 }
 
-html[data-t2a-android-overlay-fix]
-  ::view-transition-group(t2a-transition-overlay) {
-  z-index: 3;
-}
-
-html[data-t2a-android-overlay-fix] ::view-transition-group(t2a-header) {
-  z-index: 4;
-}
-
-html[data-t2a-android-overlay-fix]
-  ::view-transition-old(t2a-transition-overlay) {
-  animation: t2a-transition-overlay-fade 1200ms linear both;
-}
-
-html[data-t2a-android-overlay-fix]
-  ::view-transition-new(t2a-transition-overlay) {
-  animation: none;
-  opacity: 0;
-}
-
 @media (min-width: 1024px) {
   ::view-transition-old(root) {
     animation-duration: 800ms;
   }
   ::view-transition-new(root) {
-    animation-duration: 800ms;
-  }
-
-  html[data-t2a-android-overlay-fix]
-    ::view-transition-old(t2a-transition-overlay) {
     animation-duration: 800ms;
   }
 }
@@ -633,25 +590,9 @@ html[data-t2a-android-overlay-fix]
   }
 }
 
-@keyframes t2a-transition-overlay-fade {
-  from {
-    opacity: 0.18;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation: none;
-  }
-
-  html[data-t2a-android-overlay-fix]
-    ::view-transition-old(t2a-transition-overlay),
-  html[data-t2a-android-overlay-fix]
-    ::view-transition-new(t2a-transition-overlay) {
     animation: none;
   }
 }
