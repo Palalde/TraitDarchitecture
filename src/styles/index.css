@@ -193,8 +193,12 @@ body.landing-dismissed #landing-wrapper {
 }
 
 /* Grain de fond — texture papier architecturale.
-   Painted by a real persisted element (#t2a-grain) so it survives
-   Astro view transitions without being swept by the root snapshot. */
+   Painted by a real persisted element (#t2a-grain) so the DOM node
+   survives Astro view transitions (transition:persist keeps the node).
+   We deliberately DO NOT set `view-transition-name` here: letting the
+   grain be captured inside the root snapshot avoids an extra GPU layer
+   + a costly re-rasterization of the feTurbulence filter on each nav.
+   At opacity 0.08 the tiny translate during the curtain is imperceptible. */
 #t2a-grain {
   position: fixed;
   inset: 0;
@@ -204,7 +208,6 @@ body.landing-dismissed #landing-wrapper {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
-  view-transition-name: t2a-grain;
   /* Promote to its own GPU layer so reveals underneath do not force
      the compositor to repaint the noise texture on every frame.
      No `will-change` here: it would reserve a fullscreen VRAM buffer
@@ -580,11 +583,14 @@ astro-slot {
 }
 
 @keyframes t2a-page-leave {
+  /* Old page stays still: the new page slides over it (same pattern as
+     the landing exit — one moving GPU layer, one static). Lets the
+     compositor work with a single translating bitmap per frame. */
   from {
     transform: translateY(0);
   }
   to {
-    transform: translateY(-8vh);
+    transform: translateY(0);
   }
 }
 

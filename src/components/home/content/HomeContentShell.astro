@@ -10,6 +10,13 @@ const sectionFrameClassName =
 
 const extraitSectionFrameClassName =
   "relative min-h-[28rem] sm:min-h-[30rem] lg:min-h-[33rem]";
+
+// Sections below the fold: skip rendering + snapshot cost when off-screen.
+// contain-intrinsic-size reserves layout space so scrollbars and reveal
+// IntersectionObservers keep working correctly.
+const deferredFrameClassName = `${sectionFrameClassName} [content-visibility:auto] [contain-intrinsic-size:auto_42rem]`;
+
+const deferredExtraitFrameClassName = `${extraitSectionFrameClassName} [content-visibility:auto] [contain-intrinsic-size:auto_33rem]`;
 ---
 
 <section
@@ -164,8 +171,8 @@ const extraitSectionFrameClassName =
     class="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-24 px-6 pt-24 pb-35 sm:gap-28 sm:px-8 sm:pt-28 sm:pb-55 lg:gap-32 lg:px-10 lg:pt-32 lg:pb-55 2xl:pb-70"
   >
     <SectionAtelier className={sectionFrameClassName} />
-    <SectionTrait className={`${sectionFrameClassName} lg:-mt-32`} />
-    <SectionArchitecture className={`${sectionFrameClassName} lg:-mt-16`} />
-    <SectionExtrait className={`${extraitSectionFrameClassName} lg:-mt-8`} />
+    <SectionTrait className={`${deferredFrameClassName} lg:-mt-32`} />
+    <SectionArchitecture className={`${deferredFrameClassName} lg:-mt-16`} />
+    <SectionExtrait className={`${deferredExtraitFrameClassName} lg:-mt-8`} />
   </div>
 </section>
