@@ -554,9 +554,7 @@ astro-slot {
   navigation: auto;
 }
 
-/* Persisted header: opted out of the "root" snapshot so it doesn't get
-   swept by the curtain. Targets the painted <header> (not the <astro-island>
-   wrapper). */
+/* Persisted header*/
 .t2a-header-persist {
   view-transition-name: t2a-header;
 }
@@ -566,11 +564,14 @@ astro-slot {
 ::view-transition-old(root) {
   animation: t2a-page-leave 1200ms cubic-bezier(0.8, 1, 0.9, 1) both;
   z-index: 1;
+  /* Fill the snapshot layer with the page background */
+  background-color: var(--bg-primary);
 }
 
 ::view-transition-new(root) {
   animation: t2a-page-enter 1200ms cubic-bezier(0.8, 1, 0.9, 1) both;
   z-index: 2;
+  background-color: var(--bg-primary);
 }
 
 @media (min-width: 1024px) {
@@ -583,9 +584,6 @@ astro-slot {
 }
 
 @keyframes t2a-page-leave {
-  /* Old page stays still: the new page slides over it (same pattern as
-     the landing exit — one moving GPU layer, one static). Lets the
-     compositor work with a single translating bitmap per frame. */
   from {
     transform: translateY(0);
     opacity: 1;
