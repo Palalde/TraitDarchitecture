@@ -64,6 +64,22 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <script is:inline>
+      (() => {
+        const ua = navigator.userAgent;
+        const isAndroidChromium =
+          /Android/i.test(ua) &&
+          /(Chrome|CriOS|EdgA|OPR)\//.test(ua) &&
+          !/(Firefox|FxiOS)\//.test(ua);
+
+        if (isAndroidChromium) {
+          document.documentElement.setAttribute(
+            "data-t2a-android-overlay-fix",
+            "",
+          );
+        }
+      })();
+    </script>
     <ClientRouter />
     <script is:inline>
       const overlayScrollbarsMediaQuery =
@@ -88,6 +104,11 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
   <body class="bg-(--bg-primary) font-sans text-(--text-primary) antialiased">
     <div id="t2a-grain" aria-hidden="true" transition:persist="t2a-grain"></div>
     <div
+      id="t2a-transition-overlay"
+      aria-hidden="true"
+      transition:persist="t2a-transition-overlay"
+    ></div>
+    <div
       id="t2a-nav-progress"
       role="progressbar"
       aria-label="Chargement de la page"
@@ -109,6 +130,8 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
         let hideTimer = null;
 
         const getEl = () => document.getElementById("t2a-nav-progress");
+        const getOverlay = () =>
+          document.getElementById("t2a-transition-overlay");
 
         const clearAllTimers = () => {
           if (showTimer) {
@@ -133,6 +156,18 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
             "is-done",
             "is-hidden",
           );
+        };
+
+        const showOverlay = () => {
+          const overlay = getOverlay();
+          if (!overlay) return;
+          overlay.classList.add("is-active");
+        };
+
+        const hideOverlay = () => {
+          const overlay = getOverlay();
+          if (!overlay) return;
+          overlay.classList.remove("is-active");
         };
 
         const show = () => {
@@ -175,13 +210,17 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
 
         document.addEventListener("astro:before-preparation", () => {
           clearAllTimers();
+          showOverlay();
           showTimer = window.setTimeout(() => {
             showTimer = null;
             show();
           }, SHOW_DELAY_MS);
         });
 
-        document.addEventListener("astro:page-load", complete);
+        document.addEventListener("astro:page-load", () => {
+          complete();
+          hideOverlay();
+        });
       })();
     </script>
   </body>
