@@ -63,6 +63,19 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <meta name="twitter:image" content={ogImage} />
     <ClientRouter />
     <script is:inline>
+      (() => {
+        const ua = navigator.userAgent;
+        const isAndroidChromium =
+          /Android/i.test(ua) &&
+          /(Chrome|CriOS|EdgA|OPR)\//.test(ua) &&
+          !/(Firefox|FxiOS)\//.test(ua);
+
+        if (isAndroidChromium) {
+          document.documentElement.setAttribute("data-t2a-android-vt-fix", "");
+        }
+      })();
+    </script>
+    <script is:inline>
       const overlayScrollbarsMediaQuery =
         "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
 
@@ -92,7 +105,9 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     >
     </div>
     <OverlayScrollbarsSetup client:idle />
-    <slot />
+    <div id="t2a-page-shell">
+      <slot />
+    </div>
     <script is:inline>
       (() => {
         if (window.__t2aNavProgressInit) return;
