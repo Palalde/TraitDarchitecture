@@ -534,3 +534,162 @@ body::after {
 astro-slot {
   display: contents;
 }
+/* ============================================
+   VIEW TRANSITIONS — Inter-pages (rideau bas→haut)
+   ============================================ */
+
+@view-transition {
+  navigation: auto;
+}
+
+/* Persisted header: opted out of the "root" snapshot so it doesn't get
+   swept by the curtain. Targets the painted <header> (not the <astro-island>
+   wrapper). */
+.t2a-header-persist {
+  view-transition-name: t2a-header;
+}
+
+/* Old page slides slightly up + fades out.
+   New page enters from the bottom, covering the old one. */
+::view-transition-old(root) {
+  animation: t2a-page-leave 1800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  animation: t2a-page-enter 1800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  z-index: 2;
+}
+
+@media (min-width: 1024px) {
+  ::view-transition-old(root) {
+    animation-duration: 1500ms;
+  }
+  ::view-transition-new(root) {
+    animation-duration: 1500ms;
+  }
+}
+
+@keyframes t2a-page-leave {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-8vh);
+    opacity: 0;
+  }
+}
+
+@keyframes t2a-page-enter {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* Desktop uses OverlayScrollbars : hide native scrollbar to avoid
+   flashes when OS destroys/reinitializes around view transitions. */
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  html {
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ============================================
+   NAV PROGRESS — Top loading bar
+   ============================================ */
+
+#t2a-nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--trait);
+  transform: scaleX(0);
+  transform-origin: left center;
+  opacity: 0;
+  z-index: 10000;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+/* Shimmer overlay for the "stalled" indeterminate state. */
+#t2a-nav-progress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--t2a-blue-dark) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#t2a-nav-progress.is-loading {
+  opacity: 1;
+  transform: scaleX(1);
+  transition:
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 120ms ease-out;
+}
+
+#t2a-nav-progress.is-stalled::before {
+  opacity: 1;
+  animation: t2a-nav-shimmer 1400ms linear infinite;
+}
+
+#t2a-nav-progress.is-done {
+  opacity: 1;
+}
+
+#t2a-nav-progress.is-done::before {
+  opacity: 0;
+  animation: none;
+}
+
+#t2a-nav-progress.is-hidden {
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+
+@keyframes t2a-nav-shimmer {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #t2a-nav-progress,
+  #t2a-nav-progress.is-loading,
+  #t2a-nav-progress.is-done {
+    transform: scaleX(1);
+    transition: opacity 120ms linear;
+  }
+  #t2a-nav-progress.is-stalled::before {
+    animation: none;
+    opacity: 0;
+  }
+}

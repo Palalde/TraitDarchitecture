@@ -64,7 +64,7 @@ export function Header({
     <motion.header
       aria-label="En-tête principal"
       animate={{ y: headerVisible ? 0 : "-100%" }}
-      className="fixed inset-x-0 top-0 z-50 h-(--header-height)"
+      className="t2a-header-persist fixed inset-x-0 top-0 z-50 h-(--header-height)"
       initial={hasEnteredFromLanding ? { y: "-100%" } : false}
       transition={{
         duration: reducedMotion ? 0 : 0.42,

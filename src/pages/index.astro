@@ -6,8 +6,6 @@ import Footer from "@/components/ui/footer/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const FORCE_REPLAY_LANDING = false;
-const HOME_FLOW_SLIDE_DISTANCE = "calc(var(--landing-vh) * -1)";
-const HOME_FLOW_SLIDE_DURATION_MS = 1250;
 ---
 
 <BaseLayout
@@ -15,29 +13,29 @@ const HOME_FLOW_SLIDE_DURATION_MS = 1250;
   description="Atelier d'architecture sensible, contextuelle et engagée. Théa Battistini & Titouan Granet."
 >
   <!-- landing transition -->
-  <script
-    define:vars={{
-      forceReplay: FORCE_REPLAY_LANDING,
-      homeFlowSlideDistance: HOME_FLOW_SLIDE_DISTANCE,
-      homeFlowSlideDurationMs: HOME_FLOW_SLIDE_DURATION_MS,
-    }}
-  >
-    const isDismissed =
-      !forceReplay && sessionStorage.getItem("t2a-landing-dismissed") === "1";
-    const rootStyle = document.documentElement.style;
-    const setHomeFlowTransition = (value) => {
-      rootStyle.setProperty("--home-flow-transition", value);
-    };
-    const setHomeFlowShift = (value) => {
-      rootStyle.setProperty("--home-flow-shift", value);
-    };
+  <script is:inline data-astro-rerun>
+    (() => {
+      const HOME_FLOW_SLIDE_DISTANCE = "calc(var(--landing-vh) * -1)";
+      const HOME_FLOW_SLIDE_DURATION_MS = 1250;
 
-    setHomeFlowTransition("none");
-    setHomeFlowShift("0px");
+      const isDismissed =
+        sessionStorage.getItem("t2a-landing-dismissed") === "1";
+      const rootStyle = document.documentElement.style;
+      const setHomeFlowTransition = (value) => {
+        rootStyle.setProperty("--home-flow-transition", value);
+      };
+      const setHomeFlowShift = (value) => {
+        rootStyle.setProperty("--home-flow-shift", value);
+      };
 
-    if (isDismissed) {
-      document.body.classList.add("landing-dismissed");
-    } else {
+      setHomeFlowTransition("none");
+      setHomeFlowShift("0px");
+
+      if (isDismissed) {
+        document.body.classList.add("landing-dismissed");
+        return;
+      }
+
       if (history.scrollRestoration) {
         history.scrollRestoration = "manual";
       }
@@ -45,9 +43,9 @@ const HOME_FLOW_SLIDE_DURATION_MS = 1250;
 
       const handleLandingSlidingUp = () => {
         setHomeFlowTransition(
-          `transform ${homeFlowSlideDurationMs}ms ease-out`,
+          `transform ${HOME_FLOW_SLIDE_DURATION_MS}ms ease-out`,
         );
-        setHomeFlowShift(homeFlowSlideDistance);
+        setHomeFlowShift(HOME_FLOW_SLIDE_DISTANCE);
       };
 
       const handleLandingDismissed = () => {
@@ -63,7 +61,7 @@ const HOME_FLOW_SLIDE_DURATION_MS = 1250;
       window.addEventListener("landing:dismissed", handleLandingDismissed, {
         once: true,
       });
-    }
+    })();
   </script>
   <HeaderShell waitForLanding />
   <main class="flex flex-col bg-(--bg-primary)">

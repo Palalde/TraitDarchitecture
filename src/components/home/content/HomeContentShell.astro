@@ -10,30 +10,53 @@ const sectionFrameClassName =
 
 const extraitSectionFrameClassName =
   "relative min-h-[28rem] sm:min-h-[30rem] lg:min-h-[33rem]";
-
-const HOME_REVEAL_DELAY_AFTER_SLIDING_MS = 0;
-const HOME_REVEAL_DELAY_RETURNING_MS = 400;
 ---
 
 <section
   aria-label="Contenu principal de l'accueil"
   class="relative w-full overflow-hidden bg-(--bg-primary)"
 >
-  <script
-    define:vars={{
-      delayAfterSliding: HOME_REVEAL_DELAY_AFTER_SLIDING_MS,
-      delayReturning: HOME_REVEAL_DELAY_RETURNING_MS,
-    }}
-  >
+  <script is:inline data-astro-rerun>
     (() => {
+      const DELAY_AFTER_SLIDING_MS = 0;
+      const DELAY_RETURNING_MS = 400;
       const SELECTOR = "[data-reveal]";
-      const observed = new Set();
-      let started = false;
-      let syncRafId = null;
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const syncTargets = (io) => {
+      // Disconnect any previous IO/MO (from a prior home visit) to avoid leaks.
+      if (window.__t2aHomeIo) {
+        window.__t2aHomeIo.disconnect();
+        window.__t2aHomeIo = null;
+      }
+      if (window.__t2aHomeMo) {
+        window.__t2aHomeMo.disconnect();
+        window.__t2aHomeMo = null;
+      }
+
+      const observed = new WeakSet();
+      let started = false;
+      let syncRafId = null;
+      let io = null;
+      let mo = null;
+      let total = 0;
+      let revealedCount = 0;
+
+      const teardown = () => {
+        if (io) {
+          io.disconnect();
+          io = null;
+          window.__t2aHomeIo = null;
+        }
+        if (mo) {
+          mo.disconnect();
+          mo = null;
+          window.__t2aHomeMo = null;
+        }
+      };
+
+      const syncTargets = () => {
+        if (!io) return;
         document.querySelectorAll(SELECTOR).forEach((el) => {
           if (
             el.classList.contains("revealed") ||
@@ -44,67 +67,77 @@ const HOME_REVEAL_DELAY_RETURNING_MS = 400;
           }
 
           observed.add(el);
+          total += 1;
           io.observe(el);
+        });
+      };
+
+      const scheduleSync = () => {
+        if (syncRafId !== null) return;
+        syncRafId = requestAnimationFrame(() => {
+          syncRafId = null;
+          syncTargets();
         });
       };
 
       const start = () => {
         if (started) return;
-
-        // Defer until DOM is fully parsed (data-reveal elements are below this script).
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", start, { once: true });
-          return;
-        }
-
         started = true;
 
-        if (!document.querySelector(SELECTOR)) return;
-
-        // Default viewport root keeps IO compatible with OverlayScrollbars.
-        const io = new IntersectionObserver(
+        io = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               if (entry.intersectionRatio < 0.2) return;
 
               entry.target.classList.add("revealed");
-              observed.delete(entry.target);
               io.unobserve(entry.target);
+              revealedCount += 1;
+              // All reveals done: stop observing the DOM entirely.
+              if (revealedCount >= total && mo) {
+                mo.disconnect();
+                mo = null;
+                window.__t2aHomeMo = null;
+              }
             });
           },
           { threshold: 0.2 },
         );
 
-        syncTargets(io);
+        window.__t2aHomeIo = io;
+        syncTargets();
 
-        window.addEventListener(
-          "resize",
-          () => {
-            if (syncRafId !== null) return;
+        // Catch late-added elements: slow-network HTML parsing still ongoing,
+        // React islands hydrating, or any dynamic DOM changes.
+        mo = new MutationObserver(scheduleSync);
+        mo.observe(document.body, { childList: true, subtree: true });
+        window.__t2aHomeMo = mo;
 
-            syncRafId = requestAnimationFrame(() => {
-              syncRafId = null;
-              syncTargets(io);
-            });
-          },
-          { passive: true },
-        );
+        window.addEventListener("resize", scheduleSync, { passive: true });
       };
 
-      const markReady = () => {
-        document.body.dataset.homeRevealReady = "1";
-        window.dispatchEvent(new CustomEvent("home-reveal:ready"));
-        start();
-      };
+      // Clean up when navigating away from the home page via SPA nav.
+      document.addEventListener(
+        "astro:before-swap",
+        (event) => {
+          const nextPath = new URL(event.to.href).pathname;
+          if (nextPath !== "/") teardown();
+        },
+        { once: true },
+      );
 
-      if (document.body.dataset.homeRevealReady === "1") {
-        start();
-      } else if (document.body.classList.contains("landing-dismissed")) {
-        setTimeout(markReady, delayReturning);
+      // Returning visitor (landing already dismissed via sessionStorage)
+      // OR returning via SPA nav (class set by LandingIsland on previous visit):
+      // start reveals with a short delay so the page has time to paint.
+      const isDismissed =
+        sessionStorage.getItem("t2a-landing-dismissed") === "1" ||
+        document.body.classList.contains("landing-dismissed");
+
+      if (isDismissed) {
+        setTimeout(start, DELAY_RETURNING_MS);
       } else {
         window.addEventListener(
           "landing:sliding-up",
-          () => setTimeout(markReady, delayAfterSliding),
+          () => setTimeout(start, DELAY_AFTER_SLIDING_MS),
           { once: true },
         );
       }

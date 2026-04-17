@@ -1,4 +1,5 @@
 ---
+import { ClientRouter } from "astro:transitions";
 import OverlayScrollbarsSetup from "@/components/ui/overlay/OverlayScrollbarsSetup";
 import "overlayscrollbars/styles/overlayscrollbars.css";
 import "../styles/index.css";
@@ -60,7 +61,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <!-- scroll Bar script -->
+    <ClientRouter />
     <script is:inline>
       const overlayScrollbarsMediaQuery =
         "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
@@ -82,7 +83,94 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <slot name="head" />
   </head>
   <body class="bg-(--bg-primary) font-sans text-(--text-primary) antialiased">
+    <div id="t2a-nav-progress" aria-hidden="true"></div>
     <OverlayScrollbarsSetup client:idle />
     <slot />
+    <script is:inline>
+      (() => {
+        if (window.__t2aNavProgressInit) return;
+        window.__t2aNavProgressInit = true;
+
+        const SHOW_DELAY_MS = 150;
+        const STALL_AFTER_MS = 900;
+        const DONE_HOLD_MS = 200;
+        let showTimer = null;
+        let stallTimer = null;
+        let hideTimer = null;
+
+        const getEl = () => document.getElementById("t2a-nav-progress");
+
+        const clearAllTimers = () => {
+          if (showTimer) {
+            clearTimeout(showTimer);
+            showTimer = null;
+          }
+          if (stallTimer) {
+            clearTimeout(stallTimer);
+            stallTimer = null;
+          }
+          if (hideTimer) {
+            clearTimeout(hideTimer);
+            hideTimer = null;
+          }
+        };
+
+        const reset = (el) => {
+          if (!el) return;
+          el.classList.remove(
+            "is-loading",
+            "is-stalled",
+            "is-done",
+            "is-hidden",
+          );
+        };
+
+        const show = () => {
+          const el = getEl();
+          if (!el) return;
+          reset(el);
+          // force reflow before adding class so transition plays
+          void el.offsetWidth;
+          el.classList.add("is-loading");
+
+          // After the main scaleX transition completes, switch to indeterminate
+          // shimmer so the user keeps getting feedback on very slow networks.
+          stallTimer = window.setTimeout(() => {
+            stallTimer = null;
+            const target = getEl();
+            if (target && target.classList.contains("is-loading")) {
+              target.classList.add("is-stalled");
+            }
+          }, STALL_AFTER_MS);
+        };
+
+        const complete = () => {
+          clearAllTimers();
+          const el = getEl();
+          if (!el || !el.classList.contains("is-loading")) {
+            return;
+          }
+          el.classList.remove("is-loading", "is-stalled");
+          el.classList.add("is-done");
+          hideTimer = window.setTimeout(() => {
+            el.classList.add("is-hidden");
+            hideTimer = window.setTimeout(() => {
+              reset(el);
+              hideTimer = null;
+            }, 220);
+          }, DONE_HOLD_MS);
+        };
+
+        document.addEventListener("astro:before-preparation", () => {
+          clearAllTimers();
+          showTimer = window.setTimeout(() => {
+            showTimer = null;
+            show();
+          }, SHOW_DELAY_MS);
+        });
+
+        document.addEventListener("astro:page-load", complete);
+      })();
+    </script>
   </body>
 </html>

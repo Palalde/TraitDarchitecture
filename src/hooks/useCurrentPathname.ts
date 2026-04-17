@@ -46,9 +46,11 @@ export function useCurrentPathname(initialPathname: string) {
 
     updatePathname();
     window.addEventListener("popstate", updatePathname);
+    document.addEventListener("astro:page-load", updatePathname);
 
     return () => {
       window.removeEventListener("popstate", updatePathname);
+      document.removeEventListener("astro:page-load", updatePathname);
     };
   }, []);
 
