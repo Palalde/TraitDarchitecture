@@ -206,9 +206,11 @@ body.landing-dismissed #landing-wrapper {
   background-size: 256px 256px;
   view-transition-name: t2a-grain;
   /* Promote to its own GPU layer so reveals underneath do not force
-     the compositor to repaint the noise texture on every frame. */
+     the compositor to repaint the noise texture on every frame.
+     No `will-change` here: it would reserve a fullscreen VRAM buffer
+     permanently, which hurts low-end mobile GPUs. translateZ(0) is
+     enough to trigger layer promotion. */
   transform: translateZ(0);
-  will-change: transform;
   backface-visibility: hidden;
 }
 
@@ -559,12 +561,12 @@ astro-slot {
 /* Old page slides slightly up + fades out.
    New page enters from the bottom, covering the old one. */
 ::view-transition-old(root) {
-  animation: t2a-page-leave 1400ms cubic-bezier(0.8, 1, 0.9, 1) both;
+  animation: t2a-page-leave 1500ms cubic-bezier(0.8, 1, 0.9, 1) both;
   z-index: 1;
 }
 
 ::view-transition-new(root) {
-  animation: t2a-page-enter 1400ms cubic-bezier(0.8, 1, 0.9, 1) both;
+  animation: t2a-page-enter 1500ms cubic-bezier(0.8, 1, 0.9, 1) both;
   z-index: 2;
 }
 
@@ -580,11 +582,9 @@ astro-slot {
 @keyframes t2a-page-leave {
   from {
     transform: translateY(0);
-    opacity: 1;
   }
   to {
     transform: translateY(-8vh);
-    opacity: 0;
   }
 }
 

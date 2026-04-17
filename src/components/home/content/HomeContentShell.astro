@@ -36,7 +36,7 @@ const extraitSectionFrameClassName =
 
       const observed = new WeakSet();
       let started = false;
-      let syncRafId = null;
+      let syncTimerId = null;
       let io = null;
       let mo = null;
       let total = 0;
@@ -52,6 +52,10 @@ const extraitSectionFrameClassName =
           mo.disconnect();
           mo = null;
           window.__t2aHomeMo = null;
+        }
+        if (syncTimerId !== null) {
+          clearTimeout(syncTimerId);
+          syncTimerId = null;
         }
         window.removeEventListener("resize", scheduleSync);
         document.removeEventListener("astro:before-swap", onBeforeSwap);
@@ -81,11 +85,14 @@ const extraitSectionFrameClassName =
       };
 
       const scheduleSync = () => {
-        if (syncRafId !== null) return;
-        syncRafId = requestAnimationFrame(() => {
-          syncRafId = null;
+        if (syncTimerId !== null) return;
+        // 100ms trailing debounce: coalesces the burst of mutations during
+        // React island hydration into a single querySelectorAll pass,
+        // keeping the main thread free while the view-transition plays.
+        syncTimerId = setTimeout(() => {
+          syncTimerId = null;
           syncTargets();
-        });
+        }, 100);
       };
 
       const start = () => {
