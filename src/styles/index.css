@@ -554,21 +554,21 @@ astro-slot {
 /* Old page slides slightly up + fades out.
    New page enters from the bottom, covering the old one. */
 ::view-transition-old(root) {
-  animation: t2a-page-leave 1500ms cubic-bezier(0.7, 1, 0.8, 1) both;
+  animation: t2a-page-leave 1000ms cubic-bezier(0.9, 1, 0.95, 1) both;
   z-index: 1;
 }
 
 ::view-transition-new(root) {
-  animation: t2a-page-enter 1500ms cubic-bezier(0.7, 1, 0.8, 1) both;
+  animation: t2a-page-enter 1000ms cubic-bezier(0.9, 1, 0.95, 1) both;
   z-index: 2;
 }
 
 @media (min-width: 1024px) {
   ::view-transition-old(root) {
-    animation-duration: 1000ms;
+    animation-duration: 800ms;
   }
   ::view-transition-new(root) {
-    animation-duration: 1000ms;
+    animation-duration: 800ms;
   }
 }
 
