@@ -549,6 +549,16 @@ astro-slot {
   view-transition-name: t2a-header;
 }
 
+/* Grain : doit rester au-dessus du header pendant la transition.
+   Sans view-transition-name dédié, il est capturé dans le snapshot root
+   et passe sous le groupe t2a-header (qui a son propre VT name). */
+#t2a-grain {
+  view-transition-name: t2a-grain;
+}
+::view-transition-group(t2a-grain) {
+  z-index: 10000;
+}
+
 /* Fix "bloc noir" Chr siteomium/MIUI  */
 ::view-transition-group(root),
 ::view-transition-old(root),
