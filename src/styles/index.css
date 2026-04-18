@@ -566,26 +566,21 @@ astro-slot {
   z-index: 10000;
 }
 
-/* Disable the default cross-fade on persisted pseudos so they stay
-   perfectly static during the transition. For the grain, only the
-   "new" pseudo is kept visible — otherwise old+new stack and double
-   the noise density. */
+/* Keep persisted pseudos static (no default cross-fade). Grain's "old"
+   is hidden so it doesn't stack with "new" and double the noise. */
 ::view-transition-old(t2a-header),
-::view-transition-new(t2a-header) {
-  animation: none;
-}
-::view-transition-old(t2a-grain),
+::view-transition-new(t2a-header),
 ::view-transition-new(t2a-grain) {
   animation: none;
 }
 ::view-transition-old(t2a-grain) {
+  animation: none;
   opacity: 0;
 }
 
-/* Root : static old (fades out only at the very end) + clip-path reveal
-   on new. No transform on either pseudo → no gap can be exposed in the
-   Snapshot Containing Block (avoids the URL-bar black band on Chromium
-   Android). Pure clip-path + opacity composite on GPU. */
+/* Root : old fades out, new is revealed top→bottom via clip-path. No
+   transform on either pseudo → no SCB gap (avoids the URL-bar black
+   band on Chromium Android). Pure clip-path + opacity = GPU composite. */
 ::view-transition-old(root) {
   animation: t2a-page-leave 1100ms cubic-bezier(0.8, 0, 0.2, 1) both;
 }
