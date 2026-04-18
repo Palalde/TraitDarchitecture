@@ -5,6 +5,18 @@ const DESKTOP_MEDIA_QUERY =
   "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
 const INITIALIZE_ATTRIBUTE = "data-overlayscrollbars-initialize";
 
+let overlayScrollbarsStylesPromise: Promise<unknown> | null = null;
+function loadOverlayScrollbarsStyles() {
+  // Dynamic import: the CSS chunk is only fetched when the hook actually
+  // matches desktop. Mobile/touch devices never download it.
+  if (!overlayScrollbarsStylesPromise) {
+    overlayScrollbarsStylesPromise = import(
+      "overlayscrollbars/styles/overlayscrollbars.css"
+    );
+  }
+  return overlayScrollbarsStylesPromise;
+}
+
 const overlayScrollbarsOptions = {
   overflow: {
     x: "hidden" as const,
@@ -52,6 +64,8 @@ export function useDesktopOverlayScrollbars() {
       }
 
       setInitializeAttributes();
+      // Kick off CSS fetch in parallel (idempotent + cached).
+      void loadOverlayScrollbarsStyles();
       instance = OverlayScrollbars(
         {
           target: document.body,

@@ -549,6 +549,13 @@ astro-slot {
   view-transition-name: t2a-header;
 }
 
+/* Fix "bloc noir" Chr siteomium/MIUI  */
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  background-color: var(--bg-primary);
+}
+
 /* Old page slides slightly up + fades out.
    New page enters from the bottom, covering the old one. */
 ::view-transition-old(root) {
