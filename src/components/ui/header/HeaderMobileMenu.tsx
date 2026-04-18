@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { isPathActive } from "@/hooks/useCurrentPathname";
@@ -78,6 +79,22 @@ export function HeaderMobileMenu({
     const timer = window.setTimeout(() => setShouldRender(false), EXIT_MS);
     return () => window.clearTimeout(timer);
   }, [isOpen, shouldRender, EXIT_MS]);
+
+  // Force-unmount the menu synchronously before Astro's View Transition
+  // captures the old snapshot. Otherwise the menu's 280ms exit animation
+  // leaves it visible during the snapshot, freezing it full-screen over
+  // the reveal on the next page.
+  useEffect(() => {
+    const forceClose = () => {
+      flushSync(() => {
+        setIsVisible(false);
+        setShouldRender(false);
+      });
+    };
+    document.addEventListener("astro:before-preparation", forceClose);
+    return () =>
+      document.removeEventListener("astro:before-preparation", forceClose);
+  }, []);
 
   useBodyScrollLock(isOpen);
   useFocusTrap(navigationRef, isOpen && isVisible);

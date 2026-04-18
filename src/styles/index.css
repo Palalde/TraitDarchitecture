@@ -199,15 +199,6 @@ body.landing-dismissed #landing-wrapper {
   border-radius: 0px;
 }
 
-/* Static background layer.. */
-#t2a-vt-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-color: var(--bg-primary);
-}
-
 /* Grain */
 #t2a-grain {
   position: fixed;
@@ -553,89 +544,53 @@ astro-slot {
   display: contents;
 }
 /* ============================================
-   VIEW TRANSITIONS — Inter-pages (trait haut→bas)
+   VIEW TRANSITIONS — Rideau trait (haut→bas)
    ============================================ */
 
 @view-transition {
   navigation: auto;
 }
 
-/* Persisted header*/
+/* Persisted elements : own VT name + explicit stacking above the root. */
 .t2a-header-persist {
   view-transition-name: t2a-header;
 }
-/* Header must stay above the root pseudo (which has z-index: 1 below)
-   otherwise the new page's clip-path reveal paints over it and the
-   header appears hidden during the transition. */
-::view-transition-group(t2a-header) {
-  z-index: 100;
-}
-
-/* Grain : doit rester au-dessus du header pendant la transition.
-   Sans view-transition-name dédié, il est capturé dans le snapshot root
-   et passe sous le groupe t2a-header (qui a son propre VT name). */
 #t2a-grain {
   view-transition-name: t2a-grain;
+}
+
+::view-transition-group(t2a-header) {
+  z-index: 100;
 }
 ::view-transition-group(t2a-grain) {
   z-index: 10000;
 }
 
-/* Static background layer behind the root group. */
-#t2a-vt-bg {
-  view-transition-name: t2a-vt-bg;
-}
-::view-transition-group(t2a-vt-bg) {
-  z-index: 0;
-}
-::view-transition-group(root) {
-  z-index: 1;
-}
-
-/* Persisted elements (header, grain, bg) must NOT animate during the
-   transition. By default the UA generates a cross-fade between
-   ::view-transition-old(name) and ::view-transition-new(name) for the
-   whole animation duration, which makes the header visually "blink" or
-   "reappear" even though the live DOM element is the same.
-   Disabling the animation on both pseudos keeps them perfectly static. */
-::view-transition-group(t2a-header),
+/* Disable the default cross-fade on persisted pseudos so they stay
+   perfectly static during the transition. For the grain, only the
+   "new" pseudo is kept visible — otherwise old+new stack and double
+   the noise density. */
 ::view-transition-old(t2a-header),
-::view-transition-new(t2a-header),
-::view-transition-group(t2a-grain),
-::view-transition-old(t2a-grain),
-::view-transition-new(t2a-grain),
-::view-transition-group(t2a-vt-bg),
-::view-transition-old(t2a-vt-bg),
-::view-transition-new(t2a-vt-bg) {
+::view-transition-new(t2a-header) {
   animation: none;
-  mix-blend-mode: normal;
 }
-
-::view-transition-old(t2a-header),
 ::view-transition-old(t2a-grain),
-::view-transition-old(t2a-vt-bg) {
+::view-transition-new(t2a-grain) {
+  animation: none;
+}
+::view-transition-old(t2a-grain) {
   opacity: 0;
 }
 
-::view-transition-new(t2a-header),
-::view-transition-new(t2a-grain),
-::view-transition-new(t2a-vt-bg) {
-  opacity: 1;
-}
-
-/* Rideau trait : old stays static, new is revealed top→bottom via clip-path.
-   No translation of either pseudo, so no gap is ever exposed in the SCB —
-   the URL bar "black band" issue is structurally impossible with this
-   animation. Pure clip-path on an already-painted image composites on GPU,
-   so it's also very mobile-friendly. */
+/* Root : static old (fades out only at the very end) + clip-path reveal
+   on new. No transform on either pseudo → no gap can be exposed in the
+   Snapshot Containing Block (avoids the URL-bar black band on Chromium
+   Android). Pure clip-path + opacity composite on GPU. */
 ::view-transition-old(root) {
-  animation: t2a-page-leave 1100ms cubic-bezier(0.8, 0, 0.9, 1) both;
-  z-index: 1;
+  animation: t2a-page-leave 1100ms cubic-bezier(0.8, 0, 0.2, 1) both;
 }
-
 ::view-transition-new(root) {
-  animation: t2a-page-enter 1100ms cubic-bezier(0.8, 0, 0.9, 1) both;
-  z-index: 2;
+  animation: t2a-page-enter 1100ms cubic-bezier(0.8, 0, 0.2, 1) both;
 }
 
 @media (min-width: 1024px) {
@@ -645,12 +600,8 @@ astro-slot {
   }
 }
 
-/* Old page stays fully visible then fades out at the very end, hidden
-   beneath the new page's clip-path reveal. Keeping it static (no
-   transform) means the root pseudo always fills the full SCB. */
 @keyframes t2a-page-leave {
-  from,
-  70% {
+  from {
     opacity: 1;
   }
   to {
@@ -658,8 +609,6 @@ astro-slot {
   }
 }
 
-/* New page reveal : clip-path "trait" drawing from top to bottom.
-   inset(0 0 100% 0) = fully clipped (bottom edge at top). */
 @keyframes t2a-page-enter {
   from {
     clip-path: inset(0 0 100% 0);
@@ -676,8 +625,7 @@ astro-slot {
   }
 }
 
-/* Desktop uses OverlayScrollbars : hide native scrollbar to avoid
-   flashes when OS destroys/reinitializes around view transitions. */
+/* Desktop uses OverlayScrollbars : hide native scrollbar. */
 @media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
   html {
     scrollbar-width: none;
