@@ -50,7 +50,17 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
-    <meta name="theme-color" content="#5E7396" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0d1117"
+    />
     <meta property="og:site_name" content="ATELIER TraiT D'ARCHITECTURE" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
