@@ -123,7 +123,7 @@ export function HeaderMobileMenu({
     <>
       <button
         aria-label="Fermer le menu mobile"
-        className="fixed inset-x-0 bottom-0 top-(--header-height) bg-(--bg-primary)/20 backdrop-blur-sm md:hidden"
+        className="fixed inset-x-0 bottom-0 top-(--header-height) z-40 bg-(--bg-primary)/20 backdrop-blur-sm md:hidden"
         onClick={onClose}
         style={{
           opacity: isVisible ? 1 : 0,
@@ -132,7 +132,7 @@ export function HeaderMobileMenu({
         type="button"
       />
       <div
-        className="fixed inset-x-0 top-(--header-height) z-0 border-b border-(--trait) md:hidden"
+        className="fixed inset-x-0 top-(--header-height) z-40 border-b border-(--trait) md:hidden"
         style={{
           opacity: isVisible ? 1 : 0,
           transform: prefersReducedMotion
