@@ -199,6 +199,21 @@ body.landing-dismissed #landing-wrapper {
   border-radius: 0px;
 }
 
+/* Static background layer.
+   Always-present fullscreen element used as a dedicated view-transition
+   capture (see t2a-vt-bg rules further down). Sits behind the rest of
+   the page so it has no effect on normal rendering, but during a view
+   transition its snapshot fills the Snapshot Containing Block and
+   prevents the Chromium-Android "black band" between old/new when the
+   URL bar is visible. */
+#t2a-vt-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--bg-primary);
+}
+
 /* Grain */
 #t2a-grain {
   position: fixed;
@@ -566,10 +581,15 @@ astro-slot {
   z-index: 10000;
 }
 
-/* Fill the transition viewport with the page background  */
-::view-transition,
+/* Static background layer behind the root group. */
+#t2a-vt-bg {
+  view-transition-name: t2a-vt-bg;
+}
+::view-transition-group(t2a-vt-bg) {
+  z-index: 0;
+}
 ::view-transition-group(root) {
-  background-color: var(--bg-primary);
+  z-index: 1;
 }
 
 /* Old page slides slightly up + fades out.
