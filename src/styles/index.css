@@ -566,11 +566,9 @@ astro-slot {
   z-index: 10000;
 }
 
-/* Fix "bloc noir" Chromium/MIUI  */
+/* Fill the transition viewport with the page background  */
 ::view-transition,
-::view-transition-group(root),
-::view-transition-old(root),
-::view-transition-new(root) {
+::view-transition-group(root) {
   background-color: var(--bg-primary);
 }
 
