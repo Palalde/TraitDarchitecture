@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { flushSync } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { isPathActive } from "@/hooks/useCurrentPathname";
@@ -66,16 +66,21 @@ export function HeaderMobileMenu({
   const [isVisible, setIsVisible] = useState(false);
   const EXIT_MS = prefersReducedMotion ? 0 : 280;
 
+  // Sync mount during render (legal setState-in-render pattern).
+  if (isOpen && !shouldRender) {
+    setShouldRender(true);
+  }
+
   useEffect(() => {
     if (isOpen) {
-      setShouldRender(true);
       // Next frame so the "hidden" styles render first, then transition runs.
       const raf = requestAnimationFrame(() => setIsVisible(true));
       return () => cancelAnimationFrame(raf);
     }
 
-    setIsVisible(false);
     if (!shouldRender) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- exit-animation pattern
+    setIsVisible(false);
     const timer = window.setTimeout(() => setShouldRender(false), EXIT_MS);
     return () => window.clearTimeout(timer);
   }, [isOpen, shouldRender, EXIT_MS]);
@@ -110,7 +115,11 @@ export function HeaderMobileMenu({
           "opacity 280ms cubic-bezier(0.22, 1, 0.36, 1), transform 280ms cubic-bezier(0.22, 1, 0.36, 1)",
       };
 
-  return (
+  // Portal to <body> : the header carries `view-transition-name`, which
+  // implicitly applies `contain: paint` and turns it into a containing
+  // block for any descendant `position: fixed`. Without the portal, the
+  // backdrop button would be clipped to the header's bounding box.
+  return createPortal(
     <>
       <button
         aria-label="Fermer le menu mobile"
@@ -123,7 +132,7 @@ export function HeaderMobileMenu({
         type="button"
       />
       <div
-        className="absolute inset-x-0 top-full z-0 border-b border-(--trait) md:hidden"
+        className="fixed inset-x-0 top-(--header-height) z-0 border-b border-(--trait) md:hidden"
         style={{
           opacity: isVisible ? 1 : 0,
           transform: prefersReducedMotion
@@ -191,6 +200,7 @@ export function HeaderMobileMenu({
           </div>
         </nav>
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
