@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderHamburger } from "./HeaderHamburger";
@@ -33,6 +32,7 @@ export function Header({
   const [hasEnteredFromLanding, setHasEnteredFromLanding] =
     useState(animateEntrance);
   const [isReadyToRender, setIsReadyToRender] = useState(!waitForLanding);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     if (!waitForLanding) {
@@ -56,19 +56,32 @@ export function Header({
     };
   }, [waitForLanding]);
 
+  // Enable CSS transitions only after the first paint. When entering from the
+  // landing screen, the initial paint is forced to translateY(-100%) with no
+  // transition so the next frame can animate the slide-in down to 0.
+  useEffect(() => {
+    if (!isReadyToRender) return;
+    const raf = requestAnimationFrame(() => setIsMounted(true));
+    return () => cancelAnimationFrame(raf);
+  }, [isReadyToRender]);
+
   if (!isReadyToRender) {
     return null;
   }
 
+  const forceOffscreenForEntrance = hasEnteredFromLanding && !isMounted;
+  const offscreen = forceOffscreenForEntrance || !headerVisible;
+  const transitionActive = isMounted && !reducedMotion;
+
   return (
-    <motion.header
+    <header
       aria-label="En-tête principal"
-      animate={{ y: headerVisible ? 0 : "-100%" }}
-      className="t2a-header-persist fixed inset-x-0 top-0 z-50 h-(--header-height)"
-      initial={hasEnteredFromLanding ? { y: "-100%" } : false}
-      transition={{
-        duration: reducedMotion ? 0 : 0.42,
-        ease: [0.22, 1, 0.36, 1],
+      className="t2a-header-persist fixed inset-x-0 top-0 z-50 h-(--header-height) will-change-transform"
+      style={{
+        transform: offscreen ? "translateY(-100%)" : "translateY(0)",
+        transition: transitionActive
+          ? "transform 420ms cubic-bezier(0.22, 1, 0.36, 1)"
+          : "none",
       }}
     >
       {/* wrapper */}
@@ -164,6 +177,6 @@ export function Header({
         onClose={closeMobileMenu}
         pathname={currentPathname}
       />
-    </motion.header>
+    </header>
   );
 }
