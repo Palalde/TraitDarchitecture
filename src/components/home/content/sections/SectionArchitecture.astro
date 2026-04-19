@@ -19,9 +19,8 @@ const architectureCards = [
     label: "CASA V",
     subtitle: "Olmeta-di-Tuda, Corse",
     href: "#", // TODO: remplacer par "/architecture/casa-v"
-    cardReveal: "fade-up" as const,
-    cardRevealDelay:
-      "lg:[--reveal-delay:200ms] max-lg:[--reveal-start-opacity:1]",
+    cardReveal: "fade-left" as const,
+    cardRevealDelay: "max-lg:[--reveal-start-opacity:1]",
   },
   {
     image: bancaouImg,
@@ -40,9 +39,8 @@ const architectureCards = [
     label: "U SECAïRE",
     subtitle: "Mézel, Provence",
     href: "#", // TODO: remplacer par "/architecture/u-secaire"
-    cardReveal: "fade-up" as const,
-    cardRevealDelay:
-      "lg:[--reveal-delay:200ms] max-lg:[--reveal-start-opacity:1]",
+    cardReveal: "fade-right" as const,
+    cardRevealDelay: "max-lg:[--reveal-start-opacity:1]",
   },
 ];
 ---
@@ -126,14 +124,14 @@ const architectureCards = [
     <div class="relative z-10 mt-10 flex justify-center sm:mt-12">
       <a
         href="/architecture"
-        class="group inline-flex items-center gap-2 border border-(--border) bg-(--bg-primary) px-6 py-3 text-[0.9rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+        class="group inline-flex items-center gap-2 border border-(--border) bg-(--bg-primary) px-6 py-3 text-[0.9rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
         data-reveal="fade"
       >
         <span class="relative">
           Découvrir nos projets
           <span
             aria-hidden="true"
-            class="absolute bottom-0 left-0 h-px w-0 bg-(--trait) transition-all duration-300 group-hover:w-full"
+            class="absolute bottom-0 left-0 h-px w-0 bg-(--trait) transition-all group-hover:w-full"
           ></span>
         </span>
         <span aria-hidden="true" class="text-[1.1em]">→</span>
