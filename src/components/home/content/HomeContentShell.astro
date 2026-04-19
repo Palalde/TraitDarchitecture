@@ -42,20 +42,12 @@ const extraitSectionFrameClassName =
       let started = false;
       let syncTimerId = null;
       let io = null;
-      let mo = null;
-      let total = 0;
-      let revealedCount = 0;
 
       const teardown = () => {
         if (io) {
           io.disconnect();
           io = null;
           window.__t2aHomeIo = null;
-        }
-        if (mo) {
-          mo.disconnect();
-          mo = null;
-          window.__t2aHomeMo = null;
         }
         if (syncTimerId !== null) {
           clearTimeout(syncTimerId);
@@ -83,7 +75,6 @@ const extraitSectionFrameClassName =
           }
 
           observed.add(el);
-          total += 1;
           io.observe(el);
         });
       };
@@ -110,13 +101,6 @@ const extraitSectionFrameClassName =
 
               entry.target.classList.add("revealed");
               io.unobserve(entry.target);
-              revealedCount += 1;
-              // All reveals done: stop observing the DOM entirely.
-              if (revealedCount >= total && mo) {
-                mo.disconnect();
-                mo = null;
-                window.__t2aHomeMo = null;
-              }
             });
           },
           { threshold: 0.2 },
@@ -125,12 +109,8 @@ const extraitSectionFrameClassName =
         window.__t2aHomeIo = io;
         syncTargets();
 
-        // Catch late-added elements: slow-network HTML parsing still ongoing,
-        // React islands hydrating, or any dynamic DOM changes.
-        mo = new MutationObserver(scheduleSync);
-        mo.observe(document.body, { childList: true, subtree: true });
-        window.__t2aHomeMo = mo;
-
+        // Keep the lightweight resize resync so desktop/mobile-only reveal
+        // targets that flip display state across breakpoints can still be observed.
         window.addEventListener("resize", scheduleSync, { passive: true });
       };
 
