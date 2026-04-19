@@ -78,6 +78,22 @@ const FORCE_REPLAY_LANDING = false;
         style="height: var(--landing-vh);"
       >
         <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
+        <script is:inline data-astro-rerun>
+          // Skip LandingIsland hydration entirely on returning visits.
+          (() => {
+            if (sessionStorage.getItem("t2a-landing-dismissed") !== "1") {
+              return;
+            }
+            const wrapper = document.getElementById("landing-wrapper");
+            if (!wrapper) {
+              return;
+            }
+            const island = wrapper.querySelector("astro-island");
+            if (island) {
+              island.remove();
+            }
+          })();
+        </script>
       </div>
       <div id="home-stage">
         <HomeContentShell />
