@@ -618,7 +618,7 @@ astro-slot {
 @media (min-width: 1024px) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 1000ms;
+    animation-duration: 800ms;
   }
 }
 
@@ -629,7 +629,7 @@ astro-slot {
   }
   to {
     opacity: 0;
-    transform: translateY(10%);
+    transform: translateY(50%);
   }
 }
 
