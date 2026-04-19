@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useSyncExternalStore } from "react";
 import { LazyMotion, domAnimation, m, useSpring } from "framer-motion";
 import type { ReactNode } from "react";
 import { useParallaxScroll } from "@/hooks/useParallaxScroll";
@@ -22,20 +22,19 @@ export function ParallaxFrame({
   const frameRef = useRef<HTMLDivElement>(null);
 
   const mobile = mobileOverflowPercent ?? overflowPercent;
-  const [activeOverflow, setActiveOverflow] = useState(overflowPercent);
+  const activeOverflow = useSyncExternalStore(
+    (onStoreChange) => {
+      if (typeof window === "undefined" || mobile === overflowPercent) {
+        return () => {};
+      }
 
-  useEffect(() => {
-    const resolve = () =>
-      window.innerWidth < LG_BREAKPOINT ? mobile : overflowPercent;
-
-    setActiveOverflow(resolve());
-
-    if (mobile === overflowPercent) return;
-
-    const onResize = () => setActiveOverflow(resolve());
-    window.addEventListener("resize", onResize, { passive: true });
-    return () => window.removeEventListener("resize", onResize);
-  }, [overflowPercent, mobile]);
+      window.addEventListener("resize", onStoreChange, { passive: true });
+      return () => window.removeEventListener("resize", onStoreChange);
+    },
+    () =>
+      window.innerWidth < LG_BREAKPOINT ? mobile : overflowPercent,
+    () => overflowPercent,
+  );
 
   const { y, isReduced } = useParallaxScroll(frameRef, activeOverflow);
 

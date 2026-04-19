@@ -2,6 +2,11 @@
 
 Site vitrine de l'atelier d'architecture de Théa Battistini & Titouan Granet.
 
+## Prerequis
+
+- Node.js >= 22.12.0
+- npm >= 10
+
 ## Stack
 
 - Astro 6
