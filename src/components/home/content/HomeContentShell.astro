@@ -19,11 +19,15 @@ const extraitSectionFrameClassName =
   <script is:inline data-astro-rerun>
     (() => {
       const DELAY_AFTER_SLIDING_MS = 0;
-      // Desktop: small delay so the curtain view-transition finishes before
-      const DELAY_RETURNING_MS = window.matchMedia("(max-width: 1024px)")
+      const DESKTOP_REVEAL_MEDIA_QUERY = "(min-width: 1024px)";
+      const MOBILE_RETURNING_DELAY_MS = 350;
+      const DESKTOP_RETURNING_DELAY_MS = 1000;
+      // Keep the JS timing aligned with the CSS desktop reveal mode and
+      // desktop curtain duration so the home reveals do not restart mid-rideau.
+      const DELAY_RETURNING_MS = window.matchMedia(DESKTOP_REVEAL_MEDIA_QUERY)
         .matches
-        ? 350
-        : 650;
+        ? DESKTOP_RETURNING_DELAY_MS
+        : MOBILE_RETURNING_DELAY_MS;
       const SELECTOR = "[data-reveal]";
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;

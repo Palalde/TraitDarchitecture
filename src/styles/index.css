@@ -506,7 +506,7 @@ body.landing-dismissed #landing-wrapper {
    SCROLLBAR — OverlayScrollbars desktop only
    ============================================ */
 
-@media (min-width: 1024px) {
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
   .os-theme-t2a.os-scrollbar {
     --os-size: 6px;
     --os-padding-perpendicular: 0;
@@ -622,8 +622,8 @@ astro-slot {
   }
 }
 
-/* Wide screens using OverlayScrollbars hide the native scrollbar. */
-@media (min-width: 1024px) {
+/* Desktop uses OverlayScrollbars: hide the native scrollbar. */
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
   html {
     scrollbar-width: none;
   }
