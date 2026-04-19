@@ -582,10 +582,10 @@ astro-slot {
    transform on either pseudo → no SCB gap (avoids the URL-bar black
    band on Chromium Android). Pure clip-path + opacity = GPU composite. */
 ::view-transition-old(root) {
-  animation: t2a-page-leave 1200ms ease-out both;
+  animation: t2a-page-leave 1200ms ease-in both;
 }
 ::view-transition-new(root) {
-  animation: t2a-page-enter 1200ms ease-out both;
+  animation: t2a-page-enter 1200ms ease-in both;
 }
 
 @media (min-width: 1024px) {
