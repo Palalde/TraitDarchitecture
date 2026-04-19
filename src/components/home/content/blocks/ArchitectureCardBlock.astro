@@ -19,6 +19,7 @@ interface Props {
   href?: string;
   cardReveal?: string;
   cardRevealDelay?: string;
+  mobileCardReveal?: string;
 }
 
 const {
@@ -35,6 +36,7 @@ const {
   href = "#",
   cardReveal,
   cardRevealDelay,
+  mobileCardReveal,
 }: Props = Astro.props;
 
 const hasLabel = Boolean(label);
@@ -49,6 +51,7 @@ const linkLabel =
     cardRevealDelay,
   ]}
   data-reveal={cardReveal}
+  data-reveal-mobile={mobileCardReveal}
 >
   <a
     href={href}

@@ -415,41 +415,41 @@ body.landing-dismissed #landing-wrapper {
 
 [data-reveal="fade"] {
   opacity: 0;
-  transition: opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
+  transition: opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-right"] {
   transform: scaleX(0);
   transform-origin: right center;
-  transition: transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
+  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-left"] {
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
+  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-top"] {
   transform: scaleY(0);
   transform-origin: center top;
-  transition: transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
+  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade-left"] {
   opacity: 0;
   transform: translateX(var(--reveal-offset-x, 24px));
   transition:
-    opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),
-    transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
+    opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms),
+    transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade-right"] {
   opacity: 0;
   transform: translateX(calc(-1 * var(--reveal-offset-x, 24px)));
   transition:
-    opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),
-    transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
+    opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms),
+    transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade-up"].revealed {
@@ -474,6 +474,23 @@ body.landing-dismissed #landing-wrapper {
 [data-reveal="fade-right"].revealed {
   opacity: 1;
   transform: translateX(0);
+}
+
+@media (max-width: 1024px) {
+  [data-reveal-mobile="fade-up"][data-reveal="fade-left"],
+  [data-reveal-mobile="fade-up"][data-reveal="fade-right"] {
+    opacity: var(--reveal-start-opacity, 0);
+    transform: translateY(var(--reveal-offset-y));
+    transition:
+      opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),
+      transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal-mobile="fade-up"][data-reveal="fade-left"].revealed,
+  [data-reveal-mobile="fade-up"][data-reveal="fade-right"].revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Mobile: container animates as one block, children are neutralized */
@@ -592,16 +609,16 @@ astro-slot {
    transform on either pseudo → no SCB gap (avoids the URL-bar black
    band on Chromium Android). Pure clip-path + opacity = GPU composite. */
 ::view-transition-old(root) {
-  animation: t2a-page-leave 1000ms ease-in both;
+  animation: t2a-page-leave 1200ms ease-in both;
 }
 ::view-transition-new(root) {
-  animation: t2a-page-enter 1000ms ease-in both;
+  animation: t2a-page-enter 1200ms ease-in both;
 }
 
 @media (min-width: 1024px) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 800ms;
+    animation-duration: 1000ms;
   }
 }
 
