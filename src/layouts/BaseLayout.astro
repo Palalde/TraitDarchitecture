@@ -72,8 +72,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <meta name="twitter:image" content={ogImage} />
     <ClientRouter />
     <script is:inline>
-      const overlayScrollbarsMediaQuery =
-        "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
+      const overlayScrollbarsMediaQuery = "(min-width: 1024px)";
 
       if (window.matchMedia(overlayScrollbarsMediaQuery).matches) {
         document.documentElement.setAttribute(

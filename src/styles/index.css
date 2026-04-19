@@ -622,8 +622,8 @@ astro-slot {
   }
 }
 
-/* Desktop uses OverlayScrollbars : hide native scrollbar. */
-@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+/* Wide screens using OverlayScrollbars hide the native scrollbar. */
+@media (min-width: 1024px) {
   html {
     scrollbar-width: none;
   }

@@ -1,18 +1,16 @@
 import { useLayoutEffect } from "react";
 import { OverlayScrollbars } from "overlayscrollbars";
 
-const DESKTOP_MEDIA_QUERY =
-  "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
+const DESKTOP_MEDIA_QUERY = "(min-width: 1024px)";
 const INITIALIZE_ATTRIBUTE = "data-overlayscrollbars-initialize";
 
 let overlayScrollbarsStylesPromise: Promise<unknown> | null = null;
 function loadOverlayScrollbarsStyles() {
-  // Dynamic import: the CSS chunk is only fetched when the hook actually
-  // matches desktop. Mobile/touch devices never download it.
+  // Dynamic import: the CSS chunk is only fetched when the hook matches
+  // the wide-screen gate.
   if (!overlayScrollbarsStylesPromise) {
-    overlayScrollbarsStylesPromise = import(
-      "overlayscrollbars/styles/overlayscrollbars.css"
-    );
+    overlayScrollbarsStylesPromise =
+      import("overlayscrollbars/styles/overlayscrollbars.css");
   }
   return overlayScrollbarsStylesPromise;
 }
