@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useSpring } from "framer-motion";
+import { LazyMotion, domAnimation, m, useSpring } from "framer-motion";
 import type { ReactNode } from "react";
 import { useParallaxScroll } from "@/hooks/useParallaxScroll";
 
@@ -53,18 +53,20 @@ export function ParallaxFrame({
   const pct = `${activeOverflow * 100}%`;
 
   return (
-    <div ref={frameRef} className="relative h-full w-full">
-      <motion.div
-        className="absolute inset-x-0"
-        style={{
-          top: `-${pct}`,
-          bottom: `-${pct}`,
-          willChange: "transform",
-          y: smoothY,
-        }}
-      >
-        {children}
-      </motion.div>
-    </div>
+    <LazyMotion features={domAnimation} strict>
+      <div ref={frameRef} className="relative h-full w-full">
+        <m.div
+          className="absolute inset-x-0"
+          style={{
+            top: `-${pct}`,
+            bottom: `-${pct}`,
+            willChange: "transform",
+            y: smoothY,
+          }}
+        >
+          {children}
+        </m.div>
+      </div>
+    </LazyMotion>
   );
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { LazyMotion, domAnimation } from "framer-motion";
 
 import {
   LandingScreen,
@@ -60,11 +61,13 @@ export function LandingIsland({ forceReplay = false }: LandingIslandProps) {
   }
 
   return (
-    <div className="h-full w-full">
-      <LandingScreen
-        onIntroComplete={handleIntroComplete}
-        skipAnimation={skipAnimation}
-      />
-    </div>
+    <LazyMotion features={domAnimation} strict>
+      <div className="h-full w-full">
+        <LandingScreen
+          onIntroComplete={handleIntroComplete}
+          skipAnimation={skipAnimation}
+        />
+      </div>
+    </LazyMotion>
   );
 }

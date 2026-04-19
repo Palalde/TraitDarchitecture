@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 type TraitSequencePhase = "draw" | "erase" | "complete";
 
@@ -510,7 +510,7 @@ export function T2ALogoAnimated({
 
       {/* Couche 3 — Logo final (4 fill paths) */}
       {showFinal ? (
-        <motion.g
+        <m.g
           key={animateFinal ? "final-animated" : "final-static"}
           id="layer-logo-final"
           vectorEffect="none"
@@ -569,12 +569,12 @@ export function T2ALogoAnimated({
             }}
             transform="matrix(1.3333333,0,0,-1.3333333,662.54267,431.03347)"
           />
-        </motion.g>
+        </m.g>
       ) : null}
 
       {/* Couche 2 — Ombrage (shadow paths) */}
       {showShadow ? (
-        <motion.g
+        <m.g
           key={animateShadow ? "shadow-animated" : "shadow-static"}
           id="layer-shadow"
           initial={animateShadow ? { opacity: 0 } : false}
@@ -1335,12 +1335,12 @@ export function T2ALogoAnimated({
               id="path128"
             />
           </g>
-        </motion.g>
+        </m.g>
       ) : null}
 
       {/* Couche 1 — Trait (stroke path) */}
       <g id="layer-trait" style={{ display: showTrait ? undefined : "none" }}>
-        <motion.path
+        <m.path
           id="path130"
           d="m -1072.676,-100.03 h 600 v 75.022 h -25.008 v 25.008 h 75.023 V -75.023 h -25.008 v -25.007 h 75.023 v 25.007 h -25.007 V 0 h 1350"
           vectorEffect="none"

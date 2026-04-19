@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { T2ALogoAnimated } from "./T2ALogoAnimated";
 import { useLandingScreenAnimation } from "../hooks/useLandingScreenAnimation";
 
@@ -108,7 +108,7 @@ export function LandingScreen({
           }}
         >
           <span className="flex items-baseline gap-[0.7em] whitespace-nowrap text-(--t2a-blue-dark) text-(length:--landing-text) leading-(--landing-leading)">
-            <motion.span
+            <m.span
               className="block overflow-hidden whitespace-nowrap"
               initial={false}
               animate={{
@@ -118,7 +118,7 @@ export function LandingScreen({
               }}
               transition={WORD_MASK_TRANSITION}
             >
-              <motion.span
+              <m.span
                 className="block font-normal"
                 initial={false}
                 animate={{
@@ -128,9 +128,9 @@ export function LandingScreen({
                 transition={WORD_TEXT_TRANSITION}
               >
                 ATELIER
-              </motion.span>
-            </motion.span>
-            <motion.span
+              </m.span>
+            </m.span>
+            <m.span
               className="block overflow-hidden whitespace-nowrap"
               initial={false}
               animate={{
@@ -140,7 +140,7 @@ export function LandingScreen({
               }}
               transition={WORD_MASK_TRANSITION}
             >
-              <motion.span
+              <m.span
                 className="block font-semibold"
                 initial={false}
                 animate={{
@@ -150,9 +150,9 @@ export function LandingScreen({
                 transition={WORD_TEXT_TRANSITION}
               >
                 TraiT
-              </motion.span>
-            </motion.span>
-            <motion.span
+              </m.span>
+            </m.span>
+            <m.span
               className="block overflow-hidden whitespace-nowrap"
               initial={false}
               animate={{
@@ -162,7 +162,7 @@ export function LandingScreen({
               }}
               transition={WORD_MASK_TRANSITION}
             >
-              <motion.span
+              <m.span
                 className="block font-normal"
                 initial={false}
                 animate={{
@@ -172,8 +172,8 @@ export function LandingScreen({
                 transition={WORD_TEXT_TRANSITION}
               >
                 D'ARCHITECTURE
-              </motion.span>
-            </motion.span>
+              </m.span>
+            </m.span>
           </span>
         </div>
         {/* names */}
@@ -190,7 +190,7 @@ export function LandingScreen({
               transform: "translateY(var(--landing-names-offset))",
             }}
           >
-            <motion.span
+            <m.span
               className="block font-light text-(--t2a-blue-light) text-(length:--landing-names) leading-none"
               initial={false}
               animate={{
@@ -203,7 +203,7 @@ export function LandingScreen({
               }}
             >
               Théa BATTISTINI & Titouan GRANET
-            </motion.span>
+            </m.span>
           </span>
         </div>
       </div>
@@ -212,7 +212,7 @@ export function LandingScreen({
         className="absolute left-1/2 bottom-0"
         style={{ transform: "translateX(-50%)", width: "1px", height: "25%" }}
       >
-        <motion.div
+        <m.div
           className="h-full w-full bg-(--trait)"
           initial={false}
           animate={{
