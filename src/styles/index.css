@@ -132,7 +132,8 @@
   }
 }
 
-body.landing-dismissed #landing-wrapper {
+body.landing-dismissed #landing-wrapper,
+html.is-landing-dismissed #landing-wrapper {
   display: none;
 }
 

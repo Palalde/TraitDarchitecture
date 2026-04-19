@@ -5,8 +5,7 @@ import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Dev flag: set to true locally to replay the landing animation on every
-// reload (bypasses the sessionStorage "dismissed" check). Must ship as false.
+// Local-only flag to replay the landing on every reload.
 const FORCE_REPLAY_LANDING = false;
 ---
 
@@ -14,7 +13,6 @@ const FORCE_REPLAY_LANDING = false;
   title="ATELIER TraiT D'ARCHITECTURE"
   description="Atelier d'architecture sensible, contextuelle et engagée. Théa Battistini & Titouan Granet."
 >
-  <!-- landing transition -->
   <script is:inline data-astro-rerun>
     (() => {
       const HOME_FLOW_SLIDE_DISTANCE = "calc(var(--landing-vh) * -1)";
@@ -35,6 +33,10 @@ const FORCE_REPLAY_LANDING = false;
 
       if (isDismissed) {
         document.body.classList.add("landing-dismissed");
+        // Keep native back-nav restoration on returning home visits.
+        if (history.scrollRestoration) {
+          history.scrollRestoration = "auto";
+        }
         return;
       }
 
@@ -53,6 +55,10 @@ const FORCE_REPLAY_LANDING = false;
       const handleLandingDismissed = () => {
         setHomeFlowTransition("none");
         setHomeFlowShift("0px");
+        // Restore native back-nav restoration once the landing leaves the flow.
+        if (history.scrollRestoration) {
+          history.scrollRestoration = "auto";
+        }
         window.removeEventListener(
           "landing:sliding-up",
           handleLandingSlidingUp,
@@ -79,7 +85,7 @@ const FORCE_REPLAY_LANDING = false;
       >
         <LandingIsland client:load forceReplay={FORCE_REPLAY_LANDING} />
         <script is:inline data-astro-rerun>
-          // Skip LandingIsland hydration entirely on returning visits.
+          // Skip LandingIsland hydration on returning visits.
           (() => {
             if (sessionStorage.getItem("t2a-landing-dismissed") !== "1") {
               return;

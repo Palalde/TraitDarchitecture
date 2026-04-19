@@ -72,6 +72,38 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <meta name="twitter:image" content={ogImage} />
     <ClientRouter />
     <script is:inline>
+      const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
+
+      const syncDismissedLandingState = (targetDocument = document) => {
+        try {
+          if (sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) !== "1") {
+            return;
+          }
+
+          targetDocument.documentElement.classList.add("is-landing-dismissed");
+          targetDocument.body?.classList.add("landing-dismissed");
+
+          // Remove the wrapper before back-nav scroll restoration runs.
+          const landingWrapper =
+            targetDocument.getElementById("landing-wrapper");
+          landingWrapper?.remove();
+        } catch {
+          return;
+        }
+      };
+
+      // Keep dismissed-home state in sync before first paint and during SPA swaps.
+      syncDismissedLandingState();
+
+      document.addEventListener("astro:before-swap", (event) => {
+        syncDismissedLandingState(event.newDocument);
+      });
+
+      document.addEventListener("astro:after-swap", () => {
+        syncDismissedLandingState();
+      });
+    </script>
+    <script is:inline>
       const overlayScrollbarsMediaQuery =
         "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
 
