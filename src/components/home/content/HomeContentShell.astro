@@ -22,8 +22,8 @@ const extraitSectionFrameClassName =
       // Desktop: small delay so the curtain view-transition finishes before
       const DELAY_RETURNING_MS = window.matchMedia("(max-width: 1024px)")
         .matches
-        ? 250
-        : 800;
+        ? 350
+        : 425;
       const SELECTOR = "[data-reveal]";
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
