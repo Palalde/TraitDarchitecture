@@ -409,72 +409,126 @@ html.is-landing-dismissed #landing-wrapper {
 [data-reveal="fade-up"] {
   opacity: var(--reveal-start-opacity, 0);
   transform: translateY(var(--reveal-offset-y));
-  transition:
-    opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),
-    transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade"] {
   opacity: 0;
-  transition: opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-right"] {
   transform: scaleX(0);
   transform-origin: right center;
-  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-left"] {
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="bar-from-top"] {
   transform: scaleY(0);
   transform-origin: center top;
-  transition: transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade-left"] {
   opacity: 0;
   transform: translateX(var(--reveal-offset-x, 24px));
-  transition:
-    opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms),
-    transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade-right"] {
   opacity: 0;
   transform: translateX(calc(-1 * var(--reveal-offset-x, 24px)));
-  transition:
-    opacity var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms),
-    transform var(--reveal-d, 600ms) ease-out var(--reveal-delay, 0ms);
 }
 
 [data-reveal="fade-up"].revealed {
-  opacity: 1;
-  transform: translateY(0);
+  animation: t2a-reveal-fade-up var(--reveal-d, 700ms) ease-out
+    var(--reveal-delay, 0ms) both;
 }
 
 [data-reveal="fade"].revealed {
-  opacity: 1;
+  animation: t2a-reveal-fade var(--reveal-d, 600ms) ease-out
+    var(--reveal-delay, 0ms) both;
 }
 
 [data-reveal="bar-from-right"].revealed,
 [data-reveal="bar-from-left"].revealed {
-  transform: scaleX(1);
+  animation: t2a-reveal-bar-x var(--reveal-d, 600ms) ease-out
+    var(--reveal-delay, 0ms) both;
 }
 
 [data-reveal="bar-from-top"].revealed {
-  transform: scaleY(1);
+  animation: t2a-reveal-bar-y var(--reveal-d, 600ms) ease-out
+    var(--reveal-delay, 0ms) both;
 }
 
-[data-reveal="fade-left"].revealed,
+[data-reveal="fade-left"].revealed {
+  animation: t2a-reveal-fade-left var(--reveal-d, 600ms) ease-out
+    var(--reveal-delay, 0ms) both;
+}
+
 [data-reveal="fade-right"].revealed {
-  opacity: 1;
-  transform: translateX(0);
+  animation: t2a-reveal-fade-right var(--reveal-d, 600ms) ease-out
+    var(--reveal-delay, 0ms) both;
+}
+
+@keyframes t2a-reveal-fade-up {
+  from {
+    opacity: var(--reveal-start-opacity, 0);
+    transform: translateY(var(--reveal-offset-y));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes t2a-reveal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes t2a-reveal-bar-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes t2a-reveal-bar-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes t2a-reveal-fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(var(--reveal-offset-x, 24px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes t2a-reveal-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--reveal-offset-x, 24px)));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 1024px) {
@@ -482,15 +536,12 @@ html.is-landing-dismissed #landing-wrapper {
   [data-reveal-mobile="fade-up"][data-reveal="fade-right"] {
     opacity: var(--reveal-start-opacity, 0);
     transform: translateY(var(--reveal-offset-y));
-    transition:
-      opacity var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms),
-      transform var(--reveal-d, 700ms) ease-out var(--reveal-delay, 0ms);
   }
 
   [data-reveal-mobile="fade-up"][data-reveal="fade-left"].revealed,
   [data-reveal-mobile="fade-up"][data-reveal="fade-right"].revealed {
-    opacity: 1;
-    transform: translateY(0);
+    animation: t2a-reveal-fade-up var(--reveal-d, 700ms) ease-out
+      var(--reveal-delay, 0ms) both;
   }
 }
 
@@ -499,7 +550,7 @@ html.is-landing-dismissed #landing-wrapper {
   [data-reveal-group] [data-reveal]:not([data-reveal-independent]) {
     opacity: 1 !important;
     transform: none !important;
-    transition: none !important;
+    animation: none !important;
   }
 }
 
@@ -508,7 +559,7 @@ html.is-landing-dismissed #landing-wrapper {
   [data-reveal-group][data-reveal] {
     opacity: 1 !important;
     transform: none !important;
-    transition: none !important;
+    animation: none !important;
   }
 }
 
@@ -516,7 +567,7 @@ html.is-landing-dismissed #landing-wrapper {
   [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
-    transition: none !important;
+    animation: none !important;
   }
 }
 
