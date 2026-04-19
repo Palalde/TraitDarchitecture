@@ -441,7 +441,7 @@ html.is-landing-dismissed #landing-wrapper {
 }
 
 [data-reveal="fade-up"].revealed {
-  animation: t2a-reveal-fade-up var(--reveal-d, 700ms) ease-out
+  animation: t2a-reveal-fade-up var(--reveal-d, 600ms) ease-out
     var(--reveal-delay, 0ms) both;
 }
 
