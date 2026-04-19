@@ -19,7 +19,11 @@ export function useHeaderAutoHide(
   const upwardDistanceRef = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let rafId = 0;
+    let isScheduled = false;
+
+    const processScroll = () => {
+      isScheduled = false;
       const currentScrollY = Math.max(window.scrollY, 0);
       const delta = currentScrollY - lastScrollYRef.current;
 
@@ -52,12 +56,19 @@ export function useHeaderAutoHide(
       lastScrollYRef.current = currentScrollY;
     };
 
+    const handleScroll = () => {
+      if (isScheduled) return;
+      isScheduled = true;
+      rafId = requestAnimationFrame(processScroll);
+    };
+
     lastScrollYRef.current = Math.max(window.scrollY, 0);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, [minDelta, topOffset]);
 

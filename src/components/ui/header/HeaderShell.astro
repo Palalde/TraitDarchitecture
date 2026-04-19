@@ -9,7 +9,7 @@ const { waitForLanding = false }: Props = Astro.props;
 ---
 
 <Header
-  client:load
+  client:idle
   pathname={Astro.url.pathname}
   waitForLanding={waitForLanding}
   transition:persist="t2a-header"
