@@ -12,10 +12,16 @@ interface Props {
 }
 
 const { section }: Props = Astro.props;
+// blur
 const duoFrameStyle =
   "background-color: color-mix(in srgb, var(--bg-primary) 5%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);";
+// duo figure desktop cap
+const duoFigureStyle =
+  "--atelier-duo-max-width: min(100%, 64rem, calc((100vh - 4rem) * 1.4));";
+// paragraph text
 const richParagraphClass =
   "mx-auto max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold";
+// pivot text
 const richPivotClass =
   "mx-auto mt-4 max-w-4xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic sm:text-[1.05rem] sm:leading-8 dark:text-(--t2a-blue) [&_strong]:font-semibold";
 ---
@@ -24,6 +30,7 @@ const richPivotClass =
   class="flex flex-col gap-6 sm:gap-8 lg:gap-10"
   aria-labelledby="atelier-page-title"
 >
+  <!-- title -->
   <div class="flex items-center gap-3 sm:gap-5">
     <span
       class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
@@ -40,6 +47,7 @@ const richPivotClass =
     <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
   </div>
 
+  <!-- paragraph -->
   <FigCotation
     className="mx-auto w-full max-w-4xl"
     contentClassName="bg-transparent px-5 py-5 text-center sm:px-6 sm:py-6"
@@ -50,7 +58,11 @@ const richPivotClass =
     <p class={richParagraphClass} set:html={section.intro} />
   </FigCotation>
 
-  <figure class="relative mx-auto w-full max-w-232">
+  <!-- image -->
+  <figure
+    class="relative mx-auto w-full max-w-232 lg:max-w-(--atelier-duo-max-width)"
+    style={duoFigureStyle}
+  >
     <FigCotation aspectRatio={section.image.aspectRatio}>
       <Image
         alt={section.image.alt}
@@ -60,7 +72,7 @@ const richPivotClass =
         format="webp"
         loading="eager"
         quality={85}
-        sizes="(min-width: 1280px) 58rem, (min-width: 1024px) min(72vw, 58rem), (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
+        sizes="(min-width: 1280px) min(64rem, calc((100vh - 4rem) * 1.4)), (min-width: 1024px) min(74vw, 64rem), (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
         src={section.image.src}
         widths={[640, 900, 1200, 1600]}
       />
@@ -72,6 +84,7 @@ const richPivotClass =
     />
   </figure>
 
+  <!-- pivot text -->
   <FigCotation
     className="mx-auto w-full max-w-4xl"
     contentClassName="bg-transparent px-5 py-5 text-center sm:px-6 sm:py-6"
