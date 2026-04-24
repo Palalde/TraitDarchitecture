@@ -31,6 +31,7 @@ export interface AtelierPageData {
     image: AtelierFigureImage;
     intro: string;
     pivot: string;
+    pivotTitle: string;
   };
   heading: string;
   people: readonly [AtelierPersonSection, AtelierPersonSection];
@@ -47,6 +48,7 @@ export const atelierPageData: AtelierPageData = {
     figureLabel: "Le duo",
     intro:
       "ATELIER TraiT D'ARCHITECTURE est une structure indépendante créée par deux architectes aux parcours complémentaires, unis par une vision commune : celle d'une architecture sensible, contextuelle et engagée. Ancrés dans le Sud-Est, entre Corse et Provence, ils développent ensemble une pratique attentive, qui donne la priorité à l'existant, au lieu, à l'usage et aux usagers.",
+    pivotTitle: "UN TraiT DE CARACTÈRE",
     pivot:
       "Ensemble, ils forment un duo complémentaire et équilibré, où la rigueur constructive se mêle à la sensibilité du dessin. Leur parcours commun, de la formation à Montpellier jusqu'à la création de leur agence en 2024, est jalonné d'expériences humaines et professionnelles fortes. Le voyage, au sens large reste au cœur de leur approche. Expérimenter des lieux, pratiquer des architectures, leur permet d'élargir leur panel de références et de nourrir cette vision singulière, un réel TraiT DE CARACTERE.",
     image: {

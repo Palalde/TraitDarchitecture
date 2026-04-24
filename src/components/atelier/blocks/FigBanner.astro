@@ -1,0 +1,23 @@
+---
+interface Props {
+  className?: string;
+  figureId: string;
+  label: string;
+}
+
+const { className, figureId, label }: Props = Astro.props;
+---
+
+<div class:list={["flex items-center gap-4", className]}>
+  <span
+    class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+  >
+    {figureId}
+  </span>
+  <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+  <span
+    class="max-w-[70%] shrink-0 text-right text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[0.8rem]"
+  >
+    {label}
+  </span>
+</div>

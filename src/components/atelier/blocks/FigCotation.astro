@@ -1,0 +1,74 @@
+---
+interface Props {
+  aspectRatio: "5:4" | "4:5";
+  className?: string;
+  showCotation?: boolean;
+}
+
+const { aspectRatio, className, showCotation = true }: Props = Astro.props;
+
+const aspectRatioClass = aspectRatio === "5:4" ? "aspect-5/4" : "aspect-4/5";
+---
+
+<div class:list={["relative w-full overflow-visible", className]}>
+  {
+    showCotation && (
+      <>
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-1 -bottom-1 -left-1 w-px bg-(--trait)"
+        />
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-1 -bottom-1 -right-1 w-px bg-(--trait)"
+        />
+
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-1 -left-1 h-px w-2 bg-(--trait)"
+        />
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-1 -left-1 h-2 w-px bg-(--trait)"
+        />
+
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-1 -right-1 h-px w-2 bg-(--trait)"
+        />
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -top-1 -right-1 h-2 w-px bg-(--trait)"
+        />
+
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -bottom-1 -left-1 h-px w-2 bg-(--trait)"
+        />
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -bottom-1 -left-1 h-2 w-px bg-(--trait)"
+        />
+
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -right-1 -bottom-1 h-px w-2 bg-(--trait)"
+        />
+        <span
+          aria-hidden="true"
+          class="pointer-events-none absolute -right-1 -bottom-1 h-2 w-px bg-(--trait)"
+        />
+      </>
+    )
+  }
+
+  <div
+    class:list={[
+      aspectRatioClass,
+      "relative w-full overflow-hidden bg-(--t2a-blue-wash)",
+      showCotation && "border border-(--trait)",
+    ]}
+  >
+    <slot />
+  </div>
+</div>

@@ -1,5 +1,8 @@
 ---
 import { Image } from "astro:assets";
+import FigBanner from "@/components/atelier/blocks/FigBanner.astro";
+import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
+import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
 import type { AtelierPersonSection } from "@/components/atelier/atelier.data";
 
 interface Props {
@@ -7,48 +10,58 @@ interface Props {
 }
 
 const { section }: Props = Astro.props;
+const stickyFigureStyle =
+  "--atelier-sticky-top: calc(var(--header-height, 64px) + 1.5rem); --atelier-sticky-max-height: calc(100vh - var(--header-height, 64px) - 3rem); --atelier-sticky-max-width: min(100%, calc(var(--atelier-sticky-max-height) * 0.8));";
 ---
 
 <section
-  class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.22fr)_minmax(0,0.78fr)] lg:items-start lg:gap-14"
+  class="flex flex-col gap-6 sm:gap-8"
   aria-labelledby="atelier-figure-iii-title"
 >
-  <div class="order-2 flex flex-col gap-6 sm:gap-7 lg:order-1">
-    <div>
-      <p class="text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted)">
-        {section.figureId}
-      </p>
-      <h2
-        id="atelier-figure-iii-title"
-        class="mt-3 text-[1.5rem] font-semibold tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
-      >
-        {section.name}
-      </h2>
-    </div>
+  <FigBanner figureId={section.figureId} label={section.figureLabel} />
 
-    <div class="grid grid-cols-1 gap-4 sm:gap-5">
-      {
-        section.sections.map((contentSection) => (
-          <article class="border border-(--border) bg-(--bg-primary) p-5 sm:p-6">
-            <h3 class="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
-              {contentSection.title}
-            </h3>
-            <p class="mt-4 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8">
-              {contentSection.body}
-            </p>
-          </article>
-        ))
-      }
-    </div>
-  </div>
-
-  <figure class="order-1 lg:order-2">
+  <div
+    class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-8"
+  >
     <div
-      class="w-full overflow-hidden border border-(--border) bg-(--bg-primary) p-4 sm:p-5"
+      class="order-2 flex flex-col gap-6 sm:gap-7 lg:col-start-1 lg:order-0 lg:pr-2"
     >
-      <div
-        class="aspect-4/5 w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
-      >
+      <div>
+        <h2
+          id="atelier-figure-iii-title"
+          class="text-[1.5rem] font-semibold tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
+        >
+          {section.name}
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:gap-5">
+        {
+          section.sections.map((contentSection) => (
+            <article>
+              <h3 class="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+                {contentSection.title}
+              </h3>
+              <p class="mt-3 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8">
+                {contentSection.body}
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <div
+      aria-hidden="true"
+      class="hidden w-px bg-(--trait) lg:col-start-2 lg:block lg:self-stretch"
+    >
+    </div>
+
+    <figure
+      class="order-1 relative lg:col-start-3 lg:order-0 lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-end"
+      style={stickyFigureStyle}
+    >
+      <FigCotation aspectRatio={section.image.aspectRatio}>
         <Image
           alt={section.image.alt}
           class="h-full w-full object-cover object-center"
@@ -60,13 +73,8 @@ const { section }: Props = Astro.props;
           src={section.image.src}
           widths={[400, 640, 900]}
         />
-      </div>
-      <figcaption
-        class="mt-4 flex items-center justify-between gap-4 text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted)"
-      >
-        <span>{section.figureId}</span>
-        <span>{section.image.label}</span>
-      </figcaption>
-    </div>
-  </figure>
+      </FigCotation>
+      <FigCaption overlay figureId={section.figureId} label={section.name} />
+    </figure>
+  </div>
 </section>
