@@ -1,0 +1,73 @@
+---
+import { Image } from "astro:assets";
+import type { AtelierPageData } from "@/components/atelier/atelier.data";
+
+interface Props {
+  section: AtelierPageData["duoFigure"];
+}
+
+const { section }: Props = Astro.props;
+---
+
+<section
+  class="flex flex-col gap-8 sm:gap-10"
+  aria-labelledby="atelier-figure-i-title"
+>
+  <div
+    class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start lg:gap-14"
+  >
+    <div class="order-2 flex flex-col lg:order-1">
+      <p class="text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted)">
+        {section.figureId}
+      </p>
+      <h2
+        id="atelier-figure-i-title"
+        class="mt-3 text-[1.5rem] font-semibold tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
+      >
+        {section.figureLabel}
+      </h2>
+      <p
+        class="mt-6 text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8"
+      >
+        {section.intro}
+      </p>
+    </div>
+
+    <figure class="order-1 lg:order-2">
+      <div
+        class="w-full overflow-hidden border border-(--border) bg-(--bg-primary) p-4 sm:p-5"
+      >
+        <div
+          class="aspect-5/4 w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
+        >
+          <Image
+            alt={section.image.alt}
+            class="h-full w-full object-cover object-center"
+            draggable="false"
+            fetchpriority="high"
+            format="webp"
+            loading="eager"
+            quality={85}
+            sizes="(min-width: 1280px) 42rem, (min-width: 1024px) calc(50vw - 4rem), 100vw"
+            src={section.image.src}
+            widths={[640, 900, 1024]}
+          />
+        </div>
+        <figcaption
+          class="mt-4 flex items-center justify-between gap-4 text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted)"
+        >
+          <span>{section.figureId}</span>
+          <span>{section.image.label}</span>
+        </figcaption>
+      </div>
+    </figure>
+
+    <div class="border-y border-(--trait) py-5 sm:py-6">
+      <p
+        class="max-w-5xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic dark:text-(--t2a-blue) sm:text-[1.05rem] sm:leading-8"
+      >
+        {section.pivot}
+      </p>
+    </div>
+  </div>
+</section>

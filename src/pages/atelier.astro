@@ -1,4 +1,6 @@
 ---
+import AtelierShell from "@/components/atelier/AtelierShell.astro";
+import { atelierPageData } from "@/components/atelier/atelier.data";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
@@ -6,12 +8,13 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
-  title="Atelier | ATELIER TraiT D'ARCHITECTURE"
-  description="Présentation de l'ATELIER TraiT D'ARCHITECTURE, de sa vision et de ses architectes."
+  title={atelierPageData.title}
+  description={atelierPageData.description}
 >
   <HeaderShell />
-  <main class="relative min-h-[200vh] overflow-hidden bg-(--bg-primary)">
+  <main class="relative overflow-hidden bg-(--bg-primary)">
     <BackgroundDecorations />
+    <AtelierShell />
   </main>
   <Footer />
 </BaseLayout>

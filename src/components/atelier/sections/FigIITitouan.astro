@@ -1,0 +1,72 @@
+---
+import { Image } from "astro:assets";
+import type { AtelierPersonSection } from "@/components/atelier/atelier.data";
+
+interface Props {
+  section: AtelierPersonSection;
+}
+
+const { section }: Props = Astro.props;
+---
+
+<section
+  class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-start lg:gap-14"
+  aria-labelledby="atelier-figure-ii-title"
+>
+  <figure>
+    <div
+      class="w-full overflow-hidden border border-(--border) bg-(--bg-primary) p-4 sm:p-5"
+    >
+      <div
+        class="aspect-4/5 w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
+      >
+        <Image
+          alt={section.image.alt}
+          class="h-full w-full object-cover object-center"
+          draggable="false"
+          format="webp"
+          loading="lazy"
+          quality={85}
+          sizes="(min-width: 1280px) 28rem, (min-width: 1024px) 36vw, 100vw"
+          src={section.image.src}
+          widths={[400, 640, 900]}
+        />
+      </div>
+      <figcaption
+        class="mt-4 flex items-center justify-between gap-4 text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted)"
+      >
+        <span>{section.figureId}</span>
+        <span>{section.image.label}</span>
+      </figcaption>
+    </div>
+  </figure>
+
+  <div class="flex flex-col gap-6 sm:gap-7">
+    <div>
+      <p class="text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted)">
+        {section.figureId}
+      </p>
+      <h2
+        id="atelier-figure-ii-title"
+        class="mt-3 text-[1.5rem] font-semibold tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
+      >
+        {section.name}
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 sm:gap-5">
+      {
+        section.sections.map((contentSection) => (
+          <article class="border border-(--border) bg-(--bg-primary) p-5 sm:p-6">
+            <h3 class="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+              {contentSection.title}
+            </h3>
+            <p class="mt-4 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8">
+              {contentSection.body}
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
