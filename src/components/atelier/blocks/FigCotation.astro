@@ -1,13 +1,24 @@
 ---
 interface Props {
-  aspectRatio: "5:4" | "4:5";
+  aspectRatio: "8:5" | "5:4" | "4:5";
   className?: string;
+  contentClassName?: string;
   showCotation?: boolean;
 }
 
-const { aspectRatio, className, showCotation = true }: Props = Astro.props;
+const {
+  aspectRatio,
+  className,
+  contentClassName,
+  showCotation = true,
+}: Props = Astro.props;
 
-const aspectRatioClass = aspectRatio === "5:4" ? "aspect-5/4" : "aspect-4/5";
+const aspectRatioClass =
+  aspectRatio === "8:5"
+    ? "aspect-[8/5]"
+    : aspectRatio === "5:4"
+      ? "aspect-5/4"
+      : "aspect-4/5";
 ---
 
 <div class:list={["relative w-full overflow-visible", className]}>
@@ -65,6 +76,7 @@ const aspectRatioClass = aspectRatio === "5:4" ? "aspect-5/4" : "aspect-4/5";
   <div
     class:list={[
       aspectRatioClass,
+      contentClassName,
       "relative w-full overflow-hidden bg-(--t2a-blue-wash)",
       showCotation && "border border-(--trait)",
     ]}

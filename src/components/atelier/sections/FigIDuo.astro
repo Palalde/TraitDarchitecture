@@ -1,9 +1,11 @@
 ---
 import { Image } from "astro:assets";
-import FigBanner from "@/components/atelier/blocks/FigBanner.astro";
 import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
 import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
-import type { AtelierPageData } from "@/components/atelier/atelier.data";
+import {
+  atelierPageData,
+  type AtelierPageData,
+} from "@/components/atelier/atelier.data";
 
 interface Props {
   section: AtelierPageData["duoFigure"];
@@ -13,59 +15,66 @@ const { section }: Props = Astro.props;
 ---
 
 <section
-  class="flex flex-col gap-8 sm:gap-10"
-  aria-labelledby="atelier-figure-i-title"
+  class="flex flex-col gap-6 sm:gap-8 lg:gap-10"
+  aria-labelledby="atelier-page-title"
 >
-  <FigBanner figureId={section.figureId} label={section.figureLabel} />
-
-  <div
-    class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start lg:gap-14"
-  >
-    <div class="order-2 flex flex-col lg:order-1">
-      <h2
-        id="atelier-figure-i-title"
-        class="text-[1.5rem] font-semibold tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
-      >
-        {section.figureLabel}
-      </h2>
-      <p
-        class="mt-6 text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8"
-      >
-        {section.intro}
-      </p>
-    </div>
-
-    <figure class="order-1 relative lg:order-2">
-      <FigCotation aspectRatio={section.image.aspectRatio}>
-        <Image
-          alt={section.image.alt}
-          class="h-full w-full object-cover object-center"
-          draggable="false"
-          fetchpriority="high"
-          format="webp"
-          loading="eager"
-          quality={85}
-          sizes="(min-width: 1280px) 42rem, (min-width: 1024px) calc(50vw - 4rem), 100vw"
-          src={section.image.src}
-          widths={[640, 900, 1024]}
-        />
-      </FigCotation>
-      <FigCaption
-        overlay
-        figureId={section.figureId}
-        label={section.image.label}
-      />
-    </figure>
+  <div class="flex items-center gap-3 sm:gap-5">
+    <span
+      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+    >
+      {section.figureId}
+    </span>
+    <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+    <h1
+      id="atelier-page-title"
+      class="shrink-0 text-center text-[1.7rem] font-semibold tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[2.15rem] lg:text-[3rem]"
+    >
+      {atelierPageData.heading}
+    </h1>
+    <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
   </div>
 
-  <div class="border-y border-(--trait) py-5 text-center sm:py-6">
+  <div class="mx-auto flex w-full max-w-4xl flex-col items-center text-center">
+    <p
+      class="max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8"
+    >
+      {section.intro}
+    </p>
+  </div>
+
+  <figure class="relative mx-auto w-full max-w-232">
+    <FigCotation
+      aspectRatio={section.image.aspectRatio}
+      contentClassName="lg:aspect-video"
+    >
+      <Image
+        alt={section.image.alt}
+        class="h-full w-full object-cover object-center"
+        draggable="false"
+        fetchpriority="high"
+        format="webp"
+        loading="eager"
+        quality={85}
+        sizes="(min-width: 1280px) 58rem, (min-width: 1024px) min(72vw, 58rem), (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
+        src={section.image.src}
+        widths={[640, 900, 1200, 1600]}
+      />
+    </FigCotation>
+    <FigCaption
+      overlay
+      figureId={section.figureId}
+      label={section.image.label}
+    />
+  </figure>
+
+  <div class="mx-auto w-full max-w-4xl text-center">
     <p
       class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
     >
       {section.pivotTitle}
     </p>
     <p
-      class="mx-auto mt-4 max-w-5xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic dark:text-(--t2a-blue) sm:text-[1.05rem] sm:leading-8"
+      class="mx-auto mt-4 max-w-4xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic dark:text-(--t2a-blue) sm:text-[1.05rem] sm:leading-8"
     >
       {section.pivot}
     </p>

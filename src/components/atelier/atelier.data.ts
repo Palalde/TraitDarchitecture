@@ -1,11 +1,11 @@
 import type { ImageMetadata } from "astro";
-import duoPhoto from "@/assets/photos/atelier/Duo.JPG";
-import theaPhoto from "@/assets/photos/atelier/Thea.JPG";
-import titouanPhoto from "@/assets/photos/atelier/Titouan.JPG";
+import duoPhoto from "@/assets/photos/atelier/Duo.jpg";
+import theaPhoto from "@/assets/photos/atelier/Thea.jpg";
+import titouanPhoto from "@/assets/photos/atelier/Titouan.jpg";
 
 export interface AtelierFigureImage {
   alt: string;
-  aspectRatio: "5:4" | "4:5";
+  aspectRatio: "8:5" | "5:4" | "4:5";
   label: string;
   src: ImageMetadata;
 }
@@ -50,11 +50,11 @@ export const atelierPageData: AtelierPageData = {
       "ATELIER TraiT D'ARCHITECTURE est une structure indépendante créée par deux architectes aux parcours complémentaires, unis par une vision commune : celle d'une architecture sensible, contextuelle et engagée. Ancrés dans le Sud-Est, entre Corse et Provence, ils développent ensemble une pratique attentive, qui donne la priorité à l'existant, au lieu, à l'usage et aux usagers.",
     pivotTitle: "UN TraiT DE CARACTÈRE",
     pivot:
-      "Ensemble, ils forment un duo complémentaire et équilibré, où la rigueur constructive se mêle à la sensibilité du dessin. Leur parcours commun, de la formation à Montpellier jusqu'à la création de leur agence en 2024, est jalonné d'expériences humaines et professionnelles fortes. Le voyage, au sens large reste au cœur de leur approche. Expérimenter des lieux, pratiquer des architectures, leur permet d'élargir leur panel de références et de nourrir cette vision singulière, un réel TraiT DE CARACTERE.",
+      "Ensemble, ils forment un duo complémentaire et équilibré, où la rigueur constructive se mêle à la sensibilité du dessin. Leur parcours commun, de la formation à Montpellier jusqu'à la création de leur agence en 2024, est jalonné d'expériences humaines et professionnelles fortes. Le voyage, au sens large reste au coeur de leur approche. Expérimenter des lieux, pratiquer des architectures, leur permet d'élargir leur panel de références et de nourrir cette vision singulière, un réel TraiT DE CARACTERE.",
     image: {
       src: duoPhoto,
       label: "Théa & Titouan",
-      aspectRatio: "5:4",
+      aspectRatio: "8:5",
       alt: "Théa Battistini et Titouan Granet, architectes, devant un mur ocre et une porte en bois patinée bleue",
     },
   },
