@@ -15,6 +15,7 @@ const OS_VIEWPORT_SELECTOR = "[data-overlayscrollbars-viewport]";
 export function useParallaxScroll<T extends HTMLElement>(
   targetRef: RefObject<T | null>,
   overflowPercent: number,
+  progressAnchorSelector?: string,
 ) {
   const y = useMotionValue(0);
   const isReduced = useReducedMotion();
@@ -28,11 +29,21 @@ export function useParallaxScroll<T extends HTMLElement>(
     const el = targetRef.current;
     if (!el) return;
 
+    const resolveProgressElement = () => {
+      if (!progressAnchorSelector) {
+        return el;
+      }
+
+      const anchor = el.closest(progressAnchorSelector);
+      return anchor instanceof HTMLElement ? anchor : el;
+    };
+
     let rafId: number | null = null;
     let maxShift = el.offsetHeight * overflowPercent;
 
     const update = () => {
-      const rect = el.getBoundingClientRect();
+      const progressEl = resolveProgressElement();
+      const rect = progressEl.getBoundingClientRect();
       const vh = window.innerHeight;
       const raw = (vh - rect.top) / (vh + rect.height);
       const clamped = Math.max(0, Math.min(1, raw));
@@ -83,7 +94,7 @@ export function useParallaxScroll<T extends HTMLElement>(
       osViewport?.removeEventListener("scroll", onScroll);
       observer?.disconnect();
     };
-  }, [isReduced, overflowPercent, targetRef, y]);
+  }, [isReduced, overflowPercent, progressAnchorSelector, targetRef, y]);
 
   return { y, isReduced };
 }

@@ -10,13 +10,16 @@ interface ParallaxFrameProps {
   overflowPercent: number;
   /** Overflow for mobile (<1024px). Falls back to overflowPercent if omitted. */
   mobileOverflowPercent?: number;
+  /** Optional ancestor selector used as scroll progress reference. */
+  progressAnchorSelector?: string;
   children: ReactNode;
 }
 
-/** Vertical parallax island. Use with `client:visible` on teaser image blocks. */
+/** Vertical parallax island. Use with `client:visible` on media frames. */
 export function ParallaxFrame({
   overflowPercent,
   mobileOverflowPercent,
+  progressAnchorSelector,
   children,
 }: ParallaxFrameProps) {
   const frameRef = useRef<HTMLDivElement>(null);
@@ -31,14 +34,16 @@ export function ParallaxFrame({
       window.addEventListener("resize", onStoreChange, { passive: true });
       return () => window.removeEventListener("resize", onStoreChange);
     },
-    () =>
-      window.innerWidth < LG_BREAKPOINT ? mobile : overflowPercent,
+    () => (window.innerWidth < LG_BREAKPOINT ? mobile : overflowPercent),
     () => overflowPercent,
   );
 
-  const { y, isReduced } = useParallaxScroll(frameRef, activeOverflow);
+  const { y, isReduced } = useParallaxScroll(
+    frameRef,
+    activeOverflow,
+    progressAnchorSelector,
+  );
 
-  // Spring smoothing — follows the raw scroll value with a slight physical lag
   const smoothY = useSpring(y, {
     stiffness: 200,
     damping: 30,
@@ -46,14 +51,14 @@ export function ParallaxFrame({
   });
 
   if (isReduced) {
-    return <div className="relative h-full w-full">{children}</div>;
+    return <div className="absolute inset-0">{children}</div>;
   }
 
   const pct = `${activeOverflow * 100}%`;
 
   return (
     <LazyMotion features={domAnimation} strict>
-      <div ref={frameRef} className="relative h-full w-full">
+      <div ref={frameRef} className="absolute inset-0">
         <m.div
           className="absolute inset-x-0"
           style={{

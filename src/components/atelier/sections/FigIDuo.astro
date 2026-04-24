@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
 import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
+import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 import {
   atelierPageData,
   type AtelierPageData,
@@ -64,18 +65,24 @@ const richPivotClass =
     style={duoFigureStyle}
   >
     <FigCotation aspectRatio={section.image.aspectRatio}>
-      <Image
-        alt={section.image.alt}
-        class="h-full w-full object-cover object-center"
-        draggable="false"
-        fetchpriority="high"
-        format="webp"
-        loading="eager"
-        quality={85}
-        sizes="(min-width: 1280px) min(64rem, calc((100vh - 4rem) * 1.4)), (min-width: 1024px) min(74vw, 64rem), (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
-        src={section.image.src}
-        widths={[640, 900, 1200, 1600]}
-      />
+      <ParallaxFrame
+        client:visible
+        overflowPercent={0.025}
+        mobileOverflowPercent={0.04}
+      >
+        <Image
+          alt={section.image.alt}
+          class="h-full w-full object-cover object-center"
+          draggable="false"
+          fetchpriority="high"
+          format="webp"
+          loading="eager"
+          quality={100}
+          sizes="(min-width: 1280px) min(64rem, calc((100vh - 4rem) * 1.4)), (min-width: 1024px) min(74vw, 64rem), (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
+          src={section.image.src}
+          widths={[640, 900, 1200, 1600]}
+        />
+      </ParallaxFrame>
     </FigCotation>
     <FigCaption
       overlay

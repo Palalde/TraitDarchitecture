@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import FigBanner from "@/components/atelier/blocks/FigBanner.astro";
 import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
 import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
+import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 import type { AtelierPersonSection } from "@/components/atelier/atelier.data";
 
 interface Props {
@@ -24,6 +25,7 @@ const richBodyClass =
 
   <div
     class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-8"
+    data-parallax-anchor
   >
     <div
       class="order-2 flex flex-col gap-6 sm:gap-7 lg:col-start-1 lg:order-0 lg:pr-2"
@@ -58,21 +60,28 @@ const richBodyClass =
     </div>
 
     <figure
-      class="order-1 relative lg:col-start-3 lg:order-0 lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-center"
+      class="order-1 relative w-full lg:col-start-3 lg:order-0 lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-center"
       style={stickyFigureStyle}
     >
       <FigCotation aspectRatio={section.image.aspectRatio}>
-        <Image
-          alt={section.image.alt}
-          class="h-full w-full object-cover object-center"
-          draggable="false"
-          format="webp"
-          loading="lazy"
-          quality={85}
-          sizes="(min-width: 1280px) 28rem, (min-width: 1024px) 36vw, 100vw"
-          src={section.image.src}
-          widths={[400, 640, 900]}
-        />
+        <ParallaxFrame
+          client:visible
+          overflowPercent={0.025}
+          mobileOverflowPercent={0.04}
+          progressAnchorSelector="[data-parallax-anchor]"
+        >
+          <Image
+            alt={section.image.alt}
+            class="h-full w-full object-cover object-center"
+            draggable="false"
+            format="webp"
+            loading="lazy"
+            quality={85}
+            sizes="(min-width: 1280px) 28rem, (min-width: 1024px) 36vw, 100vw"
+            src={section.image.src}
+            widths={[400, 640, 900]}
+          />
+        </ParallaxFrame>
       </FigCotation>
       <FigCaption overlay figureId={section.figureId} label={section.name} />
     </figure>
