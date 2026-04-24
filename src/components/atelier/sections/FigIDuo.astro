@@ -12,6 +12,12 @@ interface Props {
 }
 
 const { section }: Props = Astro.props;
+const duoFrameStyle =
+  "background-color: color-mix(in srgb, var(--bg-primary) 5%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);";
+const richParagraphClass =
+  "mx-auto max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold";
+const richPivotClass =
+  "mx-auto mt-4 max-w-4xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic sm:text-[1.05rem] sm:leading-8 dark:text-(--t2a-blue) [&_strong]:font-semibold";
 ---
 
 <section
@@ -34,19 +40,18 @@ const { section }: Props = Astro.props;
     <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
   </div>
 
-  <div class="mx-auto flex w-full max-w-4xl flex-col items-center text-center">
-    <p
-      class="max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8"
-    >
-      {section.intro}
-    </p>
-  </div>
+  <FigCotation
+    className="mx-auto w-full max-w-4xl"
+    contentClassName="bg-transparent px-5 py-5 text-center sm:px-6 sm:py-6"
+    contentStyle={duoFrameStyle}
+    orientation="horizontal"
+    showBorder={false}
+  >
+    <p class={richParagraphClass} set:html={section.intro} />
+  </FigCotation>
 
   <figure class="relative mx-auto w-full max-w-232">
-    <FigCotation
-      aspectRatio={section.image.aspectRatio}
-      contentClassName="lg:aspect-video"
-    >
+    <FigCotation aspectRatio={section.image.aspectRatio}>
       <Image
         alt={section.image.alt}
         class="h-full w-full object-cover object-center"
@@ -67,16 +72,18 @@ const { section }: Props = Astro.props;
     />
   </figure>
 
-  <div class="mx-auto w-full max-w-4xl text-center">
+  <FigCotation
+    className="mx-auto w-full max-w-4xl"
+    contentClassName="bg-transparent px-5 py-5 text-center sm:px-6 sm:py-6"
+    contentStyle={duoFrameStyle}
+    orientation="horizontal"
+    showBorder={false}
+  >
     <p
       class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
     >
       {section.pivotTitle}
     </p>
-    <p
-      class="mx-auto mt-4 max-w-4xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic dark:text-(--t2a-blue) sm:text-[1.05rem] sm:leading-8"
-    >
-      {section.pivot}
-    </p>
-  </div>
+    <p class={richPivotClass} set:html={section.pivot} />
+  </FigCotation>
 </section>
