@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import OverlayScrollbarsSetup from "@/components/ui/overlay/OverlayScrollbarsSetup";
+import overlayScrollbarsCssUrl from "overlayscrollbars/styles/overlayscrollbars.css?url";
 import RevealSetup from "../components/ui/reveal/RevealSetup.astro";
 import "../styles/index.css";
 
@@ -19,6 +20,8 @@ const {
 } = Astro.props;
 
 const robots = noindex ? "noindex, nofollow" : "index, follow";
+const overlayScrollbarsMediaQuery =
+  "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
 ---
 
 <!doctype html>
@@ -77,6 +80,11 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
           shrinking visualViewport during the transition. -->
     <ClientRouter />
     <RevealSetup />
+    <link
+      rel="stylesheet"
+      href={overlayScrollbarsCssUrl}
+      media={overlayScrollbarsMediaQuery}
+    />
     <script is:inline>
       const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
 

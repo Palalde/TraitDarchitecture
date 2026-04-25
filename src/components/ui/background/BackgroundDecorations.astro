@@ -1,15 +1,82 @@
 ---
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import topoDarkPng from "@/assets/illustrations/T2A_Plan_Topo territoire - DARK.png";
 import topoLightPng from "@/assets/illustrations/T2A_Plan_Topo territoire - LIGHT.png";
 import coupeMerDarkPng from "@/assets/illustrations/T2A_Coupe_Mer DARK.png";
 import coupeMerLightPng from "@/assets/illustrations/T2A_Coupe_Mer LIGHT.png";
+import type { ImageMetadata } from "astro";
 
 interface Props {
   class?: string;
 }
 
 const { class: className }: Props = Astro.props;
+
+const darkDesktopMedia =
+  "(prefers-color-scheme: dark) and (min-width: 1024px)";
+const darkMedia = "(prefers-color-scheme: dark)";
+const desktopMedia = "(min-width: 1024px)";
+const topoDesktopSizes = "1350px";
+const topoMobileSizes = "100vw";
+const coupeMerSizes = "(min-width: 1600px) 1600px, 100vw";
+
+const createResponsiveSource = async (
+  src: ImageMetadata,
+  widths: number[],
+  quality: number,
+) => {
+  const images = await Promise.all(
+    widths.map((width) =>
+      getImage({
+        src,
+        width,
+        format: "webp",
+        quality,
+      }),
+    ),
+  );
+  const fallback = images[images.length - 1];
+
+  return {
+    src: fallback.src,
+    srcset: images
+      .map((image) => `${image.src} ${image.attributes.width}w`)
+      .join(", "),
+    width: fallback.attributes.width,
+    height: fallback.attributes.height,
+  };
+};
+
+const topoLightMobile = await createResponsiveSource(
+  topoLightPng,
+  [320, 480, 640],
+  2,
+);
+const topoLightDesktop = await createResponsiveSource(
+  topoLightPng,
+  [960, 1350],
+  2,
+);
+const topoDarkMobile = await createResponsiveSource(
+  topoDarkPng,
+  [320, 480, 640],
+  2,
+);
+const topoDarkDesktop = await createResponsiveSource(
+  topoDarkPng,
+  [960, 1350],
+  2,
+);
+const coupeMerLight = await createResponsiveSource(
+  coupeMerLightPng,
+  [480, 640, 960, 1280, 1600],
+  42,
+);
+const coupeMerDark = await createResponsiveSource(
+  coupeMerDarkPng,
+  [480, 640, 960, 1280, 1600],
+  42,
+);
 ---
 
 <div
@@ -29,63 +96,58 @@ const { class: className }: Props = Astro.props;
     <div
       class="relative mt-0 max-w-none overflow-hidden w-160 opacity-[0.15] sm:w-200 lg:w-350 xl:w-640 dark:opacity-[0.15]"
     >
-      <div class="grid w-full">
-        <Image
+      <picture class="grid w-full">
+        <source
+          media={darkDesktopMedia}
+          sizes={topoDesktopSizes}
+          srcset={topoDarkDesktop.srcset}
+        />
+        <source
+          media={darkMedia}
+          sizes={topoMobileSizes}
+          srcset={topoDarkMobile.srcset}
+        />
+        <source
+          media={desktopMedia}
+          sizes={topoDesktopSizes}
+          srcset={topoLightDesktop.srcset}
+        />
+        <img
           alt=""
-          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-100 transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-0"
+          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-100"
           decoding="async"
           draggable="false"
-          format="webp"
           loading="eager"
-          fetchpriority="high"
-          quality={5}
-          widths={[400, 640, 1024, 1280]}
-          sizes="(min-width: 1280px) 1280px, (min-width: 1024px) 700px, (min-width: 640px) 400px, 320px"
-          src={topoLightPng}
+          fetchpriority="low"
+          sizes={topoMobileSizes}
+          src={topoLightMobile.src}
+          srcset={topoLightMobile.srcset}
+          width={topoLightMobile.width}
+          height={topoLightMobile.height}
         />
-        <Image
-          alt=""
-          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-0 transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-100"
-          decoding="async"
-          draggable="false"
-          format="webp"
-          loading="eager"
-          fetchpriority="high"
-          quality={5}
-          widths={[400, 640, 1024, 1280]}
-          sizes="(min-width: 1280px) 1280px, (min-width: 1024px) 700px, (min-width: 640px) 400px, 320px"
-          src={topoDarkPng}
-        />
-      </div>
+      </picture>
     </div>
   </div>
 
   <div class="absolute inset-x-0 bottom-0 flex justify-center overflow-hidden">
-    <div class="grid w-full">
-      <Image
+    <picture class="grid w-full">
+      <source
+        media={darkMedia}
+        sizes={coupeMerSizes}
+        srcset={coupeMerDark.srcset}
+      />
+      <img
         alt=""
-        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-[0.7] transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-0"
+        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-[0.7] dark:opacity-[0.6]"
         decoding="async"
         draggable="false"
-        format="webp"
         loading="lazy"
-        quality={60}
-        widths={[800, 1280, 1920, 2560]}
-        sizes="100vw"
-        src={coupeMerLightPng}
+        sizes={coupeMerSizes}
+        src={coupeMerLight.src}
+        srcset={coupeMerLight.srcset}
+        width={coupeMerLight.width}
+        height={coupeMerLight.height}
       />
-      <Image
-        alt=""
-        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-0 transition-opacity duration-300 ease-out motion-reduce:transition-none dark:opacity-[0.6]"
-        decoding="async"
-        draggable="false"
-        format="webp"
-        loading="lazy"
-        quality={60}
-        widths={[800, 1280, 1920, 2560]}
-        sizes="100vw"
-        src={coupeMerDarkPng}
-      />
-    </div>
+    </picture>
   </div>
 </div>
