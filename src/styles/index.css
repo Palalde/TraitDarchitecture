@@ -7,6 +7,18 @@
   }
 }
 
+/* Sub-variants for narrower viewports where Atelier text blocks wrap taller */
+@custom-variant narrow-tall-mobile-md {
+  @media (max-width: 398px) and (min-height: 750px) {
+    @slot;
+  }
+}
+@custom-variant narrow-tall-mobile-sm {
+  @media (max-width: 362px) and (min-height: 750px) {
+    @slot;
+  }
+}
+
 /* Variant : tablet */
 @custom-variant can-hover {
   @media (hover: hover) and (pointer: fine) {
