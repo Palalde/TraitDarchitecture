@@ -18,21 +18,33 @@ const { className, figureId, headingId, label }: Props = Astro.props;
   <div class="flex min-w-0 items-center gap-2">
     <span
       class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+      data-reveal="fade"
     >
       {figureId}
     </span>
-    <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+    <div
+      aria-hidden="true"
+      class="h-px flex-1 bg-(--trait) [--reveal-d:620ms]"
+      data-reveal="bar-from-right"
+    >
+    </div>
   </div>
 
   <h2
     id={headingId}
     class="shrink-0 text-center text-[1.2rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[1.65rem] lg:text-[2.25rem]"
+    data-reveal="fade-up"
   >
     {label}
   </h2>
 
   <div class="flex min-w-0 items-center gap-2">
-    <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+    <div
+      aria-hidden="true"
+      class="h-px flex-1 bg-(--trait) [--reveal-d:620ms]"
+      data-reveal="bar-from-left"
+    >
+    </div>
     <span
       aria-hidden="true"
       class="invisible shrink-0 text-[0.68rem] uppercase tracking-[0.16em] sm:text-[0.72rem]"

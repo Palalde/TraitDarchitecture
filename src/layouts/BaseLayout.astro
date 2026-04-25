@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import OverlayScrollbarsSetup from "@/components/ui/overlay/OverlayScrollbarsSetup";
+import RevealSetup from "../components/ui/reveal/RevealSetup.astro";
 import "../styles/index.css";
 
 interface Props {
@@ -75,6 +76,7 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
           page cannot control, notably the Google app reopening its URL bar and
           shrinking visualViewport during the transition. -->
     <ClientRouter />
+    <RevealSetup />
     <script is:inline>
       const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
 

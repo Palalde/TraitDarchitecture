@@ -15,128 +15,30 @@ const extraitSectionFrameClassName =
 <section
   aria-label="Contenu principal de l'accueil"
   class="relative w-full overflow-hidden bg-(--bg-primary)"
+  data-home-reveal-shell
 >
+  <!-- post landing reveal script -->
   <script is:inline data-astro-rerun>
     (() => {
       const DELAY_AFTER_SLIDING_MS = 0;
-      const DESKTOP_REVEAL_MEDIA_QUERY = "(min-width: 1024px)";
-      const MOBILE_RETURNING_DELAY_MS = 300;
-      const DESKTOP_RETURNING_DELAY_MS = 200;
-      // Keep the JS timing aligned with the CSS desktop reveal mode and
-      // desktop curtain duration so the home reveals do not restart mid-rideau.
-      const DELAY_RETURNING_MS = window.matchMedia(DESKTOP_REVEAL_MEDIA_QUERY)
-        .matches
-        ? DESKTOP_RETURNING_DELAY_MS
-        : MOBILE_RETURNING_DELAY_MS;
-      const SELECTOR = "[data-reveal]";
+      const revealSystem = window.__t2aReveal;
+      if (!revealSystem) return;
 
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const revealController = revealSystem.createController({
+        id: "home",
+        pathname: "/",
+        rootSelector: "[data-home-reveal-shell]",
+      });
+      if (!revealController) return;
 
-      // Disconnect any previous IO/MO (from a prior home visit) to avoid leaks.
-      if (window.__t2aHomeIo) {
-        window.__t2aHomeIo.disconnect();
-        window.__t2aHomeIo = null;
-      }
-      if (window.__t2aHomeMo) {
-        window.__t2aHomeMo.disconnect();
-        window.__t2aHomeMo = null;
-      }
-
-      const observed = new WeakSet();
-      let started = false;
-      let syncTimerId = null;
-      let io = null;
-
-      const teardown = () => {
-        if (io) {
-          io.disconnect();
-          io = null;
-          window.__t2aHomeIo = null;
-        }
-        if (syncTimerId !== null) {
-          clearTimeout(syncTimerId);
-          syncTimerId = null;
-        }
-        window.removeEventListener("resize", scheduleSync);
-        document.removeEventListener("astro:before-swap", onBeforeSwap);
-      };
-
-      const onBeforeSwap = (event) => {
-        const nextPath = new URL(event.to.href).pathname;
-        // Only teardown when leaving the home page (not for same-page anchors).
-        if (nextPath !== "/") teardown();
-      };
-
-      const syncTargets = () => {
-        if (!io) return;
-        document.querySelectorAll(SELECTOR).forEach((el) => {
-          if (
-            el.classList.contains("revealed") ||
-            observed.has(el) ||
-            getComputedStyle(el).display === "none"
-          ) {
-            return;
-          }
-
-          observed.add(el);
-          io.observe(el);
-        });
-      };
-
-      const scheduleSync = () => {
-        if (syncTimerId !== null) return;
-        // 100ms trailing debounce: coalesces the burst of mutations during
-        // React island hydration into a single querySelectorAll pass,
-        // keeping the main thread free while the view-transition plays.
-        syncTimerId = setTimeout(() => {
-          syncTimerId = null;
-          syncTargets();
-        }, 100);
-      };
-
-      const start = () => {
-        if (started) return;
-        started = true;
-
-        io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.intersectionRatio < 0.2) return;
-
-              entry.target.classList.add("revealed");
-              io.unobserve(entry.target);
-            });
-          },
-          { threshold: 0.2 },
+      if (revealSystem.isLandingDismissed()) {
+        revealController.startAfterPageVisible(
+          revealSystem.getResponsiveDelay(),
         );
-
-        window.__t2aHomeIo = io;
-        syncTargets();
-
-        // Keep the lightweight resize resync so desktop/mobile-only reveal
-        // targets that flip display state across breakpoints can still be observed.
-        window.addEventListener("resize", scheduleSync, { passive: true });
-      };
-
-      // Clean up when navigating away from the home page via SPA nav.
-      // No { once: true }: we only teardown on real nav away from "/",
-      // so same-page anchors must not consume the listener.
-      document.addEventListener("astro:before-swap", onBeforeSwap);
-
-      // Returning visitor (landing already dismissed via sessionStorage)
-      // OR returning via SPA nav (class set by LandingIsland on previous visit):
-      // start reveals with a short delay so the page has time to paint.
-      const isDismissed =
-        sessionStorage.getItem("t2a-landing-dismissed") === "1" ||
-        document.body.classList.contains("landing-dismissed");
-
-      if (isDismissed) {
-        setTimeout(start, DELAY_RETURNING_MS);
       } else {
-        window.addEventListener(
+        revealController.startOnWindowEvent(
           "landing:sliding-up",
-          () => setTimeout(start, DELAY_AFTER_SLIDING_MS),
-          { once: true },
+          DELAY_AFTER_SLIDING_MS,
         );
       }
     })();

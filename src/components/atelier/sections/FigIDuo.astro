@@ -37,19 +37,31 @@ const richPivotClass =
     <div class="flex min-w-0 items-center gap-2">
       <span
         class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+        data-reveal="fade"
       >
         {section.figureId}
       </span>
-      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <div
+        aria-hidden="true"
+        class="h-px flex-1 bg-(--trait) [--reveal-d:620ms]"
+        data-reveal="bar-from-right"
+      >
+      </div>
     </div>
     <h1
       id="atelier-page-title"
       class="shrink-0 text-center text-[1.7rem] font-semibold tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[2.15rem] lg:text-[3rem]"
+      data-reveal="fade-up"
     >
       {atelierPageData.heading}
     </h1>
     <div class="flex min-w-0 items-center gap-2">
-      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <div
+        aria-hidden="true"
+        class="h-px flex-1 bg-(--trait) [--reveal-d:620ms]"
+        data-reveal="bar-from-left"
+      >
+      </div>
       <span
         aria-hidden="true"
         class="invisible shrink-0 text-[0.68rem] uppercase tracking-[0.16em] sm:text-[0.72rem]"
@@ -67,12 +79,17 @@ const richPivotClass =
     orientation="horizontal"
     showBorder={false}
   >
-    <p class={richParagraphClass} set:html={section.intro} />
+    <p
+      class={richParagraphClass}
+      data-reveal="fade-up"
+      set:html={section.intro}
+    />
   </FigCotation>
 
   <!-- image -->
   <figure
     class="relative mx-auto w-full max-w-232 lg:max-w-(--atelier-duo-max-width)"
+    data-reveal="fade-up"
     style={duoFigureStyle}
   >
     <FigCotation aspectRatio={section.image.aspectRatio}>
@@ -112,9 +129,10 @@ const richPivotClass =
   >
     <p
       class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      data-reveal="fade"
     >
       {section.pivotTitle}
     </p>
-    <p class={richPivotClass} set:html={section.pivot} />
+    <p class={richPivotClass} data-reveal="fade-up" set:html={section.pivot} />
   </FigCotation>
 </section>

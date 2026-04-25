@@ -17,7 +17,7 @@ const richBodyClass =
   "mt-3 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold";
 const stepListClass = "grid grid-cols-1 gap-14 sm:gap-16 lg:gap-24";
 const stepArticleClass =
-  "sticky top-[calc(50vh-9rem)] relative min-h-72 border-l border-r border-(--trait) bg-(--bg-primary) py-8 pr-5 pl-5 [--reveal-d:720ms] [--reveal-offset-y:24px] sm:py-10 sm:pr-6 sm:pl-6 lg:top-[calc(50vh-10rem)] lg:min-h-80 lg:py-12 lg:pr-8 lg:pl-8";
+  "sticky top-[calc(50vh-9rem)] relative min-h-72 bg-(--bg-primary) py-8 pr-5 pl-5 [--reveal-d:720ms] [--reveal-offset-y:24px] sm:py-10 sm:pr-6 sm:pl-6 lg:top-[calc(50vh-10rem)] lg:min-h-80 lg:py-12 lg:pr-8 lg:pl-8";
 const stepIndexClass =
   "shrink-0 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-(--text-muted) sm:text-[0.68rem]";
 ---
@@ -47,14 +47,28 @@ const stepIndexClass =
               data-reveal="fade-up"
               style={`z-index: ${index + 1};`}
             >
-              <span
+              <div
                 aria-hidden="true"
-                class="absolute top-0 left-0 h-px w-2 bg-(--trait)"
-              />
-              <span
-                aria-hidden="true"
-                class="absolute right-0 bottom-0 h-px w-2 bg-(--trait)"
-              />
+                class="pointer-events-none absolute inset-0"
+                data-reveal="cotation"
+              >
+                <span
+                  class="absolute top-0 left-0 h-px w-2 bg-(--trait)"
+                  data-cotation-corner="x-left"
+                />
+                <span
+                  class="absolute inset-y-0 left-0 w-px bg-(--trait)"
+                  data-cotation-connector="y"
+                />
+                <span
+                  class="absolute right-0 bottom-0 h-px w-2 bg-(--trait)"
+                  data-cotation-corner="x-right"
+                />
+                <span
+                  class="absolute inset-y-0 right-0 w-px bg-(--trait)"
+                  data-cotation-connector="y"
+                />
+              </div>
               <div class="flex items-baseline gap-3 sm:gap-4">
                 <span class={stepIndexClass}>
                   {String(index + 1).padStart(2, "0")}
@@ -72,12 +86,14 @@ const stepIndexClass =
 
     <div
       aria-hidden="true"
-      class="hidden w-px bg-(--trait) lg:col-start-2 lg:block lg:self-stretch"
+      class="hidden w-px bg-(--trait) [--reveal-d:680ms] lg:col-start-2 lg:block lg:self-stretch"
+      data-reveal="bar-from-top"
     >
     </div>
 
     <figure
       class="order-1 relative w-full lg:col-start-3 lg:order-0 lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-center"
+      data-reveal="fade-up"
       style={stickyFigureStyle}
     >
       <FigCotation aspectRatio={section.image.aspectRatio}>

@@ -1,0 +1,219 @@
+<script is:inline>
+  (() => {
+    if (window.__t2aReveal) return;
+
+    const DESKTOP_REVEAL_MEDIA_QUERY = "(min-width: 1024px)";
+    const MOBILE_REVEAL_DELAY_MS = 300;
+    const DESKTOP_REVEAL_DELAY_MS = 200;
+    const SELECTOR = "[data-reveal]";
+    const THRESHOLD = 0.2;
+    const SYNC_DEBOUNCE_MS = 100;
+    const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
+
+    window.__t2aPendingAstroNavigation = false;
+    window.__t2aRevealControllers = window.__t2aRevealControllers || {};
+
+    document.addEventListener("astro:before-preparation", () => {
+      window.__t2aPendingAstroNavigation = true;
+    });
+
+    document.addEventListener("astro:page-load", () => {
+      window.__t2aPendingAstroNavigation = false;
+    });
+
+    const getResponsiveDelay = () =>
+      window.matchMedia(DESKTOP_REVEAL_MEDIA_QUERY).matches
+        ? DESKTOP_REVEAL_DELAY_MS
+        : MOBILE_REVEAL_DELAY_MS;
+
+    const isLandingDismissed = () => {
+      try {
+        return (
+          sessionStorage.getItem(LANDING_DISMISSED_STORAGE_KEY) === "1" ||
+          document.body.classList.contains("landing-dismissed")
+        );
+      } catch {
+        return document.body.classList.contains("landing-dismissed");
+      }
+    };
+
+    const revealVisibleTargets = (root, selector) => {
+      const targets = root.matches?.(selector)
+        ? [root, ...root.querySelectorAll(selector)]
+        : [...root.querySelectorAll(selector)];
+
+      targets.forEach((el) => el.classList.add("revealed"));
+    };
+
+    const getTargets = (root, selector) =>
+      root.matches?.(selector)
+        ? [root, ...root.querySelectorAll(selector)]
+        : [...root.querySelectorAll(selector)];
+
+    const createController = ({ id, rootSelector, pathname }) => {
+      const root = document.querySelector(rootSelector);
+      if (!id || !root) return null;
+
+      window.__t2aRevealControllers[id]?.teardown();
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        revealVisibleTargets(root, SELECTOR);
+        return {
+          startAfter: () => {},
+          startAfterPageVisible: () => {},
+          startOnWindowEvent: () => {},
+          teardown: () => {},
+        };
+      }
+
+      const observed = new WeakSet();
+      let io = null;
+      let pageLoadListener = null;
+      let startEventName = null;
+      let startEventListener = null;
+      let startTimerId = null;
+      let syncTimerId = null;
+      let started = false;
+      let tornDown = false;
+
+      const reveal = (el) => {
+        el.classList.add("revealed");
+        io?.unobserve(el);
+      };
+
+      const syncTargets = () => {
+        if (!io || tornDown) return;
+
+        getTargets(root, SELECTOR).forEach((el) => {
+          if (
+            el.classList.contains("revealed") ||
+            observed.has(el) ||
+            getComputedStyle(el).display === "none"
+          ) {
+            return;
+          }
+
+          observed.add(el);
+          io.observe(el);
+        });
+      };
+
+      const scheduleSync = () => {
+        if (syncTimerId !== null || tornDown) return;
+
+        syncTimerId = setTimeout(() => {
+          syncTimerId = null;
+          syncTargets();
+        }, SYNC_DEBOUNCE_MS);
+      };
+
+      const start = () => {
+        if (started || tornDown) return;
+        started = true;
+
+        io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.intersectionRatio < THRESHOLD) return;
+
+              reveal(entry.target);
+            });
+          },
+          { threshold: THRESHOLD },
+        );
+
+        syncTargets();
+        window.addEventListener("resize", scheduleSync, { passive: true });
+      };
+
+      const startAfter = (delayMs = 0) => {
+        if (tornDown) return;
+
+        if (startTimerId !== null) clearTimeout(startTimerId);
+        startTimerId = setTimeout(() => {
+          startTimerId = null;
+          start();
+        }, delayMs);
+      };
+
+      const startAfterPageVisible = (delayMs = getResponsiveDelay()) => {
+        if (tornDown) return;
+
+        if (window.__t2aPendingAstroNavigation) {
+          pageLoadListener = () => {
+            pageLoadListener = null;
+            startAfter(delayMs);
+          };
+          document.addEventListener("astro:page-load", pageLoadListener, {
+            once: true,
+          });
+          return;
+        }
+
+        startAfter(delayMs);
+      };
+
+      const startOnWindowEvent = (eventName, delayMs = 0) => {
+        if (tornDown) return;
+
+        startEventName = eventName;
+        startEventListener = () => startAfter(delayMs);
+        window.addEventListener(eventName, startEventListener, { once: true });
+      };
+
+      const teardown = () => {
+        tornDown = true;
+        io?.disconnect();
+        io = null;
+
+        if (pageLoadListener) {
+          document.removeEventListener("astro:page-load", pageLoadListener);
+          pageLoadListener = null;
+        }
+
+        if (startEventName && startEventListener) {
+          window.removeEventListener(startEventName, startEventListener);
+          startEventName = null;
+          startEventListener = null;
+        }
+
+        if (startTimerId !== null) {
+          clearTimeout(startTimerId);
+          startTimerId = null;
+        }
+
+        if (syncTimerId !== null) {
+          clearTimeout(syncTimerId);
+          syncTimerId = null;
+        }
+
+        window.removeEventListener("resize", scheduleSync);
+        document.removeEventListener("astro:before-swap", onBeforeSwap);
+        delete window.__t2aRevealControllers[id];
+      };
+
+      const onBeforeSwap = (event) => {
+        const nextPath = new URL(event.to.href).pathname;
+        if (nextPath !== pathname) teardown();
+      };
+
+      const controller = {
+        startAfter,
+        startAfterPageVisible,
+        startOnWindowEvent,
+        teardown,
+      };
+
+      window.__t2aRevealControllers[id] = controller;
+      document.addEventListener("astro:before-swap", onBeforeSwap);
+
+      return controller;
+    };
+
+    window.__t2aReveal = {
+      createController,
+      getResponsiveDelay,
+      isLandingDismissed,
+    };
+  })();
+</script>

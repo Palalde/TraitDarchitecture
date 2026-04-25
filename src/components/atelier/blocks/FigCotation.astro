@@ -29,87 +29,111 @@ const aspectRatioClass =
         : aspectRatio === "4:5"
           ? "aspect-4/5"
           : undefined;
+
+const cotationConnectorClass = "pointer-events-none absolute bg-(--trait)";
+const cotationCornerClass = "pointer-events-none absolute bg-(--trait)";
+const borderTraitClass = "pointer-events-none absolute z-10 bg-(--trait)";
 ---
 
 <div class:list={["relative w-full overflow-visible", className]}>
   {
     showCotation &&
       (orientation === "vertical" ? (
-        <>
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 z-20"
+          data-reveal="cotation"
+        >
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -bottom-1 -left-1 w-px bg-(--trait)"
+            class:list={[
+              cotationConnectorClass,
+              "-top-1 -bottom-1 -left-1 w-px",
+            ]}
+            data-cotation-connector="y"
           />
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -bottom-1 -right-1 w-px bg-(--trait)"
-          />
-
-          <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -left-1 h-px w-2 bg-(--trait)"
-          />
-          <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -left-1 h-2 w-px bg-(--trait)"
-          />
-
-          <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -right-1 h-px w-2 bg-(--trait)"
-          />
-          <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -right-1 h-2 w-px bg-(--trait)"
+            class:list={[
+              cotationConnectorClass,
+              "-top-1 -bottom-1 -right-1 w-px",
+            ]}
+            data-cotation-connector="y"
           />
 
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -bottom-1 -left-1 h-px w-2 bg-(--trait)"
+            class:list={[cotationCornerClass, "-top-1 -left-1 h-px w-2"]}
+            data-cotation-corner="x-left"
           />
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -bottom-1 -left-1 h-2 w-px bg-(--trait)"
+            class:list={[cotationCornerClass, "-top-1 -left-1 h-2 w-px"]}
+            data-cotation-corner="y-top"
           />
 
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -right-1 -bottom-1 h-px w-2 bg-(--trait)"
+            class:list={[cotationCornerClass, "-top-1 -right-1 h-px w-2"]}
+            data-cotation-corner="x-right"
           />
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -right-1 -bottom-1 h-2 w-px bg-(--trait)"
+            class:list={[cotationCornerClass, "-top-1 -right-1 h-2 w-px"]}
+            data-cotation-corner="y-top"
           />
-        </>
+
+          <span
+            class:list={[cotationCornerClass, "-bottom-1 -left-1 h-px w-2"]}
+            data-cotation-corner="x-left"
+          />
+          <span
+            class:list={[cotationCornerClass, "-bottom-1 -left-1 h-2 w-px"]}
+            data-cotation-corner="y-bottom"
+          />
+
+          <span
+            class:list={[cotationCornerClass, "-right-1 -bottom-1 h-px w-2"]}
+            data-cotation-corner="x-right"
+          />
+          <span
+            class:list={[cotationCornerClass, "-right-1 -bottom-1 h-2 w-px"]}
+            data-cotation-corner="y-bottom"
+          />
+        </div>
       ) : (
-        <>
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 z-20"
+          data-reveal="cotation"
+        >
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -left-1 -right-1 h-px bg-(--trait)"
+            class:list={[
+              cotationConnectorClass,
+              "-top-1 -left-1 -right-1 h-px",
+            ]}
+            data-cotation-connector="x"
           />
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -bottom-1 -left-1 -right-1 h-px bg-(--trait)"
+            class:list={[
+              cotationConnectorClass,
+              "-bottom-1 -left-1 -right-1 h-px",
+            ]}
+            data-cotation-connector="x"
           />
 
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -left-1 h-2 w-px bg-(--trait)"
+            class:list={[cotationCornerClass, "-top-1 -left-1 h-2 w-px"]}
+            data-cotation-corner="y-top"
           />
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -top-1 -right-1 h-2 w-px bg-(--trait)"
+            class:list={[cotationCornerClass, "-top-1 -right-1 h-2 w-px"]}
+            data-cotation-corner="y-top"
           />
 
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -bottom-1 -left-1 h-2 w-px bg-(--trait)"
+            class:list={[cotationCornerClass, "-bottom-1 -left-1 h-2 w-px"]}
+            data-cotation-corner="y-bottom"
           />
           <span
-            aria-hidden="true"
-            class="pointer-events-none absolute -bottom-1 -right-1 h-2 w-px bg-(--trait)"
+            class:list={[cotationCornerClass, "-bottom-1 -right-1 h-2 w-px"]}
+            data-cotation-corner="y-bottom"
           />
-        </>
+        </div>
       ))
   }
 
@@ -118,10 +142,32 @@ const aspectRatioClass =
       aspectRatioClass,
       contentClassName,
       "relative w-full overflow-hidden bg-(--t2a-blue-wash)",
-      showBorder && "border border-(--trait)",
     ]}
     style={contentStyle}
   >
     <slot />
   </div>
+
+  {
+    showBorder && (
+      <>
+        <span
+          aria-hidden="true"
+          class:list={[borderTraitClass, "inset-x-0 top-0 h-px"]}
+        />
+        <span
+          aria-hidden="true"
+          class:list={[borderTraitClass, "inset-x-0 bottom-0 h-px"]}
+        />
+        <span
+          aria-hidden="true"
+          class:list={[borderTraitClass, "inset-y-0 left-0 w-px"]}
+        />
+        <span
+          aria-hidden="true"
+          class:list={[borderTraitClass, "inset-y-0 right-0 w-px"]}
+        />
+      </>
+    )
+  }
 </div>

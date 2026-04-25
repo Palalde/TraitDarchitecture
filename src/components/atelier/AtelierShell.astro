@@ -14,116 +14,16 @@ const [titouanSection, theaSection] = atelierPageData.people;
 >
   <script is:inline data-astro-rerun>
     (() => {
-      const shell = document.querySelector("[data-atelier-shell]");
-      if (!shell) return;
+      const revealSystem = window.__t2aReveal;
+      if (!revealSystem) return;
 
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        shell
-          .querySelectorAll("[data-reveal]")
-          .forEach((el) => el.classList.add("revealed"));
-        return;
-      }
-
-      if (window.__t2aAtelierIo) {
-        window.__t2aAtelierIo.disconnect();
-        window.__t2aAtelierIo = null;
-      }
-
-      const observed = new WeakSet();
-      let syncTimerId = null;
-
-      const isReadyForReveal = (el) => {
-        const rect = el.getBoundingClientRect();
-        const viewportHeight =
-          window.innerHeight || document.documentElement.clientHeight;
-
-        return (
-          rect.top <= viewportHeight * 0.86 &&
-          rect.bottom >= viewportHeight * 0.12
-        );
-      };
-
-      const reveal = (el) => {
-        el.classList.add("revealed");
-        io.unobserve(el);
-
-        window.setTimeout(() => {
-          if (!el.classList.contains("revealed")) return;
-
-          el.style.animation = "none";
-          el.style.opacity = "1";
-          el.style.transform = "none";
-        }, 850);
-      };
-
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting || entry.intersectionRatio < 0.12) {
-              return;
-            }
-
-            reveal(entry.target);
-          });
-        },
-        { rootMargin: "0px 0px -14% 0px", threshold: 0.12 },
-      );
-
-      window.__t2aAtelierIo = io;
-
-      const syncTargets = () => {
-        shell.querySelectorAll("[data-reveal]").forEach((el) => {
-          if (
-            el.classList.contains("revealed") ||
-            getComputedStyle(el).display === "none"
-          ) {
-            return;
-          }
-
-          if (isReadyForReveal(el)) {
-            reveal(el);
-            return;
-          }
-
-          if (observed.has(el)) return;
-
-          observed.add(el);
-          io.observe(el);
-        });
-      };
-
-      const scheduleSync = () => {
-        if (syncTimerId !== null) return;
-
-        syncTimerId = setTimeout(() => {
-          syncTimerId = null;
-          syncTargets();
-        }, 100);
-      };
-
-      const teardown = () => {
-        io.disconnect();
-        window.__t2aAtelierIo = null;
-
-        if (syncTimerId !== null) {
-          clearTimeout(syncTimerId);
-          syncTimerId = null;
-        }
-
-        window.removeEventListener("scroll", scheduleSync);
-        window.removeEventListener("resize", scheduleSync);
-        document.removeEventListener("astro:before-swap", onBeforeSwap);
-      };
-
-      const onBeforeSwap = (event) => {
-        const nextPath = new URL(event.to.href).pathname;
-        if (nextPath !== "/atelier") teardown();
-      };
-
-      requestAnimationFrame(syncTargets);
-      window.addEventListener("scroll", scheduleSync, { passive: true });
-      window.addEventListener("resize", scheduleSync, { passive: true });
-      document.addEventListener("astro:before-swap", onBeforeSwap);
+      revealSystem
+        .createController({
+          id: "atelier",
+          pathname: "/atelier",
+          rootSelector: "[data-atelier-shell]",
+        })
+        ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
     })();
   </script>
 
@@ -140,7 +40,11 @@ const [titouanSection, theaSection] = atelierPageData.people;
           class="pointer-events-none relative flex h-30 justify-center sm:h-38 md:h-46 lg:h-70 2xl:h-120"
           data-atelier-footer-bridge
         >
-          <span class="hidden h-[105%] w-px bg-(--trait) lg:block"></span>
+          <span
+            class="hidden h-[105%] w-px bg-(--trait) [--reveal-d:720ms] lg:block"
+            data-reveal="bar-from-top"
+          >
+          </span>
         </div>
       </div>
     </div>
