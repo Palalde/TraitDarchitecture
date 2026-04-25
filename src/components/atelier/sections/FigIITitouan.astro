@@ -12,9 +12,14 @@ interface Props {
 
 const { section }: Props = Astro.props;
 const stickyFigureStyle =
-  "--atelier-sticky-top: calc(var(--header-height, 64px) + 1.5rem); --atelier-sticky-max-width: min(100%, 28rem);";
+  "--atelier-sticky-top: calc(50vh - 15rem); --atelier-sticky-max-width: min(100%, 24rem);";
 const richBodyClass =
   "mt-3 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold";
+const stepListClass = "grid grid-cols-1 gap-14 sm:gap-16 lg:gap-24";
+const stepArticleClass =
+  "sticky top-[calc(var(--header-height,64px)+2.75rem)] relative min-h-72 border-l border-r border-(--trait) bg-(--bg-primary) py-8 pr-5 pl-5 [--reveal-d:720ms] [--reveal-offset-y:24px] sm:py-10 sm:pr-6 sm:pl-6 lg:top-[calc(var(--header-height,64px)+5.5rem)] lg:min-h-80 lg:py-12 lg:pr-8 lg:pl-8";
+const stepIndexClass =
+  "shrink-0 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-(--text-muted) sm:text-[0.68rem]";
 ---
 
 <section
@@ -49,7 +54,7 @@ const richBodyClass =
             format="webp"
             loading="lazy"
             quality={85}
-            sizes="(min-width: 1280px) 28rem, (min-width: 1024px) 36vw, 100vw"
+            sizes="(min-width: 1280px) 24rem, (min-width: 1024px) 32vw, 100vw"
             src={section.image.src}
             widths={[400, 640, 900]}
           />
@@ -65,13 +70,30 @@ const richBodyClass =
     </div>
 
     <div class="flex flex-col gap-6 sm:gap-7 lg:col-start-3 lg:pl-2">
-      <div class="grid grid-cols-1 gap-4 sm:gap-5">
+      <div class={stepListClass}>
         {
-          section.sections.map((contentSection) => (
-            <article>
-              <h3 class="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
-                {contentSection.title}
-              </h3>
+          section.sections.map((contentSection, index) => (
+            <article
+              class={stepArticleClass}
+              data-reveal="fade-up"
+              style={`z-index: ${index + 1};`}
+            >
+              <span
+                aria-hidden="true"
+                class="absolute top-0 left-0 h-px w-2 bg-(--trait)"
+              />
+              <span
+                aria-hidden="true"
+                class="absolute right-0 bottom-0 h-px w-2 bg-(--trait)"
+              />
+              <div class="flex items-baseline gap-3 sm:gap-4">
+                <span class={stepIndexClass}>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 class="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+                  {contentSection.title}
+                </h3>
+              </div>
               <p class={richBodyClass} set:html={contentSection.body} />
             </article>
           ))
