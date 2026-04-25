@@ -21,7 +21,11 @@ const richBodyClass =
   class="flex flex-col gap-6 sm:gap-8"
   aria-labelledby="atelier-figure-ii-title"
 >
-  <FigBanner figureId={section.figureId} label={section.figureLabel} />
+  <FigBanner
+    figureId={section.figureId}
+    headingId="atelier-figure-ii-title"
+    label={section.figureLabel}
+  />
 
   <div
     class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-8"
@@ -61,15 +65,6 @@ const richBodyClass =
     </div>
 
     <div class="flex flex-col gap-6 sm:gap-7 lg:col-start-3 lg:pl-2">
-      <div>
-        <h2
-          id="atelier-figure-ii-title"
-          class="text-[1.5rem] font-semibold tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) lg:text-[2.25rem]"
-        >
-          {section.name}
-        </h2>
-      </div>
-
       <div class="grid grid-cols-1 gap-4 sm:gap-5">
         {
           section.sections.map((contentSection) => (
