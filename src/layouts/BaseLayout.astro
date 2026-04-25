@@ -70,6 +70,10 @@ const robots = noindex ? "noindex, nofollow" : "index, follow";
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <!-- Keep this path close to Astro defaults. On iOS/WKWebView, native view
+          transitions can still be disturbed by browser chrome changes that the
+          page cannot control, notably the Google app reopening its URL bar and
+          shrinking visualViewport during the transition. -->
     <ClientRouter />
     <script is:inline>
       const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
