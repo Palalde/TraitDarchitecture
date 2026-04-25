@@ -32,20 +32,32 @@ const richPivotClass =
   aria-labelledby="atelier-page-title"
 >
   <!-- title -->
-  <div class="flex items-center gap-3 sm:gap-5">
-    <span
-      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
-    >
-      {section.figureId}
-    </span>
-    <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+  <div
+    class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 sm:gap-5"
+  >
+    <div class="flex min-w-0 items-center gap-2">
+      <span
+        class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+      >
+        {section.figureId}
+      </span>
+      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+    </div>
     <h1
       id="atelier-page-title"
       class="shrink-0 text-center text-[1.7rem] font-semibold tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[2.15rem] lg:text-[3rem]"
     >
       {atelierPageData.heading}
     </h1>
-    <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+    <div class="flex min-w-0 items-center gap-2">
+      <div aria-hidden="true" class="h-px flex-1 bg-(--trait)"></div>
+      <span
+        aria-hidden="true"
+        class="invisible shrink-0 text-[0.68rem] uppercase tracking-[0.16em] sm:text-[0.72rem]"
+      >
+        {section.figureId}
+      </span>
+    </div>
   </div>
 
   <!-- paragraph -->
