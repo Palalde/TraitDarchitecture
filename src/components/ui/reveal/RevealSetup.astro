@@ -10,6 +10,7 @@
     const SYNC_DEBOUNCE_MS = 100;
     const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
 
+    // Reveals start after Astro exposes the new page, not behind the transition curtain.
     window.__t2aPendingAstroNavigation = false;
     window.__t2aRevealControllers = window.__t2aRevealControllers || {};
 

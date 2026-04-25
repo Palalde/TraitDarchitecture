@@ -1,9 +1,7 @@
 ---
-import { Image } from "astro:assets";
 import FigBanner from "@/components/atelier/blocks/FigBanner.astro";
-import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
-import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
-import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
+import PersonPortraitFigure from "@/components/atelier/blocks/PersonPortraitFigure.astro";
+import PersonTextStack from "@/components/atelier/blocks/PersonTextStack.astro";
 import type { AtelierPersonSection } from "@/components/atelier/atelier.data";
 
 interface Props {
@@ -11,15 +9,9 @@ interface Props {
 }
 
 const { section }: Props = Astro.props;
-const stickyFigureStyle =
-  "--atelier-sticky-top: calc(50vh - 15rem); --atelier-sticky-max-width: min(100%, 24rem);";
-const richBodyClass =
-  "mt-3 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold";
-const stepListClass = "grid grid-cols-1 gap-14 sm:gap-16 lg:gap-24";
-const stepArticleClass =
-  "sticky top-[calc(50vh-9rem)] relative min-h-72 bg-(--bg-primary) py-8 pr-5 pl-5 [--reveal-d:720ms] [--reveal-offset-y:24px] sm:py-10 sm:pr-6 sm:pl-6 lg:top-[calc(50vh-10rem)] lg:min-h-80 lg:py-12 lg:pr-8 lg:pl-8";
-const stepIndexClass =
-  "shrink-0 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-(--text-muted) sm:text-[0.68rem]";
+const portraitFigureClass =
+  "relative w-full lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-center";
+const textStackClass = "flex flex-col gap-6 sm:gap-7 lg:col-start-3 lg:pl-2";
 ---
 
 <section
@@ -36,33 +28,7 @@ const stepIndexClass =
     class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)] lg:items-start lg:gap-x-10 lg:gap-y-8"
     data-parallax-anchor
   >
-    <figure
-      class="relative w-full lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-center"
-      data-reveal="fade-up"
-      style={stickyFigureStyle}
-    >
-      <FigCotation aspectRatio={section.image.aspectRatio}>
-        <ParallaxFrame
-          client:visible
-          overflowPercent={0.025}
-          mobileOverflowPercent={0.04}
-          progressAnchorSelector="[data-parallax-anchor]"
-        >
-          <Image
-            alt={section.image.alt}
-            class="h-full w-full object-cover object-center"
-            draggable="false"
-            format="webp"
-            loading="lazy"
-            quality={85}
-            sizes="(min-width: 1280px) 24rem, (min-width: 1024px) 32vw, 100vw"
-            src={section.image.src}
-            widths={[400, 640, 900]}
-          />
-        </ParallaxFrame>
-      </FigCotation>
-      <FigCaption overlay figureId={section.figureId} label={section.name} />
-    </figure>
+    <PersonPortraitFigure className={portraitFigureClass} section={section} />
 
     <div
       aria-hidden="true"
@@ -71,50 +37,6 @@ const stepIndexClass =
     >
     </div>
 
-    <div class="flex flex-col gap-6 sm:gap-7 lg:col-start-3 lg:pl-2">
-      <div class={stepListClass}>
-        {
-          section.sections.map((contentSection, index) => (
-            <article
-              class={stepArticleClass}
-              data-reveal="fade-up"
-              style={`z-index: ${index + 1};`}
-            >
-              <div
-                aria-hidden="true"
-                class="pointer-events-none absolute inset-0"
-                data-reveal="cotation"
-              >
-                <span
-                  class="absolute top-0 left-0 h-px w-2 bg-(--trait)"
-                  data-cotation-corner="x-left"
-                />
-                <span
-                  class="absolute inset-y-0 left-0 w-px bg-(--trait)"
-                  data-cotation-connector="y"
-                />
-                <span
-                  class="absolute right-0 bottom-0 h-px w-2 bg-(--trait)"
-                  data-cotation-corner="x-right"
-                />
-                <span
-                  class="absolute inset-y-0 right-0 w-px bg-(--trait)"
-                  data-cotation-connector="y"
-                />
-              </div>
-              <div class="flex items-baseline gap-3 sm:gap-4">
-                <span class={stepIndexClass}>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 class="text-[0.8rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
-                  {contentSection.title}
-                </h3>
-              </div>
-              <p class={richBodyClass} set:html={contentSection.body} />
-            </article>
-          ))
-        }
-      </div>
-    </div>
+    <PersonTextStack className={textStackClass} section={section} />
   </div>
 </section>

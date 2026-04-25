@@ -3,14 +3,17 @@ import duoPhoto from "@/assets/photos/atelier/Duo.jpg";
 import theaPhoto from "@/assets/photos/atelier/Thea.jpg";
 import titouanPhoto from "@/assets/photos/atelier/Titouan.jpg";
 
-export interface AtelierFigureImage {
+interface AtelierFigureImage {
   alt: string;
   aspectRatio: "7:5" | "8:5" | "5:4" | "4:5";
-  label: string;
   src: ImageMetadata;
 }
 
-export interface AtelierTextBlock {
+interface AtelierDuoFigureImage extends AtelierFigureImage {
+  label: string;
+}
+
+interface AtelierTextBlock {
   body: string;
   title: string;
 }
@@ -27,8 +30,7 @@ export interface AtelierPageData {
   description: string;
   duoFigure: {
     figureId: "Fig. I";
-    figureLabel: string;
-    image: AtelierFigureImage;
+    image: AtelierDuoFigureImage;
     intro: string;
     pivot: string;
     pivotTitle: string;
@@ -45,7 +47,6 @@ export const atelierPageData: AtelierPageData = {
   heading: "ATELIER",
   duoFigure: {
     figureId: "Fig. I",
-    figureLabel: "Le duo",
     intro: `<strong>ATELIER TraiT D'ARCHITECTURE</strong> est une <strong>structure indépendante créée par deux architectes aux parcours complémentaires</strong>, unis par une vision commune : celle d'une <strong>architecture sensible, contextuelle et engagée</strong>. Ancrés dans le Sud-Est, <strong>entre Corse et Provence</strong>, ils développent ensemble une pratique attentive, qui donne la priorité à l'existant, au lieu, à l'usage et aux usagers.`,
     pivotTitle: "UN TraiT DE CARACTÈRE",
     pivot: `<strong>Ensemble, ils forment un duo complémentaire et équilibré</strong>, où la rigueur constructive se mêle à la sensibilité du dessin. Leur parcours commun, de la formation à Montpellier jusqu'à la <strong>création de leur agence en 2024</strong>, est jalonné d'expériences humaines et professionnelles fortes. Le voyage, au sens large, reste au coeur de leur approche. Expérimenter des lieux, pratiquer des architectures, leur permet d'élargir leur panel de références et de nourrir cette <strong>vision singulière</strong>, un réel <strong>TraiT DE CARACTERE</strong>.`,
@@ -63,7 +64,6 @@ export const atelierPageData: AtelierPageData = {
       name: "Titouan GRANET",
       image: {
         src: titouanPhoto,
-        label: "Titouan",
         aspectRatio: "4:5",
         alt: "Portrait de Titouan Granet, architecte DE",
       },
@@ -88,7 +88,6 @@ export const atelierPageData: AtelierPageData = {
       name: "Théa BATTISTINI",
       image: {
         src: theaPhoto,
-        label: "Théa",
         aspectRatio: "4:5",
         alt: "Portrait de Théa Battistini, architecte HMONP",
       },

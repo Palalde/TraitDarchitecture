@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
+import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
+import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
+import type { AtelierPersonSection } from "@/components/atelier/atelier.data";
+
+interface Props {
+  className: string;
+  section: AtelierPersonSection;
+}
+
+const { className, section }: Props = Astro.props;
+const stickyFigureStyle =
+  "--atelier-sticky-top: calc(50vh - 15rem); --atelier-sticky-max-width: min(100%, 24rem);";
+---
+
+<figure
+  class={className}
+  data-reveal="fade-up"
+  style={stickyFigureStyle}
+>
+  <FigCotation aspectRatio={section.image.aspectRatio}>
+    <ParallaxFrame
+      client:visible
+      overflowPercent={0.025}
+      mobileOverflowPercent={0.04}
+      progressAnchorSelector="[data-parallax-anchor]"
+    >
+      <Image
+        alt={section.image.alt}
+        class="h-full w-full object-cover object-center"
+        draggable="false"
+        format="webp"
+        loading="lazy"
+        quality={85}
+        sizes="(min-width: 1280px) 24rem, (min-width: 1024px) 32vw, 100vw"
+        src={section.image.src}
+        widths={[400, 640, 900]}
+      />
+    </ParallaxFrame>
+  </FigCotation>
+  <FigCaption overlay figureId={section.figureId} label={section.name} />
+</figure>

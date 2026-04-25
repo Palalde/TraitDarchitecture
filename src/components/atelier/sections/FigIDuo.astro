@@ -3,25 +3,19 @@ import { Image } from "astro:assets";
 import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
 import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
 import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
-import {
-  atelierPageData,
-  type AtelierPageData,
-} from "@/components/atelier/atelier.data";
+import type { AtelierPageData } from "@/components/atelier/atelier.data";
 
 interface Props {
+  heading: string;
   section: AtelierPageData["duoFigure"];
 }
 
-const { section }: Props = Astro.props;
-// blur
+const { heading, section }: Props = Astro.props;
 const duoFrameStyle =
   "background-color: color-mix(in srgb, var(--bg-primary) 5%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);";
-// duo figure width cap
 const duoFigureStyle = "--atelier-duo-max-width: min(100%, 45rem);";
-// paragraph text
 const richParagraphClass =
   "mx-auto max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold";
-// pivot text
 const richPivotClass =
   "mx-auto mt-4 max-w-4xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic sm:text-[1.05rem] sm:leading-8 dark:text-(--t2a-blue) [&_strong]:font-semibold";
 ---
@@ -53,7 +47,7 @@ const richPivotClass =
       class="shrink-0 text-center text-[1.7rem] font-semibold tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[2.15rem] lg:text-[3rem]"
       data-reveal="fade-up"
     >
-      {atelierPageData.heading}
+      {heading}
     </h1>
     <div class="flex min-w-0 items-center gap-2">
       <div
