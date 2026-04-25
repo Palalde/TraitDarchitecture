@@ -10,7 +10,7 @@ interface Props {
 
 const { section }: Props = Astro.props;
 const portraitFigureClass =
-  "relative w-full lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-center";
+  "relative w-full narrow-tall-mobile:m-1 narrow-tall-mobile:sticky narrow-tall-mobile:top-(--header-height) narrow-tall-mobile:z-0 narrow-tall-mobile:mx-auto narrow-tall-mobile:max-w-64 narrow-tall-mobile:self-start narrow-tall-mobile:justify-self-center lg:sticky lg:top-(--atelier-sticky-top) lg:max-w-(--atelier-sticky-max-width) lg:self-start lg:justify-self-center";
 const textStackClass = "flex flex-col gap-6 sm:gap-7 lg:col-start-3 lg:pl-2";
 ---
 

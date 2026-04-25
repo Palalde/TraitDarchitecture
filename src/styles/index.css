@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Variant : narrow mobile with enough vertical room for Atelier sticky portraits */
+@custom-variant narrow-tall-mobile {
+  @media (max-width: 435px) and (min-height: 750px) {
+    @slot;
+  }
+}
+
 /* Variant : tablet */
 @custom-variant can-hover {
   @media (hover: hover) and (pointer: fine) {
