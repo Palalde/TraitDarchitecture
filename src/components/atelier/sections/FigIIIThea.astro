@@ -12,7 +12,7 @@ interface Props {
 
 const { section }: Props = Astro.props;
 const stickyFigureStyle =
-  "--atelier-sticky-top: calc(var(--header-height, 64px) + 1.5rem); --atelier-sticky-max-height: calc(100vh - var(--header-height, 64px) - 3rem); --atelier-sticky-max-width: min(100%, calc(var(--atelier-sticky-max-height) * 0.8));";
+  "--atelier-sticky-top: calc(var(--header-height, 64px) + 1.5rem); --atelier-sticky-max-width: min(100%, 28rem);";
 const richBodyClass =
   "mt-3 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold";
 ---

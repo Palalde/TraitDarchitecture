@@ -16,9 +16,8 @@ const { section }: Props = Astro.props;
 // blur
 const duoFrameStyle =
   "background-color: color-mix(in srgb, var(--bg-primary) 5%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);";
-// duo figure desktop cap
-const duoFigureStyle =
-  "--atelier-duo-max-width: min(100%, 64rem, calc((100vh - 4rem) * 1.4));";
+// duo figure width cap
+const duoFigureStyle = "--atelier-duo-max-width: min(100%, 45rem);";
 // paragraph text
 const richParagraphClass =
   "mx-auto max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold";
@@ -90,7 +89,7 @@ const richPivotClass =
           format="webp"
           loading="eager"
           quality={100}
-          sizes="(min-width: 1280px) min(64rem, calc((100vh - 4rem) * 1.4)), (min-width: 1024px) min(74vw, 64rem), (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
+          sizes="(min-width: 1280px) 64rem, (min-width: 1024px) min(74vw, 64rem), (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
           src={section.image.src}
           widths={[640, 900, 1200, 1600]}
         />
