@@ -1,5 +1,5 @@
 ---
-import { getImage } from "astro:assets";
+import { getImage, Image } from "astro:assets";
 import topoDarkPng from "@/assets/illustrations/T2A_Plan_Topo territoire - DARK.png";
 import topoLightPng from "@/assets/illustrations/T2A_Plan_Topo territoire - LIGHT.png";
 import coupeMerDarkPng from "@/assets/illustrations/T2A_Coupe_Mer DARK.png";
@@ -12,8 +12,7 @@ interface Props {
 
 const { class: className }: Props = Astro.props;
 
-const darkDesktopMedia =
-  "(prefers-color-scheme: dark) and (min-width: 1024px)";
+const darkDesktopMedia = "(prefers-color-scheme: dark) and (min-width: 1024px)";
 const darkMedia = "(prefers-color-scheme: dark)";
 const desktopMedia = "(min-width: 1024px)";
 const topoDesktopSizes = "1350px";
@@ -47,11 +46,6 @@ const createResponsiveSource = async (
   };
 };
 
-const topoLightMobile = await createResponsiveSource(
-  topoLightPng,
-  [320, 480, 640],
-  2,
-);
 const topoLightDesktop = await createResponsiveSource(
   topoLightPng,
   [960, 1350],
@@ -66,11 +60,6 @@ const topoDarkDesktop = await createResponsiveSource(
   topoDarkPng,
   [960, 1350],
   2,
-);
-const coupeMerLight = await createResponsiveSource(
-  coupeMerLightPng,
-  [480, 640, 960, 1280, 1600],
-  42,
 );
 const coupeMerDark = await createResponsiveSource(
   coupeMerDarkPng,
@@ -112,18 +101,17 @@ const coupeMerDark = await createResponsiveSource(
           sizes={topoDesktopSizes}
           srcset={topoLightDesktop.srcset}
         />
-        <img
+        <Image
           alt=""
           class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-100"
-          decoding="async"
-          draggable="false"
-          loading="eager"
+          draggable={false}
           fetchpriority="low"
+          format="webp"
+          loading="eager"
+          quality={2}
           sizes={topoMobileSizes}
-          src={topoLightMobile.src}
-          srcset={topoLightMobile.srcset}
-          width={topoLightMobile.width}
-          height={topoLightMobile.height}
+          src={topoLightPng}
+          widths={[320, 480, 640]}
         />
       </picture>
     </div>
@@ -136,17 +124,16 @@ const coupeMerDark = await createResponsiveSource(
         sizes={coupeMerSizes}
         srcset={coupeMerDark.srcset}
       />
-      <img
+      <Image
         alt=""
         class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-[0.7] dark:opacity-[0.6]"
-        decoding="async"
-        draggable="false"
+        draggable={false}
+        format="webp"
         loading="lazy"
+        quality={42}
         sizes={coupeMerSizes}
-        src={coupeMerLight.src}
-        srcset={coupeMerLight.srcset}
-        width={coupeMerLight.width}
-        height={coupeMerLight.height}
+        src={coupeMerLightPng}
+        widths={[480, 640, 960, 1280, 1600]}
       />
     </picture>
   </div>

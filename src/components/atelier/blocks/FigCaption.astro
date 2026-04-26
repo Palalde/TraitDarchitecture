@@ -4,9 +4,16 @@ interface Props {
   figureId: string;
   label: string;
   overlay?: boolean;
+  style?: string;
 }
 
-const { className, figureId, label, overlay = false }: Props = Astro.props;
+const {
+  className,
+  figureId,
+  label,
+  overlay = false,
+  style: styleAttr,
+}: Props = Astro.props;
 
 const captionClass = overlay
   ? "pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 px-3 py-3 text-[0.6rem] uppercase tracking-[0.12em] sm:px-4 sm:py-4 sm:text-[0.68rem]"
@@ -20,7 +27,7 @@ const labelClass = overlay
   : "max-w-[70%] text-right leading-tight";
 ---
 
-<figcaption class:list={[captionClass, className]}>
+<figcaption class:list={[captionClass, className]} style={styleAttr}>
   <span class={figureIdClass}>{figureId}</span>
   <span class={labelClass}>{label}</span>
 </figcaption>

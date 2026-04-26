@@ -52,9 +52,9 @@ export const atelierPageData: AtelierPageData = {
     pivot: `<strong>Ensemble, ils forment un duo complémentaire et équilibré</strong>, où la rigueur constructive se mêle à la sensibilité du dessin. Leur parcours commun, de la formation à Montpellier jusqu'à la <strong>création de leur agence en 2024</strong>, est jalonné d'expériences humaines et professionnelles fortes. Le voyage, au sens large, reste au coeur de leur approche. Expérimenter des lieux, pratiquer des architectures, leur permet d'élargir leur panel de références et de nourrir cette <strong>vision singulière</strong>, un réel <strong>TraiT DE CARACTERE</strong>.`,
     image: {
       src: duoPhoto,
-      label: "Théa & Titouan",
+      label: "Titouan & Théa",
       aspectRatio: "7:5",
-      alt: "Théa Battistini et Titouan Granet, architectes, devant un mur ocre et une porte en bois patinée bleue",
+      alt: "Titouan Granet et Théa Battistini, architectes, devant un mur ocre et une porte en bois patinée bleue",
     },
   },
   people: [
