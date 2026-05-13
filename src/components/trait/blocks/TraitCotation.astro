@@ -24,9 +24,7 @@ const resolvedLength = typeof length === "number" ? `${length}px` : length;
 const isCorner = typeof corner === "string";
 
 const horizontalClass =
-  corner === "top-right" || corner === "bottom-right"
-    ? "right-0"
-    : "left-0";
+  corner === "top-right" || corner === "bottom-right" ? "right-0" : "left-0";
 const horizontalOriginClass =
   corner === "top-right" || corner === "bottom-right"
     ? "origin-right"
