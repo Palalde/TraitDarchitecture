@@ -1,0 +1,90 @@
+---
+type TraitCotationCorner =
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right";
+type TraitCotationOrientation = "horizontal" | "vertical";
+
+interface Props {
+  className?: string;
+  corner?: TraitCotationCorner;
+  length?: number | string;
+  orientation?: TraitCotationOrientation;
+}
+
+const {
+  className,
+  corner,
+  length = 24,
+  orientation = "horizontal",
+}: Props = Astro.props;
+
+const resolvedLength = typeof length === "number" ? `${length}px` : length;
+const isCorner = typeof corner === "string";
+
+const horizontalClass =
+  corner === "top-right" || corner === "bottom-right"
+    ? "right-0"
+    : "left-0";
+const horizontalOriginClass =
+  corner === "top-right" || corner === "bottom-right"
+    ? "origin-right"
+    : "origin-left";
+const horizontalVerticalPositionClass =
+  corner === "bottom-left" || corner === "bottom-right" ? "bottom-0" : "top-0";
+
+const verticalClass =
+  corner === "bottom-left" || corner === "bottom-right" ? "bottom-0" : "top-0";
+const verticalOriginClass =
+  corner === "bottom-left" || corner === "bottom-right"
+    ? "origin-bottom"
+    : "origin-top";
+const verticalHorizontalPositionClass =
+  corner === "top-right" || corner === "bottom-right" ? "right-0" : "left-0";
+---
+
+{
+  isCorner ? (
+    <span
+      aria-hidden="true"
+      class:list={["pointer-events-none relative block", className]}
+      data-reveal="cotation"
+      style={`width:${resolvedLength};height:${resolvedLength};`}
+    >
+      <span
+        class:list={[
+          "absolute h-px bg-(--trait)",
+          horizontalClass,
+          horizontalOriginClass,
+          horizontalVerticalPositionClass,
+        ]}
+        style={`width:${resolvedLength};`}
+      />
+      <span
+        class:list={[
+          "absolute w-px bg-(--trait)",
+          verticalClass,
+          verticalOriginClass,
+          verticalHorizontalPositionClass,
+        ]}
+        style={`height:${resolvedLength};`}
+      />
+    </span>
+  ) : (
+    <span
+      aria-hidden="true"
+      class:list={[
+        "pointer-events-none block bg-(--trait)",
+        orientation === "horizontal" ? "h-px" : "w-px",
+        className,
+      ]}
+      data-reveal="cotation"
+      style={
+        orientation === "horizontal"
+          ? `width:${resolvedLength};`
+          : `height:${resolvedLength};`
+      }
+    />
+  )
+}
