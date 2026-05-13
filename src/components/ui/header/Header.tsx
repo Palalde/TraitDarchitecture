@@ -113,7 +113,7 @@ export function Header({
             activePath="/trait"
             label="TraiT"
             pathname={currentPathname}
-            to="/trait/philosophie"
+            to="/trait"
           />
           <HeaderNavItem
             label="D'ARCHITECTURE"
