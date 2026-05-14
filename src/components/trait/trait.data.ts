@@ -13,6 +13,7 @@ interface TraitOpeningData {
   identity: TraitTextBlock;
   project: TraitTextBlock & {
     groundingItems: readonly string[];
+    preview: string;
   };
   callout: TraitTextBlock;
 }
@@ -69,7 +70,12 @@ export interface TraitPageData {
   closingQuote: string;
   description: string;
   etymologies: readonly [TraitEtymology, TraitEtymology, TraitEtymology];
-  formulas: readonly [TraitFormulaData, TraitFormulaData, TraitFormulaData, TraitFormulaData];
+  formulas: readonly [
+    TraitFormulaData,
+    TraitFormulaData,
+    TraitFormulaData,
+    TraitFormulaData,
+  ];
   method: TraitMethodData;
   opening: TraitOpeningData;
   phases: readonly [TraitPhaseData, TraitPhaseData, TraitPhaseData];
@@ -91,6 +97,7 @@ export const traitPageData: TraitPageData = {
     project: {
       title: "Chaque projet est différent",
       body: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue et enrichie par des échanges nourris sur des sujets concrets tels que les usages, les habitudes et le cadre de vie. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique, maîtrise des coûts, respect du lieu, de l'environnement et surtout respect du budget. Parce qu'un projet réussi ne se résume pas à son prix, ni à sa forme, mais à <strong>l'histoire qu'il raconte</strong>, à la façon dont il s'inscrit durablement dans son territoire et dans la vie de ceux qui l'habitent. Nous concrétisons ces intentions dans la matière, ancrées dans une réalité :`,
+      preview: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique et respect du lieu.`,
       groundingItems: ["locale", "économique", "culturelle", "et écologique"],
     },
     callout: {
@@ -111,7 +118,7 @@ export const traitPageData: TraitPageData = {
       word: "TraiT",
       phonetic: "[tʁɛ] n.g (non genré)",
       etymology:
-        "du latin tractus, dérivé de tractum, action de \"tirer, trainer, tracter\".",
+        'du latin tractus, dérivé de tractum, action de "tirer, trainer, tracter".',
       meaning:
         "Qui dessine et structure l'espace, qui sépare et relie à la fois et fait naître l'architecture. Geste de la main comme prolongement de la pensée, fidèle à une tradition de l'architecte qui esquisse et observe avant de modéliser, faisant avancer la réflexion. Geste créatif comme symbole d'une pensée équilibrée, en tension entre plein et vide, entre rigueur et sensibilité, tissant un lien entre une idée, des envies et un projet.",
     },
@@ -256,7 +263,8 @@ export const traitPageData: TraitPageData = {
     },
     {
       name: "Formule B",
-      description: "Création → PRO/DCE (plans techniques + consultation entreprises)",
+      description:
+        "Création → PRO/DCE (plans techniques + consultation entreprises)",
       phases: ["creation", "implementation"],
     },
     {

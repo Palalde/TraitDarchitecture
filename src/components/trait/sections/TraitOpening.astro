@@ -1,0 +1,64 @@
+---
+import type { TraitPageData } from "@/components/trait/trait.data";
+import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
+
+interface Props {
+  opening: TraitPageData["opening"];
+}
+
+const { opening }: Props = Astro.props;
+
+const richBodyClass =
+  "max-w-[40rem] text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
+const richPreviewClass =
+  "max-w-[38rem] text-[0.98rem] leading-7 text-(--text-secondary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
+---
+
+<section aria-labelledby="trait-page-title" class="relative w-full">
+  <div
+    class="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 pb-24 pt-[calc(var(--header-height)+4rem)] sm:px-8 sm:pb-32 sm:pt-[calc(var(--header-height)+5rem)] lg:px-10 lg:pb-40 lg:pt-[calc(var(--header-height)+6rem)]"
+  >
+    <div class="w-full lg:ml-[31%] lg:max-w-xl">
+      <p
+        class="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      >
+        Ouverture
+      </p>
+
+      <h1
+        id="trait-page-title"
+        class="mt-4 text-[clamp(3.5rem,14vw,7rem)] leading-[0.9] font-light tracking-[0.02em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      >
+        {opening.heading}
+      </h1>
+
+      <div class="mt-8 flex flex-col gap-8 sm:mt-10 sm:gap-10">
+        <div class="flex flex-col gap-3">
+          <p
+            class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+          >
+            {opening.identity.title}
+          </p>
+          <p class={richBodyClass} set:html={opening.identity.body} />
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <p
+            class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--text-muted) dark:text-(--text-muted)"
+          >
+            {opening.project.title}
+          </p>
+          <p class={richPreviewClass} set:html={opening.project.preview} />
+        </div>
+      </div>
+    </div>
+
+    <div class="relative mt-14 h-20 sm:mt-18 sm:h-28 lg:mt-22 lg:h-36">
+      <TraitAxis
+        bottom="0"
+        className="revealed left-6 sm:left-8 md:left-10 lg:left-[27%]"
+        top="0"
+      />
+    </div>
+  </div>
+</section>

@@ -6,11 +6,19 @@ interface Props {
   top?: string;
 }
 
-const { bottom = "0", className, left = "27%", top = "0" }: Props = Astro.props;
+const { bottom = "0", className, left, top = "0" }: Props = Astro.props;
+
+const axisStyle = [
+  top ? `top:${top};` : undefined,
+  bottom ? `bottom:${bottom};` : undefined,
+  left ? `left:${left};` : undefined,
+]
+  .filter(Boolean)
+  .join("");
 ---
 
 <span
   aria-hidden="true"
   class:list={["pointer-events-none absolute z-0 w-px bg-(--trait)", className]}
   data-reveal="bar-from-top"
-  style={`left:${left};top:${top};bottom:${bottom};`}></span>
+  style={axisStyle}></span>
