@@ -1,0 +1,33 @@
+---
+import type { TraitPageData } from "@/components/trait/trait.data";
+import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
+import TraitEtymologyBlock from "@/components/trait/blocks/TraitEtymologyBlock.astro";
+
+interface Props {
+  etymologies: TraitPageData["etymologies"];
+}
+
+const { etymologies }: Props = Astro.props;
+---
+
+<section aria-labelledby="trait-etymologies-title" class="relative w-full">
+  <div
+    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-20 sm:px-8 sm:pb-24 lg:px-10 lg:pb-28"
+  >
+    <h2 id="trait-etymologies-title" class="sr-only">Étymologies</h2>
+
+    <TraitAxis
+      bottom="0"
+      className="revealed left-6 sm:left-8 md:left-10 lg:left-[27%]"
+      top="0"
+    />
+
+    <div class="relative z-10 flex flex-col">
+      {
+        etymologies.map((entry, index) => (
+          <TraitEtymologyBlock entry={entry} index={index} />
+        ))
+      }
+    </div>
+  </div>
+</section>

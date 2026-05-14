@@ -1,5 +1,6 @@
 ---
 import { traitPageData } from "@/components/trait/trait.data";
+import TraitEtymologies from "@/components/trait/sections/TraitEtymologies.astro";
 import TraitOpening from "@/components/trait/sections/TraitOpening.astro";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
@@ -12,6 +13,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   <main class="relative min-h-screen overflow-hidden bg-(--bg-primary)">
     <BackgroundDecorations />
     <TraitOpening opening={traitPageData.opening} />
+    <TraitEtymologies etymologies={traitPageData.etymologies} />
   </main>
   <Footer />
 </BaseLayout>
