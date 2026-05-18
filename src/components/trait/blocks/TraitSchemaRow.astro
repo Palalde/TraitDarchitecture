@@ -11,16 +11,19 @@ const { entry }: Props = Astro.props;
 <li
   class="grid grid-cols-1 gap-2 md:grid-cols-[minmax(8.5rem,0.9fr)_minmax(3.5rem,0.35fr)_minmax(14rem,1.45fr)] md:items-center md:gap-6"
 >
+  <!-- word -->
   <p
     class="text-[0.86rem] font-semibold tracking-[0.12em] text-(--t2a-blue-dark) sm:text-[0.9rem] md:text-[0.94rem] dark:text-(--t2a-blue)"
   >
     {entry.word}
   </p>
 
+  <!-- connector trait -->
   <span
     aria-hidden="true"
     class="block h-px w-16 bg-(--trait) opacity-80 md:w-full"></span>
 
+  <!-- meaning -->
   <p
     class="text-[0.78rem] font-normal uppercase leading-6 tracking-[0.16em] text-(--text-primary) sm:text-[0.82rem] md:text-[0.86rem]"
   >

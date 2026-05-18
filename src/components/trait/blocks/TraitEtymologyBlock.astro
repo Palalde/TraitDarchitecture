@@ -30,18 +30,22 @@ const phoneticMetaClass =
   aria-labelledby={blockId}
   class="relative py-12 sm:py-14 lg:min-h-72 lg:py-16"
 >
+  <!-- sr-only heading -->
   <h2 id={blockId} class="sr-only">{entry.word}</h2>
 
+  <!-- ghost word (background, decorative) -->
   <p aria-hidden="true" class={ghostWordClass}>
     {entry.word}
   </p>
 
+  <!-- cotation hook (top-left corner, lg+ only) -->
   <TraitCotation
     className="revealed absolute top-16 hidden lg:left-[calc(27%-1.15rem)] lg:block"
     corner="top-left"
     length="3.25rem"
   />
 
+  <!-- text block (label + phonetic + etymology + meaning) -->
   <div
     class="relative z-10 -mt-2 pl-10 sm:-mt-3 sm:pl-12 md:pl-14 lg:mt-0 lg:pl-0 lg:ml-[31%] lg:max-w-xl"
   >
@@ -52,11 +56,13 @@ const phoneticMetaClass =
     </p>
 
     <div class="mt-4 flex flex-col gap-5 sm:mt-5 sm:gap-6">
+      <!-- phonetic line -->
       <p class={phoneticLineClass}>
         <span class={phoneticWordClass}>{phoneticWord}</span>
         {phoneticMeta && <span class={phoneticMetaClass}>{phoneticMeta}</span>}
       </p>
 
+      <!-- etymology -->
       <div class="flex flex-col gap-2">
         <p
           class="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
@@ -66,6 +72,7 @@ const phoneticMetaClass =
         <p class={bodyClass}>{entry.etymology}</p>
       </div>
 
+      <!-- meaning -->
       <div class="flex flex-col gap-2">
         <p
           class="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"

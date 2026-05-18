@@ -13,6 +13,7 @@ const { schema }: Props = Astro.props;
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-6 sm:px-8 sm:pb-8 lg:px-10 lg:pb-10"
   >
+    <!-- vertical axis (static, no reveal) -->
     <span
       aria-hidden="true"
       class="pointer-events-none absolute bottom-0 left-6 top-0 z-0 block w-px bg-(--trait) sm:left-8 md:left-10 lg:left-[27%]"
@@ -21,8 +22,10 @@ const { schema }: Props = Astro.props;
     <div
       class="relative z-10 pl-10 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-3xl lg:pl-0"
     >
+      <!-- sr-only heading -->
       <h2 id="trait-schema-title" class="sr-only">Schéma synthèse</h2>
 
+      <!-- schema rows (word — trait — meaning) ×3 -->
       <ul
         class="flex flex-col gap-7 sm:gap-8"
         aria-label="Schéma synthèse du nom TraiT"

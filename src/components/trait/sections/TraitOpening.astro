@@ -20,6 +20,7 @@ const ghostWordClass =
   <div
     class="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 pb-12 pt-[calc(var(--header-height)+4rem)] sm:px-8 sm:pb-14 sm:pt-[calc(var(--header-height)+5rem)] lg:px-10 lg:pb-16 lg:pt-[calc(var(--header-height)+6rem)]"
   >
+    <!-- vertical axis -->
     <TraitAxis
       bottom="0"
       className="revealed left-6 sm:left-8 md:left-10 lg:left-[27%]"
@@ -29,8 +30,10 @@ const ghostWordClass =
     <div
       class="relative z-10 w-full pl-10 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-xl lg:pl-0"
     >
+      <!-- ghost word -->
       <p aria-hidden="true" class={ghostWordClass}>OUVERTURE</p>
 
+      <!-- heading -->
       <h1
         id="trait-page-title"
         class="relative z-10 text-[clamp(3.5rem,14vw,7rem)] leading-[1.1] lg:leading-[1.7] font-light tracking-[0.02em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
@@ -39,6 +42,7 @@ const ghostWordClass =
       </h1>
 
       <div class="mt-8 flex flex-col gap-8 sm:mt-10 sm:gap-10">
+        <!-- identity paragraph -->
         <div class="flex flex-col gap-3">
           <p
             class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
@@ -48,6 +52,7 @@ const ghostWordClass =
           <p class={richBodyClass} set:html={opening.identity.body} />
         </div>
 
+        <!-- project preview paragraph -->
         <div class="flex flex-col gap-3">
           <p
             class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--text-muted) dark:text-(--text-muted)"
