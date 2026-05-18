@@ -1,0 +1,34 @@
+---
+import type { TraitPageData } from "@/components/trait/trait.data";
+
+interface Props {
+  pivot: TraitPageData["pivot"];
+}
+
+const { pivot }: Props = Astro.props;
+---
+
+<section aria-labelledby="trait-pivot-title" class="relative w-full">
+  <span
+    aria-hidden="true"
+    class="absolute inset-x-0 top-0 z-0 block h-px bg-(--trait)"></span>
+
+  <div
+    class="relative z-10 mx-auto w-full max-w-screen-2xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
+  >
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute bottom-0 left-6 top-[calc(50%+4.5rem)] z-0 block w-px bg-(--trait) sm:left-8 sm:top-[calc(50%+5rem)] md:left-10 lg:left-[27%] lg:top-[calc(50%+5.75rem)]"
+    ></span>
+
+    <div class="relative z-10 mx-auto max-w-none">
+      <h2 id="trait-pivot-title" class="sr-only">Phrase pivot</h2>
+
+      <p
+        class="text-balance text-[clamp(1.35rem,5.2vw,1.9rem)] leading-[1.18] font-light italic tracking-[0.01em] text-(--t2a-blue-dark) sm:text-[clamp(1.75rem,4.7vw,2.45rem)] lg:text-[clamp(2.15rem,3vw,2.85rem)] dark:text-(--t2a-blue)"
+      >
+        {pivot}
+      </p>
+    </div>
+  </div>
+</section>
