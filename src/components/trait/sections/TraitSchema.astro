@@ -1,0 +1,29 @@
+---
+import type { TraitPageData } from "@/components/trait/trait.data";
+import TraitSchemaRow from "@/components/trait/blocks/TraitSchemaRow.astro";
+
+interface Props {
+  schema: TraitPageData["schema"];
+}
+
+const { schema }: Props = Astro.props;
+---
+
+<section aria-labelledby="trait-schema-title" class="relative w-full">
+  <div
+    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-20 sm:px-8 sm:pb-24 lg:px-10 lg:pb-28"
+  >
+    <div
+      class="relative z-10 pl-10 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-3xl lg:pl-0"
+    >
+      <h2 id="trait-schema-title" class="sr-only">Schéma synthèse</h2>
+
+      <ul
+        class="flex flex-col gap-7 sm:gap-8"
+        aria-label="Schéma synthèse du nom TraiT"
+      >
+        {schema.map((entry) => <TraitSchemaRow entry={entry} />)}
+      </ul>
+    </div>
+  </div>
+</section>
