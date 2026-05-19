@@ -1,0 +1,21 @@
+---
+interface Props {
+  service: string;
+}
+
+const { service }: Props = Astro.props;
+---
+
+<li class="flex max-w-176 items-start gap-4">
+  <!-- cotation segment -->
+  <span
+    aria-hidden="true"
+    class="mt-[0.82rem] block h-px w-4 shrink-0 bg-(--trait)"></span>
+
+  <!-- service text -->
+  <p
+    class="text-[0.95rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8"
+  >
+    {service}
+  </p>
+</li>

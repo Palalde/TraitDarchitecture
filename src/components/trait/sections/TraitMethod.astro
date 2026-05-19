@@ -1,5 +1,6 @@
 ---
 import type { TraitPageData } from "@/components/trait/trait.data";
+import TraitServiceItem from "@/components/trait/blocks/TraitServiceItem.astro";
 
 interface Props {
   callout: TraitPageData["opening"]["callout"];
@@ -12,6 +13,8 @@ const richParagraphClass =
   "max-w-[46rem] text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
 const calloutBodyClass =
   "max-w-[40rem] text-[0.98rem] leading-7 text-(--text-secondary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
+const ctaPromptClass =
+  "max-w-[38rem] text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8";
 ---
 
 <section aria-labelledby="trait-method-title" class="relative w-full">
@@ -21,7 +24,7 @@ const calloutBodyClass =
     <!-- vertical axis (static, no reveal) -->
     <span
       aria-hidden="true"
-      class="pointer-events-none absolute bottom-0 left-6 top-0 z-0 block w-px bg-(--trait) sm:left-8 md:left-10 lg:left-[27%]"
+      class="pointer-events-none absolute bottom-[10.5rem] left-6 top-0 z-0 block w-px bg-(--trait) sm:bottom-[10.75rem] sm:left-8 md:left-10 lg:bottom-[11.25rem] lg:left-[27%]"
     ></span>
 
     <div
@@ -67,6 +70,38 @@ const calloutBodyClass =
         </h3>
         <p class:list={[calloutBodyClass, "mt-4"]} set:html={callout.body} />
       </aside>
+
+      <!-- services list -->
+      <div class="mt-12 max-w-3xl sm:mt-14 lg:ml-10">
+        <h3
+          class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+        >
+          Services
+        </h3>
+
+        <ul
+          class="mt-6 flex flex-col gap-4 sm:gap-5"
+          aria-label="Services d'accompagnement"
+        >
+          {
+            method.services.map((service) => (
+              <TraitServiceItem service={service} />
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- contact cta (axis suspended) -->
+      <div class="relative mt-10 max-w-3xl sm:mt-12 lg:ml-10">
+        <p class={ctaPromptClass}>{method.cta.prompt}</p>
+
+        <a
+          href={method.cta.href}
+          class="mt-6 inline-flex items-center justify-center border border-(--t2a-blue) bg-transparent px-6 py-3 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 ease-out hover:bg-(--t2a-blue-wash) hover:text-(--t2a-blue-dark) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--trait) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary) dark:text-(--t2a-blue) dark:hover:bg-(--t2a-blue-pale) dark:hover:text-(--t2a-blue-dark)"
+        >
+          {method.cta.label}
+        </a>
+      </div>
     </div>
   </div>
 </section>
