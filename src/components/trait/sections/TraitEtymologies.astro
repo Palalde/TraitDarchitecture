@@ -1,5 +1,6 @@
 ---
 import type { TraitPageData } from "@/components/trait/trait.data";
+import { TRAIT_AXIS_LEFT } from "@/components/trait/trait.classes";
 import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
 import TraitEtymologyBlock from "@/components/trait/blocks/TraitEtymologyBlock.astro";
 
@@ -18,11 +19,7 @@ const { etymologies }: Props = Astro.props;
     <h2 id="trait-etymologies-title" class="sr-only">Étymologies</h2>
 
     <!-- vertical axis -->
-    <TraitAxis
-      bottom="0"
-      className="revealed left-6 sm:left-8 md:left-10 lg:left-[27%]"
-      top="0"
-    />
+    <TraitAxis bottom="0" className={`revealed ${TRAIT_AXIS_LEFT}`} top="0" />
 
     <!-- etymology blocks (×3) -->
     <div class="relative z-10 flex flex-col">

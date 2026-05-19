@@ -1,5 +1,9 @@
 ---
 import type { TraitPageData } from "@/components/trait/trait.data";
+import {
+  TRAIT_AXIS_LEFT,
+  TRAIT_NARRATIVE_INDENT,
+} from "@/components/trait/trait.classes";
 import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
 
 interface Props {
@@ -21,14 +25,10 @@ const ghostWordClass =
     class="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 pb-12 pt-[calc(var(--header-height)+4rem)] sm:px-8 sm:pb-14 sm:pt-[calc(var(--header-height)+5rem)] lg:px-10 lg:pb-16 lg:pt-[calc(var(--header-height)+6rem)]"
   >
     <!-- vertical axis -->
-    <TraitAxis
-      bottom="0"
-      className="revealed left-6 sm:left-8 md:left-10 lg:left-[27%]"
-      top="0"
-    />
+    <TraitAxis bottom="0" className={`revealed ${TRAIT_AXIS_LEFT}`} top="0" />
 
     <div
-      class="relative z-10 w-full pl-10 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-xl lg:pl-0"
+      class:list={["relative z-10 w-full lg:max-w-xl", TRAIT_NARRATIVE_INDENT]}
     >
       <!-- ghost word -->
       <p aria-hidden="true" class={ghostWordClass}>OUVERTURE</p>
