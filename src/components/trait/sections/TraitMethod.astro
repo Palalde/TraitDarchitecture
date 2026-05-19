@@ -1,6 +1,9 @@
 ---
+import { Image } from "astro:assets";
+import architectStatueImage from "@/assets/photos/TraiT/Architecte-statue.jpg";
 import type { TraitPageData } from "@/components/trait/trait.data";
 import TraitServiceItem from "@/components/trait/blocks/TraitServiceItem.astro";
+import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 
 interface Props {
   callout: TraitPageData["opening"]["callout"];
@@ -21,78 +24,109 @@ const ctaPromptClass =
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
   >
-    <!-- vertical axis (static, no reveal) -->
+    <!-- vertical axis (static, full section height) -->
     <span
       aria-hidden="true"
-      class="pointer-events-none absolute bottom-[10.5rem] left-6 top-0 z-0 block w-px bg-(--trait) sm:bottom-[10.75rem] sm:left-8 md:left-10 lg:bottom-[11.25rem] lg:left-[27%]"
+      class="pointer-events-none absolute bottom-0 left-6 top-0 z-0 block w-px bg-(--trait) sm:left-8 md:left-10 lg:left-[27%]"
     ></span>
 
-    <div
-      class="relative z-10 pl-10 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-4xl lg:pl-0"
-    >
-      <!-- section title -->
-      <h2
-        id="trait-method-title"
-        class="text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+    <!-- narrative runway -->
+    <div class="relative">
+      <div
+        class="relative z-10 pl-10 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-4xl lg:pl-0"
       >
-        {method.title}
-      </h2>
-
-      <!-- editorial paragraphs -->
-      <div class="mt-7 flex flex-col gap-5 sm:mt-8 sm:gap-6">
-        {
-          method.paragraphs.map((paragraph) => (
-            <p class={richParagraphClass} set:html={paragraph} />
-          ))
-        }
-      </div>
-
-      <!-- open cotation callout -->
-      <aside
-        class="relative mt-10 max-w-3xl py-6 pl-7 sm:mt-12 sm:py-7 sm:pl-8 lg:ml-10"
-      >
-        <span
-          aria-hidden="true"
-          class="absolute left-0 top-0 block h-full w-px bg-(--trait)"></span>
-        <span
-          aria-hidden="true"
-          class="absolute left-0 top-0 block h-px w-14 bg-(--trait) sm:w-16"
-        ></span>
-        <span
-          aria-hidden="true"
-          class="absolute bottom-0 left-0 block h-px w-14 bg-(--trait) sm:w-16"
-        ></span>
-
-        <h3
-          class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+        <!-- section title -->
+        <h2
+          id="trait-method-title"
+          class="text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
         >
-          {callout.title}
-        </h3>
-        <p class:list={[calloutBodyClass, "mt-4"]} set:html={callout.body} />
-      </aside>
+          {method.title}
+        </h2>
 
-      <!-- services list -->
-      <div class="mt-12 max-w-3xl sm:mt-14 lg:ml-10">
-        <h3
-          class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
-        >
-          Services
-        </h3>
-
-        <ul
-          class="mt-6 flex flex-col gap-4 sm:gap-5"
-          aria-label="Services d'accompagnement"
-        >
+        <!-- editorial paragraphs -->
+        <div class="mt-7 flex flex-col gap-5 sm:mt-8 sm:gap-6">
           {
-            method.services.map((service) => (
-              <TraitServiceItem service={service} />
+            method.paragraphs.map((paragraph) => (
+              <p class={richParagraphClass} set:html={paragraph} />
             ))
           }
-        </ul>
-      </div>
+        </div>
 
-      <!-- contact cta (axis suspended) -->
-      <div class="relative mt-10 max-w-3xl sm:mt-12 lg:ml-10">
+        <!-- open cotation callout -->
+        <aside
+          class="relative mt-10 max-w-3xl py-6 pl-7 sm:mt-12 sm:py-7 sm:pl-8 lg:ml-10"
+        >
+          <span
+            aria-hidden="true"
+            class="absolute left-0 top-0 block h-full w-px bg-(--trait)"></span>
+          <span
+            aria-hidden="true"
+            class="absolute left-0 top-0 block h-px w-14 bg-(--trait) sm:w-16"
+          ></span>
+          <span
+            aria-hidden="true"
+            class="absolute bottom-0 left-0 block h-px w-14 bg-(--trait) sm:w-16"
+          ></span>
+
+          <h3
+            class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+          >
+            {callout.title}
+          </h3>
+          <p class:list={[calloutBodyClass, "mt-4"]} set:html={callout.body} />
+        </aside>
+
+        <!-- services list + image -->
+        <div class="mt-12 max-w-4xl sm:mt-14 lg:ml-10">
+          <div
+            class="grid gap-7 sm:gap-8 lg:grid-cols-[minmax(12rem,0.62fr)_minmax(0,1fr)] lg:items-start lg:gap-10"
+          >
+            <!-- services image -->
+            <figure class="relative w-full max-w-72 sm:max-w-80 lg:max-w-none">
+              <CotationFrame aspectRatio="4:5" revealCotation={false}>
+                <Image
+                  alt="Statuette d'architecte tenant un plan de l'atelier"
+                  class="h-full w-full object-cover object-center grayscale"
+                  draggable="false"
+                  format="webp"
+                  loading="lazy"
+                  quality={72}
+                  sizes="(min-width: 1024px) 16rem, (min-width: 640px) 20rem, calc(100vw - 6.5rem)"
+                  src={architectStatueImage}
+                  widths={[240, 320, 420, 560]}
+                />
+              </CotationFrame>
+            </figure>
+
+            <!-- services text -->
+            <div>
+              <h3
+                class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+              >
+                Services
+              </h3>
+
+              <ul
+                class="mt-6 flex flex-col gap-4 sm:gap-5"
+                aria-label="Services d'accompagnement"
+              >
+                {
+                  method.services.map((service) => (
+                    <TraitServiceItem service={service} />
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- contact cta -->
+    <div
+      class="relative z-10 mt-10 pl-10 sm:mt-12 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-4xl lg:pl-0"
+    >
+      <div class="max-w-3xl lg:ml-10">
         <p class={ctaPromptClass}>{method.cta.prompt}</p>
 
         <a

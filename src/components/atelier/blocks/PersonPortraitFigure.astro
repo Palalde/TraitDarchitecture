@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import FigCaption from "@/components/atelier/blocks/FigCaption.astro";
-import FigCotation from "@/components/atelier/blocks/FigCotation.astro";
 import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
+import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 import type { AtelierPersonSection } from "@/components/atelier/atelier.data";
 
 interface Props {
@@ -16,7 +16,7 @@ const stickyFigureStyle =
 ---
 
 <figure class={className} data-reveal="fade-up" style={stickyFigureStyle}>
-  <FigCotation aspectRatio={section.image.aspectRatio}>
+  <CotationFrame aspectRatio={section.image.aspectRatio}>
     <ParallaxFrame
       client:visible
       overflowPercent={0.025}
@@ -35,7 +35,7 @@ const stickyFigureStyle =
         widths={[320, 480, 640, 768]}
       />
     </ParallaxFrame>
-  </FigCotation>
+  </CotationFrame>
   <FigCaption
     overlay
     figureId={section.figureId}

@@ -5,6 +5,7 @@ interface Props {
   contentClassName?: string;
   contentStyle?: string;
   orientation?: "horizontal" | "vertical";
+  revealCotation?: boolean;
   showBorder?: boolean;
   showCotation?: boolean;
 }
@@ -15,6 +16,7 @@ const {
   contentClassName,
   contentStyle,
   orientation = "vertical",
+  revealCotation = true,
   showBorder = orientation === "vertical",
   showCotation = true,
 }: Props = Astro.props;
@@ -41,8 +43,8 @@ const borderTraitClass = "pointer-events-none absolute z-10 bg-(--trait)";
       (orientation === "vertical" ? (
         <div
           aria-hidden="true"
-          class="pointer-events-none absolute inset-0 z-20"
-          data-reveal="cotation"
+          class:list={["pointer-events-none absolute inset-0 z-20"]}
+          data-reveal={revealCotation ? "cotation" : undefined}
         >
           <span
             class:list={[
@@ -98,8 +100,8 @@ const borderTraitClass = "pointer-events-none absolute z-10 bg-(--trait)";
       ) : (
         <div
           aria-hidden="true"
-          class="pointer-events-none absolute inset-0 z-20"
-          data-reveal="cotation"
+          class:list={["pointer-events-none absolute inset-0 z-20"]}
+          data-reveal={revealCotation ? "cotation" : undefined}
         >
           <span
             class:list={[
