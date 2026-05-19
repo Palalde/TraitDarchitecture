@@ -1,6 +1,7 @@
 ---
 import { traitPageData } from "@/components/trait/trait.data";
 import TraitEtymologies from "@/components/trait/sections/TraitEtymologies.astro";
+import TraitMethod from "@/components/trait/sections/TraitMethod.astro";
 import TraitOpening from "@/components/trait/sections/TraitOpening.astro";
 import TraitPivot from "@/components/trait/sections/TraitPivot.astro";
 import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
@@ -18,6 +19,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     <TraitEtymologies etymologies={traitPageData.etymologies} />
     <TraitSchema schema={traitPageData.schema} />
     <TraitPivot pivot={traitPageData.pivot} />
+    <TraitMethod
+      callout={traitPageData.opening.callout}
+      method={traitPageData.method}
+    />
   </main>
   <Footer />
 </BaseLayout>

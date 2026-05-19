@@ -1,0 +1,72 @@
+---
+import type { TraitPageData } from "@/components/trait/trait.data";
+
+interface Props {
+  callout: TraitPageData["opening"]["callout"];
+  method: TraitPageData["method"];
+}
+
+const { callout, method }: Props = Astro.props;
+
+const richParagraphClass =
+  "max-w-[46rem] text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
+const calloutBodyClass =
+  "max-w-[40rem] text-[0.98rem] leading-7 text-(--text-secondary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
+---
+
+<section aria-labelledby="trait-method-title" class="relative w-full">
+  <div
+    class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
+  >
+    <!-- vertical axis (static, no reveal) -->
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute bottom-0 left-6 top-0 z-0 block w-px bg-(--trait) sm:left-8 md:left-10 lg:left-[27%]"
+    ></span>
+
+    <div
+      class="relative z-10 pl-10 sm:pl-12 md:pl-14 lg:ml-[31%] lg:max-w-4xl lg:pl-0"
+    >
+      <!-- section title -->
+      <h2
+        id="trait-method-title"
+        class="text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      >
+        {method.title}
+      </h2>
+
+      <!-- editorial paragraphs -->
+      <div class="mt-7 flex flex-col gap-5 sm:mt-8 sm:gap-6">
+        {
+          method.paragraphs.map((paragraph) => (
+            <p class={richParagraphClass} set:html={paragraph} />
+          ))
+        }
+      </div>
+
+      <!-- open cotation callout -->
+      <aside
+        class="relative mt-10 max-w-3xl py-6 pl-7 sm:mt-12 sm:py-7 sm:pl-8 lg:ml-10"
+      >
+        <span
+          aria-hidden="true"
+          class="absolute left-0 top-0 block h-full w-px bg-(--trait)"></span>
+        <span
+          aria-hidden="true"
+          class="absolute left-0 top-0 block h-px w-14 bg-(--trait) sm:w-16"
+        ></span>
+        <span
+          aria-hidden="true"
+          class="absolute bottom-0 left-0 block h-px w-14 bg-(--trait) sm:w-16"
+        ></span>
+
+        <h3
+          class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+        >
+          {callout.title}
+        </h3>
+        <p class:list={[calloutBodyClass, "mt-4"]} set:html={callout.body} />
+      </aside>
+    </div>
+  </div>
+</section>
