@@ -1,7 +1,31 @@
+import type { ImageMetadata } from "astro";
+import diagFaisaPhoto from "@/assets/photos/TraiT/1. DIAG_FAISA..jpg";
+import esquissePhoto from "@/assets/photos/TraiT/2. ESQ.jpg";
+import apsApdPhoto from "@/assets/photos/TraiT/3. APS_APD.jpg";
+import pcPhoto from "@/assets/photos/TraiT/4. PC.png";
+import proDcePhoto from "@/assets/photos/TraiT/5. PRO-DCE.png";
+import detPhoto from "@/assets/photos/TraiT/6.DET.jpg";
+
 type TraitPhaseId = "I" | "II" | "III";
 type TraitFormulaPhase = "creation" | "implementation" | "realisation";
 type TraitStepMediaRatio = "7:5" | "5:4" | "8:5";
 type TraitStepMediaWidth = "narrow" | "medium" | "large";
+export type TraitProcessPhotoKey =
+  | "diagFaisa"
+  | "esquisse"
+  | "apsApd"
+  | "pc"
+  | "proDce"
+  | "det";
+
+export const traitProcessPhotos: Record<TraitProcessPhotoKey, ImageMetadata> = {
+  diagFaisa: diagFaisaPhoto,
+  esquisse: esquissePhoto,
+  apsApd: apsApdPhoto,
+  pc: pcPhoto,
+  proDce: proDcePhoto,
+  det: detPhoto,
+};
 
 interface TraitTextBlock {
   body: string;
@@ -49,7 +73,7 @@ export interface TraitStepData {
   mediaRatio: TraitStepMediaRatio;
   mediaWidth: TraitStepMediaWidth;
   phaseId: TraitPhaseId;
-  photoKey: "diagFaisa" | "esquisse" | "apsApd" | "pc" | "proDce" | "det";
+  photoKey: TraitProcessPhotoKey;
   title: string;
 }
 
