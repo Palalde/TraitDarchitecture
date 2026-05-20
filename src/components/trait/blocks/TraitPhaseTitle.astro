@@ -1,5 +1,6 @@
 ---
 import type { TraitPhaseData } from "@/components/trait/trait.data";
+import { TRAIT_AXIS_LEFT } from "@/components/trait/trait.classes";
 
 interface Props {
   className?: string;
@@ -18,7 +19,14 @@ const revealedClass = revealed ? "revealed" : undefined;
   aria-labelledby={titleId}
   class:list={["relative w-full py-8 sm:py-10 lg:py-12", className]}
 >
-  <div class="flex w-full items-center gap-4 sm:gap-5">
+  <span
+    aria-hidden="true"
+    class:list={[
+      "pointer-events-none absolute bottom-0 top-0 z-0 block w-px bg-(--trait)",
+      TRAIT_AXIS_LEFT,
+    ]}></span>
+
+  <div class="relative z-10 flex w-full items-center gap-4 sm:gap-5">
     <span
       aria-hidden="true"
       class:list={["block h-px flex-1 bg-(--trait)", revealedClass]}

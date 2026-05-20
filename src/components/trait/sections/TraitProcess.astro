@@ -1,0 +1,33 @@
+---
+import type { TraitPageData } from "@/components/trait/trait.data";
+import { TRAIT_AXIS_LEFT } from "@/components/trait/trait.classes";
+import TraitPhaseTitle from "@/components/trait/blocks/TraitPhaseTitle.astro";
+import TraitStep from "@/components/trait/blocks/TraitStep.astro";
+
+interface Props {
+  phases: TraitPageData["phases"];
+}
+
+const { phases }: Props = Astro.props;
+const phaseOne = phases[0];
+const phaseOneTitleId = "trait-process-phase-i-title";
+---
+
+<section aria-labelledby={phaseOneTitleId} class="relative w-full">
+  <TraitPhaseTitle headingId={phaseOneTitleId} phase={phaseOne} />
+
+  <div
+    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-14 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20"
+  >
+    <span
+      aria-hidden="true"
+      class:list={[
+        "pointer-events-none absolute bottom-0 top-0 z-0 block w-px bg-(--trait)",
+        TRAIT_AXIS_LEFT,
+      ]}></span>
+
+    <div class="relative z-10 flex flex-col">
+      {phaseOne.steps.map((step) => <TraitStep step={step} />)}
+    </div>
+  </div>
+</section>
