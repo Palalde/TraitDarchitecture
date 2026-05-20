@@ -6,6 +6,7 @@ import {
 } from "@/components/trait/trait.data";
 import { TRAIT_NARRATIVE_INDENT } from "@/components/trait/trait.classes";
 import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
+import FigCaption from "@/components/ui/cotation/FigCaption.astro";
 
 interface Props {
   className?: string;
@@ -47,7 +48,7 @@ const imageAlt = `Document de travail pour l'étape ${step.id} : ${step.title}`;
           </h3>
         </div>
 
-        <figure class:list={["mt-7 w-full sm:mt-8", mediaWidthClass]}>
+        <figure class:list={["relative mt-7 w-full sm:mt-8", mediaWidthClass]}>
           <CotationFrame aspectRatio={step.mediaRatio} revealCotation={false}>
             <Image
               alt={imageAlt}
@@ -61,11 +62,7 @@ const imageAlt = `Document de travail pour l'étape ${step.id} : ${step.title}`;
               widths={[360, 480, 640, 780, 960, 1200]}
             />
           </CotationFrame>
-          <figcaption
-            class="mt-3 text-[0.7rem] font-light uppercase tracking-[0.14em] text-(--text-muted) dark:text-(--text-muted)"
-          >
-            {step.caption}
-          </figcaption>
+          <FigCaption overlay overlayTone="dark" label={step.caption} />
         </figure>
 
         <p

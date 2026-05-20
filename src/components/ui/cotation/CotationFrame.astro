@@ -1,6 +1,6 @@
 ---
 interface Props {
-  aspectRatio?: "7:5" | "8:5" | "5:4" | "4:5";
+  aspectRatio?: "1:1" | "3:2" | "7:5" | "8:5" | "5:4" | "4:5";
   className?: string;
   contentClassName?: string;
   contentStyle?: string;
@@ -22,15 +22,19 @@ const {
 }: Props = Astro.props;
 
 const aspectRatioClass =
-  aspectRatio === "7:5"
-    ? "aspect-[7/5]"
-    : aspectRatio === "8:5"
-      ? "aspect-[8/5]"
-      : aspectRatio === "5:4"
-        ? "aspect-5/4"
-        : aspectRatio === "4:5"
-          ? "aspect-4/5"
-          : undefined;
+  aspectRatio === "1:1"
+    ? "aspect-square"
+    : aspectRatio === "3:2"
+      ? "aspect-[3/2]"
+      : aspectRatio === "7:5"
+        ? "aspect-[7/5]"
+        : aspectRatio === "8:5"
+          ? "aspect-[8/5]"
+          : aspectRatio === "5:4"
+            ? "aspect-5/4"
+            : aspectRatio === "4:5"
+              ? "aspect-4/5"
+              : undefined;
 
 const cotationConnectorClass = "pointer-events-none absolute bg-(--trait)";
 const cotationCornerClass = "pointer-events-none absolute bg-(--trait)";

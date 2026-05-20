@@ -8,7 +8,7 @@ import detPhoto from "@/assets/photos/TraiT/6.DET.jpg";
 
 type TraitPhaseId = "I" | "II" | "III";
 type TraitFormulaPhase = "creation" | "implementation" | "realisation";
-type TraitStepMediaRatio = "7:5" | "5:4" | "8:5";
+type TraitStepMediaRatio = "1:1" | "3:2" | "5:4" | "8:5";
 type TraitStepMediaWidth = "narrow" | "medium" | "large";
 export type TraitProcessPhotoKey =
   | "diagFaisa"
@@ -204,7 +204,7 @@ export const traitPageData: TraitPageData = {
           title: "Diagnostic et faisabilité",
           body: `Chaque projet commence par une <strong>immersion dans le site</strong>. Relevé de l'existant, étude du PLU, du contexte paysager, culturel et climatique : que ce soit pour une construction neuve ou pour une réhabilitation, <strong>comprendre le déjà-là</strong> est une étape essentielle autant à l'échelle de la parcelle que celle du territoire dans lequel le projet s'inscrit.`,
           caption: "relevé / contexte",
-          mediaRatio: "7:5",
+          mediaRatio: "1:1",
           mediaWidth: "narrow",
           photoKey: "diagFaisa",
         },
@@ -214,7 +214,7 @@ export const traitPageData: TraitPageData = {
           title: "Esquisse",
           body: `À partir du programme et des volontés du commanditaire, nous proposons une <strong>première orientation</strong>. Plans, croquis et <strong>esquisses à la main</strong> permettent de saisir l'essence du projet et d'engager une <strong>réflexion commune</strong>, sensible et ouverte.`,
           caption: "croquis / intentions",
-          mediaRatio: "5:4",
+          mediaRatio: "3:2",
           mediaWidth: "medium",
           photoKey: "esquisse",
         },
@@ -254,7 +254,7 @@ export const traitPageData: TraitPageData = {
           displayTitle: "PRO / DCE / ACT",
           body: `Le projet entre dans sa dimension technique. Nous détaillons alors chaque élément, établissons <strong>les plans techniques</strong> et rédigeons les documents nécessaires à la <strong>consultation des entreprises</strong> (Dossier de Consultation des Entreprises). Cette étape garantit la bonne exécution du projet et permet d'obtenir des devis précis et comparables. Nous analyserons et négocions par la suite chaque devis reçu pour vous afin d'obtenir <strong>les prix les plus justes</strong>, dans les meilleures conditions.`,
           caption: "plans techniques",
-          mediaRatio: "7:5",
+          mediaRatio: "5:4",
           mediaWidth: "narrow",
           photoKey: "proDce",
         },

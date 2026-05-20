@@ -1,0 +1,53 @@
+---
+interface Props {
+  className?: string;
+  figureId?: string;
+  label: string;
+  overlay?: boolean;
+  overlayTone?: "light" | "dark";
+  style?: string;
+}
+
+const {
+  className,
+  figureId,
+  label,
+  overlay = false,
+  overlayTone = "light",
+  style: styleAttr,
+}: Props = Astro.props;
+
+const hasFigureId = Boolean(figureId?.trim());
+
+const captionClass = overlay
+  ? [
+      "pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end gap-4 px-3 py-3 text-[0.6rem] uppercase tracking-[0.12em] sm:px-4 sm:py-4 sm:text-[0.68rem]",
+      hasFigureId ? "justify-between" : "justify-start",
+    ]
+  : [
+      "mt-4 flex items-center gap-4 text-[0.6rem] uppercase tracking-[0.12em] text-(--text-muted) sm:text-[0.68rem]",
+      hasFigureId ? "justify-between" : "justify-start",
+    ];
+
+const overlayTextClass =
+  overlayTone === "dark"
+    ? "text-[#1A1D24] [text-shadow:0_1px_2px_rgb(255_255_255/0.65)]"
+    : "text-white [text-shadow:0_1px_2px_rgb(0_0_0/0.5)]";
+
+const figureIdClass = overlay ? ["shrink-0", overlayTextClass] : ["shrink-0"];
+const labelClass = overlay
+  ? [
+      hasFigureId ? "max-w-[70%] text-right" : "max-w-full text-left",
+      "leading-tight",
+      overlayTextClass,
+    ]
+  : [
+      hasFigureId ? "max-w-[70%] text-right" : "max-w-full text-left",
+      "leading-tight",
+    ];
+---
+
+<figcaption class:list={[captionClass, className]} style={styleAttr}>
+  {hasFigureId && <span class:list={figureIdClass}>{figureId}</span>}
+  <span class:list={labelClass}>{label}</span>
+</figcaption>
