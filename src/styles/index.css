@@ -924,6 +924,6 @@ astro-slot {
    first row of pixels. Desktop stays at 1px. */
 @media (hover: none), (pointer: coarse) {
   #t2a-nav-progress {
-    height: 1.5px;
+    height: 2px;
   }
 }
