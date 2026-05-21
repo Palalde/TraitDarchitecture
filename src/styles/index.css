@@ -839,7 +839,7 @@ astro-slot {
      which is drawn just below the URL bar and overlays the page top edge.
      On desktop the offset is unnoticeable; on mobile it lets our 1px line sit
      just below Chrome's own indicator. */
-  top: 0.5px;
+  top: 0.1px;
   left: 0;
   right: 0;
   height: 1px;
