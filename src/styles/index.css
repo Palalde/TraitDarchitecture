@@ -834,7 +834,7 @@ astro-slot {
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
+  height: 2px;
   background: var(--trait);
   transform: scaleX(0);
   transform-origin: left center;
@@ -915,15 +915,5 @@ astro-slot {
   #t2a-nav-progress.is-stalled::before {
     animation: none;
     opacity: 0;
-  }
-}
-
-/* Mobile/tablet only: extend the progress bar height by 0.5px so its bottom
-   sits 1.5px below the top edge (past Chrome Android's native URL bar progress
-   indicator that overlays the page top), while its top still fills the very
-   first row of pixels. Desktop stays at 1px. */
-@media (hover: none), (pointer: coarse) {
-  #t2a-nav-progress {
-    height: 2px;
   }
 }
