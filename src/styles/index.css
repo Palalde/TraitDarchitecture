@@ -222,18 +222,25 @@ html.is-landing-dismissed #landing-wrapper {
 /* Grain */
 #t2a-grain {
   position: fixed;
-  inset: 0;
+  /* Force the grain to cover the LARGE viewport (URL bar hidden state) on
+     mobile browsers. With `inset: 0`, Chrome Android could resolve the bottom
+     edge to the small viewport (URL bar visible state); when the URL bar then
+     collapsed, a thin un-grained strip was revealed at the bottom of the
+     screen. Using `100lvh`/`100lvw` pins the grain to the largest possible
+     viewport so the strip newly exposed by the URL bar retraction is already
+     covered. Fallbacks for browsers without lvh/lvw. */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  width: 100lvw;
+  height: 100lvh;
   z-index: 9999;
   pointer-events: none;
   opacity: 0.08;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
-  /* No permanent GPU promotion: on Chrome Android, forcing a permanent GPU
-     layer (translateZ + backface-visibility) caused the grain raster to lag
-     behind the dynamic viewport when the URL bar collapsed, leaving a thin
-     un-grained band at the bottom of the screen. Letting the browser rasterize
-     the grain normally fixes that artifact. */
 }
 
 @media (prefers-color-scheme: dark) {
@@ -828,11 +835,15 @@ astro-slot {
 
 #t2a-nav-progress {
   position: fixed;
-  /* Anchored at the bottom of the layout viewport so the bar stays visible
-     whether the mobile browser URL bar is shown or hidden. On Chrome Android,
-     `top: 0` ended up behind the URL bar chrome and only appeared once the
-     bar collapsed; `bottom: 0` is always inside the visible area. */
-  bottom: 0;
+  /* Keep the bar at the visible top edge even when a mobile browser URL bar
+     is showing. On Chrome Android, `top: 0` for a fixed element sits at the
+     top of the layout viewport, which is *behind* the URL bar; the bar was
+     therefore invisible until the URL bar collapsed.
+     `calc(100lvh - 100dvh)` equals the currently-visible URL bar height
+     (large viewport minus dynamic viewport): non-zero while the URL bar is
+     shown (pushes the progress bar below it) and 0 once it retracts. Pure
+     CSS, no JS, no visualViewport listener. */
+  top: calc(100lvh - 100dvh);
   left: 0;
   right: 0;
   height: 1px;
