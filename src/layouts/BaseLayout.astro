@@ -20,6 +20,8 @@ const {
 } = Astro.props;
 
 const robots = noindex ? "noindex, nofollow" : "index, follow";
+const themeColorLight = "#ffffff";
+const themeColorDark = "#0d1117";
 const overlayScrollbarsMediaQuery =
   "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
 ---
@@ -58,12 +60,12 @@ const overlayScrollbarsMediaQuery =
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"
-      content="#ffffff"
+      content={themeColorLight}
     />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: dark)"
-      content="#0d1117"
+      content={themeColorDark}
     />
     <meta property="og:site_name" content="ATELIER TraiT D'ARCHITECTURE" />
     <meta property="og:type" content="website" />
@@ -153,14 +155,38 @@ const overlayScrollbarsMediaQuery =
         if (window.__t2aNavProgressInit) return;
         window.__t2aNavProgressInit = true;
 
+        const NAV_PROGRESS_OFFSET_CSS_VAR = "--t2a-nav-progress-offset";
         const SHOW_DELAY_MS = 150;
         const STALL_AFTER_MS = 900;
         const DONE_HOLD_MS = 200;
         let showTimer = null;
         let stallTimer = null;
         let hideTimer = null;
+        let viewportOffsetFrame = 0;
 
         const getEl = () => document.getElementById("t2a-nav-progress");
+
+        const applyViewportOffset = () => {
+          viewportOffsetFrame = 0;
+          const topOffset = Math.max(
+            0,
+            Math.round(window.visualViewport?.offsetTop ?? 0),
+          );
+
+          document.documentElement.style.setProperty(
+            NAV_PROGRESS_OFFSET_CSS_VAR,
+            `${topOffset}px`,
+          );
+        };
+
+        const syncViewportOffset = () => {
+          if (viewportOffsetFrame) {
+            return;
+          }
+
+          viewportOffsetFrame =
+            window.requestAnimationFrame(applyViewportOffset);
+        };
 
         const clearAllTimers = () => {
           if (showTimer) {
@@ -188,6 +214,7 @@ const overlayScrollbarsMediaQuery =
         };
 
         const show = () => {
+          applyViewportOffset();
           const el = getEl();
           if (!el) return;
           reset(el);
@@ -208,6 +235,7 @@ const overlayScrollbarsMediaQuery =
         };
 
         const complete = () => {
+          applyViewportOffset();
           clearAllTimers();
           const el = getEl();
           if (!el || !el.classList.contains("is-loading")) {
@@ -225,7 +253,23 @@ const overlayScrollbarsMediaQuery =
           }, DONE_HOLD_MS);
         };
 
+        applyViewportOffset();
+
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener("resize", syncViewportOffset, {
+            passive: true,
+          });
+          window.visualViewport.addEventListener("scroll", syncViewportOffset, {
+            passive: true,
+          });
+        }
+
+        window.addEventListener("resize", syncViewportOffset, {
+          passive: true,
+        });
+
         document.addEventListener("astro:before-preparation", () => {
+          syncViewportOffset();
           clearAllTimers();
           showTimer = window.setTimeout(() => {
             showTimer = null;
@@ -233,7 +277,10 @@ const overlayScrollbarsMediaQuery =
           }, SHOW_DELAY_MS);
         });
 
-        document.addEventListener("astro:page-load", complete);
+        document.addEventListener("astro:page-load", () => {
+          syncViewportOffset();
+          complete();
+        });
       })();
     </script>
   </body>
