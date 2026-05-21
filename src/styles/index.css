@@ -221,14 +221,10 @@ html.is-landing-dismissed #landing-wrapper {
 
 /* Grain */
 #t2a-grain {
+  /* Pinned to the LARGE viewport (URL bar hidden state) to avoid an
+     un-grained strip appearing at the bottom on Chrome Android when the URL
+     bar collapses. `vw`/`vh` are kept as fallback for browsers without lvw/lvh. */
   position: fixed;
-  /* Force the grain to cover the LARGE viewport (URL bar hidden state) on
-     mobile browsers. With `inset: 0`, Chrome Android could resolve the bottom
-     edge to the small viewport (URL bar visible state); when the URL bar then
-     collapsed, a thin un-grained strip was revealed at the bottom of the
-     screen. Using `100lvh`/`100lvw` pins the grain to the largest possible
-     viewport so the strip newly exposed by the URL bar retraction is already
-     covered. Fallbacks for browsers without lvh/lvw. */
   top: 0;
   left: 0;
   width: 100vw;
@@ -835,11 +831,7 @@ astro-slot {
 
 #t2a-nav-progress {
   position: fixed;
-  /* Small offset to escape Chrome Android's native URL bar progress indicator
-     which is drawn just below the URL bar and overlays the page top edge.
-     On desktop the offset is unnoticeable; on mobile it lets our 1px line sit
-     just below Chrome's own indicator. */
-  top: 0.5px;
+  top: 0;
   left: 0;
   right: 0;
   height: 1px;
@@ -923,5 +915,15 @@ astro-slot {
   #t2a-nav-progress.is-stalled::before {
     animation: none;
     opacity: 0;
+  }
+}
+
+/* Mobile/tablet only: extend the progress bar height by 0.5px so its bottom
+   sits 1.5px below the top edge (past Chrome Android's native URL bar progress
+   indicator that overlays the page top), while its top still fills the very
+   first row of pixels. Desktop stays at 1px. */
+@media (hover: none), (pointer: coarse) {
+  #t2a-nav-progress {
+    height: 1.5px;
   }
 }
