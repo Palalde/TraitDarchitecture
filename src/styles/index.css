@@ -835,11 +835,11 @@ astro-slot {
 
 #t2a-nav-progress {
   position: fixed;
-  /* `--t2a-urlbar-offset` is updated by JS in BaseLayout.astro and reflects the
-     currently-visible height of the mobile browser URL bar (0 when hidden).
-     This anchors the 1px progress bar to the visible top edge of the viewport
-     so it remains visible whether the URL bar is shown or hidden. */
-  top: var(--t2a-urlbar-offset, 0px);
+  /* Small offset to escape Chrome Android's native URL bar progress indicator
+     which is drawn just below the URL bar and overlays the page top edge.
+     On desktop the offset is unnoticeable; on mobile it lets our 1px line sit
+     just below Chrome's own indicator. */
+  top: 4px;
   left: 0;
   right: 0;
   height: 1px;
