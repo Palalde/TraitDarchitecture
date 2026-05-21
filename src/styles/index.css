@@ -835,15 +835,11 @@ astro-slot {
 
 #t2a-nav-progress {
   position: fixed;
-  /* Keep the bar at the visible top edge even when a mobile browser URL bar
-     is showing. On Chrome Android, `top: 0` for a fixed element sits at the
-     top of the layout viewport, which is *behind* the URL bar; the bar was
-     therefore invisible until the URL bar collapsed.
-     `calc(100lvh - 100dvh)` equals the currently-visible URL bar height
-     (large viewport minus dynamic viewport): non-zero while the URL bar is
-     shown (pushes the progress bar below it) and 0 once it retracts. Pure
-     CSS, no JS, no visualViewport listener. */
-  top: calc(100lvh - 100dvh);
+  /* `top: 0` is anchored at the visible top edge on modern Chrome Android
+     (just below the URL bar when shown). The earlier "calc(100lvh - 100dvh)"
+     attempt double-offset the bar on browsers that already anchor fixed
+     elements to the visual viewport top. */
+  top: 0;
   left: 0;
   right: 0;
   height: 1px;
