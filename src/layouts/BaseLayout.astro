@@ -162,6 +162,31 @@ const overlayScrollbarsMediaQuery =
 
         const getEl = () => document.getElementById("t2a-nav-progress");
 
+        // --- URL bar offset tracking (mobile) ---
+        // On Chrome Android, the URL bar overlays the top of the layout
+        // viewport. A `position: fixed; top: 0` element ends up behind the URL
+        // bar when the bar is shown, making the 1px loading bar invisible.
+        // We expose the current URL bar height via a CSS variable so the
+        // progress bar can be pushed down to the visible top edge.
+        const updateUrlBarOffset = () => {
+          const vv = window.visualViewport;
+          let offset = 0;
+          if (vv) {
+            offset = Math.max(0, Math.round(window.innerHeight - vv.height));
+          }
+          document.documentElement.style.setProperty(
+            "--t2a-urlbar-offset",
+            offset + "px",
+          );
+        };
+
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener("resize", updateUrlBarOffset);
+          window.visualViewport.addEventListener("scroll", updateUrlBarOffset);
+        }
+        window.addEventListener("resize", updateUrlBarOffset);
+        updateUrlBarOffset();
+
         const clearAllTimers = () => {
           if (showTimer) {
             clearTimeout(showTimer);
