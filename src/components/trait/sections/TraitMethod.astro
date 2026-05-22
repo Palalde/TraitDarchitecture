@@ -6,6 +6,7 @@ import {
   TRAIT_AXIS_LEFT,
   TRAIT_NARRATIVE_INDENT,
 } from "@/components/trait/trait.classes";
+import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
 import TraitServiceItem from "@/components/trait/blocks/TraitServiceItem.astro";
 import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
@@ -30,12 +31,7 @@ const ctaPromptClass =
     class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
   >
     <!-- vertical axis (static, full section height) -->
-    <span
-      aria-hidden="true"
-      class:list={[
-        "pointer-events-none absolute bottom-0 top-0 z-0 block w-px bg-(--trait)",
-        TRAIT_AXIS_LEFT,
-      ]}></span>
+    <TraitAxis bottom="0" className={TRAIT_AXIS_LEFT} top="0" />
 
     <!-- narrative runway -->
     <div class="relative">

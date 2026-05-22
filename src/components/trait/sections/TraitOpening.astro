@@ -25,7 +25,12 @@ const ghostWordClass =
     class="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 pb-12 pt-[calc(var(--header-height)+4rem)] sm:px-8 sm:pb-14 sm:pt-[calc(var(--header-height)+5rem)] lg:px-10 lg:pb-16 lg:pt-[calc(var(--header-height)+6rem)]"
   >
     <!-- vertical axis -->
-    <TraitAxis bottom="0" className={`revealed ${TRAIT_AXIS_LEFT}`} top="0" />
+    <TraitAxis
+      bottom="0"
+      className={`revealed ${TRAIT_AXIS_LEFT}`}
+      reveal
+      top="0"
+    />
 
     <div
       class:list={["relative z-10 w-full lg:max-w-xl", TRAIT_NARRATIVE_INDENT]}

@@ -3,10 +3,11 @@ interface Props {
   bottom?: string;
   className?: string;
   left?: string;
+  reveal?: boolean;
   top?: string;
 }
 
-const { bottom = "0", className, left, top = "0" }: Props = Astro.props;
+const { bottom, className, left, reveal = false, top }: Props = Astro.props;
 
 const axisStyle = [
   top ? `top:${top};` : undefined,
@@ -20,5 +21,5 @@ const axisStyle = [
 <span
   aria-hidden="true"
   class:list={["pointer-events-none absolute z-0 w-px bg-(--trait)", className]}
-  data-reveal="bar-from-top"
-  style={axisStyle}></span>
+  data-reveal={reveal ? "bar-from-top" : undefined}
+  style={axisStyle || undefined}></span>

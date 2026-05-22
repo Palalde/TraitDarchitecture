@@ -19,7 +19,12 @@ const { etymologies }: Props = Astro.props;
     <h2 id="trait-etymologies-title" class="sr-only">Étymologies</h2>
 
     <!-- vertical axis -->
-    <TraitAxis bottom="0" className={`revealed ${TRAIT_AXIS_LEFT}`} top="0" />
+    <TraitAxis
+      bottom="0"
+      className={`revealed ${TRAIT_AXIS_LEFT}`}
+      reveal
+      top="0"
+    />
 
     <!-- etymology blocks (×3) -->
     <div class="relative z-10 flex flex-col">
