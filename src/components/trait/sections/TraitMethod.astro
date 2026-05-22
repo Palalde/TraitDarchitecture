@@ -84,7 +84,7 @@ const ctaPromptClass =
         <!-- services list + image -->
         <div class="mt-12 max-w-4xl sm:mt-14 lg:ml-10">
           <div
-            class="grid gap-7 sm:gap-8 lg:grid-cols-[minmax(12rem,0.62fr)_minmax(0,1fr)] lg:items-start lg:gap-10"
+            class="grid gap-7 sm:gap-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-stretch lg:gap-10"
           >
             <!-- services image -->
             <figure class="relative w-full max-w-72 sm:max-w-80 lg:max-w-none">
@@ -110,7 +110,7 @@ const ctaPromptClass =
             </figure>
 
             <!-- services text -->
-            <div>
+            <div class="flex h-full flex-col">
               <h3
                 class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
               >
@@ -118,7 +118,7 @@ const ctaPromptClass =
               </h3>
 
               <ul
-                class="mt-6 flex flex-col gap-4 sm:gap-5"
+                class="mt-6 flex flex-1 flex-col gap-4 sm:gap-5 lg:gap-0 lg:justify-between"
                 aria-label="Services d'accompagnement"
               >
                 {
