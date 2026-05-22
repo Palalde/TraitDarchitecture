@@ -18,7 +18,7 @@ const revealedClass = revealed ? "revealed" : undefined;
 
 <header
   aria-labelledby={titleId}
-  class:list={["relative w-full py-8 sm:py-10 lg:py-12", className]}
+  class:list={["relative w-full py-2 sm:py-2.5 lg:py-3", className]}
 >
   <!-- axis wrapper aligned with global max-w-7xl runway -->
   <div
@@ -28,7 +28,7 @@ const revealedClass = revealed ? "revealed" : undefined;
     <TraitAxis bottom="0" className={TRAIT_AXIS_LEFT} top="0" />
   </div>
 
-  <div class="relative z-10 flex w-full items-center gap-4 sm:gap-5">
+  <div class="relative z-10 flex w-full items-center gap-0">
     <span
       aria-hidden="true"
       class:list={["block h-px flex-1 bg-(--trait)", revealedClass]}
@@ -36,7 +36,7 @@ const revealedClass = revealed ? "revealed" : undefined;
     <h2
       id={titleId}
       class:list={[
-        "shrink-0 text-center text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[0.76rem]",
+        "shrink-0 bg-transparent px-3 py-1 text-center text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) backdrop-blur-md dark:text-(--t2a-blue) sm:px-4 sm:text-[0.76rem]",
         revealedClass,
       ]}
       data-reveal="fade"

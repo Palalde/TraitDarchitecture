@@ -22,7 +22,11 @@ const firstPhaseTitleId = `trait-process-phase-${phases[0].id.toLowerCase()}-tit
       const phaseTitleId = `trait-process-phase-${phase.id.toLowerCase()}-title`;
       return (
         <div class="relative w-full">
-          <TraitPhaseTitle headingId={phaseTitleId} phase={phase} />
+          <TraitPhaseTitle
+            className="sticky top-0 z-40 bg-transparent"
+            headingId={phaseTitleId}
+            phase={phase}
+          />
 
           <div class="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">
             <TraitAxis bottom="0" className={TRAIT_AXIS_LEFT} top="0" />
