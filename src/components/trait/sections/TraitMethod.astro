@@ -8,6 +8,7 @@ import {
 } from "@/components/trait/trait.classes";
 import TraitServiceItem from "@/components/trait/blocks/TraitServiceItem.astro";
 import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
+import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 
 interface Props {
   callout: TraitPageData["opening"]["callout"];
@@ -88,17 +89,23 @@ const ctaPromptClass =
             <!-- services image -->
             <figure class="relative w-full max-w-72 sm:max-w-80 lg:max-w-none">
               <CotationFrame aspectRatio="4:5" revealCotation={false}>
-                <Image
-                  alt="Statuette d'architecte tenant un plan de l'atelier"
-                  class="h-full w-full object-cover object-center grayscale"
-                  draggable="false"
-                  format="webp"
-                  loading="lazy"
-                  quality={72}
-                  sizes="(min-width: 1024px) 16rem, (min-width: 640px) 20rem, calc(100vw - 6.5rem)"
-                  src={architectStatueImage}
-                  widths={[240, 320, 420, 560]}
-                />
+                <ParallaxFrame
+                  client:visible
+                  overflowPercent={0.025}
+                  mobileOverflowPercent={0.04}
+                >
+                  <Image
+                    alt="Statuette d'architecte tenant un plan de l'atelier"
+                    class="h-full w-full object-cover object-center grayscale"
+                    draggable="false"
+                    format="webp"
+                    loading="lazy"
+                    quality={72}
+                    sizes="(min-width: 1024px) 16rem, (min-width: 640px) 20rem, calc(100vw - 6.5rem)"
+                    src={architectStatueImage}
+                    widths={[240, 320, 420, 560]}
+                  />
+                </ParallaxFrame>
               </CotationFrame>
             </figure>
 

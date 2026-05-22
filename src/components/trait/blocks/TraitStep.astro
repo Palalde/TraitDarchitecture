@@ -7,6 +7,7 @@ import {
 import { TRAIT_NARRATIVE_INDENT } from "@/components/trait/trait.classes";
 import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 import FigCaption from "@/components/ui/cotation/FigCaption.astro";
+import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 
 interface Props {
   className?: string;
@@ -50,17 +51,23 @@ const imageAlt = `Document de travail pour l'étape ${step.id} : ${step.title}`;
 
         <figure class:list={["relative mt-7 w-full sm:mt-8", mediaWidthClass]}>
           <CotationFrame aspectRatio={step.mediaRatio} revealCotation={false}>
-            <Image
-              alt={imageAlt}
-              class="h-full w-full object-cover object-center grayscale"
-              draggable="false"
-              format="webp"
-              loading="lazy"
-              quality={72}
-              sizes="(min-width: 1024px) 52rem, (min-width: 640px) calc(100vw - 8rem), calc(100vw - 5rem)"
-              src={stepPhoto}
-              widths={[360, 480, 640, 780, 960, 1200]}
-            />
+            <ParallaxFrame
+              client:visible
+              overflowPercent={0.025}
+              mobileOverflowPercent={0.04}
+            >
+              <Image
+                alt={imageAlt}
+                class="h-full w-full object-cover object-center grayscale"
+                draggable="false"
+                format="webp"
+                loading="lazy"
+                quality={72}
+                sizes="(min-width: 1024px) 52rem, (min-width: 640px) calc(100vw - 8rem), calc(100vw - 5rem)"
+                src={stepPhoto}
+                widths={[360, 480, 640, 780, 960, 1200]}
+              />
+            </ParallaxFrame>
           </CotationFrame>
           <FigCaption overlay overlayTone="dark" label={step.caption} />
         </figure>

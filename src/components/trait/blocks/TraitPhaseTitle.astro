@@ -19,12 +19,17 @@ const revealedClass = revealed ? "revealed" : undefined;
   aria-labelledby={titleId}
   class:list={["relative w-full py-8 sm:py-10 lg:py-12", className]}
 >
-  <span
+  <!-- axis wrapper aligned with global max-w-7xl runway -->
+  <div
     aria-hidden="true"
-    class:list={[
-      "pointer-events-none absolute bottom-0 top-0 z-0 block w-px bg-(--trait)",
-      TRAIT_AXIS_LEFT,
-    ]}></span>
+    class="pointer-events-none absolute inset-y-0 left-1/2 z-0 w-full max-w-7xl -translate-x-1/2 px-6 sm:px-8 lg:px-10"
+  >
+    <span
+      class:list={[
+        "pointer-events-none absolute bottom-0 top-0 block w-px bg-(--trait)",
+        TRAIT_AXIS_LEFT,
+      ]}></span>
+  </div>
 
   <div class="relative z-10 flex w-full items-center gap-4 sm:gap-5">
     <span

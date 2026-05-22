@@ -9,25 +9,37 @@ interface Props {
 }
 
 const { phases }: Props = Astro.props;
-const phaseOne = phases[0];
-const phaseOneTitleId = "trait-process-phase-i-title";
+const firstPhaseTitleId = `trait-process-phase-${phases[0].id.toLowerCase()}-title`;
 ---
 
-<section aria-labelledby={phaseOneTitleId} class="relative w-full">
-  <TraitPhaseTitle headingId={phaseOneTitleId} phase={phaseOne} />
+<section
+  aria-labelledby={firstPhaseTitleId}
+  class="relative w-full pb-14 sm:pb-16 lg:pb-20"
+>
+  {
+    phases.map((phase) => {
+      const phaseTitleId = `trait-process-phase-${phase.id.toLowerCase()}-title`;
+      return (
+        <div class="relative w-full">
+          <TraitPhaseTitle headingId={phaseTitleId} phase={phase} />
 
-  <div
-    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-14 sm:px-8 sm:pb-16 lg:px-10 lg:pb-20"
-  >
-    <span
-      aria-hidden="true"
-      class:list={[
-        "pointer-events-none absolute bottom-0 top-0 z-0 block w-px bg-(--trait)",
-        TRAIT_AXIS_LEFT,
-      ]}></span>
+          <div class="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">
+            <span
+              aria-hidden="true"
+              class:list={[
+                "pointer-events-none absolute bottom-0 top-0 z-0 block w-px bg-(--trait)",
+                TRAIT_AXIS_LEFT,
+              ]}
+            />
 
-    <div class="relative z-10 flex flex-col">
-      {phaseOne.steps.map((step) => <TraitStep step={step} />)}
-    </div>
-  </div>
+            <div class="relative z-10 flex flex-col">
+              {phase.steps.map((step) => (
+                <TraitStep step={step} />
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    })
+  }
 </section>
