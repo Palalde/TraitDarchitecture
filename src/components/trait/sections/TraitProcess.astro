@@ -25,6 +25,7 @@ const firstPhaseTitleId = `trait-process-phase-${phases[0].id.toLowerCase()}-tit
           <TraitPhaseTitle
             className="sticky top-0 z-40 bg-transparent"
             headingId={phaseTitleId}
+            hideRightTraitWhenHeaderOverSticky
             phase={phase}
           />
 
@@ -42,3 +43,54 @@ const firstPhaseTitleId = `trait-process-phase-${phases[0].id.toLowerCase()}-tit
     })
   }
 </section>
+
+<script is:inline data-astro-rerun>
+  (() => {
+    const phaseTitles = Array.from(
+      document.querySelectorAll("[data-trait-sticky-watch]"),
+    );
+
+    if (!phaseTitles.length) return;
+
+    let frameId = 0;
+
+    const updateStickyState = () => {
+      frameId = 0;
+
+      for (const phaseTitle of phaseTitles) {
+        const rect = phaseTitle.getBoundingClientRect();
+        const isStickyActive = rect.top <= 0 && rect.bottom > 0;
+
+        if (isStickyActive) {
+          phaseTitle.setAttribute("data-trait-sticky-active", "true");
+        } else {
+          phaseTitle.removeAttribute("data-trait-sticky-active");
+        }
+      }
+    };
+
+    const scheduleStickyStateUpdate = () => {
+      if (frameId) return;
+      frameId = requestAnimationFrame(updateStickyState);
+    };
+
+    updateStickyState();
+    window.addEventListener("scroll", scheduleStickyStateUpdate, {
+      passive: true,
+    });
+    window.addEventListener("resize", scheduleStickyStateUpdate);
+
+    const cleanup = () => {
+      window.removeEventListener("scroll", scheduleStickyStateUpdate);
+      window.removeEventListener("resize", scheduleStickyStateUpdate);
+      document.removeEventListener("astro:before-swap", cleanup);
+      if (frameId) cancelAnimationFrame(frameId);
+
+      for (const phaseTitle of phaseTitles) {
+        phaseTitle.removeAttribute("data-trait-sticky-active");
+      }
+    };
+
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+  })();
+</script>

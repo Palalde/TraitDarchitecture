@@ -65,6 +65,19 @@ export function Header({
     return () => cancelAnimationFrame(raf);
   }, [isReadyToRender]);
 
+  useEffect(() => {
+    if (!isReadyToRender) {
+      delete document.body.dataset.t2aHeaderVisible;
+      return;
+    }
+
+    document.body.dataset.t2aHeaderVisible = headerVisible ? "true" : "false";
+
+    return () => {
+      delete document.body.dataset.t2aHeaderVisible;
+    };
+  }, [headerVisible, isReadyToRender]);
+
   if (!isReadyToRender) {
     return null;
   }

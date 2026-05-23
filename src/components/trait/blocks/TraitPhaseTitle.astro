@@ -5,20 +5,32 @@ import { TRAIT_AXIS_LEFT } from "@/components/trait/trait.classes";
 
 interface Props {
   className?: string;
+  hideRightTraitWhenHeaderOverSticky?: boolean;
   headingId?: string;
   phase: Pick<TraitPhaseData, "id" | "label" | "title">;
   revealed?: boolean;
 }
 
-const { className, headingId, phase, revealed = true }: Props = Astro.props;
+const {
+  className,
+  hideRightTraitWhenHeaderOverSticky = false,
+  headingId,
+  phase,
+  revealed = true,
+}: Props = Astro.props;
 const titleId = headingId ?? `trait-phase-${phase.id.toLowerCase()}-title`;
 const label = `${phase.label} · ${phase.title}`;
 const revealedClass = revealed ? "revealed" : undefined;
+const stickyWatchAttr = hideRightTraitWhenHeaderOverSticky ? "true" : undefined;
+const rightTraitHeaderClass = hideRightTraitWhenHeaderOverSticky
+  ? "transition-opacity duration-200 ease-out motion-reduce:transition-none [body[data-t2a-header-visible=true]_[data-trait-sticky-active=true]_&]:opacity-0"
+  : undefined;
 ---
 
 <header
   aria-labelledby={titleId}
   class:list={["relative w-full py-2 sm:py-2.5 lg:py-3", className]}
+  data-trait-sticky-watch={stickyWatchAttr}
 >
   <!-- axis wrapper aligned with global max-w-7xl runway -->
   <div
@@ -45,7 +57,11 @@ const revealedClass = revealed ? "revealed" : undefined;
     </h2>
     <span
       aria-hidden="true"
-      class:list={["block h-px flex-1 bg-(--trait)", revealedClass]}
+      class:list={[
+        "block h-px flex-1 bg-(--trait)",
+        rightTraitHeaderClass,
+        revealedClass,
+      ]}
       data-reveal="bar-from-left"></span>
   </div>
 </header>
