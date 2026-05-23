@@ -80,17 +80,18 @@ const firstPhaseTitleId = `trait-process-phase-${phases[0].id.toLowerCase()}-tit
     });
     window.addEventListener("resize", scheduleStickyStateUpdate);
 
-    const cleanup = () => {
-      window.removeEventListener("scroll", scheduleStickyStateUpdate);
-      window.removeEventListener("resize", scheduleStickyStateUpdate);
-      document.removeEventListener("astro:before-swap", cleanup);
-      if (frameId) cancelAnimationFrame(frameId);
+    document.addEventListener(
+      "astro:before-swap",
+      () => {
+        window.removeEventListener("scroll", scheduleStickyStateUpdate);
+        window.removeEventListener("resize", scheduleStickyStateUpdate);
+        if (frameId) cancelAnimationFrame(frameId);
 
-      for (const phaseTitle of phaseTitles) {
-        phaseTitle.removeAttribute("data-trait-sticky-active");
-      }
-    };
-
-    document.addEventListener("astro:before-swap", cleanup, { once: true });
+        for (const phaseTitle of phaseTitles) {
+          phaseTitle.removeAttribute("data-trait-sticky-active");
+        }
+      },
+      { once: true },
+    );
   })();
 </script>
