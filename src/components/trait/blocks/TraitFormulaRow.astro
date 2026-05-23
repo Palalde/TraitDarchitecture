@@ -1,0 +1,90 @@
+---
+import type { TraitFormulaData } from "@/components/trait/trait.data";
+import { TRAIT_FORMULA_MATRIX_GRID } from "@/components/trait/trait.classes";
+
+type FormulaPhaseId = TraitFormulaData["phases"][number];
+
+interface FormulaPhase {
+  id: FormulaPhaseId;
+  label: string;
+}
+
+interface Props {
+  formula: TraitFormulaData;
+}
+
+const { formula }: Props = Astro.props;
+
+const formulaPhases: readonly FormulaPhase[] = [
+  { id: "creation", label: "CRÉATION" },
+  { id: "implementation", label: "MISE EN OEUVRE" },
+  { id: "realisation", label: "RÉALISATION" },
+];
+
+const coveredPhases = formulaPhases.filter((phase) =>
+  formula.phases.includes(phase.id),
+);
+const coveredPhaseLabel = coveredPhases.map((phase) => phase.label).join(", ");
+---
+
+<li
+  aria-label={`${formula.name} : ${formula.description}. Phases couvertes : ${coveredPhaseLabel}.`}
+  class:list={[
+    "relative border-t border-(--border) py-6 pl-6 last:border-b md:pl-0",
+    TRAIT_FORMULA_MATRIX_GRID,
+  ]}
+>
+  <span
+    aria-hidden="true"
+    class="absolute left-0 top-0 block h-full w-px bg-(--trait) md:hidden"
+  ></span>
+  <span
+    aria-hidden="true"
+    class="absolute left-0 top-0 block h-px w-10 bg-(--trait) md:hidden"></span>
+  <span
+    aria-hidden="true"
+    class="absolute bottom-0 left-0 block h-px w-10 bg-(--trait) md:hidden"
+  ></span>
+
+  <div class="min-w-0 md:pr-4">
+    <p
+      class="text-[0.86rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) sm:text-[0.9rem] dark:text-(--t2a-blue)"
+    >
+      {formula.name}
+    </p>
+    <p
+      class="mt-2 max-w-112 text-[0.86rem] leading-6 font-light text-(--t2a-blue-light) sm:text-[0.9rem] sm:leading-7"
+    >
+      {formula.description}
+    </p>
+  </div>
+
+  <div class="mt-5 flex flex-col gap-3 md:hidden" aria-hidden="true">
+    {
+      coveredPhases.map((phase) => (
+        <div class="flex items-center gap-3">
+          <span class="block h-px w-12 shrink-0 bg-(--trait)" />
+          <span class="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+            {phase.label}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    formulaPhases.map((phase) => {
+      const isCovered = formula.phases.includes(phase.id);
+
+      return (
+        <div class="hidden min-h-8 items-center md:flex" aria-hidden="true">
+          {isCovered ? (
+            <span class="block h-px w-16 bg-(--trait) lg:w-20" />
+          ) : (
+            <span class="block h-px w-16 bg-transparent lg:w-20" />
+          )}
+        </div>
+      );
+    })
+  }
+</li>
