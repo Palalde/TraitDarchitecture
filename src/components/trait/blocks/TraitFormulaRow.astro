@@ -1,13 +1,7 @@
 ---
 import type { TraitFormulaData } from "@/components/trait/trait.data";
+import { FORMULA_PHASES } from "@/components/trait/trait.data";
 import { TRAIT_FORMULA_MATRIX_GRID } from "@/components/trait/trait.classes";
-
-type FormulaPhaseId = TraitFormulaData["phases"][number];
-
-interface FormulaPhase {
-  id: FormulaPhaseId;
-  label: string;
-}
 
 interface Props {
   formula: TraitFormulaData;
@@ -15,13 +9,7 @@ interface Props {
 
 const { formula }: Props = Astro.props;
 
-const formulaPhases: readonly FormulaPhase[] = [
-  { id: "creation", label: "CRÉATION" },
-  { id: "implementation", label: "MISE EN OEUVRE" },
-  { id: "realisation", label: "RÉALISATION" },
-];
-
-const coveredPhases = formulaPhases.filter((phase) =>
+const coveredPhases = FORMULA_PHASES.filter((phase) =>
   formula.phases.includes(phase.id),
 );
 const coveredPhaseLabel = coveredPhases.map((phase) => phase.label).join(", ");
@@ -73,16 +61,12 @@ const coveredPhaseLabel = coveredPhases.map((phase) => phase.label).join(", ");
   </div>
 
   {
-    formulaPhases.map((phase) => {
+    FORMULA_PHASES.map((phase) => {
       const isCovered = formula.phases.includes(phase.id);
 
       return (
         <div class="hidden min-h-8 items-center md:flex" aria-hidden="true">
-          {isCovered ? (
-            <span class="block h-px w-16 bg-(--trait) lg:w-20" />
-          ) : (
-            <span class="block h-px w-16 bg-transparent lg:w-20" />
-          )}
+          {isCovered && <span class="block h-px w-16 bg-(--trait) lg:w-20" />}
         </div>
       );
     })

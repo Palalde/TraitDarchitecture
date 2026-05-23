@@ -10,6 +10,22 @@ type TraitPhaseId = "I" | "II" | "III";
 type TraitFormulaPhase = "creation" | "implementation" | "realisation";
 type TraitStepMediaRatio = "1:1" | "3:2" | "5:4" | "8:5";
 type TraitStepMediaWidth = "narrow" | "medium" | "large";
+
+export interface TraitFormulaPhaseDescriptor {
+  id: TraitFormulaPhase;
+  label: string;
+}
+
+/**
+ * Single source of truth for the three formula phases (id + display label).
+ * Consumed by both the matrix header (TraitFormulas) and the per-row
+ * mobile/desktop renderer (TraitFormulaRow).
+ */
+export const FORMULA_PHASES: readonly TraitFormulaPhaseDescriptor[] = [
+  { id: "creation", label: "CRÉATION" },
+  { id: "implementation", label: "MISE EN OEUVRE" },
+  { id: "realisation", label: "RÉALISATION" },
+];
 export type TraitProcessPhotoKey =
   | "diagFaisa"
   | "esquisse"
@@ -35,8 +51,8 @@ interface TraitTextBlock {
 interface TraitOpeningData {
   heading: string;
   identity: TraitTextBlock;
-  project: TraitTextBlock & {
-    groundingItems: readonly string[];
+  project: {
+    title: string;
     preview: string;
   };
   callout: TraitTextBlock;
@@ -120,9 +136,7 @@ export const traitPageData: TraitPageData = {
     },
     project: {
       title: "Chaque projet est différent",
-      body: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue et enrichie par des échanges nourris sur des sujets concrets tels que les usages, les habitudes et le cadre de vie. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique, maîtrise des coûts, respect du lieu, de l'environnement et surtout respect du budget. Parce qu'un projet réussi ne se résume pas à son prix, ni à sa forme, mais à <strong>l'histoire qu'il raconte</strong>, à la façon dont il s'inscrit durablement dans son territoire et dans la vie de ceux qui l'habitent. Nous concrétisons ces intentions dans la matière, ancrées dans une réalité :`,
       preview: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique et respect du lieu.`,
-      groundingItems: ["locale", "économique", "culturelle", "et écologique"],
     },
     callout: {
       title: "Approche sensible et engagée",

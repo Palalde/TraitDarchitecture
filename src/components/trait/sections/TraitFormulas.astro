@@ -1,5 +1,6 @@
 ---
 import type { TraitPageData } from "@/components/trait/trait.data";
+import { FORMULA_PHASES } from "@/components/trait/trait.data";
 import { TRAIT_FORMULA_MATRIX_GRID } from "@/components/trait/trait.classes";
 import TraitFormulaRow from "@/components/trait/blocks/TraitFormulaRow.astro";
 
@@ -8,8 +9,6 @@ interface Props {
 }
 
 const { formulas }: Props = Astro.props;
-
-const formulaPhases = ["CRÉATION", "MISE EN OEUVRE", "RÉALISATION"] as const;
 ---
 
 <section aria-labelledby="trait-formulas-title" class="relative w-full">
@@ -21,14 +20,12 @@ const formulaPhases = ["CRÉATION", "MISE EN OEUVRE", "RÉALISATION"] as const;
     class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
   >
     <div class="relative z-10">
-      <div class="mb-8 flex items-center gap-4 md:mb-10">
-        <h2
-          id="trait-formulas-title"
-          class="shrink-0 text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
-        >
-          Formules
-        </h2>
-      </div>
+      <h2
+        id="trait-formulas-title"
+        class="mb-8 text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) md:mb-10 dark:text-(--t2a-blue)"
+      >
+        Formules
+      </h2>
 
       <div
         class:list={[
@@ -39,9 +36,9 @@ const formulaPhases = ["CRÉATION", "MISE EN OEUVRE", "RÉALISATION"] as const;
       >
         <span></span>
         {
-          formulaPhases.map((phase) => (
+          FORMULA_PHASES.map((phase) => (
             <p class="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
-              {phase}
+              {phase.label}
             </p>
           ))
         }
