@@ -13,14 +13,17 @@ const { pivot }: Props = Astro.props;
   <!-- top trait-coupe (full width) -->
   <span
     aria-hidden="true"
-    class="absolute inset-x-0 top-0 z-0 block h-px bg-(--trait)"></span>
+    class="absolute inset-x-0 top-0 z-0 block h-px bg-(--trait)"
+    data-reveal="bar-from-left"
+    style="--reveal-d:560ms;"></span>
 
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
   >
     <!-- vertical axis resuming below the pivot phrase (static) -->
     <TraitAxis
-      className="bottom-0 left-6 top-[calc(50%+4.5rem)] sm:left-8 sm:top-[calc(50%+5rem)] md:left-10 lg:left-[27%] lg:top-[calc(50%+5.75rem)]"
+      className="bottom-0 left-6 top-[calc(50%+4.5rem)] [--reveal-d:560ms] [--reveal-delay:180ms] sm:left-8 sm:top-[calc(50%+5rem)] md:left-10 lg:left-[27%] lg:top-[calc(50%+5.75rem)]"
+      reveal
     />
 
     <div class="relative z-10 mx-auto max-w-none">
@@ -30,6 +33,8 @@ const { pivot }: Props = Astro.props;
       <!-- pivot phrase -->
       <p
         class="text-balance text-[clamp(1.35rem,5.2vw,1.9rem)] leading-[1.18] font-light italic tracking-[0.01em] text-(--t2a-blue-dark) sm:text-[clamp(1.75rem,4.7vw,2.45rem)] lg:text-[clamp(2.15rem,3vw,2.85rem)] dark:text-(--t2a-blue)"
+        data-reveal="fade-up"
+        style="--reveal-delay:120ms;--reveal-d:560ms;"
       >
         {pivot}
       </p>

@@ -52,7 +52,24 @@ import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
 
     <TraitSchema schema={traitPageData.schema} />
   </div>
-  <TraitPivot pivot={traitPageData.pivot} />
+  <div data-trait-pivot-reveal-shell>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "trait-pivot",
+            pathname: "/trait",
+            rootSelector: "[data-trait-pivot-reveal-shell]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <TraitPivot pivot={traitPageData.pivot} />
+  </div>
   <TraitMethod
     callout={traitPageData.opening.callout}
     method={traitPageData.method}
