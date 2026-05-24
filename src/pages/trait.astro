@@ -1,13 +1,6 @@
 ---
+import TraitShell from "@/components/trait/TraitShell.astro";
 import { traitPageData } from "@/components/trait/trait.data";
-import TraitClosing from "@/components/trait/sections/TraitClosing.astro";
-import TraitEtymologies from "@/components/trait/sections/TraitEtymologies.astro";
-import TraitMethod from "@/components/trait/sections/TraitMethod.astro";
-import TraitOpening from "@/components/trait/sections/TraitOpening.astro";
-import TraitPivot from "@/components/trait/sections/TraitPivot.astro";
-import TraitProcess from "@/components/trait/sections/TraitProcess.astro";
-import TraitFormulas from "@/components/trait/sections/TraitFormulas.astro";
-import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
@@ -18,34 +11,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   <HeaderShell />
   <main class="relative min-h-screen bg-(--bg-primary)">
     <BackgroundDecorations />
-    <div data-trait-intro-reveal-shell>
-      <script is:inline data-astro-rerun>
-        (() => {
-          const revealSystem = window.__t2aReveal;
-          if (!revealSystem) return;
-
-          revealSystem
-            .createController({
-              id: "trait-intro",
-              pathname: "/trait",
-              rootSelector: "[data-trait-intro-reveal-shell]",
-            })
-            ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
-        })();
-      </script>
-
-      <TraitOpening opening={traitPageData.opening} />
-      <TraitEtymologies etymologies={traitPageData.etymologies} />
-    </div>
-    <TraitSchema schema={traitPageData.schema} />
-    <TraitPivot pivot={traitPageData.pivot} />
-    <TraitMethod
-      callout={traitPageData.opening.callout}
-      method={traitPageData.method}
-    />
-    <TraitProcess phases={traitPageData.phases} />
-    <TraitFormulas formulas={traitPageData.formulas} />
-    <TraitClosing closingQuote={traitPageData.closingQuote} />
+    <TraitShell />
   </main>
   <Footer />
 </BaseLayout>

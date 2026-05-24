@@ -1,0 +1,46 @@
+---
+import { traitPageData } from "@/components/trait/trait.data";
+import TraitClosing from "@/components/trait/sections/TraitClosing.astro";
+import TraitEtymologies from "@/components/trait/sections/TraitEtymologies.astro";
+import TraitFormulas from "@/components/trait/sections/TraitFormulas.astro";
+import TraitMethod from "@/components/trait/sections/TraitMethod.astro";
+import TraitOpening from "@/components/trait/sections/TraitOpening.astro";
+import TraitPivot from "@/components/trait/sections/TraitPivot.astro";
+import TraitProcess from "@/components/trait/sections/TraitProcess.astro";
+import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
+---
+
+<section
+  aria-labelledby="trait-page-title"
+  class="relative w-full"
+  data-trait-shell
+>
+  <div data-trait-intro-reveal-shell>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "trait-intro",
+            pathname: "/trait",
+            rootSelector: "[data-trait-intro-reveal-shell]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <TraitOpening opening={traitPageData.opening} />
+    <TraitEtymologies etymologies={traitPageData.etymologies} />
+  </div>
+  <TraitSchema schema={traitPageData.schema} />
+  <TraitPivot pivot={traitPageData.pivot} />
+  <TraitMethod
+    callout={traitPageData.opening.callout}
+    method={traitPageData.method}
+  />
+  <TraitProcess phases={traitPageData.phases} />
+  <TraitFormulas formulas={traitPageData.formulas} />
+  <TraitClosing closingQuote={traitPageData.closingQuote} />
+</section>
