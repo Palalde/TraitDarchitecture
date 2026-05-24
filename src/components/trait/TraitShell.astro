@@ -34,7 +34,24 @@ import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
     <TraitOpening opening={traitPageData.opening} />
     <TraitEtymologies etymologies={traitPageData.etymologies} />
   </div>
-  <TraitSchema schema={traitPageData.schema} />
+  <div data-trait-schema-reveal-shell>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "trait-schema",
+            pathname: "/trait",
+            rootSelector: "[data-trait-schema-reveal-shell]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <TraitSchema schema={traitPageData.schema} />
+  </div>
   <TraitPivot pivot={traitPageData.pivot} />
   <TraitMethod
     callout={traitPageData.opening.callout}

@@ -30,7 +30,11 @@ const { schema }: Props = Astro.props;
         class="flex flex-col gap-7 sm:gap-8"
         aria-label="Schéma synthèse du nom TraiT"
       >
-        {schema.map((entry) => <TraitSchemaRow entry={entry} />)}
+        {
+          schema.map((entry, index) => (
+            <TraitSchemaRow entry={entry} index={index} />
+          ))
+        }
       </ul>
     </div>
   </div>
