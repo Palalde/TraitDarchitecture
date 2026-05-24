@@ -1,6 +1,5 @@
 ---
 import type { TraitPageData } from "@/components/trait/trait.data";
-import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
 
 interface Props {
   pivot: TraitPageData["pivot"];
@@ -20,12 +19,6 @@ const { pivot }: Props = Astro.props;
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
   >
-    <!-- vertical axis resuming below the pivot phrase (static) -->
-    <TraitAxis
-      className="bottom-0 left-6 top-[calc(50%+4.5rem)] [--reveal-d:560ms] [--reveal-delay:180ms] sm:left-8 sm:top-[calc(50%+5rem)] md:left-10 lg:left-[27%] lg:top-[calc(50%+5.75rem)]"
-      reveal
-    />
-
     <div class="relative z-10 mx-auto max-w-none">
       <!-- sr-only heading -->
       <h2 id="trait-pivot-title" class="sr-only">Phrase pivot</h2>
