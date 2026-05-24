@@ -9,6 +9,9 @@ type TraitCotationOrientation = "horizontal" | "vertical";
 interface Props {
   className?: string;
   corner?: TraitCotationCorner;
+  cornerDelay?: string;
+  cornerDuration?: string;
+  connectorDuration?: string;
   length?: number | string;
   orientation?: TraitCotationOrientation;
 }
@@ -16,6 +19,9 @@ interface Props {
 const {
   className,
   corner,
+  cornerDelay,
+  cornerDuration,
+  connectorDuration,
   length = 24,
   orientation = "horizontal",
 }: Props = Astro.props;
@@ -44,6 +50,15 @@ const verticalCotationCorner =
   corner === "bottom-left" || corner === "bottom-right" ? "y-bottom" : "y-top";
 const verticalHorizontalPositionClass =
   corner === "top-right" || corner === "bottom-right" ? "right-0" : "left-0";
+const timingStyle = [
+  connectorDuration
+    ? `--cotation-connector-d:${connectorDuration};`
+    : undefined,
+  cornerDuration ? `--cotation-corner-d:${cornerDuration};` : undefined,
+  cornerDelay ? `--cotation-corner-delay:${cornerDelay};` : undefined,
+]
+  .filter(Boolean)
+  .join("");
 ---
 
 {
@@ -52,7 +67,7 @@ const verticalHorizontalPositionClass =
       aria-hidden="true"
       class:list={["pointer-events-none relative block", className]}
       data-reveal="cotation"
-      style={`width:${resolvedLength};height:${resolvedLength};`}
+      style={`width:${resolvedLength};height:${resolvedLength};${timingStyle}`}
     >
       <span
         class:list={[
@@ -87,8 +102,8 @@ const verticalHorizontalPositionClass =
       data-reveal="cotation"
       style={
         orientation === "horizontal"
-          ? `width:${resolvedLength};`
-          : `height:${resolvedLength};`
+          ? `width:${resolvedLength};${timingStyle}`
+          : `height:${resolvedLength};${timingStyle}`
       }
     />
   )

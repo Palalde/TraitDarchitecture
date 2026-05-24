@@ -467,6 +467,7 @@ html.is-landing-dismissed #landing-wrapper {
 [data-reveal="cotation"] {
   --cotation-connector-d: 600ms;
   --cotation-corner-d: 450ms;
+  --cotation-corner-delay: var(--cotation-connector-d);
 }
 
 [data-reveal="cotation"] [data-cotation-connector="x"],
@@ -549,13 +550,13 @@ html.is-landing-dismissed #landing-wrapper {
 [data-reveal="cotation"].revealed [data-cotation-corner="x-left"],
 [data-reveal="cotation"].revealed [data-cotation-corner="x-right"] {
   animation: t2a-reveal-bar-x var(--cotation-corner-d) ease-out
-    var(--cotation-connector-d) both;
+    var(--cotation-corner-delay) both;
 }
 
 [data-reveal="cotation"].revealed [data-cotation-corner="y-top"],
 [data-reveal="cotation"].revealed [data-cotation-corner="y-bottom"] {
   animation: t2a-reveal-bar-y var(--cotation-corner-d) ease-out
-    var(--cotation-connector-d) both;
+    var(--cotation-corner-delay) both;
 }
 
 [data-reveal="fade-left"].revealed {

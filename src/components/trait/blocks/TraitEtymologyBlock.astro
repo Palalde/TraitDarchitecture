@@ -41,8 +41,11 @@ const phoneticMetaClass =
 
   <!-- cotation hook (top-left corner, lg+ only) -->
   <TraitCotation
-    className="absolute top-16 hidden [--cotation-connector-d:260ms] [--cotation-corner-d:260ms] lg:left-[calc(27%-1.15rem)] lg:block"
+    className="absolute top-16 hidden lg:left-[calc(27%-1.15rem)] lg:block"
     corner="top-left"
+    cornerDelay="0ms"
+    cornerDuration="260ms"
+    connectorDuration="260ms"
     length="3.25rem"
   />
 
