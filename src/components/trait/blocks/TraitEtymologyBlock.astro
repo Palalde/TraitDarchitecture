@@ -1,14 +1,16 @@
 ---
 import type { TraitEtymology } from "@/components/trait/trait.data";
 import { TRAIT_NARRATIVE_INDENT } from "@/components/trait/trait.classes";
+import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
 import TraitCotation from "@/components/trait/blocks/TraitCotation.astro";
 
 interface Props {
   entry: TraitEtymology;
   index: number;
+  isLast: boolean;
 }
 
-const { entry, index }: Props = Astro.props;
+const { entry, index, isLast }: Props = Astro.props;
 
 const blockId = `trait-etymology-${index + 1}`;
 const blockLabel = `Étymologie ${String(index + 1).padStart(2, "0")}`;
@@ -25,6 +27,10 @@ const phoneticWordClass =
   "[font-family:'Segoe_UI',Arial,sans-serif] text-[0.78rem] font-normal tracking-[0.01em] text-(--text-muted) opacity-75 sm:text-[0.84rem]";
 const phoneticMetaClass =
   "font-sans text-[0.9rem] font-light tracking-[0.01em] text-(--t2a-blue-light) sm:text-[0.95rem]";
+const localAxisClass = "left-0 sm:left-0 md:left-2 lg:left-[calc(27%-1.15rem)]";
+const localAxisBottomClass = isLast
+  ? "bottom-[-1rem] sm:bottom-[-1.5rem] lg:bottom-[-2rem]"
+  : "bottom-[calc(-8rem-1px)]";
 ---
 
 <article
@@ -33,6 +39,13 @@ const phoneticMetaClass =
 >
   <!-- sr-only heading -->
   <h2 id={blockId} class="sr-only">{entry.word}</h2>
+
+  <!-- local vertical axis segment, from this cotation corner to the next anchor -->
+  <TraitAxis
+    className={`${localAxisClass} ${localAxisBottomClass} [--reveal-d:560ms]`}
+    reveal
+    top="calc(8rem + 1px)"
+  />
 
   <!-- ghost word (background, decorative) -->
   <p aria-hidden="true" class={ghostWordClass} data-reveal="fade">

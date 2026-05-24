@@ -1,7 +1,5 @@
 ---
 import type { TraitPageData } from "@/components/trait/trait.data";
-import { TRAIT_AXIS_LEFT } from "@/components/trait/trait.classes";
-import TraitAxis from "@/components/trait/blocks/TraitAxis.astro";
 import TraitEtymologyBlock from "@/components/trait/blocks/TraitEtymologyBlock.astro";
 
 interface Props {
@@ -18,19 +16,15 @@ const { etymologies }: Props = Astro.props;
     <!-- sr-only heading -->
     <h2 id="trait-etymologies-title" class="sr-only">Étymologies</h2>
 
-    <!-- vertical axis -->
-    <TraitAxis
-      bottom="0"
-      className={`${TRAIT_AXIS_LEFT} [--reveal-d:720ms]`}
-      reveal
-      top="0"
-    />
-
     <!-- etymology blocks (×3) -->
     <div class="relative z-10 flex flex-col">
       {
         etymologies.map((entry, index) => (
-          <TraitEtymologyBlock entry={entry} index={index} />
+          <TraitEtymologyBlock
+            entry={entry}
+            index={index}
+            isLast={index === etymologies.length - 1}
+          />
         ))
       }
     </div>
