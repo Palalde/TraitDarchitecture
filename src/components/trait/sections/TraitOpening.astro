@@ -27,7 +27,7 @@ const ghostWordClass =
     <!-- vertical axis -->
     <TraitAxis
       bottom="0"
-      className={`revealed ${TRAIT_AXIS_LEFT}`}
+      className={`${TRAIT_AXIS_LEFT} [--reveal-d:720ms]`}
       reveal
       top="0"
     />
@@ -36,12 +36,15 @@ const ghostWordClass =
       class:list={["relative z-10 w-full lg:max-w-xl", TRAIT_NARRATIVE_INDENT]}
     >
       <!-- ghost word -->
-      <p aria-hidden="true" class={ghostWordClass}>OUVERTURE</p>
+      <p aria-hidden="true" class={ghostWordClass} data-reveal="fade">
+        OUVERTURE
+      </p>
 
       <!-- heading -->
       <h1
         id="trait-page-title"
         class="relative z-10 text-[clamp(3.5rem,14vw,7rem)] leading-[1.1] lg:leading-[1.7] font-light tracking-[0.02em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+        data-reveal="fade-up"
       >
         {opening.heading}
       </h1>
@@ -50,21 +53,31 @@ const ghostWordClass =
         <!-- identity paragraph -->
         <div class="flex flex-col gap-3">
           <p
-            class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+            class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) [--reveal-delay:90ms] dark:text-(--t2a-blue)"
+            data-reveal="fade"
           >
             {opening.identity.title}
           </p>
-          <p class={richBodyClass} set:html={opening.identity.body} />
+          <p
+            class:list={[richBodyClass, "[--reveal-delay:140ms]"]}
+            data-reveal="fade-up"
+            set:html={opening.identity.body}
+          />
         </div>
 
         <!-- project preview paragraph -->
         <div class="flex flex-col gap-3">
           <p
-            class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--text-muted) dark:text-(--text-muted)"
+            class="text-[0.74rem] font-semibold uppercase tracking-[0.14em] text-(--text-muted) [--reveal-delay:210ms] dark:text-(--text-muted)"
+            data-reveal="fade"
           >
             {opening.project.title}
           </p>
-          <p class={richPreviewClass} set:html={opening.project.preview} />
+          <p
+            class:list={[richPreviewClass, "[--reveal-delay:260ms]"]}
+            data-reveal="fade-up"
+            set:html={opening.project.preview}
+          />
         </div>
       </div>
     </div>

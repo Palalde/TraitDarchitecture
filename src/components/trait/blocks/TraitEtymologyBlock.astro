@@ -35,13 +35,13 @@ const phoneticMetaClass =
   <h2 id={blockId} class="sr-only">{entry.word}</h2>
 
   <!-- ghost word (background, decorative) -->
-  <p aria-hidden="true" class={ghostWordClass}>
+  <p aria-hidden="true" class={ghostWordClass} data-reveal="fade">
     {entry.word}
   </p>
 
   <!-- cotation hook (top-left corner, lg+ only) -->
   <TraitCotation
-    className="revealed absolute top-16 hidden lg:left-[calc(27%-1.15rem)] lg:block"
+    className="absolute top-16 hidden [--cotation-connector-d:260ms] [--cotation-corner-d:260ms] lg:left-[calc(27%-1.15rem)] lg:block"
     corner="top-left"
     length="3.25rem"
   />
@@ -54,20 +54,27 @@ const phoneticMetaClass =
     ]}
   >
     <p
-      class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--text-muted) dark:text-(--text-muted)"
+      class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--text-muted) [--reveal-delay:70ms] dark:text-(--text-muted)"
+      data-reveal="fade"
     >
       {blockLabel}
     </p>
 
     <div class="mt-4 flex flex-col gap-5 sm:mt-5 sm:gap-6">
       <!-- phonetic line -->
-      <p class={phoneticLineClass}>
+      <p
+        class:list={[phoneticLineClass, "[--reveal-delay:120ms]"]}
+        data-reveal="fade-up"
+      >
         <span class={phoneticWordClass}>{phoneticWord}</span>
         {phoneticMeta && <span class={phoneticMetaClass}>{phoneticMeta}</span>}
       </p>
 
       <!-- etymology -->
-      <div class="flex flex-col gap-2">
+      <div
+        class="flex flex-col gap-2 [--reveal-delay:170ms]"
+        data-reveal="fade-up"
+      >
         <p
           class="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
         >
@@ -77,7 +84,10 @@ const phoneticMetaClass =
       </div>
 
       <!-- meaning -->
-      <div class="flex flex-col gap-2">
+      <div
+        class="flex flex-col gap-2 [--reveal-delay:220ms]"
+        data-reveal="fade-up"
+      >
         <p
           class="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
         >

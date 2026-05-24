@@ -29,6 +29,8 @@ const horizontalOriginClass =
   corner === "top-right" || corner === "bottom-right"
     ? "origin-right"
     : "origin-left";
+const horizontalCotationCorner =
+  corner === "top-right" || corner === "bottom-right" ? "x-right" : "x-left";
 const horizontalVerticalPositionClass =
   corner === "bottom-left" || corner === "bottom-right" ? "bottom-0" : "top-0";
 
@@ -38,6 +40,8 @@ const verticalOriginClass =
   corner === "bottom-left" || corner === "bottom-right"
     ? "origin-bottom"
     : "origin-top";
+const verticalCotationCorner =
+  corner === "bottom-left" || corner === "bottom-right" ? "y-bottom" : "y-top";
 const verticalHorizontalPositionClass =
   corner === "top-right" || corner === "bottom-right" ? "right-0" : "left-0";
 ---
@@ -57,6 +61,7 @@ const verticalHorizontalPositionClass =
           horizontalOriginClass,
           horizontalVerticalPositionClass,
         ]}
+        data-cotation-corner={horizontalCotationCorner}
         style={`width:${resolvedLength};`}
       />
       <span
@@ -66,6 +71,7 @@ const verticalHorizontalPositionClass =
           verticalOriginClass,
           verticalHorizontalPositionClass,
         ]}
+        data-cotation-corner={verticalCotationCorner}
         style={`height:${resolvedLength};`}
       />
     </span>
@@ -77,6 +83,7 @@ const verticalHorizontalPositionClass =
         orientation === "horizontal" ? "h-px" : "w-px",
         className,
       ]}
+      data-cotation-connector={orientation === "horizontal" ? "x" : "y"}
       data-reveal="cotation"
       style={
         orientation === "horizontal"
