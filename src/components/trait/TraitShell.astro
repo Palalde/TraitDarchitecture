@@ -70,10 +70,27 @@ import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
 
     <TraitPivot pivot={traitPageData.pivot} />
   </div>
-  <TraitMethod
-    callout={traitPageData.opening.callout}
-    method={traitPageData.method}
-  />
+  <div data-trait-method-reveal-shell>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "trait-method",
+            pathname: "/trait",
+            rootSelector: "[data-trait-method-reveal-shell]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <TraitMethod
+      callout={traitPageData.opening.callout}
+      method={traitPageData.method}
+    />
+  </div>
   <TraitProcess phases={traitPageData.phases} />
   <TraitFormulas formulas={traitPageData.formulas} />
   <TraitClosing closingQuote={traitPageData.closingQuote} />

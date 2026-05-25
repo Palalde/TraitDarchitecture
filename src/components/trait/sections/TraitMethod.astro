@@ -30,8 +30,13 @@ const ctaPromptClass =
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
   >
-    <!-- vertical axis (static, full section height) -->
-    <TraitAxis bottom="0" className={TRAIT_AXIS_LEFT} top="0" />
+    <!-- vertical axis -->
+    <TraitAxis
+      bottom="0"
+      className={`${TRAIT_AXIS_LEFT} [--reveal-d:720ms]`}
+      reveal
+      top="0"
+    />
 
     <!-- narrative runway -->
     <div class="relative">
@@ -40,6 +45,8 @@ const ctaPromptClass =
         <h2
           id="trait-method-title"
           class="text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+          data-reveal="fade"
+          style="--reveal-d:480ms;"
         >
           {method.title}
         </h2>
@@ -47,8 +54,13 @@ const ctaPromptClass =
         <!-- editorial paragraphs -->
         <div class="mt-7 flex flex-col gap-5 sm:mt-8 sm:gap-6">
           {
-            method.paragraphs.map((paragraph) => (
-              <p class={richParagraphClass} set:html={paragraph} />
+            method.paragraphs.map((paragraph, index) => (
+              <p
+                class={richParagraphClass}
+                data-reveal="fade-up"
+                set:html={paragraph}
+                style={`--reveal-delay:${90 + index * 90}ms;--reveal-d:560ms;`}
+              />
             ))
           }
         </div>
@@ -59,22 +71,33 @@ const ctaPromptClass =
         >
           <span
             aria-hidden="true"
-            class="absolute left-0 top-0 block h-full w-px bg-(--trait)"></span>
+            class="absolute left-0 top-0 block h-full w-px bg-(--trait)"
+            data-reveal="bar-from-top"
+            style="--reveal-delay:180ms;--reveal-d:520ms;"></span>
           <span
             aria-hidden="true"
             class="absolute left-0 top-0 block h-px w-14 bg-(--trait) sm:w-16"
-          ></span>
+            data-reveal="bar-from-left"
+            style="--reveal-delay:180ms;--reveal-d:520ms;"></span>
           <span
             aria-hidden="true"
             class="absolute bottom-0 left-0 block h-px w-14 bg-(--trait) sm:w-16"
-          ></span>
+            data-reveal="bar-from-left"
+            style="--reveal-delay:180ms;--reveal-d:520ms;"></span>
 
           <h3
             class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+            data-reveal="fade"
+            style="--reveal-delay:280ms;--reveal-d:480ms;"
           >
             {callout.title}
           </h3>
-          <p class:list={[calloutBodyClass, "mt-4"]} set:html={callout.body} />
+          <p
+            class:list={[calloutBodyClass, "mt-4"]}
+            data-reveal="fade-up"
+            set:html={callout.body}
+            style="--reveal-delay:360ms;--reveal-d:560ms;"
+          />
         </aside>
 
         <!-- services list + image -->
