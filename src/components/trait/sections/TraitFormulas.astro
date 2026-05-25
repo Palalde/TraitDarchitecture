@@ -14,7 +14,9 @@ const { formulas }: Props = Astro.props;
 <section aria-labelledby="trait-formulas-title" class="relative w-full">
   <span
     aria-hidden="true"
-    class="absolute inset-x-0 top-0 z-0 block h-px bg-(--trait)"></span>
+    class="absolute inset-x-0 top-0 z-0 block h-px bg-(--trait)"
+    data-reveal="bar-from-left"
+    style="--reveal-d:560ms;"></span>
 
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
@@ -23,6 +25,8 @@ const { formulas }: Props = Astro.props;
       <h2
         id="trait-formulas-title"
         class="mb-8 text-[0.76rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) md:mb-10 dark:text-(--t2a-blue)"
+        data-reveal="fade"
+        style="--reveal-delay:80ms;--reveal-d:480ms;"
       >
         Formules
       </h2>
@@ -36,8 +40,12 @@ const { formulas }: Props = Astro.props;
       >
         <span></span>
         {
-          FORMULA_PHASES.map((phase) => (
-            <p class="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+          FORMULA_PHASES.map((phase, index) => (
+            <p
+              class="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+              data-reveal="fade"
+              style={`--reveal-delay:${140 + index * 50}ms;--reveal-d:480ms;`}
+            >
               {phase.label}
             </p>
           ))
@@ -45,7 +53,11 @@ const { formulas }: Props = Astro.props;
       </div>
 
       <ul aria-label="Matrice des formules d'accompagnement">
-        {formulas.map((formula) => <TraitFormulaRow formula={formula} />)}
+        {
+          formulas.map((formula, index) => (
+            <TraitFormulaRow formula={formula} index={index} />
+          ))
+        }
       </ul>
     </div>
   </div>

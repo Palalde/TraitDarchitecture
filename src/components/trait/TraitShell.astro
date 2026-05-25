@@ -109,6 +109,23 @@ import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
 
     <TraitProcess phases={traitPageData.phases} />
   </div>
-  <TraitFormulas formulas={traitPageData.formulas} />
+  <div data-trait-formulas-reveal-shell>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "trait-formulas",
+            pathname: "/trait",
+            rootSelector: "[data-trait-formulas-reveal-shell]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <TraitFormulas formulas={traitPageData.formulas} />
+  </div>
   <TraitClosing closingQuote={traitPageData.closingQuote} />
 </section>
