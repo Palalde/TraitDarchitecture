@@ -32,6 +32,8 @@ const imageAlt = `Document de travail pour l'étape ${step.id} : ${step.title}`;
     <div class="grid gap-5 sm:gap-6 lg:grid-cols-[3rem_minmax(0,1fr)] lg:gap-7">
       <p
         class="text-[1.6rem] leading-none font-semibold tracking-[0.08em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[1.85rem] lg:pt-1"
+        data-reveal="fade"
+        style="--reveal-d:480ms;"
       >
         <span class="sr-only">Étape </span>
         {step.id}
@@ -41,16 +43,24 @@ const imageAlt = `Document de travail pour l'étape ${step.id} : ${step.title}`;
         <div class="flex items-center gap-3 sm:gap-4">
           <span
             aria-hidden="true"
-            class="block h-px w-8 shrink-0 bg-(--trait) sm:w-10"></span>
+            class="block h-px w-8 shrink-0 origin-left bg-(--trait) sm:w-10"
+            data-reveal="bar-from-left"
+            style="--reveal-delay:80ms;--reveal-d:460ms;"></span>
           <h3
             class="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[0.78rem]"
+            data-reveal="fade"
+            style="--reveal-delay:120ms;--reveal-d:480ms;"
           >
             {stepTitle}
           </h3>
         </div>
 
-        <figure class:list={["relative mt-7 w-full sm:mt-8", mediaWidthClass]}>
-          <CotationFrame aspectRatio={step.mediaRatio} revealCotation={false}>
+        <figure
+          class:list={["relative mt-7 w-full sm:mt-8", mediaWidthClass]}
+          data-reveal="fade-up"
+          style="--reveal-delay:180ms;--reveal-d:560ms;"
+        >
+          <CotationFrame aspectRatio={step.mediaRatio}>
             <ParallaxFrame
               client:visible
               overflowPercent={0.025}
@@ -74,7 +84,9 @@ const imageAlt = `Document de travail pour l'étape ${step.id} : ${step.title}`;
 
         <p
           class="mt-7 max-w-184 text-[0.98rem] leading-7 text-(--text-primary) sm:mt-8 sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)"
+          data-reveal="fade-up"
           set:html={step.body}
+          style="--reveal-delay:260ms;--reveal-d:560ms;"
         />
       </div>
     </div>
