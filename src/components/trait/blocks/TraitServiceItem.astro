@@ -1,20 +1,29 @@
 ---
 interface Props {
+  index: number;
   service: string;
 }
 
-const { service }: Props = Astro.props;
+const { index, service }: Props = Astro.props;
+const revealDelay = `${index * 40}ms`;
 ---
 
-<li class="flex max-w-176 items-start gap-4">
+<li
+  class="flex max-w-176 items-start gap-4"
+  style={`--reveal-delay:${revealDelay};`}
+>
   <!-- cotation segment -->
   <span
     aria-hidden="true"
-    class="mt-[0.82rem] block h-px w-4 shrink-0 bg-(--trait)"></span>
+    class="mt-[0.82rem] block h-px w-4 shrink-0 origin-left bg-(--trait)"
+    data-reveal="bar-from-left"
+    style="--reveal-d:420ms;"></span>
 
   <!-- service text -->
   <p
     class="text-[0.95rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8"
+    data-reveal="fade-up"
+    style="--reveal-d:520ms;"
   >
     {service}
   </p>

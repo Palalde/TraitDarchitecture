@@ -106,8 +106,12 @@ const ctaPromptClass =
             class="grid gap-7 sm:gap-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-stretch lg:gap-10"
           >
             <!-- services image -->
-            <figure class="relative w-full max-w-72 sm:max-w-80 lg:max-w-none">
-              <CotationFrame aspectRatio="4:5" revealCotation={false}>
+            <figure
+              class="relative w-full max-w-72 sm:max-w-80 lg:max-w-none"
+              data-reveal="fade-up"
+              style="--reveal-d:560ms;"
+            >
+              <CotationFrame aspectRatio="4:5">
                 <ParallaxFrame
                   client:visible
                   overflowPercent={0.025}
@@ -132,6 +136,8 @@ const ctaPromptClass =
             <div class="flex h-full flex-col">
               <h3
                 class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+                data-reveal="fade"
+                style="--reveal-d:480ms;"
               >
                 Services
               </h3>
@@ -141,8 +147,8 @@ const ctaPromptClass =
                 aria-label="Services d'accompagnement"
               >
                 {
-                  method.services.map((service) => (
-                    <TraitServiceItem service={service} />
+                  method.services.map((service, index) => (
+                    <TraitServiceItem index={index} service={service} />
                   ))
                 }
               </ul>
@@ -160,11 +166,19 @@ const ctaPromptClass =
       ]}
     >
       <div class="max-w-3xl lg:ml-10">
-        <p class={ctaPromptClass}>{method.cta.prompt}</p>
+        <p
+          class={ctaPromptClass}
+          data-reveal="fade-up"
+          style="--reveal-d:560ms;"
+        >
+          {method.cta.prompt}
+        </p>
 
         <a
           href={method.cta.href}
           class="mt-6 inline-flex items-center justify-center border border-(--t2a-blue) bg-transparent px-6 py-3 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 ease-out hover:bg-(--t2a-blue-wash) hover:text-(--t2a-blue-dark) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--trait) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary) dark:text-(--t2a-blue) dark:hover:bg-(--t2a-blue-pale) dark:hover:text-(--t2a-blue-dark)"
+          data-reveal="fade"
+          style="--reveal-delay:120ms;--reveal-d:480ms;"
         >
           {method.cta.label}
         </a>
