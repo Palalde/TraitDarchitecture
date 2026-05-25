@@ -127,5 +127,22 @@ import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
 
     <TraitFormulas formulas={traitPageData.formulas} />
   </div>
-  <TraitClosing closingQuote={traitPageData.closingQuote} />
+  <div data-trait-closing-reveal-shell>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "trait-closing",
+            pathname: "/trait",
+            rootSelector: "[data-trait-closing-reveal-shell]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <TraitClosing closingQuote={traitPageData.closingQuote} />
+  </div>
 </section>
