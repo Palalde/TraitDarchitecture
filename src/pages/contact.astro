@@ -1,4 +1,6 @@
 ---
+import ContactShell from "@/components/contact/ContactShell.astro";
+import { contactPageData } from "@/components/contact/contact.data";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
@@ -6,12 +8,13 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
-  title="Contact | ATELIER TraiT D'ARCHITECTURE"
-  description="Contacter l'ATELIER TraiT D'ARCHITECTURE pour un projet en Corse, sur la Côte Bleue ou en Provence."
+  title={contactPageData.title}
+  description={contactPageData.description}
 >
   <HeaderShell />
-  <main class="relative min-h-[200vh] overflow-hidden bg-(--bg-primary)">
+  <main class="relative overflow-hidden bg-(--bg-primary)">
     <BackgroundDecorations />
+    <ContactShell />
   </main>
   <Footer />
 </BaseLayout>
