@@ -25,11 +25,6 @@ interface ContactEmailData {
   href: string;
 }
 
-interface ContactAudienceOption {
-  label: string;
-  value: "particulier" | "professionnel";
-}
-
 interface ContactFormFieldCopy {
   label: string;
   placeholder?: string;
@@ -43,8 +38,6 @@ interface ContactFormMessages {
 }
 
 export interface ContactFormCopy {
-  audienceLegend: string;
-  audienceOptions: readonly [ContactAudienceOption, ContactAudienceOption];
   fields: {
     email: ContactFormFieldCopy;
     message: ContactFormFieldCopy;
@@ -123,11 +116,6 @@ export const contactPageData: ContactPageData = {
     },
   ],
   form: {
-    audienceLegend: "VOUS ÊTES",
-    audienceOptions: [
-      { label: "Particulier", value: "particulier" },
-      { label: "Professionnel", value: "professionnel" },
-    ],
     fields: {
       name: { label: "NOM COMPLET" },
       email: { label: "EMAIL" },
