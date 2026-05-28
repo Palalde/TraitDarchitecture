@@ -1,8 +1,21 @@
 ---
 import { contactPageData } from "@/components/contact/contact.data";
 import ContactCartouche from "@/components/contact/sections/ContactCartouche.astro";
+import ContactForm from "@/components/contact/sections/ContactForm.astro";
+import ContactInterlocuteurs from "@/components/contact/sections/ContactInterlocuteurs.astro";
 ---
 
 <section data-contact-shell aria-labelledby="contact-page-title">
   <ContactCartouche cartouche={contactPageData.cartouche} />
+
+  <ContactInterlocuteurs
+    email={contactPageData.email}
+    interlocutors={contactPageData.interlocutors}
+  />
+
+  <div class="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">
+    <hr class="my-12 border-t border-(--trait) lg:my-20" />
+  </div>
+
+  <ContactForm form={contactPageData.form} />
 </section>

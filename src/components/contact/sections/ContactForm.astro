@@ -1,0 +1,196 @@
+---
+import type { ContactPageData } from "@/components/contact/contact.data";
+import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
+
+interface Props {
+  form: ContactPageData["form"];
+}
+
+const { form }: Props = Astro.props;
+type ContactAudienceOption = ContactPageData["form"]["audienceOptions"][number];
+
+const fieldClass = "flex flex-col gap-1";
+const labelClass =
+  "text-[0.72rem] uppercase tracking-[0.14em] text-(--text-muted)";
+const inputClass =
+  "peer border-0 bg-transparent py-2 text-[1rem] text-(--text-primary) placeholder:text-(--text-muted)/60 focus:outline-none";
+const lineClass =
+  "block h-px bg-(--trait) transition-[height,background-color] duration-200 peer-focus:h-0.5 peer-focus:bg-(--t2a-blue-dark) dark:peer-focus:bg-(--t2a-blue)";
+---
+
+<section
+  aria-labelledby="contact-form-title"
+  class="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 sm:px-8 lg:gap-10 lg:px-10"
+>
+  <div class="flex items-center gap-3 sm:gap-5">
+    <span
+      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+    >
+      Fig. II
+    </span>
+    <div aria-hidden="true" class="h-px w-10 bg-(--trait) sm:w-14"></div>
+    <h2
+      id="contact-form-title"
+      class="shrink-0 text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[0.9rem]"
+    >
+      Écrire à l'atelier
+    </h2>
+    <div aria-hidden="true" class="h-px min-w-0 flex-1 bg-(--trait)"></div>
+  </div>
+
+  <CotationFrame
+    className="mx-auto w-full max-w-3xl"
+    contentClassName="p-6 sm:p-8 lg:p-10"
+    contentStyle="background: transparent;"
+    orientation="vertical"
+    revealCotation={false}
+  >
+    <form
+      id="contact-form"
+      method="post"
+      data-state="idle"
+      class="flex flex-col gap-6"
+    >
+      <div
+        data-contact-form-body
+        class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8"
+      >
+        <fieldset class="flex flex-col gap-3 md:col-span-2">
+          <legend class={labelClass}>{form.audienceLegend}</legend>
+          <div class="flex flex-col gap-2 sm:flex-row sm:gap-8">
+            {
+              form.audienceOptions.map((option: ContactAudienceOption) => (
+                <label
+                  class="inline-flex cursor-pointer items-center gap-3 py-2"
+                  for={`contact-audience-${option.value}`}
+                >
+                  <input
+                    id={`contact-audience-${option.value}`}
+                    class="peer sr-only"
+                    name="audience"
+                    required
+                    type="radio"
+                    value={option.value}
+                  />
+                  <span
+                    aria-hidden="true"
+                    class="block h-3 w-3 border border-(--trait) transition-colors peer-checked:border-(--t2a-blue) peer-checked:bg-(--t2a-blue) peer-focus-visible:outline-2 peer-focus-visible:outline-(--t2a-blue)"
+                  />
+                  <span class="text-[0.95rem] text-(--text-primary)">
+                    {option.label}
+                  </span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <div class:list={[fieldClass, "md:col-span-2"]}>
+          <label class={labelClass} for="contact-name">
+            {form.fields.name.label}
+          </label>
+          <input
+            id="contact-name"
+            autocomplete="name"
+            class={inputClass}
+            name="name"
+            required
+            type="text"
+          />
+          <span aria-hidden="true" class={lineClass}></span>
+        </div>
+
+        <div class={fieldClass}>
+          <label class={labelClass} for="contact-email">
+            {form.fields.email.label}
+          </label>
+          <input
+            id="contact-email"
+            autocomplete="email"
+            class={inputClass}
+            inputmode="email"
+            name="email"
+            required
+            type="email"
+          />
+          <span aria-hidden="true" class={lineClass}></span>
+        </div>
+
+        <div class={fieldClass}>
+          <label class={labelClass} for="contact-phone">
+            {form.fields.phone.label}
+          </label>
+          <input
+            id="contact-phone"
+            autocomplete="tel"
+            class={inputClass}
+            inputmode="tel"
+            name="phone"
+            type="tel"
+          />
+          <span aria-hidden="true" class={lineClass}></span>
+        </div>
+
+        <div class:list={[fieldClass, "md:col-span-2"]}>
+          <label class={labelClass} for="contact-msg">
+            {form.fields.message.label}
+          </label>
+          <textarea
+            id="contact-msg"
+            autocomplete="off"
+            class:list={[inputClass, "max-h-[40vh] min-h-32 resize-y"]}
+            name="message"
+            placeholder={form.fields.message.placeholder}
+            required
+            rows="4"></textarea>
+          <span aria-hidden="true" class={lineClass}></span>
+        </div>
+
+        <input
+          aria-hidden="true"
+          autocomplete="off"
+          name="botcheck"
+          tabindex="-1"
+          type="text"
+          style="position:absolute;left:-9999px;opacity:0;pointer-events:none"
+        />
+
+        <p class="mt-4 text-[0.78rem] text-(--text-muted) md:col-span-2">
+          {form.privacy.text}
+          <a
+            class="inline-block py-1 underline decoration-current/35 underline-offset-4 hover:text-(--t2a-blue) focus-visible:outline-2 focus-visible:outline-(--t2a-blue)"
+            href={form.privacy.href}
+          >
+            {form.privacy.linkLabel}
+          </a>.
+        </p>
+
+        <button
+          id="contact-submit"
+          class="group mt-6 inline-flex min-h-11 items-center justify-center gap-3 self-stretch px-0 py-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) disabled:cursor-not-allowed disabled:opacity-50 md:col-span-2 dark:text-(--t2a-blue) sm:self-end sm:justify-end"
+          type="submit"
+        >
+          <span
+            aria-hidden="true"
+            class="hidden h-px w-12 bg-(--trait) transition-[width] duration-200 group-hover:w-20 sm:block"
+          ></span>
+          <span>{form.submitLabel}</span>
+          <span
+            aria-hidden="true"
+            class="transition-transform duration-200 group-hover:translate-x-1"
+          >
+            →
+          </span>
+        </button>
+      </div>
+
+      <div
+        id="contact-feedback"
+        role="status"
+        aria-live="polite"
+        class="hidden"
+      >
+      </div>
+    </form>
+  </CotationFrame>
+</section>
