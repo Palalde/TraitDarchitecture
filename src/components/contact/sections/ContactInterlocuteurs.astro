@@ -17,7 +17,7 @@ type ContactInterlocutor = ContactPageData["interlocutors"][number];
 >
   <div class="flex items-center gap-3 sm:gap-5">
     <span
-      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--text-muted) sm:text-[0.72rem]"
     >
       Fig. I
     </span>
@@ -50,7 +50,7 @@ type ContactInterlocutor = ContactPageData["interlocutors"][number];
                 <h3 class="text-[1rem] font-semibold uppercase tracking-[0.14em] text-(--text-primary) sm:text-[1.05rem]">
                   {interlocutor.name}
                 </h3>
-                <p class="text-[0.78rem] uppercase tracking-[0.14em] text-(--text-muted)">
+                <p class="text-[0.78rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--text-muted)">
                   {interlocutor.role}
                 </p>
               </div>
@@ -73,12 +73,15 @@ type ContactInterlocutor = ContactPageData["interlocutors"][number];
 
   <div class="text-center">
     <a
-      class="inline-flex items-center justify-center gap-3 px-2 py-3 text-[0.82rem] uppercase tracking-[0.14em] text-(--text-muted) transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue)"
+      class="inline-flex max-w-full flex-col items-center justify-center gap-1 px-2 py-3 text-center text-[0.72rem] uppercase tracking-[0.08em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--text-muted) sm:flex-row sm:gap-3 sm:text-[0.82rem] sm:tracking-[0.14em]"
       href={email.href}
     >
-      <span>{email.display}</span>
-      <span aria-hidden="true">→</span>
-      <span>écrire un mail</span>
+      <span class="max-w-full break-all sm:break-normal">{email.display}</span>
+      <span aria-hidden="true" class="hidden sm:inline">→</span>
+      <span class="inline-flex items-center gap-2 whitespace-nowrap">
+        <span aria-hidden="true" class="sm:hidden">→</span>
+        <span>écrire un mail</span>
+      </span>
     </a>
   </div>
 </section>

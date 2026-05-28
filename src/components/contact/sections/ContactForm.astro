@@ -11,9 +11,9 @@ const { className, form }: Props = Astro.props;
 
 const fieldClass = "flex flex-col gap-1";
 const labelClass =
-  "text-[0.72rem] uppercase tracking-[0.14em] text-(--text-muted)";
+  "text-[0.72rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--text-muted)";
 const inputClass =
-  "peer border-0 bg-transparent py-2 pl-1 text-[1rem] text-(--text-primary) placeholder:text-(--text-muted)/60 focus:outline-none";
+  "peer border-0 bg-transparent py-2 pl-1 text-[1rem] text-(--text-primary) placeholder:text-(--text-secondary) focus:outline-none";
 const lineClass =
   "block h-px bg-(--trait) transition-[height,background-color] duration-200 peer-focus:h-0.5 peer-focus:bg-(--t2a-blue-dark) dark:peer-focus:bg-(--t2a-blue)";
 ---
@@ -27,7 +27,7 @@ const lineClass =
 >
   <div class="flex items-center gap-3 sm:gap-5">
     <span
-      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--text-muted) sm:text-[0.72rem]"
     >
       Fig. II
     </span>
@@ -128,7 +128,9 @@ const lineClass =
           style="position:absolute;left:-9999px;opacity:0;pointer-events:none"
         />
 
-        <p class="mt-4 text-[0.78rem] text-(--text-muted) md:col-span-2">
+        <p
+          class="mt-4 text-[0.78rem] text-(--t2a-blue-dark) dark:text-(--text-muted) md:col-span-2"
+        >
           {form.privacy.text}
           <a
             class="inline-block py-1 underline decoration-current/35 underline-offset-4 hover:text-(--t2a-blue) focus-visible:outline-2 focus-visible:outline-(--t2a-blue)"

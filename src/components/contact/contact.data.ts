@@ -82,13 +82,13 @@ export const contactPageData: ContactPageData = {
   interlocutors: [
     {
       name: "Théa BATTISTINI",
-      role: "Architecte DE-HMONP",
+      role: "Architecte HMONP",
       phoneDisplay: "+33 6 30 58 99 81",
       phoneHref: "tel:+33630589981",
     },
     {
       name: "Titouan GRANET",
-      role: "Architecte DE-HMONP",
+      role: "Architecte DE",
       phoneDisplay: "+33 6 72 31 04 21",
       phoneHref: "tel:+33672310421",
     },
