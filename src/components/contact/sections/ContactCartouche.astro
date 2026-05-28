@@ -1,0 +1,74 @@
+---
+import type { ContactCartoucheData } from "@/components/contact/contact.data";
+import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
+
+interface Props {
+  cartouche: ContactCartoucheData;
+}
+
+const { cartouche }: Props = Astro.props;
+
+const cartoucheRows = [
+  { label: "ÉCHELLE", value: cartouche.scale },
+  { label: "DATE", value: cartouche.date },
+  { label: "DÉLAI", value: cartouche.delay },
+  { label: "OBJET", value: cartouche.subject },
+] as const;
+---
+
+<section
+  aria-labelledby="contact-page-title"
+  class="relative w-full overflow-hidden"
+>
+  <div
+    class="relative z-10 mx-auto grid w-full max-w-7xl gap-8 overflow-hidden px-6 pb-16 pt-[calc(var(--header-height)+4rem)] sm:px-8 sm:pt-[calc(var(--header-height)+5rem)] lg:grid-cols-[1fr_auto] lg:items-start lg:gap-12 lg:px-10 lg:pt-[calc(var(--header-height)+6rem)]"
+  >
+    <div class="relative min-w-0">
+      <h1
+        id="contact-page-title"
+        class="relative z-10 text-[clamp(3rem,13vw,6.5rem)] font-semibold uppercase leading-[0.95] tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      >
+        {cartouche.heading}
+      </h1>
+
+      <span
+        aria-hidden="true"
+        class="relative z-10 mt-5 block h-px w-24 bg-(--trait) sm:w-32"></span>
+
+      <p
+        class="relative z-10 mt-6 max-w-136 text-[1rem] leading-7 text-(--text-secondary) sm:text-[1.05rem] sm:leading-8"
+      >
+        {cartouche.intro}
+      </p>
+    </div>
+
+    <div class="w-full lg:mt-12 lg:w-[24rem] lg:self-end xl:w-104">
+      <CotationFrame
+        contentClassName="p-4 sm:p-5"
+        contentStyle="background: transparent;"
+        orientation="vertical"
+        revealCotation={false}
+        showCotation
+      >
+        <dl class="flex flex-col">
+          {
+            cartoucheRows.map((row, index) => (
+              <div
+                class:list={[
+                  "flex justify-between gap-6 px-3 py-2 text-[0.78rem] uppercase tracking-[0.12em] text-(--text-primary)",
+                  index < cartoucheRows.length - 1 &&
+                    "border-b border-(--trait)",
+                ]}
+              >
+                <dt class="text-(--text-muted)">{row.label}</dt>
+                <dd class="text-right font-semibold text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+                  {row.value}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </CotationFrame>
+    </div>
+  </div>
+</section>

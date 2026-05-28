@@ -1,3 +1,8 @@
+---
+import { contactPageData } from "@/components/contact/contact.data";
+import ContactCartouche from "@/components/contact/sections/ContactCartouche.astro";
+---
+
 <section data-contact-shell aria-labelledby="contact-page-title">
-  <!-- sections to come -->
+  <ContactCartouche cartouche={contactPageData.cartouche} />
 </section>
