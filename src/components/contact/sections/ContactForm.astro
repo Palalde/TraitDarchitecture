@@ -4,10 +4,15 @@ import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 
 interface Props {
   className?: string;
+  email: ContactPageData["email"];
   form: ContactPageData["form"];
 }
 
-const { className, form }: Props = Astro.props;
+const { className, email, form }: Props = Astro.props;
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
+const fallbackEmail = email.href.startsWith("mailto:")
+  ? email.href.slice("mailto:".length)
+  : email.display;
 
 const fieldClass = "flex flex-col gap-1";
 const labelClass =
@@ -51,7 +56,17 @@ const lineClass =
     <form
       id="contact-form"
       method="post"
+      data-direct-email={fallbackEmail}
+      data-direct-email-href={email.href}
+      data-error-message={form.messages.error}
+      data-retry-label={form.retryLabel}
+      data-sending-label={form.sendingLabel}
       data-state="idle"
+      data-submit-label={form.submitLabel}
+      data-success-body={form.messages.successBody}
+      data-success-title={form.messages.successTitle}
+      data-unconfigured-message={form.messages.unconfigured}
+      data-web3forms-key={web3formsKey}
       class="flex flex-col gap-6"
     >
       <div
@@ -149,7 +164,7 @@ const lineClass =
             aria-hidden="true"
             class="hidden h-px w-12 bg-(--trait) transition-[width] duration-200 group-hover:w-20 sm:block"
           ></span>
-          <span>{form.submitLabel}</span>
+          <span data-contact-submit-label>{form.submitLabel}</span>
           <span
             aria-hidden="true"
             class="transition-transform duration-200 group-hover:translate-x-1"
@@ -169,3 +184,210 @@ const lineClass =
     </form>
   </CotationFrame>
 </section>
+
+<script is:inline data-astro-rerun>
+  (() => {
+    const createElement = (tagName, className, textContent) => {
+      const element = document.createElement(tagName);
+
+      if (className) {
+        element.className = className;
+      }
+
+      if (textContent) {
+        element.textContent = textContent;
+      }
+
+      return element;
+    };
+
+    const form = document.querySelector("#contact-form");
+
+    if (
+      !(form instanceof HTMLFormElement) ||
+      form.dataset.contactFormReady === "true"
+    ) {
+      return;
+    }
+
+    const submitButton = form.querySelector("#contact-submit");
+    const submitLabel = form.querySelector("[data-contact-submit-label]");
+    const formBody = form.querySelector("[data-contact-form-body]");
+    const feedback = form.querySelector("#contact-feedback");
+
+    if (
+      !(submitButton instanceof HTMLButtonElement) ||
+      !(submitLabel instanceof HTMLElement) ||
+      !(formBody instanceof HTMLElement) ||
+      !(feedback instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    form.dataset.contactFormReady = "true";
+
+    const mountedAt = performance.now();
+    const endpoint = "https://api.web3forms.com/submit";
+    const submitLabelText = form.dataset.submitLabel ?? "ENVOYER";
+    const sendingLabelText = form.dataset.sendingLabel ?? "ENVOI...";
+    const retryLabelText =
+      form.dataset.retryLabel ?? "Envoyer un autre message";
+    const successTitle = form.dataset.successTitle ?? "Merci.";
+    const successBody =
+      form.dataset.successBody ?? "Nous vous répondons sous 48 h.";
+    const errorMessage =
+      form.dataset.errorMessage ??
+      "Une erreur est survenue. Écrivez-nous directement.";
+    const unconfiguredMessage =
+      form.dataset.unconfiguredMessage ??
+      "Formulaire non configuré. Écrivez-nous directement.";
+    const directEmail =
+      form.dataset.directEmail ?? "atelier@traitdarchitecture.com";
+    const directEmailHref =
+      form.dataset.directEmailHref ?? `mailto:${directEmail}`;
+
+    const setSubmitting = (isSubmitting) => {
+      submitButton.disabled = isSubmitting;
+      submitLabel.textContent = isSubmitting
+        ? sendingLabelText
+        : submitLabelText;
+    };
+
+    const resetFeedback = () => {
+      feedback.replaceChildren();
+      feedback.className = "mt-6 hidden";
+    };
+
+    const scrollToFeedback = () => {
+      feedback.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    };
+
+    const resetForm = () => {
+      form.dataset.state = "idle";
+      form.reset();
+      formBody.hidden = false;
+      setSubmitting(false);
+      resetFeedback();
+
+      const nameInput = form.querySelector("#contact-name");
+
+      if (nameInput instanceof HTMLInputElement) {
+        nameInput.focus();
+      }
+    };
+
+    const showError = (message) => {
+      form.dataset.state = "error";
+      formBody.hidden = false;
+      setSubmitting(false);
+      feedback.className =
+        "mt-6 flex flex-col items-center gap-4 text-center text-[0.95rem] leading-7 text-(--t2a-blue-dark) dark:text-(--text-primary)";
+
+      const trait = createElement("span", "block h-0.5 w-16 bg-(--t2a-blue)");
+      trait.setAttribute("aria-hidden", "true");
+
+      const text = createElement("p", undefined, message);
+      const link = createElement(
+        "a",
+        "inline-block py-1 underline decoration-current/35 underline-offset-4 hover:text-(--t2a-blue) focus-visible:outline-2 focus-visible:outline-(--t2a-blue)",
+        directEmail,
+      );
+      link.href = directEmailHref;
+
+      feedback.replaceChildren(trait, text, link);
+      scrollToFeedback();
+    };
+
+    const showSuccess = () => {
+      form.dataset.state = "success";
+      formBody.hidden = true;
+      setSubmitting(false);
+      feedback.className =
+        "mt-6 flex flex-col items-center gap-5 py-10 text-center text-(--text-primary)";
+
+      const trait = createElement("span", "block h-px w-16 bg-(--t2a-blue)");
+      trait.setAttribute("aria-hidden", "true");
+
+      const title = createElement(
+        "p",
+        "text-[2rem] font-light text-(--t2a-blue-dark) dark:text-(--t2a-blue)",
+        successTitle,
+      );
+      const body = createElement(
+        "p",
+        "max-w-md text-[1rem] leading-7 text-(--text-secondary) dark:text-(--text-muted)",
+        successBody,
+      );
+      const retryButton = createElement(
+        "button",
+        "group inline-flex min-h-11 cursor-pointer items-center justify-center gap-3 px-0 py-3 text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--text-muted) dark:hover:text-(--text-primary)",
+      );
+      retryButton.type = "button";
+
+      const retryIcon = createElement(
+        "span",
+        "transition-transform duration-200 group-hover:-translate-x-1",
+        "↺",
+      );
+      retryIcon.setAttribute("aria-hidden", "true");
+      retryButton.append(
+        retryIcon,
+        createElement("span", undefined, retryLabelText),
+      );
+      retryButton.addEventListener("click", resetForm);
+
+      feedback.replaceChildren(trait, title, body, retryButton);
+      scrollToFeedback();
+    };
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (performance.now() - mountedAt < 2000) {
+        return;
+      }
+
+      const web3formsKey = form.dataset.web3formsKey?.trim();
+
+      if (!web3formsKey) {
+        showError(unconfiguredMessage);
+        return;
+      }
+
+      const formData = new FormData(form);
+
+      if (String(formData.get("botcheck") ?? "").trim().length > 0) {
+        return;
+      }
+
+      const name = String(formData.get("name") ?? "").trim();
+      formData.set("access_key", web3formsKey);
+      formData.set("subject", `[Contact site] ${name}`);
+      formData.set("from_name", name);
+
+      form.dataset.state = "sending";
+      resetFeedback();
+      setSubmitting(true);
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        const result = await response.json();
+
+        if (!response.ok || result.success !== true) {
+          showError(errorMessage);
+          return;
+        }
+
+        showSuccess();
+      } catch {
+        showError(errorMessage);
+      }
+    });
+  })();
+</script>

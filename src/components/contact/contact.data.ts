@@ -134,10 +134,8 @@ export const contactPageData: ContactPageData = {
     messages: {
       successTitle: "Merci.",
       successBody: "Nous vous répondons sous 48 h.",
-      error:
-        "Une erreur est survenue. Écrivez-nous directement : atelier@traitdarchitecture.com",
-      unconfigured:
-        "Formulaire non configuré — écrivez-nous directement : atelier@traitdarchitecture.com",
+      error: "Une erreur est survenue. Écrivez-nous directement :",
+      unconfigured: "Formulaire non configuré — écrivez-nous directement :",
     },
     submitLabel: "ENVOYER",
     sendingLabel: "ENVOI...",
