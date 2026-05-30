@@ -14,6 +14,11 @@ export interface ContactInterlocutorData {
   role: string;
 }
 
+export interface ContactOfficeData {
+  addressLines: readonly [string, string];
+  city: string;
+}
+
 export interface ContactReviewData {
   author: string;
   rating: number;
@@ -62,6 +67,11 @@ export interface ContactPageData {
   form: ContactFormCopy;
   googleReviewsUrl: string | null;
   interlocutors: readonly [ContactInterlocutorData, ContactInterlocutorData];
+  officeHours: {
+    label: string;
+    value: string;
+  };
+  offices: readonly [ContactOfficeData, ContactOfficeData, ContactOfficeData];
   reviews: readonly [ContactReviewData, ContactReviewData, ContactReviewData];
   title: string;
 }
@@ -97,6 +107,24 @@ export const contactPageData: ContactPageData = {
     display: "atelier[at]traitdarchitecture.com",
     href: "mailto:atelier@traitdarchitecture.com",
   },
+  officeHours: {
+    label: "Lundi à vendredi",
+    value: "9h-18h",
+  },
+  offices: [
+    {
+      city: "CORSE",
+      addressLines: ["29 rue Chanoine Letteron", "20200 Bastia"],
+    },
+    {
+      city: "CÔTE BLEUE",
+      addressLines: ["10 allée des églantiers", "13960 Sausset-les-Pins"],
+    },
+    {
+      city: "PROVENCE",
+      addressLines: ["22 rue des Fenils", "04270 Mézel"],
+    },
+  ],
   googleReviewsUrl: null,
   reviews: [
     {

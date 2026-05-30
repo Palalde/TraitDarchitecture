@@ -12,6 +12,8 @@ import ContactInterlocuteurs from "@/components/contact/sections/ContactInterloc
   <ContactInterlocuteurs
     email={contactPageData.email}
     interlocutors={contactPageData.interlocutors}
+    officeHours={contactPageData.officeHours}
+    offices={contactPageData.offices}
   />
 
   <ContactForm
@@ -21,20 +23,8 @@ import ContactInterlocuteurs from "@/components/contact/sections/ContactInterloc
   />
 
   <ContactAvis
-    className="mt-16"
+    className="mt-16 pb-[calc(var(--footer-root-overlap)+7rem)] sm:pb-[calc(var(--footer-root-overlap)+12rem)] lg:pb-[calc(var(--footer-root-overlap)+18rem)] 2xl:pb-[calc(var(--footer-root-overlap)+30rem)]"
     googleReviewsUrl={contactPageData.googleReviewsUrl}
     reviews={contactPageData.reviews}
   />
-
-  <div
-    class="relative z-20 mx-auto flex w-full max-w-7xl flex-col items-center gap-4 px-6 pt-12 pb-[calc(var(--footer-root-overlap)+6rem)] sm:px-8 sm:pb-[calc(var(--footer-root-overlap)+10rem)] lg:px-10 lg:pb-[calc(var(--footer-root-overlap)+15rem)] 2xl:pb-[calc(var(--footer-root-overlap)+25rem)]"
-  >
-    <span aria-hidden="true" class="h-10 w-px bg-(--trait)"></span>
-    <a
-      class="inline-block px-2 py-3 text-center text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--t2a-blue)"
-      href="#site-footer"
-    >
-      Nos 3 ateliers — Corse · Côte Bleue · Provence ↓
-    </a>
-  </div>
 </section>
