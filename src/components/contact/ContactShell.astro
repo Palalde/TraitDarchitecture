@@ -1,5 +1,6 @@
 ---
 import { contactPageData } from "@/components/contact/contact.data";
+import ContactAvis from "@/components/contact/sections/ContactAvis.astro";
 import ContactCartouche from "@/components/contact/sections/ContactCartouche.astro";
 import ContactForm from "@/components/contact/sections/ContactForm.astro";
 import ContactInterlocuteurs from "@/components/contact/sections/ContactInterlocuteurs.astro";
@@ -18,4 +19,20 @@ import ContactInterlocuteurs from "@/components/contact/sections/ContactInterloc
     form={contactPageData.form}
     className="mt-16"
   />
+
+  <hr
+    class="mx-auto my-12 w-[calc(100%-3rem)] max-w-7xl border-t border-(--trait) sm:w-[calc(100%-4rem)] lg:my-20 lg:w-[calc(100%-5rem)]"
+  />
+
+  <ContactAvis
+    googleReviewsUrl={contactPageData.googleReviewsUrl}
+    reviews={contactPageData.reviews}
+  />
+
+  <a
+    class="mx-auto my-12 block w-fit px-2 py-3 text-center text-[0.82rem] uppercase tracking-[0.14em] text-(--text-muted) transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue)"
+    href="#site-footer"
+  >
+    Nos 3 ateliers — Corse · Côte Bleue · Provence ↓
+  </a>
 </section>
