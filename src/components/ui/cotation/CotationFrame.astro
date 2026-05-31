@@ -5,6 +5,7 @@ interface Props {
   contentClassName?: string;
   contentStyle?: string;
   orientation?: "horizontal" | "vertical";
+  revealBorder?: boolean;
   revealCotation?: boolean;
   showBorder?: boolean;
   showCotation?: boolean;
@@ -16,6 +17,7 @@ const {
   contentClassName,
   contentStyle,
   orientation = "vertical",
+  revealBorder = false,
   revealCotation = true,
   showBorder = orientation === "vertical",
   showCotation = true,
@@ -156,24 +158,28 @@ const borderTraitClass = "pointer-events-none absolute z-10 bg-(--trait)";
 
   {
     showBorder && (
-      <>
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-0 z-10"
+        data-reveal={revealBorder ? "frame-border" : undefined}
+      >
         <span
-          aria-hidden="true"
           class:list={[borderTraitClass, "inset-x-0 top-0 h-px"]}
+          data-frame-border-line="x"
         />
         <span
-          aria-hidden="true"
           class:list={[borderTraitClass, "inset-x-0 bottom-0 h-px"]}
+          data-frame-border-line="x"
         />
         <span
-          aria-hidden="true"
           class:list={[borderTraitClass, "inset-y-0 left-0 w-px"]}
+          data-frame-border-line="y"
         />
         <span
-          aria-hidden="true"
           class:list={[borderTraitClass, "inset-y-0 right-0 w-px"]}
+          data-frame-border-line="y"
         />
-      </>
+      </div>
     )
   }
 </div>

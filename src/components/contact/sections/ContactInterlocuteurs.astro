@@ -21,44 +21,70 @@ type ContactOffice = ContactPageData["offices"][number];
   <div class="flex items-center gap-3 sm:gap-5">
     <span
       class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--text-muted) sm:text-[0.72rem]"
+      data-reveal="fade"
     >
       Fig. I
     </span>
-    <div aria-hidden="true" class="h-px w-10 bg-(--trait) sm:w-14"></div>
+    <div
+      aria-hidden="true"
+      class="h-px w-10 bg-(--trait) [--reveal-d:560ms] sm:w-14"
+      data-reveal="bar-from-right"
+    >
+    </div>
     <h2
       id="contact-interlocutors-title"
-      class="shrink-0 text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[0.9rem]"
+      class="shrink-0 text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) [--reveal-delay:60ms] dark:text-(--t2a-blue) sm:text-[0.9rem]"
+      data-reveal="fade-up"
     >
       Interlocuteurs & ateliers
     </h2>
-    <div aria-hidden="true" class="h-px min-w-0 flex-1 bg-(--trait)"></div>
+    <div
+      aria-hidden="true"
+      class="h-px min-w-0 flex-1 bg-(--trait) [--reveal-d:560ms] [--reveal-delay:60ms]"
+      data-reveal="bar-from-left"
+    >
+    </div>
   </div>
 
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-10">
     {
-      interlocutors.map((interlocutor: ContactInterlocutor) => (
+      interlocutors.map((interlocutor: ContactInterlocutor, index: number) => (
         <a
           aria-label={`Appeler ${interlocutor.name} au ${interlocutor.phoneDisplay}`}
           class="group block transition-colors duration-200 hover:bg-(--t2a-blue-wash) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) active:bg-(--t2a-blue-wash) dark:hover:bg-(--t2a-blue-pale)/30 dark:active:bg-(--t2a-blue-pale)/30"
           href={interlocutor.phoneHref}
+          style={`--reveal-delay:${100 + index * 80}ms;`}
         >
           <CotationFrame
             contentClassName="p-6 lg:p-8"
             contentStyle="background: transparent;"
             orientation="vertical"
-            revealCotation={false}
+            revealBorder
+            revealCotation
           >
             <div class="flex min-h-32 flex-col justify-between gap-8">
               <div class="flex flex-col gap-2">
-                <h3 class="text-[1rem] font-semibold uppercase tracking-[0.14em] text-(--text-primary) sm:text-[1.05rem]">
+                <h3
+                  class="text-[1rem] font-semibold uppercase tracking-[0.14em] text-(--text-primary) sm:text-[1.05rem]"
+                  data-reveal="fade-up"
+                  style={`--reveal-delay:${180 + index * 80}ms;`}
+                >
                   {interlocutor.name}
                 </h3>
-                <p class="text-[0.78rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--text-muted)">
+                <p
+                  class="text-[0.78rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--text-muted)"
+                  data-reveal="fade-up"
+                  style={`--reveal-delay:${220 + index * 80}ms;`}
+                >
                   {interlocutor.role}
                 </p>
               </div>
 
-              <p class="inline-flex items-center gap-3 text-[1rem] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+              <p
+                class="inline-flex items-center gap-3 text-[1rem] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+                data-reveal="fade-up"
+                style={`--reveal-delay:${270 + index * 80}ms;`}
+              >
                 <span>{interlocutor.phoneDisplay}</span>
                 <span
                   aria-hidden="true"
@@ -79,7 +105,9 @@ type ContactOffice = ContactPageData["offices"][number];
   >
     <a
       class="inline-flex max-w-full flex-col items-center justify-center gap-1 px-2 py-3 text-center text-[0.72rem] uppercase tracking-[0.08em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--text-muted) sm:flex-row sm:gap-3 sm:text-[0.82rem] sm:tracking-[0.14em] md:justify-start md:text-left"
+      data-reveal="fade-up"
       href={email.href}
+      style="--reveal-delay:300ms;"
     >
       <span class="max-w-full break-all sm:break-normal">{email.display}</span>
       <span aria-hidden="true" class="hidden sm:inline">→</span>
@@ -92,6 +120,8 @@ type ContactOffice = ContactPageData["offices"][number];
     <p
       aria-label={`${officeHours.label} : ${officeHours.value}`}
       class="px-2 py-3 text-[0.78rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--text-muted) md:justify-self-end md:text-right"
+      data-reveal="fade-up"
+      style="--reveal-delay:340ms;"
     >
       <span>{officeHours.label}</span>
       <span aria-hidden="true" class="mx-2">—</span>
@@ -107,17 +137,39 @@ type ContactOffice = ContactPageData["offices"][number];
       offices.map((office: ContactOffice, index: number) => (
         <section
           aria-label={`Atelier ${office.city}`}
-          class:list={[
-            "px-4 py-5 text-center sm:px-5 lg:px-8",
-            index > 0 && "border-t border-(--trait) sm:border-t-0 sm:border-l",
-          ]}
+          class="relative px-4 py-5 text-center sm:px-5 lg:px-8"
         >
-          <h3 class="text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+          {index > 0 && (
+            <span
+              aria-hidden="true"
+              class="absolute inset-x-0 top-0 h-px bg-(--trait) [--reveal-d:480ms] sm:hidden"
+              data-reveal="bar-from-left"
+              style={`--reveal-delay:${360 + index * 80}ms;`}
+            />
+          )}
+          {index > 0 && (
+            <span
+              aria-hidden="true"
+              class="absolute top-0 bottom-0 left-0 hidden w-px bg-(--trait) [--reveal-d:520ms] sm:block"
+              data-reveal="bar-from-top"
+              style={`--reveal-delay:${360 + index * 80}ms;`}
+            />
+          )}
+          <h3
+            class="text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+            data-reveal="fade-up"
+            style={`--reveal-delay:${400 + index * 80}ms;`}
+          >
             {office.city}
           </h3>
           <address class="mt-3 space-y-1 text-[0.95rem] leading-7 not-italic text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
-            {office.addressLines.map((line: string) => (
-              <p>{line}</p>
+            {office.addressLines.map((line: string, lineIndex: number) => (
+              <p
+                data-reveal="fade"
+                style={`--reveal-delay:${450 + index * 80 + lineIndex * 40}ms;`}
+              >
+                {line}
+              </p>
             ))}
           </address>
         </section>

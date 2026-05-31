@@ -482,6 +482,20 @@ html.is-landing-dismissed #landing-wrapper {
   transform: scaleY(0);
 }
 
+[data-reveal="frame-border"] {
+  --frame-border-d: 520ms;
+}
+
+[data-reveal="frame-border"] [data-frame-border-line="x"] {
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+[data-reveal="frame-border"] [data-frame-border-line="y"] {
+  transform: scaleY(0);
+  transform-origin: center top;
+}
+
 [data-reveal="cotation"] [data-cotation-connector="x"] {
   transform-origin: center center;
 }
@@ -540,23 +554,35 @@ html.is-landing-dismissed #landing-wrapper {
 }
 
 [data-reveal="cotation"].revealed [data-cotation-connector="x"] {
-  animation: t2a-reveal-bar-x var(--cotation-connector-d) ease-out both;
+  animation: t2a-reveal-bar-x var(--cotation-connector-d) ease-out
+    var(--reveal-delay, 0ms) both;
 }
 
 [data-reveal="cotation"].revealed [data-cotation-connector="y"] {
-  animation: t2a-reveal-bar-y var(--cotation-connector-d) ease-out both;
+  animation: t2a-reveal-bar-y var(--cotation-connector-d) ease-out
+    var(--reveal-delay, 0ms) both;
 }
 
 [data-reveal="cotation"].revealed [data-cotation-corner="x-left"],
 [data-reveal="cotation"].revealed [data-cotation-corner="x-right"] {
   animation: t2a-reveal-bar-x var(--cotation-corner-d) ease-out
-    var(--cotation-corner-delay) both;
+    calc(var(--reveal-delay, 0ms) + var(--cotation-corner-delay)) both;
 }
 
 [data-reveal="cotation"].revealed [data-cotation-corner="y-top"],
 [data-reveal="cotation"].revealed [data-cotation-corner="y-bottom"] {
   animation: t2a-reveal-bar-y var(--cotation-corner-d) ease-out
-    var(--cotation-corner-delay) both;
+    calc(var(--reveal-delay, 0ms) + var(--cotation-corner-delay)) both;
+}
+
+[data-reveal="frame-border"].revealed [data-frame-border-line="x"] {
+  animation: t2a-reveal-bar-x var(--frame-border-d) ease-out
+    var(--reveal-delay, 0ms) both;
+}
+
+[data-reveal="frame-border"].revealed [data-frame-border-line="y"] {
+  animation: t2a-reveal-bar-y var(--frame-border-d) ease-out
+    var(--reveal-delay, 0ms) both;
 }
 
 [data-reveal="fade-left"].revealed {
@@ -669,7 +695,8 @@ html.is-landing-dismissed #landing-wrapper {
   }
 
   [data-reveal="cotation"] [data-cotation-connector],
-  [data-reveal="cotation"] [data-cotation-corner] {
+  [data-reveal="cotation"] [data-cotation-corner],
+  [data-reveal="frame-border"] [data-frame-border-line] {
     transform: none !important;
     animation: none !important;
   }
