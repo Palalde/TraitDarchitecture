@@ -1,5 +1,6 @@
 ---
 import type { ContactPageData } from "@/components/contact/contact.data";
+import ContactSectionHeader from "@/components/contact/blocks/ContactSectionHeader.astro";
 import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 
 interface Props {
@@ -22,33 +23,11 @@ const createRatingTraits = (rating: number) =>
     className,
   ]}
 >
-  <div class="flex items-center gap-3 sm:gap-5">
-    <span
-      class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--text-muted) sm:text-[0.72rem]"
-      data-reveal="fade-up"
-    >
-      Fig. III
-    </span>
-    <div
-      aria-hidden="true"
-      class="h-px w-10 bg-(--trait) [--reveal-d:560ms] sm:w-14"
-      data-reveal="bar-from-right"
-    >
-    </div>
-    <h2
-      id="contact-reviews-title"
-      class="shrink-0 text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) [--reveal-delay:60ms] dark:text-(--t2a-blue) sm:text-[0.9rem]"
-      data-reveal="fade-up"
-    >
-      Ce qu'ils en disent
-    </h2>
-    <div
-      aria-hidden="true"
-      class="h-px min-w-0 flex-1 bg-(--trait) [--reveal-d:560ms] [--reveal-delay:60ms]"
-      data-reveal="bar-from-left"
-    >
-    </div>
-  </div>
+  <ContactSectionHeader
+    figureId="Fig. III"
+    headingId="contact-reviews-title"
+    title="Ce qu'ils en disent"
+  />
 
   <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-10">
     {
