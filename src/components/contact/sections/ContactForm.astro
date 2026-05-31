@@ -33,25 +33,38 @@ const lineClass =
   <div class="flex items-center gap-3 sm:gap-5">
     <span
       class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--text-muted) sm:text-[0.72rem]"
+      data-reveal="fade"
     >
       Fig. II
     </span>
-    <div aria-hidden="true" class="h-px w-10 bg-(--trait) sm:w-14"></div>
+    <div
+      aria-hidden="true"
+      class="h-px w-10 bg-(--trait) [--reveal-d:560ms] sm:w-14"
+      data-reveal="bar-from-right"
+    >
+    </div>
     <h2
       id="contact-form-title"
-      class="shrink-0 text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:text-[0.9rem]"
+      class="shrink-0 text-[0.82rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) [--reveal-delay:60ms] dark:text-(--t2a-blue) sm:text-[0.9rem]"
+      data-reveal="fade-up"
     >
       Écrire à l'atelier
     </h2>
-    <div aria-hidden="true" class="h-px min-w-0 flex-1 bg-(--trait)"></div>
+    <div
+      aria-hidden="true"
+      class="h-px min-w-0 flex-1 bg-(--trait) [--reveal-d:560ms] [--reveal-delay:60ms]"
+      data-reveal="bar-from-left"
+    >
+    </div>
   </div>
 
   <CotationFrame
-    className="mx-auto w-full max-w-3xl"
+    className="mx-auto w-full max-w-3xl [--reveal-delay:100ms]"
     contentClassName="p-6 sm:p-8 lg:p-10"
     contentStyle="background: transparent;"
     orientation="vertical"
-    revealCotation={false}
+    revealBorder
+    revealCotation
   >
     <form
       id="contact-form"
@@ -73,7 +86,11 @@ const lineClass =
         data-contact-form-body
         class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8"
       >
-        <div class:list={[fieldClass, "md:col-span-2"]}>
+        <div
+          class:list={[fieldClass, "md:col-span-2"]}
+          data-reveal="fade-up"
+          style="--reveal-delay:160ms;"
+        >
           <label class={labelClass} for="contact-name">
             {form.fields.name.label}
           </label>
@@ -85,10 +102,18 @@ const lineClass =
             required
             type="text"
           />
-          <span aria-hidden="true" class={lineClass}></span>
+          <span
+            aria-hidden="true"
+            class={lineClass}
+            data-reveal="bar-from-left"
+            style="--reveal-delay:210ms;--reveal-d:440ms;"></span>
         </div>
 
-        <div class={fieldClass}>
+        <div
+          class={fieldClass}
+          data-reveal="fade-up"
+          style="--reveal-delay:220ms;"
+        >
           <label class={labelClass} for="contact-email">
             {form.fields.email.label}
           </label>
@@ -101,10 +126,18 @@ const lineClass =
             required
             type="email"
           />
-          <span aria-hidden="true" class={lineClass}></span>
+          <span
+            aria-hidden="true"
+            class={lineClass}
+            data-reveal="bar-from-left"
+            style="--reveal-delay:270ms;--reveal-d:440ms;"></span>
         </div>
 
-        <div class={fieldClass}>
+        <div
+          class={fieldClass}
+          data-reveal="fade-up"
+          style="--reveal-delay:280ms;"
+        >
           <label class={labelClass} for="contact-phone">
             {form.fields.phone.label}
           </label>
@@ -116,10 +149,18 @@ const lineClass =
             name="phone"
             type="tel"
           />
-          <span aria-hidden="true" class={lineClass}></span>
+          <span
+            aria-hidden="true"
+            class={lineClass}
+            data-reveal="bar-from-left"
+            style="--reveal-delay:330ms;--reveal-d:440ms;"></span>
         </div>
 
-        <div class:list={[fieldClass, "md:col-span-2"]}>
+        <div
+          class:list={[fieldClass, "md:col-span-2"]}
+          data-reveal="fade-up"
+          style="--reveal-delay:340ms;"
+        >
           <label class={labelClass} for="contact-msg">
             {form.fields.message.label}
           </label>
@@ -131,7 +172,11 @@ const lineClass =
             placeholder={form.fields.message.placeholder}
             required
             rows="4"></textarea>
-          <span aria-hidden="true" class={lineClass}></span>
+          <span
+            aria-hidden="true"
+            class={lineClass}
+            data-reveal="bar-from-left"
+            style="--reveal-delay:390ms;--reveal-d:440ms;"></span>
         </div>
 
         <input
@@ -145,6 +190,8 @@ const lineClass =
 
         <p
           class="mt-4 text-[0.78rem] text-(--t2a-blue-dark) dark:text-(--text-muted) md:col-span-2"
+          data-reveal="fade-up"
+          style="--reveal-delay:430ms;"
         >
           {form.privacy.text}
           <a
@@ -158,12 +205,15 @@ const lineClass =
         <button
           id="contact-submit"
           class="group mt-6 inline-flex min-h-11 cursor-pointer items-center justify-center gap-3 self-stretch px-0 py-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) disabled:cursor-not-allowed disabled:opacity-50 md:col-span-2 dark:text-(--t2a-blue) sm:self-end sm:justify-end"
+          data-reveal="fade-up"
+          style="--reveal-delay:480ms;"
           type="submit"
         >
           <span
             aria-hidden="true"
             class="hidden h-px w-12 bg-(--trait) transition-[width] duration-200 group-hover:w-20 sm:block"
-          ></span>
+            data-reveal="bar-from-left"
+            style="--reveal-delay:520ms;--reveal-d:480ms;"></span>
           <span data-contact-submit-label>{form.submitLabel}</span>
           <span
             aria-hidden="true"
