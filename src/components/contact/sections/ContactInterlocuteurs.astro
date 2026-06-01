@@ -4,23 +4,28 @@ import ContactSectionHeader from "@/components/contact/blocks/ContactSectionHead
 import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 
 interface Props {
+  className?: string;
   email: ContactPageData["email"];
   interlocutors: ContactPageData["interlocutors"];
   officeHours: ContactPageData["officeHours"];
   offices: ContactPageData["offices"];
 }
 
-const { email, interlocutors, officeHours, offices }: Props = Astro.props;
+const { className, email, interlocutors, officeHours, offices }: Props =
+  Astro.props;
 type ContactInterlocutor = ContactPageData["interlocutors"][number];
 type ContactOffice = ContactPageData["offices"][number];
 ---
 
 <section
   aria-labelledby="contact-interlocutors-title"
-  class="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 sm:px-8 lg:gap-10 lg:px-10"
+  class:list={[
+    "relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 sm:px-8 lg:gap-10 lg:px-10",
+    className,
+  ]}
 >
   <ContactSectionHeader
-    figureId="Fig. I"
+    figureId="Fig. II"
     headingId="contact-interlocutors-title"
     title="Interlocuteurs & ateliers"
   />

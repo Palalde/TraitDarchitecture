@@ -24,17 +24,14 @@ import ContactInterlocuteurs from "@/components/contact/sections/ContactInterloc
 
   <ContactCartouche cartouche={contactPageData.cartouche} />
 
+  <ContactForm email={contactPageData.email} form={contactPageData.form} />
+
   <ContactInterlocuteurs
+    className="mt-12 lg:mt-16"
     email={contactPageData.email}
     interlocutors={contactPageData.interlocutors}
     officeHours={contactPageData.officeHours}
     offices={contactPageData.offices}
-  />
-
-  <ContactForm
-    email={contactPageData.email}
-    form={contactPageData.form}
-    className="mt-12 lg:mt-16"
   />
 
   <ContactAvis
