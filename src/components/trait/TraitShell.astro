@@ -1,7 +1,6 @@
 ---
 import { traitPageData } from "@/components/trait/trait.data";
 import TraitClosing from "@/components/trait/sections/TraitClosing.astro";
-import TraitEtymologies from "@/components/trait/sections/TraitEtymologies.astro";
 import TraitFormulas from "@/components/trait/sections/TraitFormulas.astro";
 import TraitMethod from "@/components/trait/sections/TraitMethod.astro";
 import TraitOpening from "@/components/trait/sections/TraitOpening.astro";
@@ -32,7 +31,6 @@ import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
     </script>
 
     <TraitOpening opening={traitPageData.opening} />
-    <TraitEtymologies etymologies={traitPageData.etymologies} />
   </div>
   <div data-trait-schema-reveal-shell>
     <script is:inline data-astro-rerun>

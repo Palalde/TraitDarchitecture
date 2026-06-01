@@ -18,6 +18,8 @@ const richPreviewClass =
   "max-w-[38rem] text-[0.98rem] leading-7 text-(--text-secondary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
 const ghostWordClass =
   "pointer-events-none relative -mb-3 block whitespace-nowrap text-[clamp(2.2rem,9.2vw,3.3rem)] leading-[0.85] font-semibold tracking-[0.04em] text-(--t2a-blue)/18 opacity-70 mix-blend-multiply [-webkit-text-stroke:0.45px_var(--t2a-blue)] sm:-mb-5 sm:text-[4.8rem] md:text-[6rem] lg:absolute lg:-top-9 lg:left-0 lg:-translate-x-8 lg:text-[5.33rem] xl:text-[6.33rem] 2xl:text-[7.33rem] dark:opacity-55 dark:mix-blend-screen";
+const realityItemClass =
+  "flex items-center gap-3 text-[0.82rem] font-semibold uppercase tracking-[0.12em] text-(--t2a-blue-dark) sm:text-[0.86rem] dark:text-(--t2a-blue)";
 ---
 
 <section aria-labelledby="trait-page-title" class="relative w-full">
@@ -77,6 +79,28 @@ const ghostWordClass =
             data-reveal="fade-up"
             set:html={opening.project.preview}
           />
+          <ul
+            aria-label="Réalités dans lesquelles le projet s'ancre"
+            class="mt-2 grid max-w-136 grid-cols-1 gap-3 border-l border-(--trait) pl-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3"
+          >
+            {
+              opening.project.realities.map((reality, index) => (
+                <li
+                  class={realityItemClass}
+                  data-reveal="fade-up"
+                  style={`--reveal-delay:${320 + index * 45}ms; --reveal-d:520ms;`}
+                >
+                  <span
+                    aria-hidden="true"
+                    class="h-px w-5 bg-(--trait)"
+                    data-reveal="bar-from-left"
+                    style={`--reveal-delay:${300 + index * 45}ms; --reveal-d:420ms;`}
+                  />
+                  {reality}
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
     </div>

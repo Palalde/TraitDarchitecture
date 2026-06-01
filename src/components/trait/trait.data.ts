@@ -52,17 +52,11 @@ interface TraitOpeningData {
   heading: string;
   identity: TraitTextBlock;
   project: {
+    realities: readonly [string, string, string, string];
     title: string;
     preview: string;
   };
   callout: TraitTextBlock;
-}
-
-export interface TraitEtymology {
-  etymology: string;
-  meaning: string;
-  phonetic: string;
-  word: string;
 }
 
 interface TraitSchemaEntry {
@@ -109,7 +103,6 @@ export interface TraitFormulaData {
 export interface TraitPageData {
   closingQuote: string;
   description: string;
-  etymologies: readonly [TraitEtymology, TraitEtymology, TraitEtymology];
   formulas: readonly [
     TraitFormulaData,
     TraitFormulaData,
@@ -127,48 +120,23 @@ export interface TraitPageData {
 export const traitPageData: TraitPageData = {
   title: "TraiT | ATELIER TraiT D'ARCHITECTURE",
   description:
-    "Découvrez la philosophie et la méthode d'ATELIER TraiT D'ARCHITECTURE. Un trait, trois temps : création, mise en oeuvre, réalisation.",
+    "Découvrez la philosophie et la méthode d'ATELIER TraiT D'ARCHITECTURE. Un trait, trois temps : création, mise en œuvre, réalisation.",
   opening: {
     heading: "TraiT",
     identity: {
-      title: "Notre identité",
+      title: "Notre philosophie",
       body: `Plus qu'un simple nom, <strong>ATELIER TraiT D'ARCHITECTURE</strong> représente notre vision de notre métier. Trois mots, trois intentions, trois aspects de notre caractère qui, ensemble, définissent notre façon de concevoir.`,
     },
     project: {
       title: "Chaque projet est différent",
-      preview: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique et respect du lieu.`,
+      preview: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue et enrichie par des échanges nourris sur des sujets concrets tels que les usages, les habitudes et le cadre de vie. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique, maîtrise des coûts, respect du lieu, de l'environnement et surtout respect du budget. Parce qu'un projet réussi ne se résume pas à son prix, ni à sa forme, mais à <strong>l'histoire qu'il raconte</strong>, à la façon dont il s'inscrit durablement dans son territoire et dans la vie de ceux qui l'habitent. Nous concrétisons ces intentions dans la matière, ancrées dans une réalité :`,
+      realities: ["locale", "économique", "culturelle", "écologique"],
     },
     callout: {
       title: "Approche sensible et engagée",
       body: `Alors travailler avec nous, c'est choisir une <strong>approche sensible et engagée</strong> de l'architecture <strong>adaptée</strong> aux nouveaux modes de vie et <strong>respectueuse</strong> de la nature. C'est aussi <strong>se libérer</strong> d'une certaine <strong>source de stress</strong> et de <strong>charge mentale</strong>. Un chantier, c'est long et épuisant, se sentir entouré est fondamental.`,
     },
   },
-  etymologies: [
-    {
-      word: "ATELIER",
-      phonetic: "[atəlje] n.g (non genré)",
-      etymology:
-        "ancien français astelier, tas de bois, chantier, de astele, éclat de bois, du latin populaire astella, planchette.",
-      meaning:
-        "Espace de création favorisant l'esprit collaboratif et coopératif. Espace de recherche intellectuelle et manuelle favorisant les pratiques locales et artisanales. Lieu de vie humanisant le secteur du bâtiment, en rupture avec les postulats préétablis de la construction actuelle.",
-    },
-    {
-      word: "TraiT",
-      phonetic: "[tʁɛ] n.g (non genré)",
-      etymology:
-        'du latin tractus, dérivé de tractum, action de "tirer, trainer, tracter".',
-      meaning:
-        "Qui dessine et structure l'espace, qui sépare et relie à la fois et fait naître l'architecture. Geste de la main comme prolongement de la pensée, fidèle à une tradition de l'architecte qui esquisse et observe avant de modéliser, faisant avancer la réflexion. Geste créatif comme symbole d'une pensée équilibrée, en tension entre plein et vide, entre rigueur et sensibilité, tissant un lien entre une idée, des envies et un projet.",
-    },
-    {
-      word: "D'ARCHITECTURE",
-      phonetic: "[aʁʃitɛktyʁ] n.g (non genré)",
-      etymology:
-        "latin architectura, issu du grec arkhitéktôn / arkhós, « maître » et téktôn, « ouvrier, charpentier ».",
-      meaning:
-        "Résultat du \"mariage\" entre la matière grise, l'idée, le processus créatif, et la matière construite, le territoire physique, le patrimoine culturel. Synthèse construite d'une sensibilité, d'une idée commune partagée entre des Hommes et un Territoire. Activité localisée, ancrée et territorialisée entre valeurs patrimoniales et usages actuels. Façon de bâtir, de construire dans les règles de l'Art.",
-    },
-  ],
   schema: [
     {
       word: "ATELIER",
