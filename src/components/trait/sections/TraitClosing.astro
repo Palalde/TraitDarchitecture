@@ -11,25 +11,27 @@ const { closingQuote }: Props = Astro.props;
 ---
 
 <section aria-labelledby="trait-closing-title" class="relative w-full">
-  <div
-    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-14 pt-8 sm:px-8 sm:pb-16 sm:pt-10 lg:px-10 lg:pb-20 lg:pt-12"
-  >
-    <h2 id="trait-closing-title" class="sr-only">Citation finale</h2>
-
-    <blockquote
-      class="mx-auto max-w-6xl text-center text-balance text-[clamp(1.35rem,5.2vw,1.9rem)] leading-[1.2] font-light italic tracking-[0.01em] text-(--t2a-blue-dark) sm:text-[clamp(1.75rem,4.7vw,2.45rem)] lg:text-[clamp(2.05rem,2.8vw,2.65rem)] dark:text-(--t2a-blue)"
-      data-reveal="fade-up"
-      style="--reveal-d:640ms;"
-    >
-      {closingQuote}
-    </blockquote>
-  </div>
-
   <span
     aria-hidden="true"
     class="block h-px w-full bg-(--trait)"
     data-reveal="bar-from-left"
     style="--reveal-delay:120ms;--reveal-d:560ms;"></span>
+
+  <div
+    class="relative z-10 mx-auto w-full max-w-7xl px-6 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20"
+  >
+    <div class="relative z-10 mx-auto max-w-none">
+      <h2 id="trait-closing-title" class="sr-only">Citation finale</h2>
+
+      <blockquote
+        class="text-balance text-[clamp(1.35rem,5.2vw,1.9rem)] leading-[1.18] font-light italic tracking-[0.01em] text-(--t2a-blue-dark) sm:text-[clamp(1.75rem,4.7vw,2.45rem)] lg:text-[clamp(2.15rem,3vw,2.85rem)] dark:text-(--t2a-blue)"
+        data-reveal="fade-up"
+        style="--reveal-delay:120ms;--reveal-d:560ms;"
+      >
+        {closingQuote}
+      </blockquote>
+    </div>
+  </div>
 
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-(--footer-root-overlap) sm:px-8 lg:px-10"

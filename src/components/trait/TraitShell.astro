@@ -1,7 +1,6 @@
 ---
 import { traitPageData } from "@/components/trait/trait.data";
 import TraitClosing from "@/components/trait/sections/TraitClosing.astro";
-import TraitFormulas from "@/components/trait/sections/TraitFormulas.astro";
 import TraitMethod from "@/components/trait/sections/TraitMethod.astro";
 import TraitOpening from "@/components/trait/sections/TraitOpening.astro";
 import TraitPivot from "@/components/trait/sections/TraitPivot.astro";
@@ -106,24 +105,6 @@ import TraitSchema from "@/components/trait/sections/TraitSchema.astro";
     </script>
 
     <TraitProcess phases={traitPageData.phases} />
-  </div>
-  <div data-trait-formulas-reveal-shell>
-    <script is:inline data-astro-rerun>
-      (() => {
-        const revealSystem = window.__t2aReveal;
-        if (!revealSystem) return;
-
-        revealSystem
-          .createController({
-            id: "trait-formulas",
-            pathname: "/trait",
-            rootSelector: "[data-trait-formulas-reveal-shell]",
-          })
-          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
-      })();
-    </script>
-
-    <TraitFormulas formulas={traitPageData.formulas} />
   </div>
   <div data-trait-closing-reveal-shell>
     <script is:inline data-astro-rerun>

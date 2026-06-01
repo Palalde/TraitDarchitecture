@@ -7,25 +7,8 @@ import proDcePhoto from "@/assets/photos/TraiT/5. PRO-DCE.png";
 import detPhoto from "@/assets/photos/TraiT/6.DET.jpg";
 
 type TraitPhaseId = "I" | "II" | "III";
-type TraitFormulaPhase = "creation" | "implementation" | "realisation";
 type TraitStepMediaRatio = "1:1" | "3:2" | "5:4" | "8:5";
 type TraitStepMediaWidth = "narrow" | "medium" | "large";
-
-export interface TraitFormulaPhaseDescriptor {
-  id: TraitFormulaPhase;
-  label: string;
-}
-
-/**
- * Single source of truth for the three formula phases (id + display label).
- * Consumed by both the matrix header (TraitFormulas) and the per-row
- * mobile/desktop renderer (TraitFormulaRow).
- */
-export const FORMULA_PHASES: readonly TraitFormulaPhaseDescriptor[] = [
-  { id: "creation", label: "CRÉATION" },
-  { id: "implementation", label: "MISE EN OEUVRE" },
-  { id: "realisation", label: "RÉALISATION" },
-];
 export type TraitProcessPhotoKey =
   | "diagFaisa"
   | "esquisse"
@@ -95,21 +78,9 @@ export interface TraitPhaseData {
   title: string;
 }
 
-export interface TraitFormulaData {
-  description: string;
-  name: "Formule A" | "Formule B" | "Formule C" | "Formule D";
-  phases: readonly TraitFormulaPhase[];
-}
-
 export interface TraitPageData {
   closingQuote: string;
   description: string;
-  formulas: readonly [
-    TraitFormulaData,
-    TraitFormulaData,
-    TraitFormulaData,
-    TraitFormulaData,
-  ];
   method: TraitMethodData;
   opening: TraitOpeningData;
   phases: readonly [TraitPhaseData, TraitPhaseData, TraitPhaseData];
@@ -261,29 +232,6 @@ export const traitPageData: TraitPageData = {
           photoKey: "det",
         },
       ],
-    },
-  ],
-  formulas: [
-    {
-      name: "Formule A",
-      description: "Création → Permis de Construire",
-      phases: ["creation"],
-    },
-    {
-      name: "Formule B",
-      description:
-        "Création → PRO/DCE (plans techniques + consultation entreprises)",
-      phases: ["creation", "implementation"],
-    },
-    {
-      name: "Formule C",
-      description: "Mission complète avec suivi chantier",
-      phases: ["creation", "implementation", "realisation"],
-    },
-    {
-      name: "Formule D",
-      description: "Uniquement suivi chantier",
-      phases: ["realisation"],
     },
   ],
   closingQuote:
