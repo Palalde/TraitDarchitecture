@@ -4,12 +4,11 @@ import ContactSectionHeader from "@/components/contact/blocks/ContactSectionHead
 import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
 
 interface Props {
-  className?: string;
   email: ContactPageData["email"];
   form: ContactPageData["form"];
 }
 
-const { className, email, form }: Props = Astro.props;
+const { email, form }: Props = Astro.props;
 const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
 const fallbackEmail = email.href.startsWith("mailto:")
   ? email.href.slice("mailto:".length)
@@ -26,10 +25,7 @@ const lineClass =
 
 <section
   aria-labelledby="contact-form-title"
-  class:list={[
-    "relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 sm:px-8 lg:gap-10 lg:px-10",
-    className,
-  ]}
+  class="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 px-6 sm:px-8 lg:gap-10 lg:px-10"
 >
   <ContactSectionHeader
     figureId="Fig. I"

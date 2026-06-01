@@ -54,27 +54,17 @@ const createRatingTraits = (rating: number) =>
                   >
                     {review.author}
                   </h3>
-                  {googleReviewsUrl && googleReviewsUrl.length > 0 ? (
-                    <a
-                      aria-label="Lire les avis de l'atelier sur Google (nouvel onglet)"
-                      class="inline-flex w-fit items-center py-1 text-[0.64rem] uppercase tracking-[0.18em] text-(--text-muted) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue-dark) hover:decoration-current focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:hover:text-(--t2a-blue)"
-                      data-reveal="fade-up"
-                      href={googleReviewsUrl}
-                      rel="noopener noreferrer"
-                      style={`--reveal-delay:${205 + reviewIndex * 80}ms;`}
-                      target="_blank"
-                    >
-                      Avis de Google
-                    </a>
-                  ) : (
-                    <p
-                      class="text-[0.64rem] uppercase tracking-[0.18em] text-(--text-muted)"
-                      data-reveal="fade-up"
-                      style={`--reveal-delay:${205 + reviewIndex * 80}ms;`}
-                    >
-                      Avis de Google
-                    </p>
-                  )}
+                  <a
+                    aria-label="Lire les avis de l'atelier sur Google (nouvel onglet)"
+                    class="inline-flex w-fit items-center py-1 text-[0.64rem] uppercase tracking-[0.18em] text-(--text-muted) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue-dark) hover:decoration-current focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:hover:text-(--t2a-blue)"
+                    data-reveal="fade-up"
+                    href={googleReviewsUrl}
+                    rel="noopener noreferrer"
+                    style={`--reveal-delay:${205 + reviewIndex * 80}ms;`}
+                    target="_blank"
+                  >
+                    Avis de Google
+                  </a>
                 </div>
                 <span
                   aria-label={`Avis de Google de ${review.author}, note ${review.rating} sur 5`}
@@ -107,23 +97,15 @@ const createRatingTraits = (rating: number) =>
     }
   </div>
 
-  {
-    googleReviewsUrl && googleReviewsUrl.length > 0 && (
-      <div
-        class="text-center"
-        data-reveal="fade-up"
-        style="--reveal-delay:600ms;"
-      >
-        <a
-          aria-label="Lire tous les avis de l'atelier sur Google (nouvel onglet)"
-          class="inline-block px-2 py-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue) hover:decoration-current focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
-          href={googleReviewsUrl}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Lire les avis sur Google
-        </a>
-      </div>
-    )
-  }
+  <div class="text-center" data-reveal="fade-up" style="--reveal-delay:600ms;">
+    <a
+      aria-label="Lire tous les avis de l'atelier sur Google (nouvel onglet)"
+      class="inline-block px-2 py-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue) hover:decoration-current focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+      href={googleReviewsUrl}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Lire les avis sur Google
+    </a>
+  </div>
 </section>

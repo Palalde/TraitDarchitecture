@@ -65,7 +65,7 @@ export interface ContactPageData {
   description: string;
   email: ContactEmailData;
   form: ContactFormCopy;
-  googleReviewsUrl: string | null;
+  googleReviewsUrl: string;
   interlocutors: readonly [ContactInterlocutorData, ContactInterlocutorData];
   officeHours: {
     label: string;
