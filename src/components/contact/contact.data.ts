@@ -125,8 +125,7 @@ export const contactPageData: ContactPageData = {
       addressLines: ["22 rue des Fenils", "04270 Mézel"],
     },
   ],
-  googleReviewsUrl:
-    "https://www.google.com/search?sa=X&sca_esv=163269b9f9bc3142&sxsrf=ANbL-n4ptXpZ7rYeu9N_R6NHJhhPY1oRoA:1780342377441&q=avis%20sur%20atelier%20trait%20d%27architecture%20bastia&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2tjQwtDA2MzczMrEwMjQ1NDA128DI-IpRJ7Ess1ihuLRIIbEkNScztUihpCgxs0QhRT2xKDkjsyQ1uaS0KFUhKbG4JDNxEStJygFXmi05eAAAAA&rldimm=3901836762482151056&tbm=lcl&hl=fr-FR&ved=0CAYQ5foLahcKEwiYnfOU5uaUAxUAAAAAHQAAAAAQBQ&biw=1280&bih=551&dpr=1.5#lkt=LocalPoiReviews&arid=Ci9DQUlRQUNvZENodHljRjlvT2tzME4ybHJZemhHY0c5ck1EUkdTblpVTUdVNVpXYxAB",
+  googleReviewsUrl: "https://www.google.com/maps?cid=3901836762482151056&hl=fr",
   reviews: [
     {
       author: "Camille C.",
