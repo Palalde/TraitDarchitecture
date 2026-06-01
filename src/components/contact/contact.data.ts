@@ -125,20 +125,21 @@ export const contactPageData: ContactPageData = {
       addressLines: ["22 rue des Fenils", "04270 Mézel"],
     },
   ],
-  googleReviewsUrl: null,
+  googleReviewsUrl:
+    "https://www.google.com/search?sa=X&sca_esv=163269b9f9bc3142&sxsrf=ANbL-n4ptXpZ7rYeu9N_R6NHJhhPY1oRoA:1780342377441&q=avis%20sur%20atelier%20trait%20d%27architecture%20bastia&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxI2tjQwtDA2MzczMrEwMjQ1NDA128DI-IpRJ7Ess1ihuLRIIbEkNScztUihpCgxs0QhRT2xKDkjsyQ1uaS0KFUhKbG4JDNxEStJygFXmi05eAAAAA&rldimm=3901836762482151056&tbm=lcl&hl=fr-FR&ved=0CAYQ5foLahcKEwiYnfOU5uaUAxUAAAAAHQAAAAAQBQ&biw=1280&bih=551&dpr=1.5#lkt=LocalPoiReviews&arid=Ci9DQUlRQUNvZENodHljRjlvT2tzME4ybHJZemhHY0c5ck1EUkdTblpVTUdVNVpXYxAB",
   reviews: [
     {
-      author: "Caroline Chaumet",
+      author: "Camille C.",
       rating: 5,
       text: "Nous souhaitions une extension de notre habitation qui nous ressemble et qui soit en accord avec nos valeurs. Théa et Titouan ont su être à l'écoute afin de nous proposer un projet qui nous correspond et s'intègre parfaitement avec le bâtiment existant tout en respectant notre budget ainsi que nos contraintes. Leur expertise et leur suivi rigoureux nous a été d'une grande aide pour le choix des artisans, des différents matériaux utilisés ainsi que lors des démarches administratives et du suivi de chantier. Nous sommes heureux d'avoir fait appel à eux et nous ne pouvons que les recommander.",
     },
     {
-      author: "Rémi Fouilloud",
+      author: "Rémi F.",
       rating: 5,
       text: "Couple d'architectes très compétents et efficaces. Ils nous ont parfaitement accompagnés pour un projet de rénovation et agrandissant maison. Merci à eux n'hésitez à faire appel a leur services.",
     },
     {
-      author: "Léa Cavallo",
+      author: "Lea C.",
       rating: 5,
       text: "Théa et Titouan sont des architectes très professionnels, sympathiques arrangeants et très dynamiques ! Ils ont des idées très ingénieuses et originales. Je vous les recommande pour vos projets.",
     },

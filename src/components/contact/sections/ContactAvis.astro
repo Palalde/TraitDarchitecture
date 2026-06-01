@@ -46,15 +46,38 @@ const createRatingTraits = (rating: number) =>
           >
             <article class="flex h-full flex-col gap-5">
               <div class="flex flex-col gap-3">
-                <h3
-                  class="text-[0.9rem] font-semibold uppercase tracking-[0.14em] text-(--text-primary)"
-                  data-reveal="fade-up"
-                  style={`--reveal-delay:${180 + reviewIndex * 80}ms;`}
-                >
-                  {review.author}
-                </h3>
+                <div class="flex flex-col gap-1.5">
+                  <h3
+                    class="text-[0.9rem] font-semibold uppercase tracking-[0.14em] text-(--text-primary)"
+                    data-reveal="fade-up"
+                    style={`--reveal-delay:${180 + reviewIndex * 80}ms;`}
+                  >
+                    {review.author}
+                  </h3>
+                  {googleReviewsUrl && googleReviewsUrl.length > 0 ? (
+                    <a
+                      aria-label="Lire les avis de l'atelier sur Google (nouvel onglet)"
+                      class="inline-flex w-fit items-center py-1 text-[0.64rem] uppercase tracking-[0.18em] text-(--text-muted) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue-dark) hover:decoration-current focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:hover:text-(--t2a-blue)"
+                      data-reveal="fade-up"
+                      href={googleReviewsUrl}
+                      rel="noopener noreferrer"
+                      style={`--reveal-delay:${205 + reviewIndex * 80}ms;`}
+                      target="_blank"
+                    >
+                      Avis de Google
+                    </a>
+                  ) : (
+                    <p
+                      class="text-[0.64rem] uppercase tracking-[0.18em] text-(--text-muted)"
+                      data-reveal="fade-up"
+                      style={`--reveal-delay:${205 + reviewIndex * 80}ms;`}
+                    >
+                      Avis de Google
+                    </p>
+                  )}
+                </div>
                 <span
-                  aria-label={`Note ${review.rating} sur 5`}
+                  aria-label={`Avis de Google de ${review.author}, note ${review.rating} sur 5`}
                   class="flex gap-1.5"
                 >
                   {createRatingTraits(review.rating).map(
@@ -93,12 +116,12 @@ const createRatingTraits = (rating: number) =>
       >
         <a
           aria-label="Lire tous les avis de l'atelier sur Google (nouvel onglet)"
-          class="inline-block px-2 py-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) transition-colors duration-200 hover:underline focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--t2a-blue)"
+          class="inline-block px-2 py-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--t2a-blue-dark) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue) hover:decoration-current focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
           href={googleReviewsUrl}
           rel="noopener noreferrer"
           target="_blank"
         >
-          Lire les avis sur Google →
+          Lire les avis sur Google
         </a>
       </div>
     )
