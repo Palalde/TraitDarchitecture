@@ -55,6 +55,7 @@ interface TraitOpeningData {
     realities: readonly [string, string, string, string];
     title: string;
     preview: string;
+    previewMobile: string;
   };
   callout: TraitTextBlock;
 }
@@ -130,6 +131,7 @@ export const traitPageData: TraitPageData = {
     project: {
       title: "Chaque projet est différent",
       preview: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue et enrichie par des échanges nourris sur des sujets concrets tels que les usages, les habitudes et le cadre de vie. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique, maîtrise des coûts, respect du lieu, de l'environnement et surtout respect du budget. Parce qu'un projet réussi ne se résume pas à son prix, ni à sa forme, mais à <strong>l'histoire qu'il raconte</strong>, à la façon dont il s'inscrit durablement dans son territoire et dans la vie de ceux qui l'habitent. Nous concrétisons ces intentions dans la matière, ancrées dans une réalité :`,
+      previewMobile: `Il est donc important pour nous d'<strong>établir une base commune</strong> avec nos clients, une aventure humaine fondée sur l'écoute, la confiance et le dialogue. Nous développons ensuite l'idée du projet grâce à <strong>un accompagnement de tout instant</strong> qui allie créativité, rigueur technique et respect du lieu.`,
       realities: ["locale", "économique", "culturelle", "écologique"],
     },
     callout: {
@@ -154,18 +156,18 @@ export const traitPageData: TraitPageData = {
   pivot:
     "Recréer du liant, un TraiT entre l'Architecture et le Territoire, entre la Construction et l'Histoire",
   method: {
-    title: "Notre démarche",
+    title: "Notre méthode",
     paragraphs: [
       `Un <strong>projet n'est jamais qu'un simple plan</strong>. Il se construit étapes par étapes, en volumétrie, en coupe, en façade mais surtout en dialogue constant entre le lieu, le client, les artisans et l'architecte.`,
       `Notre rôle en tant qu'architectes constructeurs est <strong>un accompagnement entièrement personnalisé</strong> possible du premier coup de crayon jusqu'à la remise des clefs par une méthode claire et définie en amont avec nos clients. Et cela, <strong>quelle qu'en soit l'échelle du projet</strong>, de la cabane à l'immeuble, de la crèche au complexe sportif.`,
     ],
     services: [
-      "Conseil architectural",
-      "Montage de demande de Permis de Construire",
-      "Réalisation de plans techniques de construction",
-      "Consultation des entreprises et analyse de devis",
-      "Création d'une équipe de construction complète (maîtrise d'oeuvre & entreprises)",
-      "Suivi de chantier",
+      "<strong>Conseil architectural</strong>",
+      "Montage de demande de <strong>Permis de Construire</strong>",
+      "Réalisation de <strong>plans techniques de construction</strong>",
+      "Consultation des entreprises et <strong>analyse de devis</strong>",
+      "Création d'une <strong>équipe de construction complète</strong> (maîtrise d'oeuvre & entreprises)",
+      "<strong>Suivi de chantier</strong>",
     ],
     cta: {
       prompt:

@@ -21,10 +21,9 @@ const revealDelay = `${index * 40}ms`;
 
   <!-- service text -->
   <p
-    class="text-[0.95rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8"
+    class="text-[0.95rem] leading-7 text-(--text-primary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold"
     data-reveal="fade-up"
     style="--reveal-d:520ms;"
-  >
-    {service}
-  </p>
+    set:html={service}
+  />
 </li>

@@ -75,32 +75,47 @@ const realityItemClass =
             {opening.project.title}
           </p>
           <p
-            class:list={[richPreviewClass, "[--reveal-delay:260ms]"]}
+            class:list={[richPreviewClass, "md:hidden [--reveal-delay:260ms]"]}
+            data-reveal="fade-up"
+            set:html={opening.project.previewMobile}
+          />
+          <p
+            class:list={[
+              richPreviewClass,
+              "hidden md:block [--reveal-delay:260ms]",
+            ]}
             data-reveal="fade-up"
             set:html={opening.project.preview}
           />
-          <ul
-            aria-label="Réalités dans lesquelles le projet s'ancre"
-            class="mt-2 grid max-w-136 grid-cols-1 gap-3 border-l border-(--trait) pl-4 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3"
-          >
-            {
-              opening.project.realities.map((reality, index) => (
-                <li
-                  class={realityItemClass}
-                  data-reveal="fade-up"
-                  style={`--reveal-delay:${320 + index * 45}ms; --reveal-d:520ms;`}
-                >
-                  <span
-                    aria-hidden="true"
-                    class="h-px w-5 bg-(--trait)"
-                    data-reveal="bar-from-left"
-                    style={`--reveal-delay:${300 + index * 45}ms; --reveal-d:420ms;`}
-                  />
-                  {reality}
-                </li>
-              ))
-            }
-          </ul>
+          <div class="relative mt-2 hidden max-w-136 pl-4 md:block">
+            <span
+              aria-hidden="true"
+              class="absolute left-0 top-0 h-full w-px origin-top bg-(--trait)"
+              data-reveal="bar-from-top"
+              style="--reveal-delay:300ms; --reveal-d:560ms;"></span>
+            <ul
+              aria-label="Réalités dans lesquelles le projet s'ancre"
+              class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3"
+            >
+              {
+                opening.project.realities.map((reality, index) => (
+                  <li
+                    class={realityItemClass}
+                    data-reveal="fade-up"
+                    style={`--reveal-delay:${340 + index * 45}ms; --reveal-d:520ms;`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      class="h-px w-5 bg-(--trait)"
+                      data-reveal="bar-from-left"
+                      style={`--reveal-delay:${320 + index * 45}ms; --reveal-d:420ms;`}
+                    />
+                    {reality}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
       </div>
     </div>
