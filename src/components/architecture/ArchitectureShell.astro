@@ -1,6 +1,6 @@
 ---
-import ArchitectureGrid from "@/components/architecture/blocks/ArchitectureGrid.astro";
 import ArchitectureHero from "@/components/architecture/blocks/ArchitectureHero.astro";
+import ProjectThumb from "@/components/architecture/blocks/ProjectThumb.astro";
 import { getSortedProjects } from "@/components/architecture/architecture.data";
 
 const projects = await getSortedProjects();
@@ -8,5 +8,10 @@ const projects = await getSortedProjects();
 
 <section data-architecture-shell>
   <ArchitectureHero />
-  <ArchitectureGrid projects={projects} />
+  <!-- Rendu temporaire empilé (étape 3). La mosaïque ArchitectureGrid arrive à l'étape 6. -->
+  <div
+    class="mx-auto flex w-full max-w-md flex-col gap-12 px-6 pt-[calc(var(--header-height)+4rem)] pb-24 sm:px-8 lg:px-10"
+  >
+    {projects.map((project) => <ProjectThumb project={project} />)}
+  </div>
 </section>

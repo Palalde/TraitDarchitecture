@@ -1,11 +1,45 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
   project: CollectionEntry<"projects">;
 }
 
-// Placeholder — carte miniature implémentée à l'étape 3.
 const { project } = Astro.props;
-void project;
+const { name, city, dept, cover, coverAlt, coverRatio } = project.data;
+const slug = project.id.replace(/\/index$/, "");
+const titleId = `project-${slug}-title`;
+const metaId = `project-${slug}-meta`;
 ---
+
+<a
+  href={`/architecture/${slug}`}
+  class="group block focus-visible:outline-2 focus-visible:outline-(--t2a-blue) focus-visible:outline-offset-2"
+  aria-labelledby={`${titleId} ${metaId}`}
+>
+  <div class="overflow-hidden" style={`aspect-ratio: ${coverRatio};`}>
+    <Image
+      alt={coverAlt}
+      class="h-full w-full object-cover object-center"
+      draggable="false"
+      format="webp"
+      loading="lazy"
+      quality={80}
+      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+      src={cover}
+      widths={[320, 480, 640, 768, 1024]}
+    />
+  </div>
+  <div class="border-t border-(--border) pt-3">
+    <h3
+      id={titleId}
+      class="font-semibold text-(--text-primary) transition-colors duration-200 group-hover:text-(--t2a-blue)"
+    >
+      {name}
+    </h3>
+    <p id={metaId} class="text-sm text-(--text-secondary)">
+      {city} ({dept})
+    </p>
+  </div>
+</a>
