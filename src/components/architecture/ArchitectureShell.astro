@@ -1,0 +1,12 @@
+---
+import ArchitectureGrid from "@/components/architecture/blocks/ArchitectureGrid.astro";
+import ArchitectureHero from "@/components/architecture/blocks/ArchitectureHero.astro";
+import { getSortedProjects } from "@/components/architecture/architecture.data";
+
+const projects = await getSortedProjects();
+---
+
+<section data-architecture-shell>
+  <ArchitectureHero />
+  <ArchitectureGrid projects={projects} />
+</section>
