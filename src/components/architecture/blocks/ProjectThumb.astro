@@ -21,7 +21,7 @@ const metaId = `project-${slug}-meta`;
   <div class="overflow-hidden" style={`aspect-ratio: ${coverRatio};`}>
     <Image
       alt={coverAlt}
-      class="h-full w-full object-cover object-center"
+      class="h-full w-full object-cover object-center transition duration-300 ease-out group-hover:scale-105 group-hover:opacity-90"
       draggable="false"
       format="webp"
       loading="lazy"
@@ -31,14 +31,16 @@ const metaId = `project-${slug}-meta`;
       widths={[320, 480, 640, 768, 1024]}
     />
   </div>
-  <div class="border-t border-(--border) pt-3">
+  <div
+    class="flex items-baseline justify-between gap-4 border-t border-(--border) pt-3"
+  >
     <h3
       id={titleId}
       class="font-semibold text-(--text-primary) transition-colors duration-200 group-hover:text-(--t2a-blue)"
     >
       {name}
     </h3>
-    <p id={metaId} class="text-sm text-(--text-secondary)">
+    <p id={metaId} class="shrink-0 text-sm text-(--text-secondary)">
       {city} ({dept})
     </p>
   </div>

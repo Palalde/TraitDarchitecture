@@ -3,7 +3,7 @@ name: "CASA OCANERA"
 city: "Vignale"
 dept: "2B"
 zone: "corse"
-cover: "./cover.png"
+cover: "./cover.webp"
 coverRatio: "1/1"
 coverAlt: "Surélévation bois de la Casa Ocanera à Vignale"
 order: 1
