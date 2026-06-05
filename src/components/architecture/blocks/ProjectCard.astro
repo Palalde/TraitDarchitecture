@@ -12,9 +12,15 @@ interface Props {
   image?: ImageMetadata;
   imageAlt?: string;
   imageClassName?: string;
+  coverRatio?: "1/1" | "5/4" | "4/5";
   parallax?: boolean;
   parallaxOverflow?: number;
   mobileParallaxOverflow?: number;
+  sizes?: string;
+  /** Affiche la flèche CTA sur les appareils tactiles (home). Index : false. */
+  showTouchArrow?: boolean;
+  /** Si true, toute la carte est cliquable sur tous les appareils (index). */
+  alwaysClickable?: boolean;
   /** Lien vers la page projet. Temporairement "#" tant que les pages n'existent pas. */
   href?: string;
   cardReveal?: string;
@@ -30,9 +36,13 @@ const {
   image,
   imageAlt = "",
   imageClassName = "object-cover object-center",
+  coverRatio = "4/5",
   parallax = false,
   parallaxOverflow = 0.025,
   mobileParallaxOverflow = 0.04,
+  sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
+  showTouchArrow = true,
+  alwaysClickable = false,
   href = "#",
   cardReveal,
   cardRevealDelay,
@@ -42,6 +52,13 @@ const {
 const hasLabel = Boolean(label);
 const linkLabel =
   [label, subtitle].filter(Boolean).join(" — ") || "Voir le projet";
+
+const ASPECT_CLASS = {
+  "1/1": "aspect-square",
+  "5/4": "aspect-5/4",
+  "4/5": "aspect-4/5",
+} as const;
+const aspectClass = ASPECT_CLASS[coverRatio];
 ---
 
 <article
@@ -55,13 +72,19 @@ const linkLabel =
 >
   <a
     href={href}
-    class="absolute inset-0 z-30 hidden can-hover:block"
+    class:list={[
+      "absolute inset-0 z-30",
+      alwaysClickable ? "block" : "hidden can-hover:block",
+    ]}
     aria-label={linkLabel}
   >
   </a>
   <T2AMotifPattern />
   <div
-    class="relative z-10 aspect-4/5 w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash) motion-safe:can-hover:transition-transform motion-safe:can-hover:duration-300 motion-safe:can-hover:ease-out motion-safe:can-hover:group-hover:scale-[1.03]"
+    class:list={[
+      "relative z-10 w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash) motion-safe:can-hover:transition-transform motion-safe:can-hover:duration-300 motion-safe:can-hover:ease-out motion-safe:can-hover:group-hover:scale-[1.03]",
+      aspectClass,
+    ]}
   >
     {
       image && parallax ? (
@@ -77,7 +100,7 @@ const linkLabel =
             loading="lazy"
             quality={85}
             widths={[400, 600, 800]}
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            sizes={sizes}
             src={image}
           />
         </ParallaxFrame>
@@ -89,7 +112,7 @@ const linkLabel =
           loading="lazy"
           quality={85}
           widths={[400, 600, 800]}
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          sizes={sizes}
           src={image}
         />
       ) : null
@@ -99,7 +122,12 @@ const linkLabel =
     hasLabel ? (
       <a
         href={href}
-        class="relative z-30 mt-5 block can-hover:pointer-events-none"
+        class:list={[
+          "relative z-30 mt-5 block",
+          alwaysClickable
+            ? "pointer-events-none"
+            : "can-hover:pointer-events-none",
+        ]}
         aria-label={linkLabel}
         data-reveal={cardReveal ? "fade" : undefined}
       >
@@ -115,12 +143,14 @@ const linkLabel =
         {subtitle && (
           <p class="mt-1 flex items-baseline justify-between text-[0.82rem] tracking-[0.04em] text-(--text-secondary)">
             <span>{subtitle}</span>
-            <span
-              aria-hidden="true"
-              class="text-[24px] leading-none text-(--t2a-blue) can-hover:hidden"
-            >
-              →
-            </span>
+            {showTouchArrow && (
+              <span
+                aria-hidden="true"
+                class="text-[24px] leading-none text-(--t2a-blue) can-hover:hidden"
+              >
+                →
+              </span>
+            )}
           </p>
         )}
       </a>

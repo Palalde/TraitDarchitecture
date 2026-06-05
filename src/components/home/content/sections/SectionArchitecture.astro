@@ -1,5 +1,5 @@
 ---
-import ArchitectureCardBlock from "@/components/home/content/blocks/ArchitectureCardBlock.astro";
+import ProjectCard from "@/components/architecture/blocks/ProjectCard.astro";
 import bancaouImg from "@/content/projects/le-bancaou/cover.png";
 import secaireImg from "@/content/projects/u-secaire/cover.png";
 import casaVImg from "@/content/projects/casa-v/cover.jpg";
@@ -107,7 +107,7 @@ const architectureCards = [
             cardRevealDelay,
             mobileCardReveal,
           }) => (
-            <ArchitectureCardBlock
+            <ProjectCard
               image={image}
               imageAlt={imageAlt}
               imageClassName={imageClassName}
