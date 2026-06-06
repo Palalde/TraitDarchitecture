@@ -58,7 +58,7 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
   </script>
 
   <ArchitectureHero />
-  <div class="mt-8 sm:mt-9 lg:mt-10">
+  <div class="relative z-20 mt-8 sm:mt-9 lg:mt-10">
     <ArchitectureFilters
       projects={projectMeta}
       typeOptions={typeOptions}
@@ -67,7 +67,7 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
       client:visible
     />
   </div>
-  <div class="mt-4 sm:mt-5 lg:mt-6">
+  <div class="relative z-10 mt-4 sm:mt-5 lg:mt-6">
     <ArchitectureGrid projects={projects} />
   </div>
 </section>

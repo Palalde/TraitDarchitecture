@@ -3,6 +3,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type Dispatch,
   type SetStateAction,
 } from "react";
@@ -170,7 +171,11 @@ export function ArchitectureFilters({
       aria-label="Filtrer les projets"
       className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10"
     >
-      <div className="flex flex-wrap items-center gap-x-1 gap-y-2 border-b border-(--border) pb-3 sm:gap-x-2">
+      <div
+        data-reveal="fade-up"
+        style={{ "--reveal-delay": "60ms" } as CSSProperties}
+        className="flex flex-wrap items-center gap-x-1 gap-y-2 pb-3 sm:gap-x-2"
+      >
         {ZONES.map((zone) => {
           const isActive = activeZone === zone.value;
           return (
@@ -205,8 +210,19 @@ export function ArchitectureFilters({
         })}
       </div>
 
+      <span
+        aria-hidden="true"
+        data-reveal="fade"
+        style={{ "--reveal-delay": "120ms" } as CSSProperties}
+        className="block h-px w-full bg-(--border)"
+      />
+
       <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-4">
-        <div className="flex flex-wrap items-center gap-2">
+        <div
+          data-reveal="fade-up"
+          style={{ "--reveal-delay": "180ms" } as CSSProperties}
+          className="flex flex-wrap items-center gap-2"
+        >
           {families.map((family) => {
             const isOpen = openFamily === family.key;
             const activeN = family.active.size;
@@ -322,7 +338,11 @@ export function ArchitectureFilters({
           )}
         </div>
 
-        <p className="text-xs uppercase tracking-[0.12em] text-(--text-muted)">
+        <p
+          data-reveal="fade-up"
+          style={{ "--reveal-delay": "240ms" } as CSSProperties}
+          className="text-xs uppercase tracking-[0.12em] text-(--text-muted)"
+        >
           {visibleCount} projet{visibleCount > 1 ? "s" : ""}
         </p>
       </div>
