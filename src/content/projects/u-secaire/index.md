@@ -6,7 +6,7 @@ zone: "provence"
 cover: "./cover.png"
 coverRatio: "4/5"
 coverAlt: "U Secaïre à Mézel, rénovation en pierre en contexte rural"
-order: 60
+order: 20
 types: ["renovation"]
 materials: ["pierre"]
 programs: ["logement", "rural"]

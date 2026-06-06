@@ -6,7 +6,7 @@ zone: "corse"
 cover: "./cover.webp"
 coverRatio: "1/1"
 coverAlt: "Surélévation bois de la Casa Ocanera à Vignale"
-order: 1
+order: 10
 types: ["surelevation"]
 materials: ["bois", "biosource"]
 programs: ["logement"]

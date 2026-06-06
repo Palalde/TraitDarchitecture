@@ -1,6 +1,6 @@
 ---
 import ArchitectureHero from "@/components/architecture/blocks/ArchitectureHero.astro";
-import ProjectCard from "@/components/architecture/blocks/ProjectCard.astro";
+import ArchitectureGrid from "@/components/architecture/blocks/ArchitectureGrid.astro";
 import { getSortedProjects } from "@/components/architecture/architecture.data";
 
 const projects = await getSortedProjects();
@@ -8,26 +8,7 @@ const projects = await getSortedProjects();
 
 <section data-architecture-shell class="relative z-10">
   <ArchitectureHero />
-  <!-- Rendu temporaire empilé (étape 6). La mosaïque ArchitectureGrid arrive à l'étape 7. -->
-  <div
-    class="mx-auto flex w-full max-w-md flex-col gap-12 px-6 pt-12 pb-24 sm:px-8 lg:px-10"
-  >
-    {
-      projects.map((project) => {
-        const slug = project.id.replace(/\/index$/, "");
-        return (
-          <ProjectCard
-            coverRatio={project.data.coverRatio}
-            image={project.data.cover}
-            imageAlt={project.data.coverAlt}
-            label={project.data.name}
-            subtitle={`${project.data.city} (${project.data.dept})`}
-            href={`/architecture/${slug}`}
-            showTouchArrow={false}
-            alwaysClickable
-          />
-        );
-      })
-    }
+  <div class="mt-12 sm:mt-14 lg:mt-16">
+    <ArchitectureGrid projects={projects} />
   </div>
 </section>

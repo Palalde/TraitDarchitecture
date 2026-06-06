@@ -6,7 +6,7 @@ zone: "provence"
 cover: "./cover.jpg"
 coverRatio: "5/4"
 coverAlt: "Maison C à Soleilhas, construction neuve à ossature bois"
-order: 80
+order: 40
 types: ["neuf"]
 materials: ["bois", "biosource"]
 programs: ["logement", "rural"]

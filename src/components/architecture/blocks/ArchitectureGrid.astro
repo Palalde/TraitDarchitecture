@@ -1,11 +1,46 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ProjectCard from "@/components/architecture/blocks/ProjectCard.astro";
 
 interface Props {
   projects: CollectionEntry<"projects">[];
 }
 
-// Placeholder — mosaïque responsive implémentée aux étapes 3 et 6.
 const { projects } = Astro.props;
-void projects;
+
+const INDEX_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
 ---
+
+<ul
+  class="mx-auto w-full max-w-7xl columns-1 gap-6 px-6 pb-24 sm:columns-2 sm:px-8 lg:columns-4 lg:gap-8 lg:px-10"
+>
+  {
+    projects.map((project) => {
+      const slug = project.id.replace(/\/index$/, "");
+      const { name, city, dept, zone, cover, coverAlt, coverRatio } =
+        project.data;
+      return (
+        <li
+          class="mb-6 break-inside-avoid lg:mb-8"
+          data-project-card
+          data-zone={zone}
+          data-types={(project.data.types ?? []).join(",")}
+          data-materials={(project.data.materials ?? []).join(",")}
+          data-programs={(project.data.programs ?? []).join(",")}
+        >
+          <ProjectCard
+            coverRatio={coverRatio}
+            image={cover}
+            imageAlt={coverAlt}
+            label={name}
+            subtitle={`${city} (${dept})`}
+            href={`/architecture/${slug}`}
+            sizes={INDEX_SIZES}
+            showTouchArrow={false}
+            alwaysClickable
+          />
+        </li>
+      );
+    })
+  }
+</ul>
