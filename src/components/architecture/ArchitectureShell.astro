@@ -2,22 +2,53 @@
 import ArchitectureHero from "@/components/architecture/blocks/ArchitectureHero.astro";
 import ArchitectureGrid from "@/components/architecture/blocks/ArchitectureGrid.astro";
 import { ArchitectureFilters } from "@/components/architecture/blocks/ArchitectureFilters";
-import { getSortedProjects } from "@/components/architecture/architecture.data";
+import {
+  getSortedProjects,
+  TYPE_LABELS,
+  MATERIAL_LABELS,
+  PROGRAM_LABELS,
+} from "@/components/architecture/architecture.data";
 
 const projects = await getSortedProjects();
 
-const zoneCounts = { corse: 0, "cote-bleue": 0, provence: 0 };
-for (const project of projects) {
-  zoneCounts[project.data.zone] += 1;
-}
+const projectMeta = projects.map((project) => ({
+  zone: project.data.zone,
+  types: project.data.types ?? [],
+  materials: project.data.materials ?? [],
+  programs: project.data.programs ?? [],
+}));
+
+const usedTypes = new Set(projectMeta.flatMap((project) => project.types));
+const usedMaterials = new Set(
+  projectMeta.flatMap((project) => project.materials),
+);
+const usedPrograms = new Set(
+  projectMeta.flatMap((project) => project.programs),
+);
+
+const buildOptions = <T extends string>(
+  labels: Record<T, string>,
+  used: Set<string>,
+) =>
+  (Object.keys(labels) as T[]).map((value) => ({
+    value,
+    label: labels[value],
+    available: used.has(value),
+  }));
+
+const typeOptions = buildOptions(TYPE_LABELS, usedTypes);
+const materialOptions = buildOptions(MATERIAL_LABELS, usedMaterials);
+const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
 ---
 
 <section data-architecture-shell class="relative z-10">
   <ArchitectureHero />
   <div class="mt-8 sm:mt-9 lg:mt-10">
     <ArchitectureFilters
-      total={projects.length}
-      counts={zoneCounts}
+      projects={projectMeta}
+      typeOptions={typeOptions}
+      materialOptions={materialOptions}
+      programOptions={programOptions}
       client:visible
     />
   </div>
