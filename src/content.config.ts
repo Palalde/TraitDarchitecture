@@ -13,6 +13,8 @@ const projects = defineCollection({
       coverRatio: z.enum(["1/1", "5/4", "4/5"]),
       coverAlt: z.string(),
       order: z.number(),
+      // Projet vedette home : position (1, 2, 3). Absent = non vedette.
+      home: z.number().int().positive().optional(),
       types: z
         .array(z.enum(["neuf", "renovation", "extension", "surelevation"]))
         .optional(),

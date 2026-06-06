@@ -1,8 +1,6 @@
 ---
 import ProjectCard from "@/components/architecture/blocks/ProjectCard.astro";
-import bancaouImg from "@/content/projects/le-bancaou/cover.png";
-import secaireImg from "@/content/projects/u-secaire/cover.png";
-import casaVImg from "@/content/projects/casa-v/cover.jpg";
+import { getHomeFeaturedProjects } from "@/components/architecture/architecture.data";
 
 interface Props {
   className?: string;
@@ -10,41 +8,40 @@ interface Props {
 
 const { className }: Props = Astro.props;
 
-// cards data
-const architectureCards = [
+// Reveal config positionnelle (1er / 2e / 3e projet vedette).
+const REVEAL_CONFIG = [
   {
-    image: casaVImg,
-    imageAlt: "CASA V — Croquis de façade du projet à Olmeta-di-Tuda, Corse",
-    imageClassName: "object-cover object-center",
-    label: "CASA V",
-    subtitle: "Olmeta-di-Tuda, Corse",
-    href: "#", // TODO: remplacer par "/architecture/casa-v"
     cardReveal: "fade-left" as const,
     mobileCardReveal: "fade-up" as const,
     cardRevealDelay: "max-lg:[--reveal-start-opacity:1]",
   },
   {
-    image: bancaouImg,
-    imageAlt: "LE BANCAOU — Coupe 3D du projet à Sausset-les-Pins, Côte Bleue",
-    imageClassName: "object-cover object-center",
-    label: "LE BANCAOU",
-    subtitle: "Sausset-les-Pins, Côte Bleue",
-    href: "#", // TODO: remplacer par "/architecture/le-bancaou"
     cardReveal: "fade-up" as const,
+    mobileCardReveal: undefined,
     cardRevealDelay: "[--reveal-start-opacity:1]",
   },
   {
-    image: secaireImg,
-    imageAlt: "U SECAïRE — Croquis axonométrique du projet à Mézel, Provence",
-    imageClassName: "object-cover object-center",
-    label: "U SECAïRE",
-    subtitle: "Mézel, Provence",
-    href: "#", // TODO: remplacer par "/architecture/u-secaire"
     cardReveal: "fade-right" as const,
     mobileCardReveal: "fade-up" as const,
     cardRevealDelay: "max-lg:[--reveal-start-opacity:1]",
   },
 ];
+
+// Projets vedettes pilotés par le champ `home` du frontmatter (position 1, 2, 3).
+const featuredProjects = await getHomeFeaturedProjects();
+const architectureCards = featuredProjects.map((project, index) => {
+  const slug = project.id.replace(/\/index$/, "");
+  const { name, city, dept, cover, coverAlt } = project.data;
+  return {
+    image: cover,
+    imageAlt: coverAlt,
+    imageClassName: "object-cover object-center",
+    label: name,
+    subtitle: `${city} (${dept})`,
+    href: `/architecture/${slug}`,
+    ...REVEAL_CONFIG[index],
+  };
+});
 ---
 
 <section

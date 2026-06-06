@@ -43,3 +43,28 @@ export async function getSortedProjects(): Promise<
     return a.data.name.localeCompare(b.data.name, "fr");
   });
 }
+
+/** Nombre de projets vedettes attendus par la section home (3 cartes). */
+const HOME_FEATURED_COUNT = 3;
+
+/**
+ * Projets vedettes de la home, pilotés par le champ `home` du frontmatter
+ * (position 1, 2, 3). Ignore les draft, trie par `home` croissant, et lève
+ * une erreur de build explicite si le compte attendu n'est pas respecté.
+ */
+export async function getHomeFeaturedProjects(): Promise<
+  CollectionEntry<"projects">[]
+> {
+  const projects = await getCollection("projects", ({ data }) => !data.draft);
+  const featured = projects
+    .filter((p) => p.data.home !== undefined)
+    .sort((a, b) => a.data.home! - b.data.home!);
+
+  if (featured.length !== HOME_FEATURED_COUNT) {
+    throw new Error(
+      `[architecture] La home attend ${HOME_FEATURED_COUNT} projets vedettes (champ "home: 1|2|3" dans le frontmatter), ${featured.length} trouvé(s). Vérifier src/content/projects/*/index.md (champ "home", projets en draft).`,
+    );
+  }
+
+  return featured;
+}

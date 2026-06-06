@@ -7,6 +7,7 @@ cover: "./cover.jpg"
 coverRatio: "4/5"
 coverAlt: "Casa V à Olmeta-di-Tuda, rénovation en pierre en contexte rural de Haute-Corse"
 order: 30
+home: 1
 types: ["renovation"]
 materials: ["pierre"]
 programs: ["logement", "rural"]
