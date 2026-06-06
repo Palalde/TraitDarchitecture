@@ -1,14 +1,27 @@
 ---
 import ArchitectureHero from "@/components/architecture/blocks/ArchitectureHero.astro";
 import ArchitectureGrid from "@/components/architecture/blocks/ArchitectureGrid.astro";
+import { ArchitectureFilters } from "@/components/architecture/blocks/ArchitectureFilters";
 import { getSortedProjects } from "@/components/architecture/architecture.data";
 
 const projects = await getSortedProjects();
+
+const zoneCounts = { corse: 0, "cote-bleue": 0, provence: 0 };
+for (const project of projects) {
+  zoneCounts[project.data.zone] += 1;
+}
 ---
 
 <section data-architecture-shell class="relative z-10">
   <ArchitectureHero />
   <div class="mt-12 sm:mt-14 lg:mt-16">
+    <ArchitectureFilters
+      total={projects.length}
+      counts={zoneCounts}
+      client:visible
+    />
+  </div>
+  <div class="mt-8 sm:mt-10 lg:mt-12">
     <ArchitectureGrid projects={projects} />
   </div>
 </section>
