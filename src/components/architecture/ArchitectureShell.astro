@@ -41,7 +41,11 @@ const materialOptions = buildOptions(MATERIAL_LABELS, usedMaterials);
 const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
 ---
 
-<section data-architecture-shell class="relative z-10">
+<section
+  data-architecture-shell
+  class="relative z-10"
+  style="--reveal-d: 550ms;"
+>
   <script is:inline data-astro-rerun>
     (() => {
       const revealSystem = window.__t2aReveal;
@@ -58,7 +62,7 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
   </script>
 
   <ArchitectureHero />
-  <div class="relative z-20 mt-8 sm:mt-9 lg:mt-10">
+  <div class="relative z-20 mt-8 sm:mt-9 lg:mt-10" style="--reveal-d: 400ms;">
     <ArchitectureFilters
       projects={projectMeta}
       typeOptions={typeOptions}

@@ -173,7 +173,7 @@ export function ArchitectureFilters({
     >
       <div
         data-reveal="fade-up"
-        style={{ "--reveal-delay": "60ms" } as CSSProperties}
+        style={{ "--reveal-delay": "0ms" } as CSSProperties}
         className="flex flex-wrap items-center gap-x-1 gap-y-2 pb-3 sm:gap-x-2"
       >
         {ZONES.map((zone) => {
@@ -213,14 +213,14 @@ export function ArchitectureFilters({
       <span
         aria-hidden="true"
         data-reveal="fade"
-        style={{ "--reveal-delay": "120ms" } as CSSProperties}
+        style={{ "--reveal-delay": "50ms" } as CSSProperties}
         className="block h-px w-full bg-(--border)"
       />
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-4">
         <div
           data-reveal="fade-up"
-          style={{ "--reveal-delay": "180ms" } as CSSProperties}
+          style={{ "--reveal-delay": "100ms" } as CSSProperties}
           className="relative z-20 flex flex-wrap items-center gap-2"
         >
           {families.map((family) => {
@@ -340,7 +340,7 @@ export function ArchitectureFilters({
 
         <p
           data-reveal="fade-up"
-          style={{ "--reveal-delay": "240ms" } as CSSProperties}
+          style={{ "--reveal-delay": "140ms" } as CSSProperties}
           className="relative z-10 text-xs uppercase tracking-[0.12em] text-(--text-muted)"
         >
           {visibleCount} projet{visibleCount > 1 ? "s" : ""}
