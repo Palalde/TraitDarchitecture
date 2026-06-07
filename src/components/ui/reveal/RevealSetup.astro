@@ -23,9 +23,9 @@
     });
 
     // Expose the in-flight view transition's `finished` promise so controllers
-    // can defer reveals until AFTER the transition overlay is removed. WebKit
-    // collapses CSS multi-column layouts to a single column while the root VT
-    // overlay is on screen, so such reveals must wait for it to finish.
+    // can defer reveals until AFTER the transition overlay is removed. On
+    // iOS/WebKit a reveal still animating when the root VT ends visibly rolls
+    // back, so such reveals must wait for the transition to finish.
     window.__t2aTransitionFinished = null;
     document.addEventListener("astro:before-swap", (event) => {
       window.__t2aTransitionFinished = event.viewTransition?.finished ?? null;
@@ -165,8 +165,8 @@
       };
 
       // Like startAfterPageVisible, but on SPA navigation it also waits for the
-      // view transition to finish before revealing. Used for layouts (e.g. CSS
-      // multi-column) that WebKit renders incorrectly inside the VT overlay.
+      // view transition to finish before revealing. Used where a reveal must
+      // not still be animating when the root VT ends (iOS/WebKit rollback).
       const startAfterPageTransition = (delayMs = getResponsiveDelay()) => {
         if (tornDown) return;
 

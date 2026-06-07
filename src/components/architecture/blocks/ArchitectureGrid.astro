@@ -63,8 +63,8 @@ const INDEX_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
       if (!grid || grid.getAttribute("data-masonry-on") === "1") return;
       grid.setAttribute("data-masonry-on", "1");
 
-      const readVar = (name, fallback) => {
-        const value = parseFloat(getComputedStyle(grid).getPropertyValue(name));
+      const readVar = (style, name, fallback) => {
+        const value = parseFloat(style.getPropertyValue(name));
         return Number.isFinite(value) ? value : fallback;
       };
 
@@ -76,9 +76,10 @@ const INDEX_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
       };
 
       const layout = () => {
-        const cols = readVar("--masonry-cols", 1);
+        const gridStyle = getComputedStyle(grid);
+        const cols = readVar(gridStyle, "--masonry-cols", 1);
         const cards = [...grid.querySelectorAll("[data-project-card]")].filter(
-          (card) => getComputedStyle(card).display !== "none",
+          (card) => !card.classList.contains("hidden"),
         );
 
         // Single column (mobile): plain document flow, no masonry needed.
@@ -90,7 +91,7 @@ const INDEX_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
           return;
         }
 
-        const gap = readVar("--masonry-gap", 24);
+        const gap = readVar(gridStyle, "--masonry-gap", 24);
         const width = grid.clientWidth;
         if (width <= 0) return;
 

@@ -80,11 +80,11 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
   </div>
   <div data-architecture-grid class="relative z-10 mt-4 sm:mt-5 lg:mt-6">
     {
-      /* The project grid uses CSS multi-column, which WebKit collapses to a
-        single column while the root view-transition overlay is on screen. Keep
-        its cards hidden until the transition has finished, then reveal them in
-        the settled multi-column layout. Script inside the root so it also runs
-        on a fresh load. */
+      /* Defer the grid reveals until the view transition has fully finished.
+        On iOS/WebKit a reveal still animating when the root transition ends
+        (~800ms) visibly rolls back, so the cards stay hidden behind the
+        curtain and only animate once the page has settled. Script inside the
+        root so it also runs on a fresh (non-VT) load. */
     }
     <script is:inline data-astro-rerun>
       (() => {
