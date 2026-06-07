@@ -221,7 +221,7 @@ export function ArchitectureFilters({
         <div
           data-reveal="fade-up"
           style={{ "--reveal-delay": "180ms" } as CSSProperties}
-          className="flex flex-wrap items-center gap-2"
+          className="relative z-20 flex flex-wrap items-center gap-2"
         >
           {families.map((family) => {
             const isOpen = openFamily === family.key;
@@ -339,9 +339,9 @@ export function ArchitectureFilters({
         </div>
 
         <p
-          data-reveal="fade"
+          data-reveal="fade-up"
           style={{ "--reveal-delay": "240ms" } as CSSProperties}
-          className="text-xs uppercase tracking-[0.12em] text-(--text-muted)"
+          className="relative z-10 text-xs uppercase tracking-[0.12em] text-(--text-muted)"
         >
           {visibleCount} projet{visibleCount > 1 ? "s" : ""}
         </p>
