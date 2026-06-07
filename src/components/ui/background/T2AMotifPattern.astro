@@ -7,11 +7,21 @@ interface Props {
 
 const { class: className }: Props = Astro.props;
 
+// The motif SVG defines a `<pattern id="pattern70">` referenced by
+// `url(#pattern70)`. It is inlined into every card, so without namespacing the
+// id collides across instances; browsers resolve the reference to the first
+// match, and when that card is `display:none` (e.g. filtered out) the reference
+// breaks and the motif renders as a solid fill. Suffix every id (and its
+// reference) with a per-instance token to keep each inlined SVG self-contained.
+const uid = `t2a-motif-${crypto.randomUUID().slice(0, 8)}`;
+
 const motifSvg = motifSvgRaw
   .replace(/<\?xml[\s\S]*?\?>/g, "")
   .replace(/<!--[\s\S]*?-->/g, "")
   .replace(/fill:#51638b/g, "fill:none")
   .replace(/stroke:#ffffff/g, "stroke:currentColor")
+  .replace(/\bid="([^"]+)"/g, `id="$1-${uid}"`)
+  .replace(/url\(#([^)]+)\)/g, `url(#$1-${uid})`)
   .replace(
     /<svg([^>]*)>/,
     '<svg$1 preserveAspectRatio="xMidYMid slice" focusable="false" aria-hidden="true">',
