@@ -339,7 +339,7 @@ export function ArchitectureFilters({
         </div>
 
         <p
-          data-reveal="fade-up"
+          data-reveal="fade"
           style={{ "--reveal-delay": "240ms" } as CSSProperties}
           className="text-xs uppercase tracking-[0.12em] text-(--text-muted)"
         >
