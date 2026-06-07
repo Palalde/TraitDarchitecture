@@ -788,6 +788,18 @@ astro-slot {
   opacity: 0;
 }
 
+/* /architecture grid: on leave it is lifted into its own group and hidden so
+   WebKit's collapsed (single-column) multicol snapshot is never shown. The
+   grid reveals normally on arrival via the deferred reveal controller. */
+::view-transition-group(t2a-arch-grid),
+::view-transition-old(t2a-arch-grid),
+::view-transition-new(t2a-arch-grid) {
+  animation: none;
+}
+::view-transition-old(t2a-arch-grid) {
+  opacity: 0;
+}
+
 /* Root : old fades out, new is revealed top→bottom via clip-path. No
    transform on either pseudo → no SCB gap (avoids the URL-bar black
   band on Chromium Android). Pure clip-path + opacity = GPU composite.

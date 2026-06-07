@@ -73,25 +73,22 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
         ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
     })();
 
-    // When LEAVING /architecture, WebKit re-evaluates the responsive
-    // multi-column at its base breakpoint inside the outgoing root snapshot,
-    // collapsing the grid to one column during the leave animation. Pin the
-    // current column-count inline before the snapshot is captured so the
-    // leaving snapshot keeps the real layout. Pinning to the already-computed
-    // value is a visual no-op on the live page (no flash), and the grid node
-    // is discarded on swap so no cleanup is needed.
-    if (!window.__t2aArchGridColumnPinInstalled) {
-      window.__t2aArchGridColumnPinInstalled = true;
+    // When LEAVING /architecture, WebKit collapses the grid's CSS multi-column
+    // to a single column inside the outgoing root snapshot (it re-lays-out the
+    // multicol in the snapshot context and ignores the real column count, so
+    // pinning column-count inline does NOT help). Instead, lift the grid into
+    // its OWN view-transition group on leave and hide that group, so the broken
+    // single-column snapshot is never shown. The grid still reveals normally on
+    // arrival (see startAfterPageTransition above). `view-transition-name` is
+    // inert outside a transition and the old DOM is discarded after swap, so
+    // there is no visual change on the live page and no cleanup is needed.
+    if (!window.__t2aArchGridLeaveHideInstalled) {
+      window.__t2aArchGridLeaveHideInstalled = true;
       document.addEventListener("astro:before-preparation", (event) => {
         if (new URL(event.from.href).pathname !== "/architecture") return;
 
-        const grid = document.querySelector("[data-architecture-grid] ul");
-        if (!grid) return;
-
-        const columnCount = getComputedStyle(grid).columnCount;
-        if (columnCount && columnCount !== "auto") {
-          grid.style.columnCount = columnCount;
-        }
+        const grid = document.querySelector("[data-architecture-grid]");
+        if (grid) grid.style.viewTransitionName = "t2a-arch-grid";
       });
     }
   </script>
