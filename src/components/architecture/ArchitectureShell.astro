@@ -46,35 +46,27 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
   class="relative z-10"
   style="--reveal-d: 450ms;"
 >
-  <script is:inline data-astro-rerun>
-    (() => {
-      const revealSystem = window.__t2aReveal;
-      if (!revealSystem) return;
-
-      // Hero + filters reveal as the page-transition curtain lifts.
-      revealSystem
-        .createController({
-          id: "architecture-head",
-          pathname: "/architecture",
-          rootSelector: "[data-architecture-head]",
-        })
-        ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
-
-      // The project grid uses CSS multi-column, which WebKit collapses to a
-      // single column while the root view-transition overlay is on screen.
-      // Keep its cards hidden until the transition has fully finished, then
-      // reveal them in the settled multi-column layout.
-      revealSystem
-        .createController({
-          id: "architecture-grid",
-          pathname: "/architecture",
-          rootSelector: "[data-architecture-grid]",
-        })
-        ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
-    })();
-  </script>
-
   <div data-architecture-head>
+    {
+      /* Script inside its reveal root (targets the parent, which exists at parse
+        time) so the hero + filters reveal on a fresh load too, not only via VT. */
+    }
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        // Hero + filters reveal as the page-transition curtain lifts.
+        revealSystem
+          .createController({
+            id: "architecture-head",
+            pathname: "/architecture",
+            rootSelector: "[data-architecture-head]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
     <ArchitectureHero />
     <div class="relative z-20 mt-8 sm:mt-9 lg:mt-10" style="--reveal-d: 400ms;">
       <ArchitectureFilters
@@ -87,6 +79,28 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
     </div>
   </div>
   <div data-architecture-grid class="relative z-10 mt-4 sm:mt-5 lg:mt-6">
+    {
+      /* The project grid uses CSS multi-column, which WebKit collapses to a
+        single column while the root view-transition overlay is on screen. Keep
+        its cards hidden until the transition has finished, then reveal them in
+        the settled multi-column layout. Script inside the root so it also runs
+        on a fresh load. */
+    }
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "architecture-grid",
+            pathname: "/architecture",
+            rootSelector: "[data-architecture-grid]",
+          })
+          ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
     <ArchitectureGrid projects={projects} />
   </div>
 </section>
