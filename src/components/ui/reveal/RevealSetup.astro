@@ -22,6 +22,15 @@
       window.__t2aPendingAstroNavigation = false;
     });
 
+    // Expose the in-flight view transition's `finished` promise so controllers
+    // can defer reveals until AFTER the transition overlay is removed. WebKit
+    // collapses CSS multi-column layouts to a single column while the root VT
+    // overlay is on screen, so such reveals must wait for it to finish.
+    window.__t2aTransitionFinished = null;
+    document.addEventListener("astro:before-swap", (event) => {
+      window.__t2aTransitionFinished = event.viewTransition?.finished ?? null;
+    });
+
     const getResponsiveDelay = () =>
       window.matchMedia(DESKTOP_REVEAL_MEDIA_QUERY).matches
         ? DESKTOP_REVEAL_DELAY_MS
@@ -62,6 +71,7 @@
         return {
           startAfter: () => {},
           startAfterPageVisible: () => {},
+          startAfterPageTransition: () => {},
           startOnWindowEvent: () => {},
           teardown: () => {},
         };
@@ -154,6 +164,34 @@
         startAfter(delayMs);
       };
 
+      // Like startAfterPageVisible, but on SPA navigation it also waits for the
+      // view transition to finish before revealing. Used for layouts (e.g. CSS
+      // multi-column) that WebKit renders incorrectly inside the VT overlay.
+      const startAfterPageTransition = (delayMs = getResponsiveDelay()) => {
+        if (tornDown) return;
+
+        if (!window.__t2aPendingAstroNavigation) {
+          startAfter(delayMs);
+          return;
+        }
+
+        pageLoadListener = () => {
+          pageLoadListener = null;
+          const finished = window.__t2aTransitionFinished;
+          if (finished && typeof finished.then === "function") {
+            finished.then(
+              () => startAfter(delayMs),
+              () => startAfter(delayMs),
+            );
+          } else {
+            startAfter(delayMs);
+          }
+        };
+        document.addEventListener("astro:page-load", pageLoadListener, {
+          once: true,
+        });
+      };
+
       const startOnWindowEvent = (eventName, delayMs = 0) => {
         if (tornDown) return;
 
@@ -201,6 +239,7 @@
       const controller = {
         startAfter,
         startAfterPageVisible,
+        startAfterPageTransition,
         startOnWindowEvent,
         teardown,
       };

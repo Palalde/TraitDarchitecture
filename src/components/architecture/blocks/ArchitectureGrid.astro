@@ -23,6 +23,7 @@ const INDEX_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
           class="mb-6 break-inside-avoid lg:mb-8"
           data-project-card
           data-reveal="fade-up"
+          style={`--reveal-delay:${Math.min(index, 7) * 60}ms;`}
         >
           <ProjectCard
             coverRatio={coverRatio}
