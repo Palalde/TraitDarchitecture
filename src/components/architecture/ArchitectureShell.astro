@@ -44,7 +44,7 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
 <section
   data-architecture-shell
   class="relative z-10"
-  style="--reveal-d: 500ms;"
+  style="--reveal-d: 450ms;"
 >
   <script is:inline data-astro-rerun>
     (() => {
@@ -72,25 +72,6 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
         })
         ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
     })();
-
-    // When LEAVING /architecture, WebKit collapses the grid's CSS multi-column
-    // to a single column inside the outgoing root snapshot (it re-lays-out the
-    // multicol in the snapshot context and ignores the real column count, so
-    // pinning column-count inline does NOT help). Instead, lift the grid into
-    // its OWN view-transition group on leave and hide that group, so the broken
-    // single-column snapshot is never shown. The grid still reveals normally on
-    // arrival (see startAfterPageTransition above). `view-transition-name` is
-    // inert outside a transition and the old DOM is discarded after swap, so
-    // there is no visual change on the live page and no cleanup is needed.
-    if (!window.__t2aArchGridLeaveHideInstalled) {
-      window.__t2aArchGridLeaveHideInstalled = true;
-      document.addEventListener("astro:before-preparation", (event) => {
-        if (new URL(event.from.href).pathname !== "/architecture") return;
-
-        const grid = document.querySelector("[data-architecture-grid]");
-        if (grid) grid.style.viewTransitionName = "t2a-arch-grid";
-      });
-    }
   </script>
 
   <div data-architecture-head>
