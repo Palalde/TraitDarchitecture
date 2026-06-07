@@ -236,5 +236,88 @@ const overlayScrollbarsMediaQuery =
         document.addEventListener("astro:page-load", complete);
       })();
     </script>
+    <script is:inline>
+      // Forward-navigation scroll reset.
+      //
+      // On iOS WebKit / the Google app, when the URL bar is collapsed the
+      // native view transition can be skipped abnormally. The scroll-to-top
+      // Astro performs *inside* the transition callback is then lost, so the
+      // new page keeps the previous scroll offset and a shorter destination
+      // clamps to its footer (a taller one lands mid-page). Re-assert the top
+      // after the navigation has settled (astro:page-load fires whether or not
+      // the transition played), for forward navigations only so back/forward
+      // scroll restoration keeps working.
+      (() => {
+        if (window.__t2aScrollResetInit) return;
+        window.__t2aScrollResetInit = true;
+
+        let pendingNavigationType = null;
+        let viewportGuard = null;
+
+        const clearViewportGuard = () => {
+          if (!viewportGuard) return;
+          const guard = viewportGuard;
+          viewportGuard = null;
+          clearTimeout(guard.timer);
+          window.visualViewport?.removeEventListener("resize", guard.onResize);
+          window.removeEventListener("touchstart", guard.onUserInput, true);
+          window.removeEventListener("wheel", guard.onUserInput, true);
+          window.removeEventListener("keydown", guard.onUserInput, true);
+          window.removeEventListener("pointerdown", guard.onUserInput, true);
+        };
+
+        const scrollToTop = () => {
+          if (window.location.hash) return;
+          window.scrollTo(0, 0);
+        };
+
+        // While the visual viewport is still settling after a forward
+        // navigation (notably the Google app reopening its URL bar), keep the
+        // page pinned to the top — but bail out the moment the user interacts,
+        // so a deliberate scroll is never fought.
+        const armViewportGuard = () => {
+          clearViewportGuard();
+          if (!window.visualViewport) return;
+
+          const onResize = () => scrollToTop();
+          const onUserInput = () => clearViewportGuard();
+          const timer = window.setTimeout(clearViewportGuard, 1000);
+
+          viewportGuard = { onResize, onUserInput, timer };
+          window.visualViewport.addEventListener("resize", onResize);
+          window.addEventListener("touchstart", onUserInput, {
+            capture: true,
+            passive: true,
+          });
+          window.addEventListener("wheel", onUserInput, {
+            capture: true,
+            passive: true,
+          });
+          window.addEventListener("keydown", onUserInput, true);
+          window.addEventListener("pointerdown", onUserInput, true);
+        };
+
+        document.addEventListener("astro:before-preparation", (event) => {
+          pendingNavigationType = event.navigationType;
+        });
+
+        document.addEventListener("astro:page-load", () => {
+          const navigationType = pendingNavigationType;
+          pendingNavigationType = null;
+
+          // Only handle deliberate forward navigations. Back/forward
+          // ("traverse") and the initial load keep their native/Astro scroll
+          // restoration.
+          if (navigationType !== "push" && navigationType !== "replace") {
+            clearViewportGuard();
+            return;
+          }
+
+          scrollToTop();
+          requestAnimationFrame(() => requestAnimationFrame(scrollToTop));
+          armViewportGuard();
+        });
+      })();
+    </script>
   </body>
 </html>
