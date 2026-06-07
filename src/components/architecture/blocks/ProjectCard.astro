@@ -21,6 +21,8 @@ interface Props {
   showTouchArrow?: boolean;
   /** Si true, toute la carte est cliquable sur tous les appareils (index). */
   alwaysClickable?: boolean;
+  /** Image LCP : loading eager + fetchpriority high (cartes above-the-fold de l'index). */
+  priority?: boolean;
   /** Lien vers la page projet. Temporairement "#" tant que les pages n'existent pas. */
   href?: string;
   cardReveal?: string;
@@ -43,6 +45,7 @@ const {
   sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw",
   showTouchArrow = true,
   alwaysClickable = false,
+  priority = false,
   href = "#",
   cardReveal,
   cardRevealDelay,
@@ -97,7 +100,8 @@ const aspectClass = ASPECT_CLASS[coverRatio];
             alt={imageAlt}
             class:list={["h-full w-full", imageClassName]}
             draggable="false"
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            fetchpriority={priority ? "high" : undefined}
             quality={85}
             widths={[400, 600, 800]}
             sizes={sizes}
@@ -109,7 +113,8 @@ const aspectClass = ASPECT_CLASS[coverRatio];
           alt={imageAlt}
           class:list={["h-full w-full", imageClassName]}
           draggable="false"
-          loading="lazy"
+          loading={priority ? "eager" : "lazy"}
+          fetchpriority={priority ? "high" : undefined}
           quality={85}
           widths={[400, 600, 800]}
           sizes={sizes}

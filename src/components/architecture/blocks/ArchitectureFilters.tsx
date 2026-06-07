@@ -185,7 +185,7 @@ export function ArchitectureFilters({
               aria-pressed={isActive}
               onClick={() => setActiveZone(zone.value)}
               className={[
-                "group relative inline-flex cursor-pointer items-center justify-center whitespace-nowrap px-3 py-1.5",
+                "group relative inline-flex min-h-11 cursor-pointer items-center justify-center whitespace-nowrap px-3 py-1.5",
                 "text-sm tracking-[0.08em] transition-colors duration-200 ease-out sm:px-4 sm:text-base",
                 isActive
                   ? "font-semibold text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
@@ -234,12 +234,11 @@ export function ArchitectureFilters({
               >
                 <button
                   type="button"
-                  aria-haspopup="true"
                   aria-expanded={isOpen}
                   aria-controls={`filter-menu-${family.key}`}
                   onClick={() => setOpenFamily(isOpen ? null : family.key)}
                   className={[
-                    "inline-flex cursor-pointer items-center gap-1.5 border px-3 py-1.5 text-sm tracking-[0.04em] transition-colors duration-200 ease-out",
+                    "inline-flex min-h-11 cursor-pointer items-center gap-1.5 border px-3 py-1.5 text-sm tracking-[0.04em] transition-colors duration-200 ease-out",
                     activeN > 0 || isOpen
                       ? "border-(--t2a-blue) text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
                       : "border-(--border) text-(--text-secondary) hover:border-(--t2a-blue) hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)",
@@ -256,7 +255,7 @@ export function ArchitectureFilters({
                     stroke="currentColor"
                     strokeWidth="1.5"
                     className={[
-                      "h-3 w-3 transition-transform duration-200 ease-out",
+                      "h-3 w-3 transition-transform duration-200 ease-out motion-reduce:transition-none",
                       isOpen ? "rotate-180" : "",
                     ].join(" ")}
                   >
@@ -267,7 +266,8 @@ export function ArchitectureFilters({
                 {isOpen && (
                   <div
                     id={`filter-menu-${family.key}`}
-                    role="menu"
+                    role="group"
+                    aria-label={family.label}
                     className="absolute left-0 top-full z-20 mt-2 flex min-w-44 flex-col border border-(--border) bg-(--bg-primary) p-1"
                   >
                     {family.options.map((option) => {
@@ -277,7 +277,7 @@ export function ArchitectureFilters({
                           <span
                             key={option.value}
                             aria-disabled="true"
-                            className="flex cursor-not-allowed items-center gap-2 px-2 py-1.5 text-sm tracking-[0.02em] text-(--text-muted) opacity-50"
+                            className="flex min-h-11 cursor-not-allowed items-center gap-2 px-2 py-1.5 text-sm tracking-[0.02em] text-(--text-muted) opacity-50"
                           >
                             <span
                               aria-hidden="true"
@@ -291,14 +291,14 @@ export function ArchitectureFilters({
                         <button
                           key={option.value}
                           type="button"
-                          role="menuitemcheckbox"
+                          role="checkbox"
                           aria-checked={isActive}
                           onClick={() =>
                             family.setActive((set) =>
                               toggleSetValue(set, option.value),
                             )
                           }
-                          className="flex cursor-pointer items-center gap-2 px-2 py-1.5 text-left text-sm tracking-[0.02em] text-(--text-secondary) transition-colors duration-200 ease-out hover:bg-(--t2a-blue-wash) hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
+                          className="flex min-h-11 cursor-pointer items-center gap-2 px-2 py-1.5 text-left text-sm tracking-[0.02em] text-(--text-secondary) transition-colors duration-200 ease-out hover:bg-(--t2a-blue-wash) hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
                         >
                           <span
                             aria-hidden="true"
@@ -331,7 +331,7 @@ export function ArchitectureFilters({
             <button
               type="button"
               onClick={resetFine}
-              className="cursor-pointer text-xs uppercase tracking-[0.12em] text-(--text-muted) transition-colors duration-200 ease-out hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
+              className="inline-flex min-h-11 items-center cursor-pointer text-xs uppercase tracking-[0.12em] text-(--text-muted) transition-colors duration-200 ease-out hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
             >
               × Réinitialiser
             </button>
@@ -355,7 +355,7 @@ export function ArchitectureFilters({
           <button
             type="button"
             onClick={resetAll}
-            className="cursor-pointer text-xs uppercase tracking-[0.12em] text-(--text-muted) transition-colors duration-200 ease-out hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
+            className="inline-flex min-h-11 items-center cursor-pointer text-xs uppercase tracking-[0.12em] text-(--text-muted) transition-colors duration-200 ease-out hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
           >
             × Réinitialiser les filtres
           </button>
