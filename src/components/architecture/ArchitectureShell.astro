@@ -72,6 +72,28 @@ const programOptions = buildOptions(PROGRAM_LABELS, usedPrograms);
         })
         ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
     })();
+
+    // When LEAVING /architecture, WebKit re-evaluates the responsive
+    // multi-column at its base breakpoint inside the outgoing root snapshot,
+    // collapsing the grid to one column during the leave animation. Pin the
+    // current column-count inline before the snapshot is captured so the
+    // leaving snapshot keeps the real layout. Pinning to the already-computed
+    // value is a visual no-op on the live page (no flash), and the grid node
+    // is discarded on swap so no cleanup is needed.
+    if (!window.__t2aArchGridColumnPinInstalled) {
+      window.__t2aArchGridColumnPinInstalled = true;
+      document.addEventListener("astro:before-preparation", (event) => {
+        if (new URL(event.from.href).pathname !== "/architecture") return;
+
+        const grid = document.querySelector("[data-architecture-grid] ul");
+        if (!grid) return;
+
+        const columnCount = getComputedStyle(grid).columnCount;
+        if (columnCount && columnCount !== "auto") {
+          grid.style.columnCount = columnCount;
+        }
+      });
+    }
   </script>
 
   <div data-architecture-head>
