@@ -4,7 +4,6 @@ import { isPathActive } from "@/hooks/useCurrentPathname";
 
 interface HeaderNavItemProps {
   activePath?: string;
-  className?: string;
   label: string;
   pathname: string;
   style?: CSSProperties;
@@ -13,7 +12,6 @@ interface HeaderNavItemProps {
 
 export function HeaderNavItem({
   activePath,
-  className = "",
   label,
   pathname,
   style,
@@ -29,7 +27,6 @@ export function HeaderNavItem({
         "text-sm sm:text-sm md:text-base lg:text-base 2xl:text-[1.35rem]",
         "tracking-[0.08em] transition-colors duration-200 ease-out text-(--t2a-blue-dark)",
         isActive ? "font-semibold" : "font-normal hover:font-semibold",
-        className,
       ].join(" ")}
       href={to}
       style={style}
