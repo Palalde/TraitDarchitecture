@@ -5,6 +5,7 @@ import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { isPathActive } from "@/hooks/useCurrentPathname";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
+import { HeaderThemeToggle } from "./HeaderThemeToggle";
 import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
 
 interface HeaderMobileMenuProps {
@@ -154,6 +155,11 @@ export function HeaderMobileMenu({
           tabIndex={-1}
         >
           <div className="flex flex-col items-center gap-5">
+            <HeaderThemeToggle size="calc(var(--header-height) * 0.85)" />
+            <div
+              aria-hidden="true"
+              className="h-px w-full max-w-20 bg-(--trait) opacity-80"
+            />
             <MobileMenuLink
               isActive={isPathActive(pathname, "/contact")}
               label="Contact"
