@@ -1,10 +1,9 @@
 ---
-import { getImage, Image } from "astro:assets";
+import { Image } from "astro:assets";
 import topoDarkPng from "@/assets/illustrations/T2A_Plan_Topo territoire - DARK.png";
 import topoLightPng from "@/assets/illustrations/T2A_Plan_Topo territoire - LIGHT.png";
 import coupeMerDarkPng from "@/assets/illustrations/T2A_Coupe_Mer DARK.png";
 import coupeMerLightPng from "@/assets/illustrations/T2A_Coupe_Mer LIGHT.png";
-import type { ImageMetadata } from "astro";
 
 interface Props {
   class?: string;
@@ -12,60 +11,13 @@ interface Props {
 
 const { class: className }: Props = Astro.props;
 
-const darkDesktopMedia = "(prefers-color-scheme: dark) and (min-width: 1024px)";
-const darkMedia = "(prefers-color-scheme: dark)";
-const desktopMedia = "(min-width: 1024px)";
-const topoDesktopSizes = "1350px";
-const topoMobileSizes = "100vw";
+// Theme is driven by [data-theme] (the `dark:` variant), not media queries:
+// both light and dark sets are rendered and toggled via opacity. Desktop vs
+// mobile stays a real responsive concern handled by widths + sizes.
+const topoSizes = "(min-width: 1024px) 1350px, 100vw";
+const topoWidths = [320, 480, 640, 960, 1350];
 const coupeMerSizes = "(min-width: 1600px) 1600px, 100vw";
-
-const createResponsiveSource = async (
-  src: ImageMetadata,
-  widths: number[],
-  quality: number,
-) => {
-  const images = await Promise.all(
-    widths.map((width) =>
-      getImage({
-        src,
-        width,
-        format: "webp",
-        quality,
-      }),
-    ),
-  );
-  const fallback = images[images.length - 1];
-
-  return {
-    src: fallback.src,
-    srcset: images
-      .map((image) => `${image.src} ${image.attributes.width}w`)
-      .join(", "),
-    width: fallback.attributes.width,
-    height: fallback.attributes.height,
-  };
-};
-
-const topoLightDesktop = await createResponsiveSource(
-  topoLightPng,
-  [960, 1350],
-  2,
-);
-const topoDarkMobile = await createResponsiveSource(
-  topoDarkPng,
-  [320, 480, 640],
-  2,
-);
-const topoDarkDesktop = await createResponsiveSource(
-  topoDarkPng,
-  [960, 1350],
-  2,
-);
-const coupeMerDark = await createResponsiveSource(
-  coupeMerDarkPng,
-  [480, 640, 960, 1280, 1600],
-  42,
-);
+const coupeMerWidths = [480, 640, 960, 1280, 1600];
 ---
 
 <div
@@ -85,56 +37,59 @@ const coupeMerDark = await createResponsiveSource(
     <div
       class="relative mt-0 max-w-none overflow-hidden w-160 opacity-[0.15] sm:w-200 lg:w-350 xl:w-640 dark:opacity-[0.15]"
     >
-      <picture class="grid w-full">
-        <source
-          media={darkDesktopMedia}
-          sizes={topoDesktopSizes}
-          srcset={topoDarkDesktop.srcset}
-        />
-        <source
-          media={darkMedia}
-          sizes={topoMobileSizes}
-          srcset={topoDarkMobile.srcset}
-        />
-        <source
-          media={desktopMedia}
-          sizes={topoDesktopSizes}
-          srcset={topoLightDesktop.srcset}
-        />
+      <div class="grid w-full">
         <Image
           alt=""
-          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-100"
+          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-100 dark:opacity-0"
           draggable={false}
           fetchpriority="low"
           format="webp"
           loading="eager"
           quality={2}
-          sizes={topoMobileSizes}
+          sizes={topoSizes}
           src={topoLightPng}
-          widths={[320, 480, 640]}
+          widths={topoWidths}
         />
-      </picture>
+        <Image
+          alt=""
+          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-0 dark:opacity-100"
+          draggable={false}
+          fetchpriority="low"
+          format="webp"
+          loading="lazy"
+          quality={2}
+          sizes={topoSizes}
+          src={topoDarkPng}
+          widths={topoWidths}
+        />
+      </div>
     </div>
   </div>
 
   <div class="absolute inset-x-0 bottom-0 flex justify-center overflow-hidden">
-    <picture class="grid w-full">
-      <source
-        media={darkMedia}
-        sizes={coupeMerSizes}
-        srcset={coupeMerDark.srcset}
-      />
+    <div class="grid w-full">
       <Image
         alt=""
-        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-[0.7] dark:opacity-[0.6]"
+        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-[0.7] dark:opacity-0"
         draggable={false}
         format="webp"
         loading="lazy"
         quality={42}
         sizes={coupeMerSizes}
         src={coupeMerLightPng}
-        widths={[480, 640, 960, 1280, 1600]}
+        widths={coupeMerWidths}
       />
-    </picture>
+      <Image
+        alt=""
+        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-0 dark:opacity-[0.6]"
+        draggable={false}
+        format="webp"
+        loading="lazy"
+        quality={42}
+        sizes={coupeMerSizes}
+        src={coupeMerDarkPng}
+        widths={coupeMerWidths}
+      />
+    </div>
   </div>
 </div>
