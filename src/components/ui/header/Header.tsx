@@ -3,6 +3,7 @@ import { HeaderExtraitItem } from "./HeaderExtraitItem";
 import { HeaderHamburger } from "./HeaderHamburger";
 import { HeaderMobileMenu } from "./HeaderMobileMenu";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
+import { HeaderThemeToggle } from "./HeaderThemeToggle";
 import { useHeaderAutoHide } from "./hook/useHeaderAutoHide";
 import { useHeaderMobileMenu } from "./hook/useHeaderMobileMenu";
 import { T2ALogoBrut } from "./logo/T2ALogoBrut";
@@ -11,6 +12,30 @@ import { T2ALogoLineRight } from "./logo/T2ALogoLineRight";
 import { useReducedMotion } from "../../../hooks/useReducedMotion";
 import { useCurrentPathname } from "@/hooks/useCurrentPathname";
 import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
+
+// ════════════════════════════════════════════════════════════════════════════
+// Right cluster fine-tuning (desktop ≥ md) — Contact · RS (social) · theme toggle
+// ----------------------------------------------------------------------------
+// These are the ONLY knobs to move/resize that trio. They are applied as INLINE
+// STYLES on purpose: the header is `transition:persist`, and a freshly-minted
+// Tailwind arbitrary class (e.g. right-[calc(...)] or h-[calc(...)]) can fail to
+// re-inject after a View Transition in dev — the element then loses the rule and
+// jumps/resizes. Inline styles are owned by React and never desync, so tweak the
+// numbers below and the change applies live (no rebuild caveat). Lengths are
+// relative to --header-height so the whole cluster scales across breakpoints.
+// ════════════════════════════════════════════════════════════════════════════
+const HEADER_RIGHT = {
+  /** Position of the whole cluster (the RS block) from the right logo. ↑ = further left. */
+  clusterRight: "calc(var(--header-height) * 2.22)",
+  /** Spacing between the three social icons (RS). */
+  socialGap: "calc(var(--header-height) * 0.16)",
+  /** Contact ↔ social icons. More negative pulls Contact closer to the RS. */
+  contactToSocial: "calc(var(--header-height) * -0.22)",
+  /** Social icons ↔ theme toggle. Higher pushes the toggle further right. */
+  socialToToggle: "calc(var(--header-height) * 0.05)",
+  /** Theme toggle button size (RS icons are 0.32 — this is slightly larger). */
+  toggleSize: "calc(var(--header-height) * 0.45)",
+} as const;
 
 interface HeaderProps {
   animateEntrance?: boolean;
@@ -134,16 +159,23 @@ export function Header({
             to="/architecture"
           />
         </nav>
-        {/* contact */}
-        <div className="absolute inset-y-0 right-[calc(var(--header-height)*4)] z-20 hidden items-center md:flex">
+        {/* Contact · social (RS) · theme toggle — one right-anchored flex
+            cluster. Every position/size below comes from HEADER_RIGHT (top of
+            file) via inline styles, so nothing desyncs across the persisted
+            header's View Transitions and each knob is tunable live. */}
+        <div
+          className="absolute inset-y-0 z-20 hidden items-center md:flex"
+          style={{
+            right: HEADER_RIGHT.clusterRight,
+            columnGap: HEADER_RIGHT.socialGap,
+          }}
+        >
           <HeaderNavItem
             label="Contact"
             pathname={currentPathname}
+            style={{ marginRight: HEADER_RIGHT.contactToSocial }}
             to="/contact"
           />
-        </div>
-        {/* social */}
-        <div className="absolute inset-y-0 right-[calc(var(--header-height)*2.5)] z-20 hidden items-center gap-2 md:flex lg:gap-2.5">
           <HeaderSocialIcon
             href="https://www.instagram.com/atelier.trait.darchitecture/"
             label="Instagram"
@@ -162,6 +194,10 @@ export function Header({
           >
             <LinkedInLogo className="h-full w-full" />
           </HeaderSocialIcon>
+          <HeaderThemeToggle
+            size={HEADER_RIGHT.toggleSize}
+            style={{ marginLeft: HEADER_RIGHT.socialToToggle }}
+          />
         </div>
 
         {/* rightLogo */}

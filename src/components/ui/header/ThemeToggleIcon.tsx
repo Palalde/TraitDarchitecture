@@ -24,6 +24,10 @@ const SUN_RAYS: ReadonlyArray<readonly [number, number, number, number]> = [
  * Pure CSS/SVG sun ↔ moon morph (no Framer Motion). The crescent is carved by a
  * masked circle that slides across the disk while the rays retract and fade.
  * Honors prefers-reduced-motion with an instant swap.
+ *
+ * The icon shows the TARGET action, not the current theme: a moon in light mode
+ * ("switch to dark") and a sun in dark mode ("switch to light"), matching the
+ * button's aria-label.
  */
 export function ThemeToggleIcon({
   theme,
@@ -31,7 +35,7 @@ export function ThemeToggleIcon({
 }: ThemeToggleIconProps) {
   const maskId = useId();
   const reducedMotion = useReducedMotion();
-  const isDark = theme === "dark";
+  const showMoon = theme === "light";
 
   const morph = reducedMotion ? "none" : "transform 250ms ease-out";
   const fade = reducedMotion
@@ -43,7 +47,9 @@ export function ThemeToggleIcon({
       aria-hidden="true"
       className={className}
       focusable="false"
+      height="24"
       viewBox="0 0 24 24"
+      width="24"
       xmlns="http://www.w3.org/2000/svg"
     >
       <mask id={maskId}>
@@ -54,7 +60,7 @@ export function ThemeToggleIcon({
           fill="black"
           r="5"
           style={{
-            transform: isDark
+            transform: showMoon
               ? "translate(3px, -3px)"
               : "translate(14px, -14px)",
             transition: morph,
@@ -75,8 +81,8 @@ export function ThemeToggleIcon({
         strokeLinecap="butt"
         strokeWidth="1.5"
         style={{
-          opacity: isDark ? 0 : 1,
-          transform: isDark
+          opacity: showMoon ? 0 : 1,
+          transform: showMoon
             ? "scale(0.5) rotate(-25deg)"
             : "scale(1) rotate(0deg)",
           transformBox: "fill-box",
