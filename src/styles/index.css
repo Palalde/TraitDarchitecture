@@ -26,6 +26,11 @@
   }
 }
 
+/* Dark mode driven by [data-theme="dark"] on <html> (set before paint by the
+   inline anti-flash script in BaseLayout.astro). Overrides Tailwind's default
+   prefers-color-scheme behaviour so the `dark:` variant follows the toggle. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* ============================================
    FONTS T2A — @font-face
    ============================================ */
@@ -156,60 +161,66 @@ html.is-landing-dismissed #landing-wrapper {
   display: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --t2a-blue: #8a9bb5;
-    --t2a-blue-light: #a8b5c8;
-    --t2a-blue-pale: #2d3748;
-    --t2a-blue-wash: #1a2030;
-    --t2a-blue-dark: #c8d1de;
+:root[data-theme="dark"] {
+  --t2a-blue: #8a9bb5;
+  --t2a-blue-light: #a8b5c8;
+  --t2a-blue-pale: #2d3748;
+  --t2a-blue-wash: #1a2030;
+  --t2a-blue-dark: #c8d1de;
 
-    --bg-primary: #0d1117;
-    --bg-secondary: #161b25;
-    --text-primary: #e2e5eb;
-    --text-secondary: #8b95a5;
-    --text-muted: #8691a0;
-    --border: #252d3a;
-    --trait: #8a9bb5;
-    --gradient-end: #1a2030;
-    --logo-fill: #8a9bb5;
-    --logo-shadow-fcfbfc: #0e1218;
-    --logo-shadow-faf9fa: #0e1319;
-    --logo-shadow-f9f8f9: #0f1319;
-    --logo-shadow-f8f7f8: #0f141a;
-    --logo-shadow-f7f6f8: #10151b;
-    --logo-shadow-f7f6f7: #10151b;
-    --logo-shadow-f5f5f6: #11161c;
-    --logo-shadow-f5f4f7: #11161d;
-    --logo-shadow-f3f3f5: #12171d;
-    --logo-shadow-f1f1f4: #12181e;
-    --logo-shadow-f1f0f3: #13181f;
-    --logo-shadow-f0eff3: #131920;
-    --logo-shadow-eff0f3: #131a20;
-    --logo-shadow-ededf2: #141a21;
-    --logo-shadow-ececf1: #141b22;
-    --logo-shadow-eaecf0: #151b22;
-    --logo-shadow-eaebf0: #151c23;
-    --logo-shadow-e9ebf0: #161d24;
-    --logo-shadow-e8eaef: #161d24;
-    --logo-shadow-e6e7ed: #171e25;
-    --logo-shadow-e5e5ea: #171f26;
-    --logo-shadow-e5e4e9: #181f26;
-    --logo-shadow-e2e3e9: #182027;
-    --logo-shadow-e2e3e8: #192028;
-    --logo-shadow-e1e2e9: #192128;
-    --logo-shadow-d8dbe3: #192229;
-    --logo-shadow-d8dae2: #1a222a;
-    --logo-shadow-d7d9e1: #1a232b;
-    --logo-shadow-d4d7df: #1b242b;
-    --logo-shadow-d2d5de: #1b242c;
-    --logo-shadow-d0d3dd: #1c252d;
-    --logo-shadow-d0d2dc: #1c252d;
-    --logo-shadow-d0d2db: #1d262e;
-    --logo-shadow-ccced9: #1d272f;
-    --logo-shadow-cdd0da: #1e272f;
-    --logo-shadow-c8cbd6: #1e2830;
-  }
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b25;
+  --text-primary: #e2e5eb;
+  --text-secondary: #8b95a5;
+  --text-muted: #8691a0;
+  --border: #252d3a;
+  --trait: #8a9bb5;
+  --gradient-end: #1a2030;
+  --logo-fill: #8a9bb5;
+  --logo-shadow-fcfbfc: #0e1218;
+  --logo-shadow-faf9fa: #0e1319;
+  --logo-shadow-f9f8f9: #0f1319;
+  --logo-shadow-f8f7f8: #0f141a;
+  --logo-shadow-f7f6f8: #10151b;
+  --logo-shadow-f7f6f7: #10151b;
+  --logo-shadow-f5f5f6: #11161c;
+  --logo-shadow-f5f4f7: #11161d;
+  --logo-shadow-f3f3f5: #12171d;
+  --logo-shadow-f1f1f4: #12181e;
+  --logo-shadow-f1f0f3: #13181f;
+  --logo-shadow-f0eff3: #131920;
+  --logo-shadow-eff0f3: #131a20;
+  --logo-shadow-ededf2: #141a21;
+  --logo-shadow-ececf1: #141b22;
+  --logo-shadow-eaecf0: #151b22;
+  --logo-shadow-eaebf0: #151c23;
+  --logo-shadow-e9ebf0: #161d24;
+  --logo-shadow-e8eaef: #161d24;
+  --logo-shadow-e6e7ed: #171e25;
+  --logo-shadow-e5e5ea: #171f26;
+  --logo-shadow-e5e4e9: #181f26;
+  --logo-shadow-e2e3e9: #182027;
+  --logo-shadow-e2e3e8: #192028;
+  --logo-shadow-e1e2e9: #192128;
+  --logo-shadow-d8dbe3: #192229;
+  --logo-shadow-d8dae2: #1a222a;
+  --logo-shadow-d7d9e1: #1a232b;
+  --logo-shadow-d4d7df: #1b242b;
+  --logo-shadow-d2d5de: #1b242c;
+  --logo-shadow-d0d3dd: #1c252d;
+  --logo-shadow-d0d2dc: #1c252d;
+  --logo-shadow-d0d2db: #1d262e;
+  --logo-shadow-ccced9: #1d272f;
+  --logo-shadow-cdd0da: #1e272f;
+  --logo-shadow-c8cbd6: #1e2830;
+
+  /* Force native widgets (form controls, scrollbars, URL bar) to dark. */
+  color-scheme: dark;
+}
+
+/* Force native widgets to light when the light theme is explicitly active. */
+:root[data-theme="light"] {
+  color-scheme: light;
 }
 
 /* border-radius: 0px partout */
@@ -239,10 +250,8 @@ html.is-landing-dismissed #landing-wrapper {
   background-size: 256px 256px;
 }
 
-@media (prefers-color-scheme: dark) {
-  #t2a-grain {
-    opacity: 0.04;
-  }
+:root[data-theme="dark"] #t2a-grain {
+  opacity: 0.04;
 }
 
 /* ============================================

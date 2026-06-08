@@ -29,6 +29,59 @@ const overlayScrollbarsMediaQuery =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" />
+    <!-- Resolve and apply the theme before first paint to avoid a theme flash
+         (FOUC). Mirrors src/scripts/theme.ts: same storage key + attribute.
+         is:inline scripts are not bundled, so constants are inlined here. -->
+    <script is:inline>
+      (() => {
+        if (window.__t2aThemeInit) return;
+        window.__t2aThemeInit = true;
+
+        const STORAGE_KEY = "t2a-theme";
+        const DARK_QUERY = "(prefers-color-scheme: dark)";
+        const THEME_COLORS = { light: "#ffffff", dark: "#0d1117" };
+
+        const readStoredTheme = () => {
+          try {
+            const stored = sessionStorage.getItem(STORAGE_KEY);
+            if (stored === "light" || stored === "dark") return stored;
+          } catch {
+            /* sessionStorage unavailable (private mode / blocked storage) */
+          }
+          return null;
+        };
+
+        const resolveTheme = () =>
+          readStoredTheme() ??
+          (window.matchMedia(DARK_QUERY).matches ? "dark" : "light");
+
+        const applyTheme = (targetDocument, theme) => {
+          targetDocument.documentElement.dataset.theme = theme;
+          const meta = targetDocument.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", THEME_COLORS[theme]);
+        };
+
+        // 1) Initial: set before the first paint.
+        applyTheme(document, resolveTheme());
+
+        // 2) Re-stamp during SPA view transitions: the incoming document is
+        //    parsed without data-theme, so set it before the swap is painted.
+        document.addEventListener("astro:before-swap", (event) => {
+          applyTheme(event.newDocument, resolveTheme());
+        });
+        document.addEventListener("astro:after-swap", () => {
+          applyTheme(document, resolveTheme());
+        });
+
+        // 3) Follow the OS preference live until an explicit choice is stored.
+        window.matchMedia(DARK_QUERY).addEventListener("change", () => {
+          if (readStoredTheme()) return;
+          applyTheme(document, resolveTheme());
+        });
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/media/favicon/favicon.svg" />
     <link
       rel="preload"
@@ -54,17 +107,6 @@ const overlayScrollbarsMediaQuery =
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
-    <meta name="color-scheme" content="light dark" />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: light)"
-      content="#ffffff"
-    />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: dark)"
-      content="#0d1117"
-    />
     <meta property="og:site_name" content="ATELIER TraiT D'ARCHITECTURE" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
