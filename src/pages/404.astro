@@ -3,6 +3,14 @@ import BackgroundDecorations from "@/components/ui/background/BackgroundDecorati
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const quickLinks = [
+  { label: "Atelier", href: "/atelier" },
+  { label: "TraiT", href: "/trait" },
+  { label: "D'Architecture", href: "/architecture" },
+  { label: "EXTraiT", href: "/extrait" },
+  { label: "Contact", href: "/contact" },
+] as const;
 ---
 
 <BaseLayout
@@ -10,8 +18,95 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   description="La page demandée est introuvable sur le site de l'ATELIER TraiT D'ARCHITECTURE."
 >
   <HeaderShell />
-  <main class="relative min-h-[200vh] overflow-hidden bg-(--bg-primary)">
+  <main
+    class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-(--bg-primary) px-6 pt-[calc(var(--header-height)+4rem)] pb-24 sm:px-8 lg:pb-120 lg:px-10 2xl:pb-300"
+  >
     <BackgroundDecorations />
+
+    <section
+      data-notfound-shell
+      aria-labelledby="notfound-title"
+      class="relative z-10 mx-auto flex w-full max-w-xl flex-col items-center text-center"
+    >
+      <script is:inline data-astro-rerun>
+        (() => {
+          const revealSystem = window.__t2aReveal;
+          if (!revealSystem) return;
+
+          revealSystem
+            .createController({
+              id: "notfound",
+              pathname: window.location.pathname,
+              rootSelector: "[data-notfound-shell]",
+            })
+            ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+        })();
+      </script>
+
+      <p
+        class="text-[clamp(3.5rem,14vw,7rem)] font-light leading-none tracking-[0.02em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+        data-reveal="fade-up"
+      >
+        404
+      </p>
+
+      <h1
+        id="notfound-title"
+        class="mt-6 text-xl font-semibold uppercase tracking-[0.12em] text-(--t2a-blue-dark) sm:text-2xl dark:text-(--t2a-blue)"
+        data-reveal="fade-up"
+        style="--reveal-delay:80ms;"
+      >
+        Cette page est introuvable
+      </h1>
+
+      <span
+        aria-hidden="true"
+        class="mt-6 block h-px w-24 bg-(--trait) sm:w-32"
+        data-reveal="bar-from-left"
+        style="--reveal-delay:140ms; --reveal-d:480ms;"></span>
+
+      <p
+        class="mt-6 max-w-md text-[1rem] leading-7 text-(--text-secondary) sm:text-[1.05rem] sm:leading-8"
+        data-reveal="fade-up"
+        style="--reveal-delay:200ms;"
+      >
+        La page que vous cherchez n'existe pas, a été déplacée ou son adresse a
+        changé. Revenez à l'accueil ou rejoignez directement l'une de nos pages.
+      </p>
+
+      <a
+        href="/"
+        class="mt-8 inline-flex items-center justify-center border border-(--t2a-blue) bg-transparent px-6 py-3 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 ease-out hover:bg-(--t2a-blue-wash) hover:text-(--t2a-blue-dark) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--trait) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary) dark:text-(--t2a-blue) dark:hover:bg-(--t2a-blue-pale) dark:hover:text-(--t2a-blue-dark)"
+        data-reveal="fade"
+        style="--reveal-delay:280ms; --reveal-d:480ms;"
+      >
+        Retour à l'accueil
+      </a>
+
+      <nav
+        aria-label="Pages principales"
+        class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
+        data-reveal="fade-up"
+        style="--reveal-delay:340ms;"
+      >
+        {
+          quickLinks.map((link) => (
+            <a
+              href={link.href}
+              class="group inline-flex items-center text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+            >
+              <span class="relative">
+                {link.label}
+                <span
+                  aria-hidden="true"
+                  class="absolute bottom-0 left-0 h-px w-0 bg-(--trait) transition-all duration-300 group-hover:w-full"
+                />
+              </span>
+            </a>
+          ))
+        }
+      </nav>
+    </section>
   </main>
   <Footer />
 </BaseLayout>
