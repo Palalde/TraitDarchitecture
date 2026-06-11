@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
+import Footer from "@/components/ui/footer/Footer.astro";
+import HeaderShell from "@/components/ui/header/HeaderShell.astro";
+import ProjectShell from "@/components/architecture/project/ProjectShell.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  getSortedProjects,
+  TYPE_LABELS,
+  PROGRAM_LABELS,
+} from "@/components/architecture/architecture.data";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects", ({ data }) => !data.draft);
+  return projects.map((entry) => {
+    const slug = entry.id.replace(/\/index$/, "");
+    return { params: { slug }, props: { entry } };
+  });
+}
+
+const { entry } = Astro.props;
+const { name, city, dept, types, programs, cover } = entry.data;
+
+// Generated description — stable even when labels are absent
+const typeLabels = (types ?? []).map((t) => TYPE_LABELS[t]).join(", ");
+const programLabels = (programs ?? []).map((p) => PROGRAM_LABELS[p]).join(", ");
+const labelParts = [typeLabels, programLabels].filter(Boolean).join(" · ");
+const description = [
+  `Projet ${name} à ${city} (${dept})`,
+  labelParts ? `— ${labelParts}` : "",
+  "Par l'ATELIER TraiT D'ARCHITECTURE.",
+]
+  .filter(Boolean)
+  .join(" ");
+
+// Pre-fetch all projects once for the similar projects section (step 7)
+const allProjects = await getSortedProjects();
+---
+
+<BaseLayout
+  title={`${name} | ATELIER TraiT D'ARCHITECTURE`}
+  description={description}
+  ogImage={cover.src}
+>
+  <HeaderShell />
+  <main class="relative overflow-hidden bg-(--bg-primary)">
+    <BackgroundDecorations />
+    <ProjectShell entry={entry} allProjects={allProjects} />
+  </main>
+  <Footer />
+</BaseLayout>

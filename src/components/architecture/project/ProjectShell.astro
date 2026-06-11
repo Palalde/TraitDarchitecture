@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectHero from "@/components/architecture/project/ProjectHero.astro";
+
+interface Props {
+  entry: CollectionEntry<"projects">;
+  allProjects: CollectionEntry<"projects">[];
+}
+
+const { entry } = Astro.props;
+---
+
+<article data-project-shell aria-labelledby="project-page-title">
+  {
+    /*
+    Reveal controller for the cartouche + hero (head section).
+    Starts once the page is visible (after the VT curtain lifts).
+    Pathname is read at runtime so this script works for any slug.
+  */
+  }
+  <script is:inline data-astro-rerun>
+    (() => {
+      const revealSystem = window.__t2aReveal;
+      if (!revealSystem) return;
+
+      revealSystem
+        .createController({
+          id: "project-head",
+          pathname: window.location.pathname,
+          rootSelector: "[data-project-head]",
+        })
+        ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+    })();
+  </script>
+
+  {
+    /*
+    Reveal controller for body + gallery + similar projects.
+    Deferred until after the VT finishes to avoid iOS/WebKit rollback
+    (§ 3.8 Darchitecture.md).
+  */
+  }
+  <script is:inline data-astro-rerun>
+    (() => {
+      const revealSystem = window.__t2aReveal;
+      if (!revealSystem) return;
+
+      revealSystem
+        .createController({
+          id: "project-body",
+          pathname: window.location.pathname,
+          rootSelector: "[data-project-body]",
+        })
+        ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
+    })();
+  </script>
+
+  <div data-project-head>
+    <ProjectHero entry={entry} />
+  </div>
+
+  {/* data-project-body populated progressively in steps 3-7 */}
+  <div data-project-body></div>
+</article>
