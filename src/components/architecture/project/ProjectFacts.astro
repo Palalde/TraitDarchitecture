@@ -65,21 +65,27 @@ const partnerRows = partners ?? [];
 <aside
   data-reveal="fade-up"
   class="border border-(--trait) bg-(--bg-primary) p-5 sm:p-6"
-  aria-label="Fiche technique"
+  aria-labelledby="project-facts-heading"
 >
-  <p
+  <h3
+    id="project-facts-heading"
     class="mb-3 text-[0.65rem] font-normal uppercase tracking-[0.14em] text-(--text-muted)"
   >
     Fiche technique
-  </p>
+  </h3>
   <span aria-hidden="true" class="mb-4 block h-px w-full bg-(--trait)"></span>
 
-  <dl class="divide-y divide-(--border)">
+  {
+    /* 2-col grid of label/value pairs between sm and lg (dense tablet layout),
+      single column on mobile and in the lg+ sticky sidebar. Rows are ruled
+      with border-b (divide-y can't follow the 2-col grid). */
+  }
+  <dl class="sm:grid sm:grid-cols-2 sm:gap-x-8 lg:block">
     {
       rows.map(
         ({ label, value }) =>
           value !== null && (
-            <div class="flex flex-col gap-0.5 py-2.5">
+            <div class="flex flex-col gap-0.5 border-b border-(--border) py-2.5">
               <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
                 {label}
               </dt>
@@ -92,17 +98,19 @@ const partnerRows = partners ?? [];
     }
 
     {
-      /* Partners — one row per entry */
-      partnerRows.map((partner, i) => (
-        <div class="flex flex-col gap-0.5 py-2.5">
+      /* Partners — one dt, one dd per entry */
+      partnerRows.length > 0 && (
+        <div class="flex flex-col gap-0.5 border-b border-(--border) py-2.5">
           <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
-            {i === 0 ? "Partenaires" : ""}
+            Partenaires
           </dt>
-          <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
-            {partner}
-          </dd>
+          {partnerRows.map((partner) => (
+            <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
+              {partner}
+            </dd>
+          ))}
         </div>
-      ))
+      )
     }
   </dl>
 </aside>

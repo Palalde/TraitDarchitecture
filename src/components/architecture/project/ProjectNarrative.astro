@@ -1,6 +1,5 @@
 ---
-import { render } from "astro:content";
-import type { CollectionEntry } from "astro:content";
+import { render, type CollectionEntry } from "astro:content";
 
 interface Props {
   entry: CollectionEntry<"projects">;
@@ -46,8 +45,7 @@ const { Content } = await render(entry);
   }
 
   /* Secondary paragraphs — those following a ## heading */
-  .narrative-body :global(h2 ~ p),
-  .narrative-body :global(h2 + p) {
+  .narrative-body :global(h2 ~ p) {
     font-size: 0.9375rem;
     color: var(--text-secondary);
     margin-bottom: 1.25rem;

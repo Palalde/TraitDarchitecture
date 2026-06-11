@@ -13,51 +13,27 @@ const { entry } = Astro.props;
 ---
 
 <article data-project-shell aria-labelledby="project-page-title">
-  {
-    /*
-    Reveal controller for the cartouche + hero (head section).
-    Starts once the page is visible (after the VT curtain lifts).
-    Pathname is read at runtime so this script works for any slug.
-  */
-  }
-  <script is:inline data-astro-rerun>
-    (() => {
-      const revealSystem = window.__t2aReveal;
-      if (!revealSystem) return;
-
-      revealSystem
-        .createController({
-          id: "project-head",
-          pathname: window.location.pathname,
-          rootSelector: "[data-project-head]",
-        })
-        ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
-    })();
-  </script>
-
-  {
-    /*
-    Reveal controller for body + gallery + similar projects.
-    Deferred until after the VT finishes to avoid iOS/WebKit rollback
-    (§ 3.8 Darchitecture.md).
-  */
-  }
-  <script is:inline data-astro-rerun>
-    (() => {
-      const revealSystem = window.__t2aReveal;
-      if (!revealSystem) return;
-
-      revealSystem
-        .createController({
-          id: "project-body",
-          pathname: window.location.pathname,
-          rootSelector: "[data-project-body]",
-        })
-        ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
-    })();
-  </script>
-
   <div data-project-head>
+    {
+      /* Script inside its reveal root (targets the parent, which exists at
+        parse time) so the cartouche + hero reveal on a fresh load too, not
+        only via VT. Pathname read at runtime so it works for any slug. */
+    }
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "project-head",
+            pathname: window.location.pathname,
+            rootSelector: "[data-project-head]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
     <ProjectHero entry={entry} />
   </div>
 
@@ -65,6 +41,25 @@ const { entry } = Astro.props;
     /* data-project-body: description + fiche technique (steps 4+), gallery (6), similar (7) */
   }
   <div data-project-body>
+    {
+      /* Script inside its reveal root so it also runs on a fresh (non-VT)
+        load. Deferred until after the VT finishes to avoid iOS/WebKit
+        rollback (§ 3.8 Darchitecture.md). */
+    }
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "project-body",
+            pathname: window.location.pathname,
+            rootSelector: "[data-project-body]",
+          })
+          ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
+      })();
+    </script>
     {
       /* Body section — description (col 1-7) + fiche technique sticky (col 9-12) on desktop */
     }
