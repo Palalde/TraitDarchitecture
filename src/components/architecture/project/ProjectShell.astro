@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import ProjectHero from "@/components/architecture/project/ProjectHero.astro";
+import ProjectNarrative from "@/components/architecture/project/ProjectNarrative.astro";
+import ProjectFacts from "@/components/architecture/project/ProjectFacts.astro";
 
 interface Props {
   entry: CollectionEntry<"projects">;
@@ -59,6 +61,30 @@ const { entry } = Astro.props;
     <ProjectHero entry={entry} />
   </div>
 
-  {/* data-project-body populated progressively in steps 3-7 */}
-  <div data-project-body></div>
+  {
+    /* data-project-body: description + fiche technique (steps 4+), gallery (6), similar (7) */
+  }
+  <div data-project-body>
+    {
+      /* Body section — description (col 1-7) + fiche technique sticky (col 9-12) on desktop */
+    }
+    <section
+      aria-labelledby="project-body-heading"
+      class="mx-auto w-full max-w-7xl px-6 pb-16 sm:px-8 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-10 lg:pb-24"
+    >
+      <h2 id="project-body-heading" class="sr-only">Description du projet</h2>
+
+      {/* Narrative — spans cols 1-7 on desktop */}
+      <div class="mb-12 lg:col-span-7 lg:mb-0">
+        <ProjectNarrative entry={entry} />
+      </div>
+
+      {/* Facts — col 9-12, sticky on desktop */}
+      <div
+        class="lg:col-span-4 lg:col-start-9 lg:self-start lg:sticky lg:top-[calc(var(--header-height)+2rem)]"
+      >
+        <ProjectFacts entry={entry} />
+      </div>
+    </section>
+  </div>
 </article>

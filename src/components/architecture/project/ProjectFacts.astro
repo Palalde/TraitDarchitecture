@@ -1,0 +1,108 @@
+---
+import type { CollectionEntry } from "astro:content";
+import {
+  ZONE_LABELS,
+  TYPE_LABELS,
+  MATERIAL_LABELS,
+  PROGRAM_LABELS,
+  STATUS_LABELS,
+} from "@/components/architecture/architecture.data";
+
+interface Props {
+  entry: CollectionEntry<"projects">;
+}
+
+const { entry }: Props = Astro.props;
+const {
+  city,
+  dept,
+  zone,
+  year,
+  status,
+  types,
+  materials,
+  programs,
+  surface,
+  mission,
+  client,
+  budget,
+  partners,
+} = entry.data;
+
+// Helpers to build "·"-joined label strings
+const typeLabel =
+  types && types.length > 0
+    ? types.map((t) => TYPE_LABELS[t]).join(" · ")
+    : null;
+const materialLabel =
+  materials && materials.length > 0
+    ? materials.map((m) => MATERIAL_LABELS[m]).join(" · ")
+    : null;
+const programLabel =
+  programs && programs.length > 0
+    ? programs.map((g) => PROGRAM_LABELS[g]).join(" · ")
+    : null;
+
+// Ordered rows — each row only rendered when its value exists
+const rows = [
+  { label: "Lieu", value: `${city} (${dept})` },
+  { label: "Zone", value: ZONE_LABELS[zone] },
+  { label: "Année", value: year != null ? String(year) : null },
+  { label: "Statut", value: status != null ? STATUS_LABELS[status] : null },
+  { label: "Type", value: typeLabel },
+  { label: "Matériaux", value: materialLabel },
+  { label: "Programme", value: programLabel },
+  { label: "Surface", value: surface ?? null },
+  { label: "Mission", value: mission ?? null },
+  { label: "Maîtrise d'ouvrage", value: client ?? null },
+  { label: "Budget", value: budget ?? null },
+] satisfies Array<{ label: string; value: string | null }>;
+
+// Partners rendered separately (one row per entry)
+const partnerRows = partners ?? [];
+---
+
+<aside
+  data-reveal="fade-up"
+  class="border border-(--trait) bg-(--bg-primary) p-5 sm:p-6"
+  aria-label="Fiche technique"
+>
+  <p
+    class="mb-3 text-[0.65rem] font-normal uppercase tracking-[0.14em] text-(--text-muted)"
+  >
+    Fiche technique
+  </p>
+  <span aria-hidden="true" class="mb-4 block h-px w-full bg-(--trait)"></span>
+
+  <dl class="divide-y divide-(--border)">
+    {
+      rows.map(
+        ({ label, value }) =>
+          value !== null && (
+            <div class="flex flex-col gap-0.5 py-2.5">
+              <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
+                {label}
+              </dt>
+              <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
+                {value}
+              </dd>
+            </div>
+          ),
+      )
+    }
+
+    {
+      /* Partners — one row per entry */
+      partnerRows.map((partner, i) => (
+        <div class="flex flex-col gap-0.5 py-2.5">
+          <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
+            {i === 0 ? "Partenaires" : ""}
+          </dt>
+          <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
+            {partner}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</aside>
