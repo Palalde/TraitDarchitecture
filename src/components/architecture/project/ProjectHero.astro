@@ -1,5 +1,9 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
+import FigCaption from "@/components/ui/cotation/FigCaption.astro";
+import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 import {
   ZONE_LABELS,
   STATUS_LABELS,
@@ -10,7 +14,8 @@ interface Props {
 }
 
 const { entry }: Props = Astro.props;
-const { name, city, dept, zone, year, status } = entry.data;
+const { name, city, dept, zone, year, status, cover, coverAlt, coverRatio } =
+  entry.data;
 
 const locationLine = `${city} (${dept}) — ${ZONE_LABELS[zone]}`;
 
@@ -19,16 +24,40 @@ const metaParts = [
   status != null ? STATUS_LABELS[status] : null,
 ].filter((v): v is string => v !== null);
 const metaLine = metaParts.join(" · ");
+
+// Width calibrated by ratio for ~60-70vh perceived height on desktop (§ 3.3)
+const MAX_W_CLASS = {
+  "1/1": "max-w-3xl",
+  "5/4": "max-w-4xl",
+  "4/5": "max-w-2xl",
+} as const;
+const maxWClass = MAX_W_CLASS[coverRatio];
+
+// CotationFrame expects colon notation ("5:4"), frontmatter uses slash ("5/4")
+const COTATION_RATIO = {
+  "1/1": "1:1",
+  "5/4": "5:4",
+  "4/5": "4:5",
+} as const;
+const cotationRatio = COTATION_RATIO[coverRatio];
+
+// sizes: full-width mobile, capped at the calibrated max-w on desktop
+const HERO_SIZES = {
+  "1/1": "(min-width: 1280px) 48rem, (min-width: 1024px) 75vw, 100vw",
+  "5/4": "(min-width: 1280px) 56rem, (min-width: 1024px) 80vw, 100vw",
+  "4/5": "(min-width: 1280px) 42rem, (min-width: 1024px) 65vw, 100vw",
+} as const;
+const heroSizes = HERO_SIZES[coverRatio];
 ---
 
 <section aria-labelledby="project-page-title" class="relative w-full">
   <div
-    class="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pt-[calc(var(--header-height)+2.5rem)] lg:px-10 lg:pt-[calc(var(--header-height)+3rem)]"
+    class="relative z-10 mx-auto flex w-full max-w-7xl flex-col px-6 pb-8 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pb-12 sm:pt-[calc(var(--header-height)+2.5rem)] lg:px-10 lg:pb-16 lg:pt-[calc(var(--header-height)+3rem)]"
   >
     {/* Back link — first focusable element after the header */}
     <a
       href="/architecture"
-      class="group mb-6 inline-flex w-fit items-center gap-1.5 text-[0.78rem] uppercase tracking-[0.1em] text-(--text-muted) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
+      class="group mb-6 inline-flex w-fit items-center gap-1.5 text-[0.78rem] uppercase tracking-widest text-(--text-muted) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
       data-reveal="fade"
       style="--reveal-delay:0ms;"
     >
@@ -71,12 +100,41 @@ const metaLine = metaParts.join(" · ");
     {
       metaLine && (
         <p
-          class="mt-1.5 text-[0.75rem] uppercase tracking-[0.1em] text-(--text-muted) [--reveal-delay:240ms]"
+          class="mt-1.5 text-[0.75rem] uppercase tracking-widest text-(--text-muted) [--reveal-delay:240ms]"
           data-reveal="fade-up"
         >
           {metaLine}
         </p>
       )
     }
+
+    {/* Hero cover — plate figure 01 (LCP image) */}
+    <figure class:list={["mt-8 w-full sm:mt-12 lg:mt-16", maxWClass]}>
+      <CotationFrame
+        aspectRatio={cotationRatio}
+        revealBorder
+        revealCotation
+        showCotation
+      >
+        <ParallaxFrame
+          client:visible
+          overflowPercent={0.025}
+          mobileOverflowPercent={0.04}
+        >
+          <Image
+            src={cover}
+            alt={coverAlt}
+            class="h-full w-full object-cover"
+            draggable="false"
+            loading="eager"
+            fetchpriority="high"
+            quality={85}
+            widths={[800, 1200, 1600]}
+            sizes={heroSizes}
+          />
+        </ParallaxFrame>
+      </CotationFrame>
+      <FigCaption figureId="01" label={coverAlt} />
+    </figure>
   </div>
 </section>
