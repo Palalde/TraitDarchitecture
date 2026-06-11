@@ -24,6 +24,12 @@ const projects = defineCollection({
       programs: z.array(z.enum(["logement", "equipement", "rural"])).optional(),
       status: z.enum(["etude", "chantier", "livre"]).optional(),
       year: z.number().optional(),
+      // Project sheet fields — all optional, absent = line not rendered
+      surface: z.string().optional(),
+      mission: z.string().optional(),
+      client: z.string().optional(),
+      budget: z.string().optional(),
+      partners: z.array(z.string()).optional(),
       draft: z.boolean().default(false),
     }),
 });
