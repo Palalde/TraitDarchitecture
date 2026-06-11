@@ -43,7 +43,7 @@ const programLabel =
     ? programs.map((g) => PROGRAM_LABELS[g]).join(" · ")
     : null;
 
-// Ordered rows — each row only rendered when its value exists
+// Ordered rows — filtered before render so the reveal stagger has no holes
 const rows = [
   { label: "Lieu", value: `${city} (${dept})` },
   { label: "Zone", value: ZONE_LABELS[zone] },
@@ -58,12 +58,23 @@ const rows = [
   { label: "Budget", value: budget ?? null },
 ] satisfies Array<{ label: string; value: string | null }>;
 
+const visibleRows = rows.filter(
+  (row): row is { label: string; value: string } => row.value !== null,
+);
+
 // Partners rendered separately (one row per entry)
 const partnerRows = partners ?? [];
+
+// Per-row reveal stagger (ms per row); partners block continues the sequence
+const ROW_STAGGER = 40;
 ---
 
+{
+  /* Frame + heading reveal as one unit (fade), rows then cascade in with
+    their own fragmented fade-up reveals. */
+}
 <aside
-  data-reveal="fade-up"
+  data-reveal="fade"
   class="border border-(--trait) bg-(--bg-primary) p-5 sm:p-6"
   aria-labelledby="project-facts-heading"
 >
@@ -76,31 +87,36 @@ const partnerRows = partners ?? [];
   <span aria-hidden="true" class="mb-4 block h-px w-full bg-(--trait)"></span>
 
   {
-    /* 2-col grid of label/value pairs between sm and lg (dense tablet layout),
-      single column on mobile and in the lg+ sticky sidebar. Rows are ruled
-      with border-b (divide-y can't follow the 2-col grid). */
+    /* Dense grid of label/value pairs — 2 cols from mobile up, 3-4 cols on
+      the full-width desktop band. Rows are ruled with border-b (divide-y
+      can't follow a multi-col grid). */
   }
-  <dl class="sm:grid sm:grid-cols-2 sm:gap-x-8 lg:block">
+  <dl class="grid grid-cols-2 gap-x-4 sm:gap-x-8 lg:grid-cols-3 xl:grid-cols-4">
     {
-      rows.map(
-        ({ label, value }) =>
-          value !== null && (
-            <div class="flex flex-col gap-0.5 border-b border-(--border) py-2.5">
-              <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
-                {label}
-              </dt>
-              <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
-                {value}
-              </dd>
-            </div>
-          ),
-      )
+      visibleRows.map(({ label, value }, index) => (
+        <div
+          class="flex flex-col gap-0.5 border-b border-(--border) py-2.5"
+          data-reveal="fade-up"
+          style={`--reveal-delay:${index * ROW_STAGGER}ms;`}
+        >
+          <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
+            {label}
+          </dt>
+          <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
+            {value}
+          </dd>
+        </div>
+      ))
     }
 
     {
-      /* Partners — one dt, one dd per entry */
+      /* Partners — one dt, one dd per entry; continues the row stagger */
       partnerRows.length > 0 && (
-        <div class="flex flex-col gap-0.5 border-b border-(--border) py-2.5">
+        <div
+          class="flex flex-col gap-0.5 border-b border-(--border) py-2.5"
+          data-reveal="fade-up"
+          style={`--reveal-delay:${visibleRows.length * ROW_STAGGER}ms;`}
+        >
           <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
             Partenaires
           </dt>

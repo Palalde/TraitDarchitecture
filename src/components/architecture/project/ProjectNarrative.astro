@@ -10,11 +10,33 @@ const { Content } = await render(entry);
 ---
 
 <div
-  class="narrative-body max-w-[65ch] text-[1.0625rem] leading-8 text-(--text-primary)"
-  data-reveal="fade-up"
+  data-narrative
+  class="narrative-body max-w-[65ch] text-[1.0625rem] leading-8 text-(--text-primary) lg:max-w-none"
 >
   <Content />
 </div>
+
+{
+  /* Split reveal: primary description (children before the first <h2>) and
+    secondary block (first <h2> and after) get separate delays. Markdown
+    children can't carry data-reveal server-side, so they are tagged at parse
+    time — before the deferred project-body controller starts and scans its
+    targets. Reduced motion is covered by CSS ([data-reveal] is forced
+    visible), and without JS nothing is tagged → content stays visible. */
+}
+<script is:inline data-astro-rerun>
+  (() => {
+    const body = document.querySelector("[data-narrative]");
+    if (!body) return;
+
+    let secondary = false;
+    for (const el of body.children) {
+      if (el.tagName === "H2") secondary = true;
+      el.setAttribute("data-reveal", "fade-up");
+      el.style.setProperty("--reveal-delay", secondary ? "150ms" : "0ms");
+    }
+  })();
+</script>
 
 {
   /*
@@ -33,6 +55,9 @@ const { Content } = await render(entry);
 
   /* Secondary block heading — ## in Markdown → <h2> */
   .narrative-body :global(h2) {
+    /* flow-root → the heading box (and its border-bottom trait) shrinks
+       beside the floated cover instead of running full width under it. */
+    display: flow-root;
     margin-top: 2.5rem;
     margin-bottom: 0.5rem;
     font-size: 0.75rem;

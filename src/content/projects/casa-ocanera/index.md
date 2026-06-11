@@ -17,7 +17,7 @@ mission: "Mission complète"
 client: "Maîtrise d'ouvrage privée"
 ---
 
-<!-- À relire par T&T — contenu provisoire -->
+<!-- À relire texte IA-->
 
 La Casa Ocanera est une surélévation en ossature bois d'un logement existant à Vignale, en Haute-Corse. L'intervention s'inscrit dans la continuité de la maison traditionnelle tout en proposant un niveau supérieur résolument contemporain, dont la légèreté structurelle dialogue avec les matériaux de pierre du soubassement.
 
@@ -25,6 +25,8 @@ L'étage est entièrement construit en bois : charpente, bardage et menuiseries 
 
 ## Parti architectural
 
-<!-- À relire par T&T -->
+<!-- À relire texte IA -->
+
+Le plan du niveau supérieur est organisé autour d'un séjour ouvert sur une terrasse côté ouest, prolongeant le panorama sur le golfe de Saint-Florent. Deux chambres en façade nord bénéficient d'une lumière maîtrisée, filtrée par un bardage à claire-voie orientable.
 
 Le plan du niveau supérieur est organisé autour d'un séjour ouvert sur une terrasse côté ouest, prolongeant le panorama sur le golfe de Saint-Florent. Deux chambres en façade nord bénéficient d'une lumière maîtrisée, filtrée par un bardage à claire-voie orientable.

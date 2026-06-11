@@ -12,74 +12,90 @@ interface Props {
 const { entry } = Astro.props;
 ---
 
-<article data-project-shell aria-labelledby="project-page-title">
-  <div data-project-head>
-    {
-      /* Script inside its reveal root (targets the parent, which exists at
-        parse time) so the cartouche + hero reveal on a fresh load too, not
-        only via VT. Pathname read at runtime so it works for any slug. */
-    }
-    <script is:inline data-astro-rerun>
-      (() => {
-        const revealSystem = window.__t2aReveal;
-        if (!revealSystem) return;
-
-        revealSystem
-          .createController({
-            id: "project-head",
-            pathname: window.location.pathname,
-            rootSelector: "[data-project-head]",
-          })
-          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
-      })();
-    </script>
-
-    <ProjectHero entry={entry} />
-  </div>
-
+<article
+  data-project-shell
+  aria-labelledby="project-page-title"
+  class="relative w-full"
+>
   {
-    /* data-project-body: description + fiche technique (steps 4+), gallery (6), similar (7) */
+    /* Single flow container shared by head + body: the cover is floated right
+      (lg+) from inside [data-project-head] and the narrative line boxes in
+      [data-project-body] wrap against it, then run full width below it.
+      None of the intermediate wrappers may create a BFC at lg+ (no
+      overflow/flex/grid), otherwise the float stops affecting the text. */
   }
-  <div data-project-body>
+  <div
+    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pt-[calc(var(--header-height)+2.5rem)] lg:px-10 lg:pb-24 lg:pt-[calc(var(--header-height)+3rem)]"
+  >
     {
-      /* Script inside its reveal root so it also runs on a fresh (non-VT)
-        load. Deferred until after the VT finishes to avoid iOS/WebKit
-        rollback (§ 3.8 Darchitecture.md). */
+      /* flex-col + order-* gives the stacked mobile/tablet order (cartouche →
+        cover); lg:block restores normal flow so the float works. */
     }
-    <script is:inline data-astro-rerun>
-      (() => {
-        const revealSystem = window.__t2aReveal;
-        if (!revealSystem) return;
+    <div data-project-head class="flex flex-col lg:block">
+      {
+        /* Script inside its reveal root (targets the parent, which exists at
+          parse time) so the cartouche + hero reveal on a fresh load too, not
+          only via VT. Pathname read at runtime so it works for any slug. */
+      }
+      <script is:inline data-astro-rerun>
+        (() => {
+          const revealSystem = window.__t2aReveal;
+          if (!revealSystem) return;
 
-        revealSystem
-          .createController({
-            id: "project-body",
-            pathname: window.location.pathname,
-            rootSelector: "[data-project-body]",
-          })
-          ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
-      })();
-    </script>
+          revealSystem
+            .createController({
+              id: "project-head",
+              pathname: window.location.pathname,
+              rootSelector: "[data-project-head]",
+            })
+            ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+        })();
+      </script>
+
+      <ProjectHero entry={entry} />
+    </div>
+
     {
-      /* Body section — description (col 1-7) + fiche technique sticky (col 9-12) on desktop */
+      /* data-project-body: description + fiche technique (steps 4+), gallery (6), similar (7) */
     }
-    <section
-      aria-labelledby="project-body-heading"
-      class="mx-auto w-full max-w-7xl px-6 pb-16 sm:px-8 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-10 lg:pb-24"
-    >
-      <h2 id="project-body-heading" class="sr-only">Description du projet</h2>
+    <div data-project-body>
+      {
+        /* Script inside its reveal root so it also runs on a fresh (non-VT)
+          load. Deferred until after the VT finishes to avoid iOS/WebKit
+          rollback (§ 3.8 Darchitecture.md). */
+      }
+      <script is:inline data-astro-rerun>
+        (() => {
+          const revealSystem = window.__t2aReveal;
+          if (!revealSystem) return;
 
-      {/* Narrative — spans cols 1-7 on desktop */}
-      <div class="mb-12 lg:col-span-7 lg:mb-0">
-        <ProjectNarrative entry={entry} />
-      </div>
+          revealSystem
+            .createController({
+              id: "project-body",
+              pathname: window.location.pathname,
+              rootSelector: "[data-project-body]",
+            })
+            ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
+        })();
+      </script>
 
-      {/* Facts — col 9-12, sticky on desktop */}
-      <div
-        class="lg:col-span-4 lg:col-start-9 lg:self-start lg:sticky lg:top-[calc(var(--header-height)+2rem)]"
+      <section
+        aria-labelledby="project-body-heading"
+        class="mt-8 sm:mt-12 lg:mt-16"
       >
-        <ProjectFacts entry={entry} />
-      </div>
-    </section>
+        <h2 id="project-body-heading" class="sr-only">Description du projet</h2>
+
+        {/* Narrative — flows left of the floated cover, wraps below it */}
+        <ProjectNarrative entry={entry} />
+
+        {
+          /* Facts — full width below cover + narrative (clear drops it under
+            the float, honouring the figure's lg:mb) */
+        }
+        <div class="mt-12 lg:clear-both lg:mt-16">
+          <ProjectFacts entry={entry} />
+        </div>
+      </section>
+    </div>
   </div>
 </article>
