@@ -5,7 +5,7 @@ dept: "13"
 zone: "cote-bleue"
 cover: "./cover.png"
 coverRatio: "1/1"
-coverAlt: "Maison des P'tits Loups à Sausset-les-Pins, rénovation en pierre d'un équipement"
+coverAlt: "Maison des P'tits Loups à Sausset-les-Pins, rénovation en pierre"
 order: 70
 types: ["renovation"]
 materials: ["pierre"]

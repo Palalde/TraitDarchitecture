@@ -25,83 +25,41 @@ const metaParts = [
 ].filter((v): v is string => v !== null);
 const metaLine = metaParts.join(" · ");
 
-// Per-ratio config — desktop float layout (cover floated right, cartouche +
-// narrative flow left of it, text wraps below when longer than the cover).
+// Per-ratio config — desktop sticky layout (cover in the right grid column).
 // cotation: CotationFrame expects colon notation ("5:4").
-// maxW: caps the stacked figure below lg (the float width governs at lg+).
-// float: floated width by ratio — wider image takes more of the row,
-//   portrait gets breathing room.
-// sizes: matches the lg+ float width and the xl cap (max-w-7xl − px-10 ≈ 1200px).
+// maxW: caps the stacked figure below lg.
+// fit: cover width/height ratio, used to cap the figure width so that
+//   image + figcaption always fit in the viewport (laptops included):
+//   width ≤ (100dvh − header − 7rem) × fit.
 const RATIO_CONFIG = {
-  "1/1": {
-    cotation: "1:1",
-    maxW: "max-w-3xl",
-    float: "lg:w-[48%]",
-    sizes: "(min-width: 1280px) 36rem, (min-width: 1024px) 48vw, 100vw",
-  },
-  "5/4": {
-    cotation: "5:4",
-    maxW: "max-w-4xl",
-    float: "lg:w-[55%]",
-    sizes: "(min-width: 1280px) 41rem, (min-width: 1024px) 55vw, 100vw",
-  },
-  "4/5": {
-    cotation: "4:5",
-    maxW: "max-w-2xl",
-    float: "lg:w-[40%]",
-    sizes: "(min-width: 1280px) 30rem, (min-width: 1024px) 40vw, 100vw",
-  },
+  "1/1": { cotation: "1:1", maxW: "max-w-3xl", fit: 1 },
+  "5/4": { cotation: "5:4", maxW: "max-w-4xl", fit: 1.25 },
+  "4/5": { cotation: "4:5", maxW: "max-w-2xl", fit: 0.8 },
 } as const;
 const ratio = RATIO_CONFIG[coverRatio];
+
+// Cover column ≈ half of (max-w-7xl − px-10 − gap) → ~36rem at the xl cap.
+const COVER_SIZES =
+  "(min-width: 1280px) 36rem, (min-width: 1024px) 50vw, 100vw";
+
+// Sticky knobs as inline-style CSS vars (atelier pattern — avoids minting
+// per-ratio arbitrary utility classes).
+// top = 0 → the cover sticks to the very top of the viewport (the auto-hide
+// header slides over it when it comes back, as on /atelier narrow mobile).
+// max-width is height-driven so image + figcaption together fill the whole
+// viewport height: image height = 100dvh − 2.5rem (the figcaption block),
+// then width = height × fit.
+const stickyFigureStyle = [
+  "--project-cover-top: 5px",
+  `--project-cover-max-width: min(100%, calc((100dvh - 2.5rem) * ${ratio.fit}))`,
+].join("; ");
 ---
 
 {
-  /* Hero cover — plate figure 01 (LCP image).
-    First in DOM so the lg+ float starts at the top of the flow container
-    (a float only escapes upward of nothing — placed after the cartouche it
-    would start below it). Mobile/tablet order (cartouche first) is restored
-    by order-* on the parent's flex-col. The figure holds no focusable
-    element, so tab order is unaffected. */
+  /* Cartouche — left grid column (row 1) on desktop; first in the stacked
+    mobile/tablet flow (DOM order = reading order, no order-* needed). */
 }
-<figure
-  class:list={[
-    "order-2 mt-8 w-full sm:mt-12 lg:float-right lg:mb-10 lg:ml-10 lg:mt-0 lg:max-w-none",
-    ratio.maxW,
-    ratio.float,
-  ]}
->
-  <CotationFrame
-    aspectRatio={ratio.cotation}
-    revealBorder
-    revealCotation
-    showCotation
-  >
-    <ParallaxFrame
-      client:visible
-      overflowPercent={0.025}
-      mobileOverflowPercent={0.04}
-    >
-      <Image
-        src={cover}
-        alt={coverAlt}
-        class="h-full w-full object-cover"
-        draggable="false"
-        loading="eager"
-        fetchpriority="high"
-        quality={85}
-        widths={[800, 1200, 1600]}
-        sizes={ratio.sizes}
-      />
-    </ParallaxFrame>
-  </CotationFrame>
-  <FigCaption figureId="01" label={coverAlt} />
-</figure>
-
-{
-  /* Cartouche — flows left of the floated cover on desktop (line boxes avoid
-    the float), stacked first on mobile/tablet via order-1. */
-}
-<div class="order-1 flex flex-col">
+<div class="flex flex-col lg:col-start-1 lg:row-start-1">
   {/* Back link — first focusable element after the header */}
   <a
     href="/architecture"
@@ -155,4 +113,60 @@ const ratio = RATIO_CONFIG[coverRatio];
       </p>
     )
   }
+</div>
+
+{
+  /* Hero cover — plate figure 01 (LCP image).
+    Desktop: the cover lives in the right grid column.
+    ⚠️ The sticky figure is wrapped in a REAL (non display:contents) block that
+    occupies the grid area (col 2, rows 1-2 = cartouche + narrative). Why: the
+    figure's box-tree parent ([data-project-head]) is lg:contents, and Chrome
+    then bounds a sticky grid item to the GRID CONTAINER (which spans the facts
+    row) instead of its grid area → the cover ran all the way under the whole
+    fiche technique. Giving the figure an explicit block containing block makes
+    it release exactly at the wrapper bottom = top of the facts row.
+    Width capped per ratio (--project-cover-max-width) so image + figcaption fit
+    the viewport. Sticky + parallax combine as on /atelier. */
+}
+<div class="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+  <figure
+    class:list={[
+      "mt-8 w-full sm:mt-12 lg:sticky lg:top-(--project-cover-top) lg:mx-auto lg:mt-0 lg:max-w-(--project-cover-max-width)",
+      ratio.maxW,
+    ]}
+    style={stickyFigureStyle}
+  >
+    <CotationFrame
+      aspectRatio={ratio.cotation}
+      revealBorder
+      revealCotation
+      showCotation
+    >
+      {
+        /* progressAnchorSelector (atelier pattern): a sticky frame's own rect is
+          frozen in the viewport while stuck → progress stalls and the parallax
+          dies. The anchor (resolved via closest()) is the scrolling grid
+          container in ProjectShell, whose traversal drives the progress. */
+      }
+      <ParallaxFrame
+        client:visible
+        overflowPercent={0.025}
+        mobileOverflowPercent={0.04}
+        progressAnchorSelector="[data-parallax-anchor]"
+      >
+        <Image
+          src={cover}
+          alt={coverAlt}
+          class="h-full w-full object-cover"
+          draggable="false"
+          loading="eager"
+          fetchpriority="high"
+          quality={85}
+          widths={[800, 1200, 1600]}
+          sizes={COVER_SIZES}
+        />
+      </ParallaxFrame>
+    </CotationFrame>
+    <FigCaption figureId="01" label={coverAlt} />
+  </figure>
 </div>

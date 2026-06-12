@@ -44,7 +44,7 @@ const allProjects = await getSortedProjects();
   ogImage={cover.src}
 >
   <HeaderShell />
-  <main class="relative overflow-hidden bg-(--bg-primary)">
+  <main class="relative overflow-x-clip bg-(--bg-primary)">
     <BackgroundDecorations />
     <ProjectShell entry={entry} allProjects={allProjects} />
   </main>

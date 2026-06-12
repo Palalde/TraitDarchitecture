@@ -18,20 +18,21 @@ const { entry } = Astro.props;
   class="relative w-full"
 >
   {
-    /* Single flow container shared by head + body: the cover is floated right
-      (lg+) from inside [data-project-head] and the narrative line boxes in
-      [data-project-body] wrap against it, then run full width below it.
-      None of the intermediate wrappers may create a BFC at lg+ (no
-      overflow/flex/grid), otherwise the float stops affecting the text. */
+    /* Shared container — lg+ = 2-col grid. Left column: cartouche (row 1) +
+      narrative (row 2) at a constant text width. Right column: cover figure
+      spanning rows 1-2, sticky inside that grid-area runway → it follows the
+      scroll when the narrative is taller than it and stops above the facts
+      row (row 3, full width). Below lg everything stacks in DOM order. */
   }
   <div
-    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pt-[calc(var(--header-height)+2.5rem)] lg:px-10 lg:pb-24 lg:pt-[calc(var(--header-height)+3rem)]"
+    class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pt-[calc(var(--header-height)+2.5rem)] lg:grid lg:grid-cols-2 lg:gap-x-10 lg:px-10 lg:pb-24 lg:pt-[calc(var(--header-height)+3rem)]"
+    data-parallax-anchor
   >
     {
-      /* flex-col + order-* gives the stacked mobile/tablet order (cartouche →
-        cover); lg:block restores normal flow so the float works. */
+      /* lg:contents → the wrapper's children become grid items while it keeps
+        serving as reveal root (DOM scoping is display-independent). */
     }
-    <div data-project-head class="flex flex-col lg:block">
+    <div data-project-head class="lg:contents">
       {
         /* Script inside its reveal root (targets the parent, which exists at
           parse time) so the cartouche + hero reveal on a fresh load too, not
@@ -58,7 +59,7 @@ const { entry } = Astro.props;
     {
       /* data-project-body: description + fiche technique (steps 4+), gallery (6), similar (7) */
     }
-    <div data-project-body>
+    <div data-project-body class="lg:contents">
       {
         /* Script inside its reveal root so it also runs on a fresh (non-VT)
           load. Deferred until after the VT finishes to avoid iOS/WebKit
@@ -79,20 +80,19 @@ const { entry } = Astro.props;
         })();
       </script>
 
-      <section
-        aria-labelledby="project-body-heading"
-        class="mt-8 sm:mt-12 lg:mt-16"
-      >
+      <section aria-labelledby="project-body-heading" class="lg:contents">
         <h2 id="project-body-heading" class="sr-only">Description du projet</h2>
 
-        {/* Narrative — flows left of the floated cover, wraps below it */}
-        <ProjectNarrative entry={entry} />
+        {/* Narrative — left column, row 2, under the cartouche */}
+        <div class="mt-8 sm:mt-12 lg:col-start-1 lg:row-start-2 lg:mt-16">
+          <ProjectNarrative entry={entry} />
+        </div>
 
         {
-          /* Facts — full width below cover + narrative (clear drops it under
-            the float, honouring the figure's lg:mb) */
+          /* Facts — full-width row 3; its row boundary is where the cover's
+            sticky runway ends */
         }
-        <div class="mt-12 lg:clear-both lg:mt-16">
+        <div class="mt-12 lg:col-span-2 lg:row-start-3 lg:mt-16">
           <ProjectFacts entry={entry} />
         </div>
       </section>
