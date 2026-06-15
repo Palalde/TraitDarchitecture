@@ -36,7 +36,8 @@ const { Content } = await render(entry);
   Hierarchy:
     - paragraphs keep the main reading rhythm;
     - a bare ## / ### draws a horizontal divider trait;
-    - a blockquote (>) is an untitled aside, placeable anywhere.
+    - a blockquote (>) flows as secondary-register text (--text-secondary,
+      0.9375rem), usable in both primary and secondary descriptions.
 */
 }
 <style>
@@ -76,7 +77,9 @@ const { Content } = await render(entry);
     margin-bottom: 0.375rem;
   }
 
-  /* Aside — untitled Markdown blockquote (>), interleavable anywhere. */
+  /* Blockquote (>) — secondary-register text with left-border aside.
+     colour + size match description secondaire, usable in both primary
+     and secondary contexts. */
   .narrative-body :global(blockquote) {
     margin: 2rem 0;
     padding: 0.25rem 0 0.25rem 1.25rem;
@@ -86,6 +89,7 @@ const { Content } = await render(entry);
 
   .narrative-body :global(blockquote p) {
     font-size: 0.9375rem;
+    color: inherit;
     margin-bottom: 1rem;
   }
 

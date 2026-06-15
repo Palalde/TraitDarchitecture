@@ -1,7 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getProjectSecondary } from "@/components/architecture/architecture.data";
 import ProjectHero from "@/components/architecture/project/ProjectHero.astro";
 import ProjectNarrative from "@/components/architecture/project/ProjectNarrative.astro";
+import ProjectSecondary from "@/components/architecture/project/ProjectSecondary.astro";
 import ProjectFacts from "@/components/architecture/project/ProjectFacts.astro";
 
 interface Props {
@@ -10,6 +12,8 @@ interface Props {
 }
 
 const { entry } = Astro.props;
+const slug = entry.id.replace(/\/index$/, "");
+const secondaryEntry = await getProjectSecondary(slug);
 ---
 
 <article
@@ -18,11 +22,10 @@ const { entry } = Astro.props;
   class="relative w-full"
 >
   {
-    /* Shared container — lg+ = 2-col grid. Left column: cartouche (row 1) +
-      narrative (row 2) at a constant text width. Right column: cover figure
-      spanning rows 1-2, sticky inside that grid-area runway → it follows the
-      scroll when the narrative is taller than it and stops above the facts
-      row (row 3, full width). Below lg everything stacks in DOM order. */
+    /* Shared container — lg+ = 2-col grid for the block haut. Left column:
+      cartouche (row 1) + narrative (row 2) at a constant text width. Right
+      column: cover figure spanning rows 1-2, sticky inside that grid-area
+      runway. Below lg everything stacks in DOM order. */
   }
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-16 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pt-[calc(var(--header-height)+2.5rem)] lg:grid lg:grid-cols-2 lg:gap-x-10 lg:px-10 lg:pb-24 lg:pt-[calc(var(--header-height)+3rem)]"
@@ -57,7 +60,8 @@ const { entry } = Astro.props;
     </div>
 
     {
-      /* data-project-body: description + fiche technique (steps 4+), gallery (6), similar (7) */
+      /* data-project-body: description, reserved gallery slot, then facts /
+        secondary section. */
     }
     <div data-project-body class="lg:contents">
       {
@@ -87,15 +91,42 @@ const { entry } = Astro.props;
         <div class="mt-8 sm:mt-12 lg:col-start-1 lg:row-start-2 lg:mt-16">
           <ProjectNarrative entry={entry} />
         </div>
-
-        {
-          /* Facts — full-width row 3; its row boundary is where the cover's
-            sticky runway ends */
-        }
-        <div class="mt-12 lg:col-span-2 lg:row-start-3 lg:mt-16">
-          <ProjectFacts entry={entry} />
-        </div>
       </section>
+
+      {
+        /* Gallery slot — spans both columns so the gallery inserts cleanly in B2. */
+      }
+      <div
+        data-project-gallery-slot
+        hidden
+        aria-hidden="true"
+        class="lg:col-span-2"
+      >
+      </div>
+
+      {
+        secondaryEntry ? (
+          <section
+            aria-label="Description secondaire et fiche technique"
+            class="mt-12 lg:col-span-2 lg:mt-16 lg:grid lg:grid-cols-2 lg:gap-x-10"
+          >
+            <div class="lg:sticky lg:top-[calc(var(--header-height)+2rem)] lg:self-start">
+              <ProjectSecondary entry={secondaryEntry} />
+            </div>
+
+            <div class="mt-8 lg:mt-0 lg:justify-self-center lg:w-full lg:max-w-124">
+              <ProjectFacts entry={entry} compact />
+            </div>
+          </section>
+        ) : (
+          <section
+            aria-labelledby="project-facts-heading"
+            class="mt-12 lg:col-span-2 lg:mt-16"
+          >
+            <ProjectFacts entry={entry} />
+          </section>
+        )
+      }
     </div>
   </div>
 </article>

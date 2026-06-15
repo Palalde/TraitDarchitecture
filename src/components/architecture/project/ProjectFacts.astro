@@ -10,9 +10,10 @@ import {
 
 interface Props {
   entry: CollectionEntry<"projects">;
+  compact?: boolean;
 }
 
-const { entry }: Props = Astro.props;
+const { entry, compact = false }: Props = Astro.props;
 const {
   city,
   dept,
@@ -67,6 +68,9 @@ const partnerRows = partners ?? [];
 
 // Per-row reveal stagger (ms per row); partners block continues the sequence
 const ROW_STAGGER = 40;
+const gridClass = compact
+  ? "grid grid-cols-2 gap-x-4 sm:gap-x-8"
+  : "grid grid-cols-2 gap-x-4 sm:gap-x-8 lg:grid-cols-3 xl:grid-cols-4";
 ---
 
 {
@@ -91,7 +95,7 @@ const ROW_STAGGER = 40;
       the full-width desktop band. Rows are ruled with border-b (divide-y
       can't follow a multi-col grid). */
   }
-  <dl class="grid grid-cols-2 gap-x-4 sm:gap-x-8 lg:grid-cols-3 xl:grid-cols-4">
+  <dl class={gridClass}>
     {
       visibleRows.map(({ label, value }, index) => (
         <div
