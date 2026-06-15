@@ -539,10 +539,6 @@ html.is-landing-dismissed #landing-wrapper {
   transform: translateX(calc(-1 * var(--reveal-offset-x, 24px)));
 }
 
-[data-reveal="wipe-from-left"] {
-  clip-path: inset(0 100% 0 0);
-}
-
 [data-reveal="fade-up"].revealed {
   animation: t2a-reveal-fade-up var(--reveal-d, 600ms) ease-out
     var(--reveal-delay, 0ms) both;
@@ -608,11 +604,6 @@ html.is-landing-dismissed #landing-wrapper {
     var(--reveal-delay, 0ms) both;
 }
 
-[data-reveal="wipe-from-left"].revealed {
-  animation: t2a-reveal-wipe-from-left var(--reveal-d, 500ms) ease-out
-    var(--reveal-delay, 0ms) both;
-}
-
 @keyframes t2a-reveal-fade-up {
   from {
     opacity: var(--reveal-start-opacity, 0);
@@ -670,15 +661,6 @@ html.is-landing-dismissed #landing-wrapper {
   to {
     opacity: 1;
     transform: translateX(0);
-  }
-}
-
-@keyframes t2a-reveal-wipe-from-left {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0);
   }
 }
 

@@ -1,8 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import type { GalleryImage } from "@/components/architecture/architecture.data";
-import CotationFrame from "@/components/ui/cotation/CotationFrame.astro";
-import FigCaption from "@/components/ui/cotation/FigCaption.astro";
 import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 import MasonrySetup from "@/components/ui/masonry/MasonrySetup.astro";
 
@@ -50,40 +48,27 @@ const GALLERY_SIZES =
           return (
             <li
               data-masonry-item
-              data-reveal="wipe-from-left"
-              style={`--reveal-d:500ms; --reveal-delay:${revealDelay};`}
+              data-reveal="fade-up"
+              style={`--reveal-delay:${revealDelay};`}
             >
-              <figure class="border border-(--border) bg-(--bg-primary)">
-                <CotationFrame
-                  contentStyle={aspectStyle}
-                  revealCotation={index === 0}
-                  showBorder={false}
-                  showCotation={index === 0}
+              <div class="relative w-full overflow-hidden" style={aspectStyle}>
+                <ParallaxFrame
+                  client:visible
+                  overflowPercent={0.02}
+                  mobileOverflowPercent={0.03}
                 >
-                  <ParallaxFrame
-                    client:visible
-                    overflowPercent={0.02}
-                    mobileOverflowPercent={0.03}
-                  >
-                    <Image
-                      alt={image.alt}
-                      class="h-full w-full object-cover"
-                      draggable="false"
-                      loading="lazy"
-                      quality={85}
-                      sizes={GALLERY_SIZES}
-                      src={image.src}
-                      widths={[400, 600, 800, 1200, 1600]}
-                    />
-                  </ParallaxFrame>
-                </CotationFrame>
-
-                <FigCaption
-                  className="px-4 pb-4"
-                  figureId={image.plate}
-                  label={image.caption}
-                />
-              </figure>
+                  <Image
+                    alt={image.alt}
+                    class="h-full w-full object-cover"
+                    draggable="false"
+                    loading="lazy"
+                    quality={85}
+                    sizes={GALLERY_SIZES}
+                    src={image.src}
+                    widths={[400, 600, 800, 1200, 1600]}
+                  />
+                </ParallaxFrame>
+              </div>
             </li>
           );
         })}
