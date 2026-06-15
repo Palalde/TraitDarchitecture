@@ -1,0 +1,93 @@
+<script is:inline data-astro-rerun>
+  (() => {
+    const roots = document.querySelectorAll("[data-masonry]");
+    if (!roots.length) return;
+
+    const readVar = (style, name, fallback) => {
+      const value = parseFloat(style.getPropertyValue(name));
+      return Number.isFinite(value) ? value : fallback;
+    };
+
+    const clearCard = (card) => {
+      card.style.position = "";
+      card.style.width = "";
+      card.style.left = "";
+      card.style.top = "";
+    };
+
+    const initGrid = (grid) => {
+      if (grid.getAttribute("data-masonry-on") === "1") return;
+      grid.setAttribute("data-masonry-on", "1");
+
+      const layout = () => {
+        const gridStyle = getComputedStyle(grid);
+        const cols = readVar(gridStyle, "--masonry-cols", 1);
+        const cards = [
+          ...grid.querySelectorAll("[data-masonry-item], [data-project-card]"),
+        ].filter((card) => !card.classList.contains("hidden"));
+
+        // Single column (mobile): plain document flow, no masonry needed.
+        if (cols < 2 || cards.length === 0) {
+          grid.style.position = "";
+          grid.style.display = "";
+          grid.style.height = "";
+          cards.forEach(clearCard);
+          return;
+        }
+
+        const gap = readVar(gridStyle, "--masonry-gap", 24);
+        const width = grid.clientWidth;
+        if (width <= 0) return;
+
+        const colWidth = (width - gap * (cols - 1)) / cols;
+
+        // Phase 1 — pull cards out of flow at the resolved column width.
+        grid.style.position = "relative";
+        grid.style.display = "block";
+        cards.forEach((card) => {
+          card.style.position = "absolute";
+          card.style.width = colWidth + "px";
+        });
+
+        // Phase 2 — measure every card once to avoid layout thrashing.
+        const heights = cards.map((card) => card.offsetHeight);
+
+        // Phase 3 — assign each card to its reading-order column (index mod
+        // cols) and stack it below the previous card in that column.
+        const colHeights = new Array(cols).fill(0);
+        cards.forEach((card, index) => {
+          const col = index % cols;
+          card.style.left = col * (colWidth + gap) + "px";
+          card.style.top = colHeights[col] + "px";
+          colHeights[col] += heights[index] + gap;
+        });
+
+        grid.style.height = Math.max(...colHeights) - gap + "px";
+      };
+
+      let frame = 0;
+      const schedule = () => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          layout();
+        });
+      };
+
+      layout();
+
+      new ResizeObserver(schedule).observe(grid);
+      new MutationObserver(schedule).observe(grid, {
+        attributes: true,
+        attributeFilter: ["class"],
+        subtree: true,
+      });
+
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(schedule);
+      }
+    };
+
+    roots.forEach(initGrid);
+  })();
+</script>
