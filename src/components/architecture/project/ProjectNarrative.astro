@@ -16,27 +16,15 @@ const { Content } = await render(entry);
   <Content />
 </div>
 
-{
-  /* Split reveal: the secondary register (everything after the first ## / ###
-    section heading, plus any blockquote aside) gets a slightly later delay
-    than the primary flow. Markdown children can't carry data-reveal
-    server-side, so they are tagged at parse time — before the deferred
-    project-body controller starts and scans its targets. Reduced motion is
-    covered by CSS ([data-reveal] is forced visible), and without JS nothing is
-    tagged → content stays visible. */
-}
 <script is:inline data-astro-rerun>
   (() => {
     const body = document.querySelector("[data-narrative]");
     if (!body) return;
 
-    let secondary = false;
-    for (const el of body.children) {
-      if (el.tagName === "H2" || el.tagName === "H3") secondary = true;
-      const isSecondary = secondary || el.tagName === "BLOCKQUOTE";
+    Array.from(body.children).forEach((el, index) => {
       el.setAttribute("data-reveal", "fade-up");
-      el.style.setProperty("--reveal-delay", isSecondary ? "150ms" : "0ms");
-    }
+      el.style.setProperty("--reveal-delay", `${index * 40}ms`);
+    });
   })();
 </script>
 
@@ -46,10 +34,9 @@ const { Content } = await render(entry);
   Markdown rendered via <Content /> cannot be styled inline.
   Scoped <style> is the official Astro primitive for this use case (no new dep).
   Hierarchy:
-    - normal flow before any ## / ### = primary;
-    - a bare ## / ### draws a horizontal divider trait, and everything after it
-      reads as secondary;
-    - a blockquote (>) is an untitled secondary aside, placeable anywhere.
+    - paragraphs keep the main reading rhythm;
+    - a bare ## / ### draws a horizontal divider trait;
+    - a blockquote (>) is an untitled aside, placeable anywhere.
 */
 }
 <style>
@@ -80,35 +67,25 @@ const { Content } = await render(entry);
     border-bottom: 1px solid var(--border);
   }
 
-  /* Secondary register — everything after a section heading reads smaller and
-     in the secondary colour (general sibling: no return to primary afterwards). */
-  .narrative-body :global(:is(h2, h3) ~ p) {
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.25rem;
-  }
-
-  .narrative-body :global(:is(h2, h3) ~ :is(ul, ol)) {
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
+  .narrative-body :global(:is(ul, ol)) {
     padding-left: 1.25rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 
-  .narrative-body :global(:is(h2, h3) ~ * li) {
+  .narrative-body :global(li) {
     margin-bottom: 0.375rem;
   }
 
-  /* Secondary aside — untitled Markdown blockquote (>), interleavable anywhere. */
+  /* Aside — untitled Markdown blockquote (>), interleavable anywhere. */
   .narrative-body :global(blockquote) {
     margin: 2rem 0;
     padding: 0.25rem 0 0.25rem 1.25rem;
     border-left: 1px solid var(--border);
+    color: var(--text-secondary);
   }
 
   .narrative-body :global(blockquote p) {
     font-size: 0.9375rem;
-    color: var(--text-secondary);
     margin-bottom: 1rem;
   }
 
@@ -117,13 +94,6 @@ const { Content } = await render(entry);
   }
 
   .narrative-body :global(blockquote :is(ul, ol)) {
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
-    padding-left: 1.25rem;
     margin-bottom: 1rem;
-  }
-
-  .narrative-body :global(blockquote li) {
-    margin-bottom: 0.375rem;
   }
 </style>

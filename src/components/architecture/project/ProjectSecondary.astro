@@ -1,0 +1,85 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+
+interface Props {
+  entry?: CollectionEntry<"projectSecondaries">;
+}
+
+const { entry }: Props = Astro.props;
+const rendered = entry ? await render(entry) : null;
+const Content = rendered?.Content;
+---
+
+{
+  Content && (
+    <div
+      data-secondary
+      class="secondary-body max-w-[60ch] text-[0.9375rem] leading-7 text-(--text-secondary) sm:leading-8"
+    >
+      <Content />
+    </div>
+  )
+}
+
+<script is:inline data-astro-rerun>
+  (() => {
+    const body = document.querySelector("[data-secondary]");
+    if (!body) return;
+
+    Array.from(body.children).forEach((el, index) => {
+      el.setAttribute("data-reveal", "fade-up");
+      el.style.setProperty("--reveal-delay", `${index * 40}ms`);
+    });
+  })();
+</script>
+
+<style>
+  .secondary-body :global(p) {
+    margin-bottom: 1.25rem;
+  }
+
+  .secondary-body :global(strong) {
+    font-weight: 600;
+    color: inherit;
+  }
+
+  .secondary-body :global(:is(h2, h3)) {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .secondary-body :global(:is(ul, ol)) {
+    padding-left: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .secondary-body :global(li) {
+    margin-bottom: 0.375rem;
+  }
+
+  .secondary-body :global(blockquote) {
+    margin: 2rem 0;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    border-left: 1px solid var(--border);
+  }
+
+  .secondary-body :global(blockquote p) {
+    font-size: 0.9375rem;
+    margin-bottom: 1rem;
+  }
+
+  .secondary-body :global(blockquote :is(p, ul, ol):last-child) {
+    margin-bottom: 0;
+  }
+
+  .secondary-body :global(blockquote :is(ul, ol)) {
+    margin-bottom: 1rem;
+  }
+</style>
