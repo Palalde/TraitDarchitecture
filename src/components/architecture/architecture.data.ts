@@ -77,6 +77,14 @@ export async function getHomeFeaturedProjects(): Promise<
   return featured;
 }
 
+/** Returns the optional secondary content entry for a given project slug. */
+export async function getProjectSecondary(
+  slug: string,
+): Promise<CollectionEntry<"projectSecondaries"> | undefined> {
+  const secondaryEntries = await getCollection("projectSecondaries");
+  return secondaryEntries.find((entry) => entry.id.split("/")[0] === slug);
+}
+
 /**
  * Returns up to 3 projects similar to `current`, excluding drafts and the
  * current project itself. Similarity is scored (+1 per shared value in

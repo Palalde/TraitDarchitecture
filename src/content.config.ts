@@ -34,4 +34,9 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { projects };
+const projectSecondaries = defineCollection({
+  loader: glob({ pattern: "*/secondary.md", base: "./src/content/projects" }),
+  schema: z.object({}),
+});
+
+export const collections = { projects, projectSecondaries };
