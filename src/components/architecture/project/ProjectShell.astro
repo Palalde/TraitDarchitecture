@@ -1,7 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { getProjectSecondary } from "@/components/architecture/architecture.data";
+import {
+  getProjectGallery,
+  getProjectSecondary,
+} from "@/components/architecture/architecture.data";
 import ProjectHero from "@/components/architecture/project/ProjectHero.astro";
+import ProjectGallery from "@/components/architecture/project/ProjectGallery.astro";
 import ProjectNarrative from "@/components/architecture/project/ProjectNarrative.astro";
 import ProjectSecondary from "@/components/architecture/project/ProjectSecondary.astro";
 import ProjectFacts from "@/components/architecture/project/ProjectFacts.astro";
@@ -13,6 +17,7 @@ interface Props {
 
 const { entry } = Astro.props;
 const slug = entry.id.replace(/\/index$/, "");
+const galleryImages = getProjectGallery(slug, entry.data.name);
 const secondaryEntry = await getProjectSecondary(slug);
 ---
 
@@ -93,16 +98,7 @@ const secondaryEntry = await getProjectSecondary(slug);
         </div>
       </section>
 
-      {
-        /* Gallery slot — spans both columns so the gallery inserts cleanly in B2. */
-      }
-      <div
-        data-project-gallery-slot
-        hidden
-        aria-hidden="true"
-        class="lg:col-span-2"
-      >
-      </div>
+      <ProjectGallery images={galleryImages} />
 
       {
         secondaryEntry ? (
