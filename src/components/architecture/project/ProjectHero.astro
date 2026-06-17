@@ -11,9 +11,10 @@ import {
 
 interface Props {
   entry: CollectionEntry<"projects">;
+  hasGallery?: boolean;
 }
 
-const { entry }: Props = Astro.props;
+const { entry, hasGallery = false }: Props = Astro.props;
 const { name, city, dept, zone, year, status, cover, coverAlt, coverRatio } =
   entry.data;
 
@@ -166,6 +167,24 @@ const stickyFigureStyle = [
           sizes={COVER_SIZES}
         />
       </ParallaxFrame>
+
+      {
+        hasGallery && (
+          <button
+            type="button"
+            class="group absolute inset-0 z-20 flex cursor-zoom-in items-center justify-center bg-transparent p-0 transition-colors duration-200 can-hover:hover:bg-(--t2a-blue)/5 focus-visible:bg-(--t2a-blue)/5"
+            aria-label={`Agrandir la photo — ${coverAlt}`}
+            data-gallery-open="0"
+          >
+            <span class="pointer-events-none inline-flex items-center gap-1 border border-(--trait) bg-(--bg-primary)/80 px-2 py-1 text-[0.6rem] uppercase tracking-[0.14em] text-(--t2a-blue) opacity-0 transition-opacity duration-200 can-hover:group-hover:opacity-100 focus-visible:opacity-100">
+              <span aria-hidden="true" class="text-[0.85rem] leading-none">
+                ↗
+              </span>
+              <span>Agrandir</span>
+            </span>
+          </button>
+        )
+      }
     </CotationFrame>
     <FigCaption figureId="01" label={coverAlt} />
   </figure>

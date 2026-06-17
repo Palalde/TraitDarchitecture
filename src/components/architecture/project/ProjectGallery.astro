@@ -10,7 +10,6 @@ interface Props {
 
 const { images }: Props = Astro.props;
 const previewImages = images.slice(0, 6);
-const hasMore = images.length > previewImages.length;
 
 const GALLERY_SIZES =
   "(min-width: 1280px) 34rem, (min-width: 640px) 50vw, 100vw";
@@ -44,6 +43,7 @@ const GALLERY_SIZES =
         {previewImages.map((image, index) => {
           const aspectStyle = `aspect-ratio:${image.src.width} / ${image.src.height}`;
           const revealDelay = `${index * 100}ms`;
+          const imageLabel = image.caption || image.alt;
 
           return (
             <li
@@ -68,6 +68,23 @@ const GALLERY_SIZES =
                     widths={[400, 600, 800, 1200, 1600]}
                   />
                 </ParallaxFrame>
+
+                <button
+                  type="button"
+                  class="group absolute inset-0 z-20 flex cursor-zoom-in items-center justify-center bg-transparent p-0 transition-colors duration-200 can-hover:hover:bg-(--t2a-blue)/5 focus-visible:bg-(--t2a-blue)/5"
+                  aria-label={`Agrandir la photo — ${imageLabel}`}
+                  data-gallery-open={String(index + 1)}
+                >
+                  <span class="pointer-events-none inline-flex items-center gap-1 border border-(--trait) bg-(--bg-primary)/80 px-2 py-1 text-[0.6rem] uppercase tracking-[0.14em] text-(--t2a-blue) opacity-0 transition-opacity duration-200 can-hover:group-hover:opacity-100 focus-visible:opacity-100">
+                    <span
+                      aria-hidden="true"
+                      class="text-[0.85rem] leading-none"
+                    >
+                      ↗
+                    </span>
+                    <span>Agrandir</span>
+                  </span>
+                </button>
               </div>
             </li>
           );
@@ -76,20 +93,22 @@ const GALLERY_SIZES =
 
       <MasonrySetup />
 
-      {hasMore && (
-        <button
-          type="button"
-          disabled
-          aria-disabled="true"
-          class="mt-6 inline-flex w-fit items-center gap-1.5 text-[0.78rem] uppercase tracking-widest text-(--text-muted) transition-colors duration-200 disabled:cursor-default disabled:opacity-100"
-          data-reveal="fade-up"
-          style={`--reveal-delay:${previewImages.length * 100 + 80}ms;`}
-        >
+      <button
+        type="button"
+        class="group mt-6 inline-flex w-fit cursor-pointer items-center gap-2 text-[0.78rem] uppercase tracking-widest text-(--text-muted) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
+        data-reveal="fade-up"
+        style={`--reveal-delay:${previewImages.length * 100 + 80}ms;`}
+        data-gallery-open="0"
+      >
+        <span class="inline-flex items-center gap-2 border border-(--trait) px-3 py-2 transition-colors duration-200 can-hover:group-hover:bg-(--t2a-blue)/5">
+          <span class="text-[0.65rem] leading-none" aria-hidden="true">
+            ↗
+          </span>
           <span class="underline decoration-(--trait) decoration-1 underline-offset-2">
             Voir la galerie
           </span>
-        </button>
-      )}
+        </span>
+      </button>
     </section>
   )
 }

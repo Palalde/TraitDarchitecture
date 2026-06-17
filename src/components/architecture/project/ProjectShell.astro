@@ -6,6 +6,10 @@ import {
 } from "@/components/architecture/architecture.data";
 import ProjectHero from "@/components/architecture/project/ProjectHero.astro";
 import ProjectGallery from "@/components/architecture/project/ProjectGallery.astro";
+import {
+  ProjectGalleryOverlay,
+  type ProjectGallerySlide,
+} from "@/components/architecture/project/ProjectGalleryOverlay";
 import ProjectNarrative from "@/components/architecture/project/ProjectNarrative.astro";
 import ProjectSecondary from "@/components/architecture/project/ProjectSecondary.astro";
 import ProjectFacts from "@/components/architecture/project/ProjectFacts.astro";
@@ -19,6 +23,25 @@ const { entry } = Astro.props;
 const slug = entry.id.replace(/\/index$/, "");
 const galleryImages = getProjectGallery(slug, entry.data.name);
 const secondaryEntry = await getProjectSecondary(slug);
+const hasGallery = galleryImages.length > 0;
+const gallerySlides: ProjectGallerySlide[] = [
+  {
+    src: entry.data.cover.src,
+    width: entry.data.cover.width,
+    height: entry.data.cover.height,
+    plate: "01",
+    caption: entry.data.coverAlt,
+    alt: entry.data.coverAlt,
+  },
+  ...galleryImages.map((image) => ({
+    src: image.src.src,
+    width: image.src.width,
+    height: image.src.height,
+    plate: image.plate,
+    caption: image.caption,
+    alt: image.alt,
+  })),
+];
 ---
 
 <article
@@ -61,7 +84,7 @@ const secondaryEntry = await getProjectSecondary(slug);
         })();
       </script>
 
-      <ProjectHero entry={entry} />
+      <ProjectHero entry={entry} hasGallery={hasGallery} />
     </div>
 
     {
@@ -125,4 +148,14 @@ const secondaryEntry = await getProjectSecondary(slug);
       }
     </div>
   </div>
+
+  {
+    hasGallery && (
+      <ProjectGalleryOverlay
+        client:idle
+        slides={gallerySlides}
+        projectName={entry.data.name}
+      />
+    )
+  }
 </article>
