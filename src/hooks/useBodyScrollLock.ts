@@ -10,7 +10,23 @@ function getScrollLockTarget() {
   );
 }
 
-export function useBodyScrollLock(isLocked: boolean) {
+interface BodyScrollLockOptions {
+  // When true, only `overflow: hidden` is applied — NOT `touch-action: none`.
+  // Android Chrome honors `touch-action: none` and would disable pinch-zoom for
+  // the whole locked subtree (a portal overlay on document.body is included),
+  // so the user can't zoom the image; iOS Safari ignores it for zoom, hence the
+  // platform split. `overflow: hidden` (on the target + <html>) already prevents
+  // background scroll, and the opaque full-screen overlay masks any residual
+  // rubber-band, so dropping `touch-action: none` is safe here and restores zoom.
+  allowZoom?: boolean;
+}
+
+export function useBodyScrollLock(
+  isLocked: boolean,
+  options: BodyScrollLockOptions = {},
+) {
+  const { allowZoom = false } = options;
+
   useEffect(() => {
     if (!isLocked) {
       return undefined;
@@ -24,7 +40,9 @@ export function useBodyScrollLock(isLocked: boolean) {
     const previousHtmlOverflow = documentElement.style.overflow;
 
     scrollTarget.style.overflow = "hidden";
-    scrollTarget.style.touchAction = "none";
+    if (!allowZoom) {
+      scrollTarget.style.touchAction = "none";
+    }
 
     if (shouldLockDocumentElement) {
       documentElement.style.overflow = "hidden";
@@ -38,5 +56,5 @@ export function useBodyScrollLock(isLocked: boolean) {
         documentElement.style.overflow = previousHtmlOverflow;
       }
     };
-  }, [isLocked]);
+  }, [isLocked, allowZoom]);
 }
