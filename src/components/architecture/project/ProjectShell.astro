@@ -96,7 +96,8 @@ const gallerySlides: ProjectGallerySlide[] = [
       {
         /* Script inside its reveal root so it also runs on a fresh (non-VT)
           load. Deferred until after the VT finishes to avoid iOS/WebKit
-          rollback (§ 3.8 Darchitecture.md). */
+          rollback of an animation still running at the end of the root
+          transition. */
       }
       <script is:inline data-astro-rerun>
         (() => {

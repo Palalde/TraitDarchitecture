@@ -7,7 +7,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getSortedProjects } from "@/components/architecture/architecture.data";
 
 // OG social : première cover (premier projet trié par `order`). Swap simple
-// quand une image dédiée sera validée avec T&T (cf. Darchitecture.md §7.3).
+// quand une image dédiée sera validée avec T&T.
 const sortedProjects = await getSortedProjects();
 const ogImage = sortedProjects[0]?.data.cover.src;
 ---

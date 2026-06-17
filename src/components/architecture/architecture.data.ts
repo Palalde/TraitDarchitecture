@@ -127,8 +127,6 @@ export async function getSimilarProjects(
 
 export interface GalleryImage {
   src: ImageMetadata;
-  /** Zero-based index within the gallery (hero = 0, gallery starts at 1). */
-  index: number;
   /** Plate number label shown in FigCaption (02, 03, …). */
   plate: string;
   /** Optional caption extracted from the filename ("03 - Caption.jpg" → "Caption"). */
@@ -171,6 +169,6 @@ export function getProjectGallery(
     const plate = String(plateNum).padStart(2, "0");
     const alt = caption || `${projectName} — vue ${plateNum}`;
 
-    return { src: mod.default, index: i + 1, plate, caption, alt };
+    return { src: mod.default, plate, caption, alt };
   });
 }
