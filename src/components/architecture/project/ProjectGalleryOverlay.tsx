@@ -270,9 +270,50 @@ export function ProjectGalleryOverlay({ projectName, slides }: Props) {
 
       {hasMultipleSlides && (
         <>
+          {/* Mobile/tablet: a dedicated bottom control bar. The side-overlay
+              arrows (below) would sit on top of a wide image — and any
+              bottom-corner placement would clash with the plate/caption — so
+              under lg the navigation lives in its own flow row that never
+              covers the image or the labels, whatever the aspect ratio.
+              Desktop keeps the side arrows and is unchanged. */}
+          <div className="flex items-center gap-3 border-t border-(--trait) px-4 py-3 sm:px-6 lg:hidden">
+            <button
+              aria-label="Image précédente"
+              className="inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) bg-(--bg-primary) text-[0.65rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35"
+              disabled={activeIndex === 0}
+              onClick={(event) => {
+                event.stopPropagation();
+                stepSlide(-1);
+              }}
+              type="button"
+            >
+              <span aria-hidden="true" className="text-[0.95rem] leading-none">
+                ‹
+              </span>
+              Précédent
+            </button>
+
+            <button
+              aria-label="Image suivante"
+              className="inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) bg-(--bg-primary) text-[0.65rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35"
+              disabled={activeIndex >= slides.length - 1}
+              onClick={(event) => {
+                event.stopPropagation();
+                stepSlide(1);
+              }}
+              type="button"
+            >
+              Suivant
+              <span aria-hidden="true" className="text-[0.95rem] leading-none">
+                ›
+              </span>
+            </button>
+          </div>
+
+          {/* Desktop (lg+): side-overlay arrows, hidden under lg. */}
           <button
             aria-label="Image précédente"
-            className="absolute left-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center border border-(--trait) bg-(--bg-primary) text-[1.1rem] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35 sm:left-5"
+            className="absolute left-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center border border-(--trait) bg-(--bg-primary) text-[1.1rem] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35 sm:left-5 lg:inline-flex"
             disabled={activeIndex === 0}
             onClick={(event) => {
               event.stopPropagation();
@@ -285,7 +326,7 @@ export function ProjectGalleryOverlay({ projectName, slides }: Props) {
 
           <button
             aria-label="Image suivante"
-            className="absolute right-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center border border-(--trait) bg-(--bg-primary) text-[1.1rem] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35 sm:right-5"
+            className="absolute right-3 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 cursor-pointer items-center justify-center border border-(--trait) bg-(--bg-primary) text-[1.1rem] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35 sm:right-5 lg:inline-flex"
             disabled={activeIndex >= slides.length - 1}
             onClick={(event) => {
               event.stopPropagation();
