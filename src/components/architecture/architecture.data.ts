@@ -86,10 +86,10 @@ export async function getProjectSecondary(
 }
 
 /**
- * Returns up to 3 projects similar to `current`, excluding drafts and the
+ * Returns up to 4 projects similar to `current`, excluding drafts and the
  * current project itself. Similarity is scored (+1 per shared value in
  * types / materials / programs, +1 for same zone). Ties broken by `order`.
- * If fewer than 3 projects score > 0, the list is padded with the next
+ * If fewer than 4 projects score > 0, the list is padded with the next
  * projects by `order` so the section is never short or empty.
  */
 export async function getSimilarProjects(
@@ -122,7 +122,7 @@ export async function getSimilarProjects(
       : a.project.data.order - b.project.data.order,
   );
 
-  return scored.slice(0, 3).map((s) => s.project);
+  return scored.slice(0, 4).map((s) => s.project);
 }
 
 export interface GalleryImage {
