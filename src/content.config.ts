@@ -34,9 +34,26 @@ const projects = defineCollection({
     }),
 });
 
+const articles = defineCollection({
+  loader: glob({ pattern: "*/index.md", base: "./src/content/articles" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      excerpt: z.string(),
+      category: z.string(),
+      tags: z.array(z.string()).default([]),
+      readingTime: z.number().int().positive().optional(),
+      order: z.number(),
+      home: z.number().int().positive().optional(),
+      cover: image().optional(),
+      coverAlt: z.string().optional(),
+      draft: z.boolean().default(false),
+    }),
+});
+
 const projectSecondaries = defineCollection({
   loader: glob({ pattern: "*/secondary.md", base: "./src/content/projects" }),
   schema: z.object({}),
 });
 
-export const collections = { projects, projectSecondaries };
+export const collections = { projects, articles, projectSecondaries };
