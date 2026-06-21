@@ -1,0 +1,112 @@
+---
+import type { CollectionEntry } from "astro:content";
+import T2AMotifPattern from "@/components/ui/background/T2AMotifPattern.astro";
+
+interface Props {
+  article: CollectionEntry<"articles">;
+  index: number;
+}
+
+const { article, index }: Props = Astro.props;
+
+const slug = article.id.replace(/\/index$/, "");
+const plate = String(index + 1).padStart(2, "0");
+const rowDelay = Math.min(index, 7) * 60;
+const readingTimeLabel =
+  article.data.readingTime === 1
+    ? "1 min de lecture"
+    : article.data.readingTime
+      ? `${article.data.readingTime} min de lecture`
+      : "";
+
+const linkLabel = `Lire l'article ${article.data.title}`;
+---
+
+<li class="relative" data-article-row data-category={article.data.category}>
+  {
+    index > 0 && (
+      <span
+        aria-hidden="true"
+        class="mb-6 block h-px w-full bg-(--trait) sm:mb-7 lg:mb-8"
+        data-reveal="bar-from-left"
+        style={`--reveal-delay:${rowDelay}ms; --reveal-d:480ms;`}
+      />
+    )
+  }
+
+  <article class="group relative pb-6 can-hover:cursor-pointer sm:pb-7 lg:pb-8">
+    <a
+      class="absolute inset-0 z-30 rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--t2a-blue) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary)"
+      href={`/extrait/${slug}`}
+      aria-label={linkLabel}></a>
+
+    <div
+      class="relative z-10 grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(15rem,18rem)] lg:gap-8"
+    >
+      <div class="space-y-4 pr-10 sm:pr-16 lg:pr-0">
+        <div
+          class="flex flex-wrap items-baseline gap-x-3 gap-y-1"
+          data-reveal="fade-up"
+          style={`--reveal-delay:${rowDelay + 60}ms;`}
+        >
+          <span
+            class="text-[0.8rem] font-normal tracking-[0.18em] text-(--text-muted)"
+          >
+            {plate}
+          </span>
+          <span
+            class="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+          >
+            {article.data.category}
+          </span>
+          {
+            readingTimeLabel && (
+              <span class="text-[0.74rem] tracking-[0.12em] text-(--text-muted)">
+                {readingTimeLabel}
+              </span>
+            )
+          }
+        </div>
+
+        <h2
+          class="max-w-4xl text-[clamp(1.4rem,3.4vw,2.15rem)] font-light leading-[1.1] tracking-[0.01em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+          data-reveal="fade-up"
+          style={`--reveal-delay:${rowDelay + 120}ms;`}
+        >
+          <span class="relative inline-block">
+            {article.data.title}
+            <span
+              aria-hidden="true"
+              class="absolute bottom-0 left-0 block h-px w-0 bg-(--trait) transition-[width] duration-300 ease-out group-hover:w-full"
+            ></span>
+          </span>
+        </h2>
+
+        <p
+          class="max-w-3xl text-[0.98rem] leading-7 text-(--text-secondary) sm:text-[1.02rem] sm:leading-8"
+          data-reveal="fade-up"
+          style={`--reveal-delay:${rowDelay + 180}ms;`}
+        >
+          {article.data.excerpt}
+        </p>
+
+        <div
+          class="flex items-center gap-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--text-muted) transition-colors duration-300 group-hover:text-(--trait)"
+          data-reveal="fade-up"
+          style={`--reveal-delay:${rowDelay + 240}ms;`}
+        >
+          <span>Lire l'article</span>
+          <span aria-hidden="true" class="text-[1.4rem] leading-none"> → </span>
+        </div>
+      </div>
+
+      <div
+        class="relative aspect-4/3 overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
+        data-reveal="fade-up"
+        style={`--reveal-delay:${rowDelay + 300}ms;`}
+      >
+        <T2AMotifPattern />
+      </div>
+    </div>
+  </article>
+</li>

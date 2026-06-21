@@ -92,7 +92,7 @@ export interface TraitPageData {
 export const traitPageData: TraitPageData = {
   title: "TraiT | ATELIER TraiT D'ARCHITECTURE",
   description:
-    "Découvrez la philosophie et la méthode d'ATELIER TraiT D'ARCHITECTURE. Un trait, trois temps : création, mise en œuvre, réalisation.",
+    "Découvrez la philosophie et la méthode d'ATELIER TraiT D'ARCHITECTURE. Un trait, trois temps : création, mise en oeuvre, réalisation.",
   opening: {
     heading: "TraiT",
     identity: {

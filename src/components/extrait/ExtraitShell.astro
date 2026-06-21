@@ -1,5 +1,6 @@
 ---
 import ExtraitHero from "@/components/extrait/blocks/ExtraitHero.astro";
+import ExtraitList from "@/components/extrait/blocks/ExtraitList.astro";
 ---
 
 <section class="relative z-10" data-extrait-shell style="--reveal-d: 450ms;">
@@ -20,5 +21,24 @@ import ExtraitHero from "@/components/extrait/blocks/ExtraitHero.astro";
     </script>
 
     <ExtraitHero />
+  </div>
+
+  <div data-extrait-list class="mt-10 sm:mt-12 lg:mt-14">
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "extrait-list",
+            pathname: "/extrait",
+            rootSelector: "[data-extrait-list]",
+          })
+          ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <ExtraitList />
   </div>
 </section>
