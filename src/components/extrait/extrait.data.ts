@@ -20,7 +20,7 @@ export async function getSortedArticles(): Promise<
 
 /** Nombre d'articles publiés, utilisé pour le compteur home. */
 export async function getPublishedArticleCount(): Promise<number> {
-  const articles = await getSortedArticles();
+  const articles = await getCollection("articles", ({ data }) => !data.draft);
   return articles.length;
 }
 
@@ -53,11 +53,9 @@ export async function getHomeFeaturedArticles(): Promise<
 export function getArticleCategories(
   articles: CollectionEntry<"articles">[],
 ): string[] {
-  const categories = new Set<string>();
-
+  const seen = new Set<string>();
   for (const article of articles) {
-    categories.add(article.data.category);
+    seen.add(article.data.category);
   }
-
-  return [...categories];
+  return Array.from(seen);
 }
