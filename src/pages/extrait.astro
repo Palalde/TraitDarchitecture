@@ -1,4 +1,5 @@
 ---
+import ExtraitShell from "@/components/extrait/ExtraitShell.astro";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
@@ -10,8 +11,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
   description="Articles, réflexions et prises de position de l'ATELIER TraiT D'ARCHITECTURE."
 >
   <HeaderShell />
-  <main class="relative min-h-[200vh] overflow-hidden bg-(--bg-primary)">
+  <main class="relative overflow-hidden bg-(--bg-primary)">
     <BackgroundDecorations />
+    <ExtraitShell />
   </main>
   <Footer />
 </BaseLayout>

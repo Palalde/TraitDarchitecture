@@ -1,0 +1,24 @@
+---
+import ExtraitHero from "@/components/extrait/blocks/ExtraitHero.astro";
+---
+
+<section class="relative z-10" data-extrait-shell style="--reveal-d: 450ms;">
+  <div data-extrait-head>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const revealSystem = window.__t2aReveal;
+        if (!revealSystem) return;
+
+        revealSystem
+          .createController({
+            id: "extrait-head",
+            pathname: "/extrait",
+            rootSelector: "[data-extrait-head]",
+          })
+          ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+      })();
+    </script>
+
+    <ExtraitHero />
+  </div>
+</section>
