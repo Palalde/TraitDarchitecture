@@ -1,5 +1,6 @@
 ---
 import ExtraitArticleBlock from "@/components/home/content/blocks/ExtraitArticleBlock.astro";
+import { getPublishedArticleCount } from "@/components/extrait/extrait.data";
 
 interface Props {
   className?: string;
@@ -21,7 +22,7 @@ const editorialTags = [
   "Autoconstruction",
   "& bien d'autres",
 ];
-const articleCount = 6;
+const articleCount = await getPublishedArticleCount();
 
 // articles data
 const extraitArticles = [
