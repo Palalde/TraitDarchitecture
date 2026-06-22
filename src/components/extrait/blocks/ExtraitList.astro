@@ -1,8 +1,12 @@
 ---
-import { getSortedArticles } from "@/components/extrait/extrait.data";
+import type { CollectionEntry } from "astro:content";
 import ArticleRow from "@/components/extrait/blocks/ArticleRow.astro";
 
-const articles = await getSortedArticles();
+interface Props {
+  articles: CollectionEntry<"articles">[];
+}
+
+const { articles }: Props = Astro.props;
 ---
 
 <ol

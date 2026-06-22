@@ -1,6 +1,10 @@
 ---
 import ExtraitHero from "@/components/extrait/blocks/ExtraitHero.astro";
+import ExtraitFilters from "@/components/extrait/blocks/ExtraitFilters.astro";
 import ExtraitList from "@/components/extrait/blocks/ExtraitList.astro";
+import { getSortedArticles } from "@/components/extrait/extrait.data";
+
+const articles = await getSortedArticles();
 ---
 
 <section class="relative z-10" data-extrait-shell style="--reveal-d: 450ms;">
@@ -21,6 +25,8 @@ import ExtraitList from "@/components/extrait/blocks/ExtraitList.astro";
     </script>
 
     <ExtraitHero />
+
+    <ExtraitFilters articles={articles} />
   </div>
 
   <div data-extrait-list class="mt-10 sm:mt-12 lg:mt-14">
@@ -39,6 +45,122 @@ import ExtraitList from "@/components/extrait/blocks/ExtraitList.astro";
       })();
     </script>
 
-    <ExtraitList />
+    <ExtraitList articles={articles} />
   </div>
+
+  <script is:inline data-astro-rerun>
+    (() => {
+      const shell = document.querySelector("[data-extrait-shell]");
+      if (!shell) return;
+
+      const buttons = Array.from(
+        shell.querySelectorAll("[data-extrait-filter-button]"),
+      );
+      const rows = Array.from(shell.querySelectorAll("[data-article-row]"));
+      const countNodes = Array.from(
+        shell.querySelectorAll("[data-extrait-count]"),
+      );
+
+      if (!buttons.length || !rows.length || !countNodes.length) return;
+
+      const activeButtonClasses = [
+        "font-semibold",
+        "text-(--t2a-blue-dark)",
+        "dark:text-(--t2a-blue)",
+      ];
+      const inactiveButtonClasses = [
+        "font-normal",
+        "text-(--text-secondary)",
+        "hover:text-(--t2a-blue-dark)",
+        "dark:hover:text-(--t2a-blue)",
+      ];
+      const activeIndicatorClasses = ["scale-x-100"];
+      const inactiveIndicatorClasses = ["scale-x-0", "group-hover:scale-x-100"];
+
+      const setButtonState = (button, isActive) => {
+        if (isActive) {
+          button.setAttribute("aria-current", "true");
+        } else {
+          button.removeAttribute("aria-current");
+        }
+
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        button.classList.remove(
+          ...activeButtonClasses,
+          ...inactiveButtonClasses,
+        );
+        button.classList.add(
+          ...(isActive ? activeButtonClasses : inactiveButtonClasses),
+        );
+
+        const indicator = button.querySelector(
+          "[data-extrait-filter-indicator]",
+        );
+        if (!indicator) return;
+
+        indicator.classList.remove(
+          ...activeIndicatorClasses,
+          ...inactiveIndicatorClasses,
+        );
+        indicator.classList.add(
+          ...(isActive ? activeIndicatorClasses : inactiveIndicatorClasses),
+        );
+      };
+
+      const setCount = (visibleCount) => {
+        const label =
+          visibleCount === 1 ? "1 article" : `${visibleCount} articles`;
+        countNodes.forEach((countNode) => {
+          countNode.textContent = label;
+        });
+      };
+
+      const updateSeparators = () => {
+        const visibleRows = rows.filter(
+          (row) => !row.classList.contains("hidden"),
+        );
+
+        rows.forEach((row) => {
+          const separator = row.querySelector("[data-article-separator]");
+          if (!separator) return;
+
+          if (row.classList.contains("hidden")) {
+            separator.classList.add("hidden");
+            return;
+          }
+
+          separator.classList.toggle("hidden", visibleRows[0] === row);
+        });
+      };
+
+      const applyFilter = (filterValue) => {
+        let visibleCount = 0;
+
+        rows.forEach((row) => {
+          const shouldShow =
+            filterValue === "all" || row.dataset.category === filterValue;
+          row.classList.toggle("hidden", !shouldShow);
+          if (shouldShow) visibleCount += 1;
+        });
+
+        buttons.forEach((button) => {
+          setButtonState(
+            button,
+            button.dataset.extraitFilterValue === filterValue,
+          );
+        });
+
+        setCount(visibleCount);
+        updateSeparators();
+      };
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          applyFilter(button.dataset.extraitFilterValue ?? "all");
+        });
+      });
+
+      applyFilter("all");
+    })();
+  </script>
 </section>

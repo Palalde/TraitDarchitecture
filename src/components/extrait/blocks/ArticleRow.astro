@@ -27,6 +27,7 @@ const linkLabel = `Lire l'article ${article.data.title}`;
     index > 0 && (
       <span
         aria-hidden="true"
+        data-article-separator
         class="mb-6 block h-px w-full bg-(--trait) sm:mb-7 lg:mb-8"
         data-reveal="bar-from-left"
         style={`--reveal-delay:${rowDelay}ms; --reveal-d:480ms;`}

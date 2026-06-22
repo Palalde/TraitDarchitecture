@@ -1,0 +1,134 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getArticleCategories } from "@/components/extrait/extrait.data";
+
+interface Props {
+  articles: CollectionEntry<"articles">[];
+}
+
+const { articles }: Props = Astro.props;
+
+const categories = getArticleCategories(articles);
+const categoryCounts = new Map<string, number>();
+
+for (const article of articles) {
+  categoryCounts.set(
+    article.data.category,
+    (categoryCounts.get(article.data.category) ?? 0) + 1,
+  );
+}
+
+const totalCount = articles.length;
+const totalLabel = totalCount === 1 ? "1 article" : `${totalCount} articles`;
+
+const chipBase =
+  "group relative inline-flex min-h-11 shrink-0 cursor-pointer items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm tracking-[0.08em] transition-colors duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--t2a-blue) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary) sm:px-4 sm:text-base";
+const chipActive =
+  "font-semibold text-(--t2a-blue-dark) dark:text-(--t2a-blue)";
+const chipInactive =
+  "font-normal text-(--text-secondary) hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)";
+const indicatorBase =
+  "pointer-events-none absolute bottom-0 left-1/2 h-0.5 w-[calc(100%-1.5rem)] -translate-x-1/2 origin-center bg-(--t2a-blue) opacity-80 transition-transform duration-200 ease-out";
+const indicatorActive = "scale-x-100";
+const indicatorInactive = "scale-x-0 group-hover:scale-x-100";
+---
+
+<div
+  class="mx-auto mt-8 w-full max-w-7xl px-6 sm:mt-10 sm:px-8 lg:mt-12 lg:px-10"
+>
+  <div class="flex flex-col gap-3">
+    <div
+      class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4"
+    >
+      <div
+        class="flex flex-wrap items-center gap-x-1 gap-y-2 sm:gap-x-2"
+        role="group"
+        aria-label="Filtrer les articles"
+      >
+        <button
+          type="button"
+          aria-current="true"
+          aria-pressed="true"
+          data-extrait-filter-button
+          data-extrait-filter-value="all"
+          data-reveal="fade-up"
+          style="--reveal-delay:240ms;"
+          class:list={[chipBase, chipActive]}
+        >
+          <span
+            class="transition-transform duration-200 ease-out group-hover:scale-105"
+          >
+            Tout
+          </span>
+          <span
+            aria-hidden="true"
+            class="ml-1 hidden text-[0.68rem] text-(--text-muted) sm:inline"
+          >
+            ({totalCount})
+          </span>
+          <span
+            data-extrait-filter-indicator
+            aria-hidden="true"
+            class:list={[indicatorBase, indicatorActive]}></span>
+        </button>
+
+        {
+          categories.map((category, index) => {
+            const count = categoryCounts.get(category) ?? 0;
+
+            return (
+              <button
+                type="button"
+                aria-pressed="false"
+                data-extrait-filter-button
+                data-extrait-filter-value={category}
+                data-reveal="fade-up"
+                style={`--reveal-delay:${280 + index * 40}ms;`}
+                class:list={[chipBase, chipInactive]}
+              >
+                <span class="transition-transform duration-200 ease-out group-hover:scale-105">
+                  {category}
+                </span>
+                <span
+                  aria-hidden="true"
+                  class="ml-1 hidden text-[0.68rem] text-(--text-muted) sm:inline"
+                >
+                  ({count})
+                </span>
+                <span
+                  data-extrait-filter-indicator
+                  aria-hidden="true"
+                  class:list={[indicatorBase, indicatorInactive]}
+                />
+              </button>
+            );
+          })
+        }
+      </div>
+
+      <p
+        data-extrait-count
+        aria-live="polite"
+        data-reveal="fade-up"
+        style="--reveal-delay:360ms;"
+        class="hidden text-[0.76rem] uppercase tracking-[0.14em] text-(--text-muted) sm:block sm:text-right sm:text-[0.82rem]"
+      >
+        {totalLabel}
+      </p>
+    </div>
+
+    <span
+      aria-hidden="true"
+      data-reveal="fade"
+      style="--reveal-delay:50ms;"
+      class="block h-px w-full bg-(--border)"></span>
+
+    <p
+      data-extrait-count
+      aria-live="polite"
+      class="text-left text-[0.76rem] uppercase tracking-[0.14em] text-(--text-muted) sm:hidden"
+    >
+      {totalLabel}
+    </p>
+  </div>
+</div>
