@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function normalizePathname(pathname: string) {
+function normalizePathname(pathname: string) {
   if (!pathname) {
     return "/";
   }
