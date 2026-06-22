@@ -20,8 +20,7 @@ export async function getSortedArticles(): Promise<
 
 /** Nombre d'articles publiés, utilisé pour le compteur home. */
 export async function getPublishedArticleCount(): Promise<number> {
-  const articles = await getCollection("articles", ({ data }) => !data.draft);
-  return articles.length;
+  return (await getSortedArticles()).length;
 }
 
 /**
@@ -32,7 +31,7 @@ export async function getPublishedArticleCount(): Promise<number> {
 export async function getHomeFeaturedArticles(): Promise<
   CollectionEntry<"articles">[]
 > {
-  const articles = await getCollection("articles", ({ data }) => !data.draft);
+  const articles = await getSortedArticles();
   const featured = articles
     .filter((article) => article.data.home !== undefined)
     .sort((a, b) => a.data.home! - b.data.home!);

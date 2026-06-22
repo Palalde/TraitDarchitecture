@@ -1,6 +1,9 @@
 ---
 import ExtraitArticleBlock from "@/components/home/content/blocks/ExtraitArticleBlock.astro";
-import { getPublishedArticleCount } from "@/components/extrait/extrait.data";
+import {
+  getHomeFeaturedArticles,
+  getPublishedArticleCount,
+} from "@/components/extrait/extrait.data";
 
 interface Props {
   className?: string;
@@ -25,26 +28,15 @@ const editorialTags = [
 const articleCount = await getPublishedArticleCount();
 
 // articles data
-const extraitArticles = [
-  {
-    title: "Pourquoi faire appel à un architecte ?",
-    summary:
-      "Temps, budget, charge mentale : pourquoi l'architecte reste un investissement de maîtrise plutôt qu'un coût supplémentaire.",
-    href: "#",
-  },
-  {
-    title: "Un architecte coûte trop cher, ce n'est pas pour moi !",
-    summary:
-      "Honoraires, reprises et surcoûts invisibles : ce que coûte vraiment un projet mal cadré avant même le chantier.",
-    href: "#",
-  },
-  {
-    title: "Auto-construction : Je veux faire mon chantier moi-même",
-    summary:
-      "Construire soi-même peut séduire, mais sans cadre, méthode et limites claires, le chantier devient long, risqué et épuisant.",
-    href: "#",
-  },
-];
+const extraitArticles = (await getHomeFeaturedArticles()).map((article) => {
+  const slug = article.id.replace(/\/index$/, "");
+
+  return {
+    title: article.data.title,
+    summary: article.data.excerpt,
+    href: `/extrait/${slug}`,
+  };
+});
 ---
 
 <section id="extrait" aria-labelledby="home-section-extrait" class={className}>
