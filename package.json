@@ -20,6 +20,7 @@
     "vite": "^7.0.0"
   },
   "devDependencies": {
+    "@astrojs/mdx": "^6.0.3",
     "@astrojs/react": "^5.0.2",
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.2.2",

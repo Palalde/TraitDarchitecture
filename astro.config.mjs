@@ -1,10 +1,11 @@
 import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "node:path";
 
 export default defineConfig({
-  integrations: [react()],
+  integrations: [mdx(), react()],
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "viewport",
