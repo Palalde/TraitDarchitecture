@@ -1,0 +1,36 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import Prose from "@/components/ui/prose/Prose.astro";
+
+interface Props {
+  entry: CollectionEntry<"articles">;
+}
+
+const { entry }: Props = Astro.props;
+const { Content } = await render(entry);
+---
+
+<section aria-labelledby="article-body-heading" class="mt-10 sm:mt-12 lg:mt-16">
+  <h2 id="article-body-heading" class="sr-only">Contenu de l’article</h2>
+
+  <Prose data-article-prose>
+    <Content />
+  </Prose>
+
+  <script is:inline data-astro-rerun>
+    (() => {
+      const prose = document.querySelector("[data-article-prose]");
+      if (!prose) return;
+
+      Array.from(prose.children).forEach((child, index) => {
+        if (child.hasAttribute("data-reveal")) return;
+
+        child.setAttribute("data-reveal", "fade-up");
+        child.style.setProperty(
+          "--reveal-delay",
+          `${Math.min(index, 7) * 40}ms`,
+        );
+      });
+    })();
+  </script>
+</section>

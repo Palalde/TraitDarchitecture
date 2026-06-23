@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import ArticleBody from "@/components/extrait/article/ArticleBody.astro";
 import ArticleHeader from "@/components/extrait/article/ArticleHeader.astro";
 
 interface Props {
@@ -52,6 +53,8 @@ const { entry }: Props = Astro.props;
             ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
         })();
       </script>
+
+      <ArticleBody entry={entry} />
     </div>
   </div>
 </article>
