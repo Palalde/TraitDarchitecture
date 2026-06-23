@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ArticleHeader from "@/components/extrait/article/ArticleHeader.astro";
+
+interface Props {
+  entry: CollectionEntry<"articles">;
+  allArticles: CollectionEntry<"articles">[];
+}
+
+const { entry }: Props = Astro.props;
+---
+
+<article
+  data-article-shell
+  aria-labelledby="article-page-title"
+  class="relative w-full"
+>
+  <div
+    class="mx-auto w-full max-w-4xl px-6 pb-36 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pb-60 sm:pt-[calc(var(--header-height)+2.5rem)] lg:px-10"
+  >
+    <div data-article-head>
+      <script is:inline data-astro-rerun>
+        (() => {
+          const revealSystem = window.__t2aReveal;
+          if (!revealSystem) return;
+
+          revealSystem
+            .createController({
+              id: "article-head",
+              pathname: window.location.pathname,
+              rootSelector: "[data-article-head]",
+            })
+            ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+        })();
+      </script>
+
+      <ArticleHeader entry={entry} />
+    </div>
+
+    <div data-article-body>
+      <script is:inline data-astro-rerun>
+        (() => {
+          const revealSystem = window.__t2aReveal;
+          if (!revealSystem) return;
+
+          revealSystem
+            .createController({
+              id: "article-body",
+              pathname: window.location.pathname,
+              rootSelector: "[data-article-body]",
+            })
+            ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
+        })();
+      </script>
+    </div>
+  </div>
+</article>

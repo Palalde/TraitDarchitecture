@@ -1,0 +1,73 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"articles">;
+}
+
+const { entry }: Props = Astro.props;
+const { title, category, excerpt, readingTime } = entry.data;
+const readingTimeLabel =
+  readingTime != null ? `${readingTime} min de lecture` : null;
+---
+
+<header class="flex flex-col" aria-labelledby="article-page-title">
+  <a
+    href="/extrait"
+    class="group mb-6 inline-flex w-fit items-center gap-1.5 text-[0.78rem] uppercase tracking-widest text-(--text-muted) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
+    data-reveal="fade"
+    style="--reveal-delay:0ms;"
+  >
+    <span
+      class="inline-block transition-transform duration-200 can-hover:group-hover:-translate-x-0.5"
+      aria-hidden="true">←</span
+    >
+    <span
+      class="underline decoration-(--trait) decoration-1 underline-offset-2 transition-[text-decoration-color] duration-200 can-hover:group-hover:decoration-(--t2a-blue)"
+      >Tous les articles</span
+    >
+  </a>
+
+  <p
+    class="text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted) [--reveal-delay:40ms]"
+    data-reveal="fade"
+  >
+    {category}
+  </p>
+
+  <h1
+    id="article-page-title"
+    class="mt-4 text-[clamp(2.25rem,6.5vw,4rem)] font-light leading-[1.05] tracking-[0.02em] text-(--t2a-blue-dark) [--reveal-delay:100ms] dark:text-(--t2a-blue)"
+    data-reveal="fade-up"
+  >
+    {title}
+  </h1>
+
+  <span
+    aria-hidden="true"
+    class="mt-4 block h-px w-24 bg-(--trait) [--reveal-delay:160ms] sm:w-32"
+    data-reveal="bar-from-left"></span>
+
+  {
+    readingTimeLabel && (
+      <p
+        class="mt-4 text-[0.78rem] uppercase tracking-[0.14em] text-(--text-muted) [--reveal-delay:220ms]"
+        data-reveal="fade-up"
+      >
+        {readingTimeLabel}
+      </p>
+    )
+  }
+
+  <p
+    class="mt-6 max-w-[65ch] text-[1.0625rem] leading-8 text-(--text-secondary) [--reveal-delay:280ms]"
+    data-reveal="fade-up"
+  >
+    {excerpt}
+  </p>
+
+  <span
+    aria-hidden="true"
+    class="mt-8 block h-px w-20 bg-(--trait) [--reveal-delay:340ms]"
+    data-reveal="bar-from-left"></span>
+</header>
