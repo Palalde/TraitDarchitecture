@@ -1,0 +1,20 @@
+---
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest }: Props = Astro.props;
+---
+
+<p
+  {...rest}
+  data-lead
+  data-reveal="fade-up"
+  class:list={[
+    "mb-8 max-w-[65ch] text-[1.15rem] font-light leading-8 text-(--text-secondary) sm:mb-10 sm:text-[1.2rem] sm:leading-9",
+    className,
+  ]}
+>
+  <slot />
+</p>

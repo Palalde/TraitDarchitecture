@@ -1,5 +1,7 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
+import Lead from "@/components/extrait/mdx/Lead.astro";
+import Pullquote from "@/components/extrait/mdx/Pullquote.astro";
 import Prose from "@/components/ui/prose/Prose.astro";
 
 interface Props {
@@ -8,13 +10,14 @@ interface Props {
 
 const { entry }: Props = Astro.props;
 const { Content } = await render(entry);
+const mdxComponents = { Lead, Pullquote };
 ---
 
 <section aria-labelledby="article-body-heading" class="mt-10 sm:mt-12 lg:mt-16">
   <h2 id="article-body-heading" class="sr-only">Contenu de l’article</h2>
 
   <Prose data-article-prose>
-    <Content />
+    <Content components={mdxComponents} />
   </Prose>
 
   <script is:inline data-astro-rerun>

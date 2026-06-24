@@ -1,0 +1,27 @@
+---
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest }: Props = Astro.props;
+---
+
+<blockquote
+  {...rest}
+  data-pullquote
+  data-reveal="fade-up"
+  class:list={[
+    "my-12 max-w-4xl text-center text-[clamp(1.4rem,3.5vw,2rem)] font-light leading-[1.35] tracking-[0.01em] text-(--t2a-blue-dark) dark:text-(--t2a-blue) sm:my-14",
+    className,
+  ]}
+>
+  <span
+    aria-hidden="true"
+    class="mx-auto mb-6 block h-px w-24 bg-(--trait)"
+    data-reveal="bar-from-left"></span>
+
+  <div class="mx-auto max-w-[42ch] text-balance">
+    <slot />
+  </div>
+</blockquote>
