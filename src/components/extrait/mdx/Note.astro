@@ -1,0 +1,65 @@
+---
+interface Props {
+  class?: string;
+  title?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, title, ...rest }: Props = Astro.props;
+const titleId = title
+  ? `note-${title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")}`
+  : undefined;
+---
+
+<aside
+  {...rest}
+  aria-labelledby={titleId}
+  data-note
+  data-reveal="fade-up"
+  class:list={[
+    "my-10 max-w-4xl border border-(--trait) bg-(--t2a-blue-wash) px-5 py-5 text-(--text-primary) sm:px-6 sm:py-6",
+    className,
+  ]}
+>
+  <div class="space-y-4">
+    {
+      title && (
+        <p
+          id={titleId}
+          class="text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted)"
+        >
+          {title}
+        </p>
+      )
+    }
+
+    <div class="note-body">
+      <slot />
+    </div>
+  </div>
+</aside>
+
+<style>
+  .note-body :global(p) {
+    margin-bottom: 1rem;
+  }
+
+  .note-body :global(:is(p, ul, ol):last-child) {
+    margin-bottom: 0;
+  }
+
+  .note-body :global(:is(ul, ol)) {
+    padding-left: 1.25rem;
+  }
+
+  .note-body :global(li) {
+    margin-bottom: 0.375rem;
+  }
+
+  .note-body :global(blockquote) {
+    margin: 1.5rem 0;
+  }
+</style>
