@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import ArticleBody from "@/components/extrait/article/ArticleBody.astro";
 import ArticleHeader from "@/components/extrait/article/ArticleHeader.astro";
+import Figure from "@/components/extrait/mdx/Figure.astro";
 
 interface Props {
   entry: CollectionEntry<"articles">;
@@ -9,6 +10,7 @@ interface Props {
 }
 
 const { entry }: Props = Astro.props;
+const { cover, coverAlt } = entry.data;
 ---
 
 <article
@@ -36,6 +38,8 @@ const { entry }: Props = Astro.props;
       </script>
 
       <ArticleHeader entry={entry} />
+
+      {cover && <Figure src={cover} caption={coverAlt} layout="wide" />}
     </div>
 
     <div data-article-body>

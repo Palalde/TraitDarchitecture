@@ -12,7 +12,9 @@ interface Props {
 
 const { entry }: Props = Astro.props;
 const { Content } = await render(entry);
-const mdxComponents = { Figure, Lead, Note, Pullquote };
+// `img: Figure` makes Markdown images `![légende](./x.webp)` render through Figure.
+// `Figure` (named) lets authors place layout placeholders (`<Figure layout="aside" />`).
+const mdxComponents = { img: Figure, Figure, Lead, Note, Pullquote };
 ---
 
 <section aria-labelledby="article-body-heading" class="mt-10 sm:mt-12 lg:mt-16">

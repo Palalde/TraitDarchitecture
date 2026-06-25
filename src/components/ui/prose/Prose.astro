@@ -75,7 +75,7 @@ const { class: className, ...rest }: Props = Astro.props;
     margin-bottom: 1rem;
   }
 
-  .prose-body :global([data-pullquote] p) {
+  .prose-body :global(:is([data-pullquote], [data-lead]) p) {
     max-width: none;
     margin-bottom: 0;
     color: inherit;

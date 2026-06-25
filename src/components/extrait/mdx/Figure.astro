@@ -33,7 +33,6 @@ const resolvedLayout =
 
 const isAside =
   resolvedLayout === "aside-left" || resolvedLayout === "aside-right";
-const hasRealImage = Boolean(src);
 
 const captionText = [caption, title, alt]
   .find((value) => Boolean(value?.trim()))
@@ -44,9 +43,6 @@ const hasCaption = Boolean(captionText || plateLabel);
 const captionId = hasCaption
   ? `figure-${crypto.randomUUID().slice(0, 8)}`
   : undefined;
-const figureA11yProps = hasCaption
-  ? { "aria-labelledby": captionId }
-  : { "aria-hidden": "true" };
 
 const figureClass = isAside
   ? [
@@ -66,7 +62,7 @@ const captionClass = hasCaption
     ]
   : [];
 
-const plateClass = ["shrink-0", hasCaption ? "leading-tight" : "leading-tight"];
+const plateClass = ["shrink-0", "leading-tight"];
 const labelClass = [
   plateLabel ? "max-w-[70%] text-right" : "max-w-full text-left",
   "leading-tight",
@@ -82,7 +78,8 @@ const imageSizes =
 ---
 
 <figure
-  {...figureA11yProps}
+  aria-labelledby={hasCaption ? captionId : undefined}
+  aria-hidden={hasCaption ? undefined : "true"}
   class:list={[figureClass, className]}
   data-reveal="fade-up"
 >
@@ -91,7 +88,7 @@ const imageSizes =
     style={`aspect-ratio: ${ratio};`}
   >
     {
-      hasRealImage ? (
+      src ? (
         typeof src === "string" ? (
           <ParallaxFrame
             client:visible
