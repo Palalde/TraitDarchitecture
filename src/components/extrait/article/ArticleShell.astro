@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import ArticleBody from "@/components/extrait/article/ArticleBody.astro";
 import ArticleHeader from "@/components/extrait/article/ArticleHeader.astro";
+import ArticlePrevNext from "@/components/extrait/article/ArticlePrevNext.astro";
 import ArticleProgress from "@/components/extrait/article/ArticleProgress.astro";
 import ArticleSimilar from "@/components/extrait/article/ArticleSimilar.astro";
 import Figure from "@/components/extrait/mdx/Figure.astro";
@@ -64,6 +65,7 @@ const { cover, coverAlt } = entry.data;
 
       <ArticleBody entry={entry} />
       <ArticleSimilar entry={entry} allArticles={allArticles} />
+      <ArticlePrevNext entry={entry} allArticles={allArticles} />
     </div>
   </div>
 </article>

@@ -1,0 +1,85 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"articles">;
+  allArticles: CollectionEntry<"articles">[];
+}
+
+const { entry, allArticles }: Props = Astro.props;
+
+const currentIndex = allArticles.findIndex((a) => a.id === entry.id);
+const prev = currentIndex > 0 ? allArticles[currentIndex - 1] : null;
+const next =
+  currentIndex < allArticles.length - 1 ? allArticles[currentIndex + 1] : null;
+
+const prevSlug = prev?.id.replace(/\/index$/, "");
+const nextSlug = next?.id.replace(/\/index$/, "");
+---
+
+{
+  (prev || next) && (
+    <nav
+      aria-label="Navigation entre articles"
+      class="mt-12 border-t border-(--trait) pt-8 lg:mt-16"
+    >
+      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {prev && (
+          <li>
+            <a
+              href={`/extrait/${prevSlug}`}
+              class="group flex flex-col gap-1.5"
+              data-reveal="fade-up"
+              style="--reveal-delay:0ms;"
+            >
+              <span class="flex items-center gap-1.5 text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted) transition-colors duration-200 can-hover:group-hover:text-(--t2a-blue)">
+                <span
+                  aria-hidden="true"
+                  class="inline-block transition-transform duration-200 can-hover:group-hover:-translate-x-0.5"
+                >
+                  ←
+                </span>
+                Article précédent
+              </span>
+              <span class="relative inline-block text-[0.95rem] leading-snug text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+                {prev.data.title}
+                <span
+                  aria-hidden="true"
+                  class="absolute bottom-0 left-0 block h-px w-0 bg-(--trait) transition-[width] duration-300 ease-out can-hover:group-hover:w-full"
+                />
+              </span>
+            </a>
+          </li>
+        )}
+
+        {next && (
+          <li class:list={[!prev ? "sm:col-start-2" : undefined]}>
+            <a
+              href={`/extrait/${nextSlug}`}
+              class="group flex flex-col items-end gap-1.5 text-right"
+              data-reveal="fade-up"
+              style="--reveal-delay:60ms;"
+            >
+              <span class="flex items-center gap-1.5 text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted) transition-colors duration-200 can-hover:group-hover:text-(--t2a-blue)">
+                Article suivant
+                <span
+                  aria-hidden="true"
+                  class="inline-block transition-transform duration-200 can-hover:group-hover:translate-x-0.5"
+                >
+                  →
+                </span>
+              </span>
+              <span class="relative inline-block text-[0.95rem] leading-snug text-(--t2a-blue-dark) dark:text-(--t2a-blue)">
+                {next.data.title}
+                <span
+                  aria-hidden="true"
+                  class="absolute bottom-0 right-0 block h-px w-0 bg-(--trait) transition-[width] duration-300 ease-out can-hover:group-hover:w-full"
+                />
+              </span>
+            </a>
+          </li>
+        )}
+      </ul>
+    </nav>
+  )
+}
