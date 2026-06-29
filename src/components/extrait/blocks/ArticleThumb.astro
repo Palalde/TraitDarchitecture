@@ -1,0 +1,61 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import T2AMotifPattern from "@/components/ui/background/T2AMotifPattern.astro";
+import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
+
+interface Props {
+  article: CollectionEntry<"articles">;
+  class?: string;
+  revealDelay?: number;
+  reveal?: boolean;
+  sizes?: string;
+}
+
+const {
+  article,
+  class: className,
+  revealDelay,
+  reveal = true,
+  sizes = "(min-width: 1024px) 18rem, 100vw",
+}: Props = Astro.props;
+
+const { cover, coverAlt, title } = article.data;
+const imageAlt = coverAlt ?? title;
+const revealStyle =
+  reveal && revealDelay !== undefined
+    ? `--reveal-delay:${revealDelay}ms;`
+    : undefined;
+---
+
+<div
+  class:list={[
+    "relative aspect-4/3 overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)",
+    className,
+  ]}
+  data-reveal={reveal ? "fade-up" : undefined}
+  style={revealStyle}
+>
+  {
+    cover ? (
+      <ParallaxFrame
+        client:visible
+        overflowPercent={0.025}
+        mobileOverflowPercent={0.04}
+      >
+        <Image
+          alt={imageAlt}
+          class="h-full w-full object-cover object-center"
+          draggable="false"
+          loading="lazy"
+          quality={85}
+          sizes={sizes}
+          src={cover}
+          widths={[400, 600, 800]}
+        />
+      </ParallaxFrame>
+    ) : (
+      <T2AMotifPattern />
+    )
+  }
+</div>

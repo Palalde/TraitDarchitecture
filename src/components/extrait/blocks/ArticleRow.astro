@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import T2AMotifPattern from "@/components/ui/background/T2AMotifPattern.astro";
+import ArticleThumb from "@/components/extrait/blocks/ArticleThumb.astro";
 
 interface Props {
   article: CollectionEntry<"articles">;
@@ -101,13 +101,7 @@ const linkLabel = `Lire l'article ${article.data.title}`;
         </div>
       </div>
 
-      <div
-        class="relative aspect-4/3 overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
-        data-reveal="fade-up"
-        style={`--reveal-delay:${rowDelay + 300}ms;`}
-      >
-        <T2AMotifPattern />
-      </div>
+      <ArticleThumb article={article} revealDelay={rowDelay + 300} />
     </div>
   </article>
 </li>

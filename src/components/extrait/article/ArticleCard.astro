@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ArticleThumb from "@/components/extrait/blocks/ArticleThumb.astro";
+
+interface Props {
+  article: CollectionEntry<"articles">;
+  class?: string;
+  href?: string;
+  sizes?: string;
+}
+
+const {
+  article,
+  class: className,
+  href,
+  sizes = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw",
+}: Props = Astro.props;
+
+const slug = article.id.replace(/\/index$/, "");
+const articleHref = href ?? `/extrait/${slug}`;
+const readingTimeLabel =
+  article.data.readingTime === 1
+    ? "1 min de lecture"
+    : article.data.readingTime
+      ? `${article.data.readingTime} min de lecture`
+      : "";
+const linkLabel = `Lire l'article ${article.data.title}`;
+---
+
+<article
+  class:list={[
+    "group relative z-10 overflow-hidden border border-(--trait) bg-(--bg-primary) p-4 sm:p-5 can-hover:cursor-pointer",
+    className,
+  ]}
+>
+  <a href={articleHref} class="absolute inset-0 z-30" aria-label={linkLabel}
+  ></a>
+
+  <div class="relative z-10 space-y-4">
+    <ArticleThumb article={article} sizes={sizes} reveal={false} />
+
+    <div class="space-y-2 pr-6">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span
+          class="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+        >
+          {article.data.category}
+        </span>
+
+        {
+          readingTimeLabel && (
+            <span class="text-[0.74rem] tracking-[0.12em] text-(--text-muted)">
+              {readingTimeLabel}
+            </span>
+          )
+        }
+      </div>
+
+      <h3
+        class="text-[clamp(1.15rem,2.4vw,1.5rem)] font-light leading-[1.15] tracking-[0.01em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      >
+        <span class="relative inline-block">
+          {article.data.title}
+          <span
+            aria-hidden="true"
+            class="absolute bottom-0 left-0 block h-px w-0 bg-(--trait) transition-[width] duration-300 ease-out group-hover:w-full"
+          ></span>
+        </span>
+      </h3>
+    </div>
+  </div>
+</article>

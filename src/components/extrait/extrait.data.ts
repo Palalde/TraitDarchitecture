@@ -58,3 +58,84 @@ export function getArticleCategories(
   }
   return Array.from(seen);
 }
+
+/**
+ * Articles similaires au `current`, limités à 3 cartes.
+ * Similarité: catégorie partagée (+2) puis tags partagés (+1 chacun).
+ * Si moins de 3 articles scorent > 0, la liste est complétée par ordre.
+ */
+export async function getSimilarArticles(
+  current: CollectionEntry<"articles">,
+  allArticles?: CollectionEntry<"articles">[],
+): Promise<CollectionEntry<"articles">[]> {
+  const all =
+    allArticles ?? (await getCollection("articles", ({ data }) => !data.draft));
+
+  const candidates = all.filter(
+    (article) => article.id !== current.id && !article.data.draft,
+  );
+
+  const scoredCandidates = candidates
+    .map((article) => {
+      let score = 0;
+
+      if (article.data.category === current.data.category) {
+        score += 2;
+      }
+
+      for (const tag of current.data.tags ?? []) {
+        if ((article.data.tags ?? []).includes(tag)) {
+          score += 1;
+        }
+      }
+
+      return { article, score };
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => {
+      if (a.score !== b.score) {
+        return b.score - a.score;
+      }
+
+      if (a.article.data.order !== b.article.data.order) {
+        return a.article.data.order - b.article.data.order;
+      }
+
+      return a.article.data.title.localeCompare(b.article.data.title, "fr");
+    });
+
+  const orderedCandidates = candidates.slice().sort((a, b) => {
+    if (a.data.order !== b.data.order) {
+      return a.data.order - b.data.order;
+    }
+
+    return a.data.title.localeCompare(b.data.title, "fr");
+  });
+
+  const picked = new Set<string>();
+  const similarArticles: CollectionEntry<"articles">[] = [];
+
+  for (const { article } of scoredCandidates) {
+    if (similarArticles.length >= 3) {
+      break;
+    }
+
+    similarArticles.push(article);
+    picked.add(article.id);
+  }
+
+  for (const article of orderedCandidates) {
+    if (similarArticles.length >= 3) {
+      break;
+    }
+
+    if (picked.has(article.id)) {
+      continue;
+    }
+
+    similarArticles.push(article);
+    picked.add(article.id);
+  }
+
+  return similarArticles;
+}
