@@ -28,15 +28,12 @@ const linkLabel = `Lire l'article ${article.data.title}`;
 ---
 
 <article
-  class:list={[
-    "group relative z-10 overflow-hidden border border-(--trait) bg-(--bg-primary) p-4 sm:p-5 can-hover:cursor-pointer",
-    className,
-  ]}
+  class:list={["group relative z-10 can-hover:cursor-pointer", className]}
 >
   <a href={articleHref} class="absolute inset-0 z-30" aria-label={linkLabel}
   ></a>
 
-  <div class="relative z-10 space-y-4">
+  <div class="relative z-10 space-y-4 pt-4 sm:pt-5">
     <ArticleThumb article={article} sizes={sizes} reveal={false} />
 
     <div class="space-y-2 pr-6">

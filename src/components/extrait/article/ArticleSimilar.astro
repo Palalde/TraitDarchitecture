@@ -33,6 +33,7 @@ const similarArticles = await getSimilarArticles(entry, allArticles);
       <ul class="mt-6 grid grid-cols-1 items-start gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {similarArticles.map((article, index) => (
           <li
+            class:list={[index >= 2 ? "max-lg:hidden" : undefined]}
             data-reveal="fade-up"
             style={`--reveal-delay:${Math.min(index, 7) * 60}ms;`}
           >
