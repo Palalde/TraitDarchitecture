@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import ArticleThumb from "@/components/extrait/blocks/ArticleThumb.astro";
+import { formatReadingTime } from "@/components/extrait/extrait.data";
 
 interface Props {
   article: CollectionEntry<"articles">;
@@ -18,12 +19,7 @@ const {
 
 const slug = article.id.replace(/\/index$/, "");
 const articleHref = href ?? `/extrait/${slug}`;
-const readingTimeLabel =
-  article.data.readingTime === 1
-    ? "1 min de lecture"
-    : article.data.readingTime
-      ? `${article.data.readingTime} min de lecture`
-      : "";
+const readingTimeLabel = formatReadingTime(article.data.readingTime);
 const linkLabel = `Lire l'article ${article.data.title}`;
 ---
 

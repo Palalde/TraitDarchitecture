@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { formatReadingTime } from "@/components/extrait/extrait.data";
 
 interface Props {
   entry: CollectionEntry<"articles">;
@@ -7,8 +8,7 @@ interface Props {
 
 const { entry }: Props = Astro.props;
 const { title, category, excerpt, readingTime } = entry.data;
-const readingTimeLabel =
-  readingTime != null ? `${readingTime} min de lecture` : null;
+const readingTimeLabel = formatReadingTime(readingTime);
 ---
 
 <header class="flex flex-col" aria-labelledby="article-page-title">

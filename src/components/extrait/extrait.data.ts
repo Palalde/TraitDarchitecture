@@ -60,6 +60,13 @@ export function getArticleCategories(
 }
 
 /**
+ * Libellé « N min de lecture » (chaîne vide si le temps n'est pas renseigné).
+ */
+export function formatReadingTime(readingTime?: number): string {
+  return readingTime ? `${readingTime} min de lecture` : "";
+}
+
+/**
  * Articles similaires au `current`, limités à 3 cartes.
  * Similarité: catégorie partagée (+2) puis tags partagés (+1 chacun).
  * Si moins de 3 articles scorent > 0, la liste est complétée par ordre.
