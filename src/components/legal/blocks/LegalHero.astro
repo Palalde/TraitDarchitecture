@@ -11,14 +11,14 @@ const { heading, intro, updatedAt }: Props = Astro.props;
 <section
   data-legal-head
   aria-labelledby="legal-page-title"
-  class="relative w-full"
+  class="relative z-10 w-full"
 >
   <div
-    class="pt-[calc(var(--header-height)+4rem)] pb-12 sm:pt-[calc(var(--header-height)+5rem)] sm:pb-14 lg:pt-[calc(var(--header-height)+6rem)] lg:pb-16"
+    class="pt-[calc(var(--header-height)+4rem)] pb-16 sm:pt-[calc(var(--header-height)+5rem)] sm:pb-18 lg:pt-[calc(var(--header-height)+6rem)] lg:pb-20"
   >
     <h1
       id="legal-page-title"
-      class="max-w-4xl text-[clamp(2.75rem,10vw,5.5rem)] font-semibold uppercase leading-[0.95] tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      class="max-w-3xl text-[clamp(2.75rem,10vw,5.5rem)] font-semibold uppercase leading-[0.95] tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
     >
       {heading}
     </h1>

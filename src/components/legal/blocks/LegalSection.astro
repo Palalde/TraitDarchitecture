@@ -18,17 +18,17 @@ const { email, first = false, section }: Props = Astro.props;
   aria-labelledby={`${section.id}-title`}
   class:list={[
     "scroll-mt-[calc(var(--header-height)+2rem)]",
-    !first && "border-t border-(--trait) pt-8 sm:pt-10",
+    !first && "border-t border-(--trait) pt-10 sm:pt-12",
   ]}
 >
   <h2
     id={`${section.id}-title`}
-    class="border-b border-(--trait) pb-3 text-[0.75rem] uppercase tracking-[0.12em] text-(--text-muted)"
+    class="max-w-[65ch] border-b border-(--border) pb-2 text-[0.75rem] font-normal uppercase tracking-[0.12em] text-(--text-muted)"
   >
     {section.title}
   </h2>
 
-  <div class="mt-6 space-y-6">
+  <div class="mt-7 space-y-7 sm:mt-8 sm:space-y-8">
     {
       section.body.map((block) => {
         if (block.kind === "p") {
@@ -41,7 +41,7 @@ const { email, first = false, section }: Props = Astro.props;
 
         if (block.kind === "list") {
           return (
-            <ul class="max-w-[65ch] list-disc space-y-3 pl-5 text-[1rem] leading-8 text-(--text-primary) marker:text-(--t2a-blue-dark) dark:marker:text-(--t2a-blue)">
+            <ul class="max-w-[65ch] list-disc space-y-3 pl-5 text-[1rem] leading-8 text-(--text-primary) marker:text-(--trait)">
               {block.items.map((item) => (
                 <li>{item}</li>
               ))}

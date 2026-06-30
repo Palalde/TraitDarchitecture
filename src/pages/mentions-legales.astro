@@ -4,11 +4,13 @@ import { legalPageData } from "@/components/legal/legal.data";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 ---
 
 <BaseLayout title={legalPageData.title} description={legalPageData.description}>
   <HeaderShell />
   <main class="relative overflow-x-clip bg-(--bg-primary)">
+    <BackgroundDecorations />
     <LegalShell />
   </main>
   <Footer />
