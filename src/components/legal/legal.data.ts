@@ -193,7 +193,7 @@ export const legalPageData: LegalPageData = {
         },
         {
           kind: "p",
-          text: "Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés, vous disposez des droits d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur vos données. Pour les exercer, écrivez à atelier@traitdarchitecture.com. Vous pouvez également introduire une réclamation auprès de la CNIL (https://www.cnil.fr).",
+          text: "Conformément au Règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés, vous disposez des droits d'accès, de rectification, d'effacement, de limitation, d'opposition et de portabilité sur vos données. Pour les exercer, écrivez à atelier[at]traitdarchitecture.com. Vous pouvez également introduire une réclamation auprès de la CNIL (https://www.cnil.fr).",
         },
       ],
     },

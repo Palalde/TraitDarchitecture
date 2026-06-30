@@ -49,7 +49,7 @@ const { email, first = false, section }: Props = Astro.props;
           );
         }
 
-        return (
+        const dlContent = (
           <dl class="max-w-3xl">
             {block.rows.map((row, rowIndex) => (
               <div
@@ -67,7 +67,7 @@ const { email, first = false, section }: Props = Astro.props;
                   row.label === "Adresse e-mail" ? (
                     <span class="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1 sm:justify-end">
                       <a
-                        class="font-medium underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
+                        class="font-medium underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue-dark) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:hover:text-(--t2a-blue)"
                         href={email.href}
                       >
                         {email.display}
@@ -85,6 +85,11 @@ const { email, first = false, section }: Props = Astro.props;
               </div>
             ))}
           </dl>
+        );
+        return section.id === "editeur" ? (
+          <address class="not-italic">{dlContent}</address>
+        ) : (
+          dlContent
         );
       })
     }
