@@ -64,12 +64,9 @@ export const legalPageData: LegalPageData = {
               value: "29 rue Chanoine Letteron, 20200 Bastia",
             },
             {
-              label: "SIREN",
-              value: "989 997 572 ⟦À CONFIRMER — 9 chiffres = SIREN⟧",
-            },
-            {
               label: "SIRET (siège)",
-              value: "⟦À FOURNIR — 14 chiffres⟧",
+              value:
+                "⟦À FOURNIR — 14 chiffres (commence par le SIREN 989 997 572, à confirmer)⟧",
             },
             {
               label: "RCS",
@@ -208,12 +205,22 @@ export const legalPageData: LegalPageData = {
       ],
     },
     {
-      id: "responsabilite",
-      title: "Responsabilité & liens hypertextes",
+      id: "mediation-consommation",
+      title: "Médiation de la consommation",
       body: [
         {
           kind: "p",
-          text: "L'éditeur s'efforce d'assurer l'exactitude et la mise à jour des informations diffusées sur ce site, sans pouvoir en garantir l'exhaustivité. Sa responsabilité ne saurait être engagée en cas d'erreur, d'omission ou d'indisponibilité du service. Le site peut contenir des liens vers des sites tiers ; l'éditeur n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu.",
+          text: "Conformément aux articles L.616-1 et R.616-1 du Code de la consommation, tout consommateur a le droit de recourir gratuitement à un médiateur de la consommation pour la résolution amiable d'un litige qui l'opposerait à l'atelier, après lui avoir adressé une réclamation écrite restée sans réponse satisfaisante.",
+        },
+        {
+          kind: "dl",
+          rows: [
+            {
+              label: "Médiateur de la consommation",
+              value:
+                "⟦À FOURNIR — nom, adresse postale et site internet du médiateur auquel l'atelier a adhéré (médiateur souvent proposé via l'assureur MAF ou un organisme agréé)⟧",
+            },
+          ],
         },
       ],
     },
@@ -232,21 +239,7 @@ export const legalPageData: LegalPageData = {
               label: "Photographies & illustrations",
               value: "⟦À FOURNIR — crédits⟧",
             },
-            {
-              label: "Typographie",
-              value: "caractère « T2A » (usage propre à l'atelier)",
-            },
           ],
-        },
-      ],
-    },
-    {
-      id: "droit-applicable",
-      title: "Droit applicable",
-      body: [
-        {
-          kind: "p",
-          text: "Les présentes mentions légales sont régies par le droit français. Tout litige relatif à l'utilisation du site relève de la compétence des tribunaux du ressort du siège de l'éditeur, sous réserve des dispositions légales impératives applicables aux consommateurs.",
         },
       ],
     },
