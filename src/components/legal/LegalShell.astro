@@ -18,7 +18,11 @@ import { legalPageData } from "@/components/legal/legal.data";
     <div data-legal-body class="mt-12 sm:mt-14 lg:mt-16">
       {
         legalPageData.sections.map((section, index) => (
-          <LegalSection first={index === 0} section={section} />
+          <LegalSection
+            email={legalPageData.email}
+            first={index === 0}
+            section={section}
+          />
         ))
       }
     </div>

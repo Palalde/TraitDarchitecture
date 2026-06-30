@@ -1,12 +1,16 @@
 ---
-import type { LegalSection as LegalSectionData } from "@/components/legal/legal.data";
+import type {
+  LegalPageData,
+  LegalSection as LegalSectionData,
+} from "@/components/legal/legal.data";
 
 interface Props {
+  email: LegalPageData["email"];
   first?: boolean;
   section: LegalSectionData;
 }
 
-const { first = false, section }: Props = Astro.props;
+const { email, first = false, section }: Props = Astro.props;
 ---
 
 <section
@@ -59,7 +63,24 @@ const { first = false, section }: Props = Astro.props;
                   {row.label}
                 </dt>
                 <dd class="min-w-0 text-[1rem] leading-7 text-(--text-primary) sm:text-right">
-                  {row.value}
+                  {section.id === "editeur" &&
+                  row.label === "Adresse e-mail" ? (
+                    <span class="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1 sm:justify-end">
+                      <a
+                        class="font-medium underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--t2a-blue-dark) dark:hover:text-(--t2a-blue)"
+                        href={email.href}
+                      >
+                        {email.display}
+                      </a>
+                      <span class="text-(--text-muted)">
+                        {row.value.includes("(")
+                          ? row.value.slice(row.value.indexOf("("))
+                          : row.value}
+                      </span>
+                    </span>
+                  ) : (
+                    row.value
+                  )}
                 </dd>
               </div>
             ))}
