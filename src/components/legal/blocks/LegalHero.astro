@@ -1,0 +1,41 @@
+---
+interface Props {
+  heading: string;
+  intro: string;
+  updatedAt: string;
+}
+
+const { heading, intro, updatedAt }: Props = Astro.props;
+---
+
+<section
+  data-legal-head
+  aria-labelledby="legal-page-title"
+  class="relative w-full"
+>
+  <div
+    class="pt-[calc(var(--header-height)+4rem)] pb-12 sm:pt-[calc(var(--header-height)+5rem)] sm:pb-14 lg:pt-[calc(var(--header-height)+6rem)] lg:pb-16"
+  >
+    <h1
+      id="legal-page-title"
+      class="max-w-4xl text-[clamp(2.75rem,10vw,5.5rem)] font-semibold uppercase leading-[0.95] tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+    >
+      {heading}
+    </h1>
+
+    <span aria-hidden="true" class="mt-5 block h-px w-24 bg-(--trait) sm:w-32"
+    ></span>
+
+    <p
+      class="mt-6 max-w-[65ch] text-[1rem] leading-8 text-(--text-secondary) sm:text-[1.05rem]"
+    >
+      {intro}
+    </p>
+
+    <p
+      class="mt-5 text-[0.8rem] uppercase tracking-[0.12em] text-(--text-muted)"
+    >
+      Dernière mise à jour : {updatedAt}
+    </p>
+  </div>
+</section>

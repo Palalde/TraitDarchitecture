@@ -1,0 +1,71 @@
+---
+import type { LegalSection as LegalSectionData } from "@/components/legal/legal.data";
+
+interface Props {
+  first?: boolean;
+  section: LegalSectionData;
+}
+
+const { first = false, section }: Props = Astro.props;
+---
+
+<section
+  id={section.id}
+  aria-labelledby={`${section.id}-title`}
+  class:list={[
+    "scroll-mt-[calc(var(--header-height)+2rem)]",
+    !first && "border-t border-(--trait) pt-8 sm:pt-10",
+  ]}
+>
+  <h2
+    id={`${section.id}-title`}
+    class="border-b border-(--trait) pb-3 text-[0.75rem] uppercase tracking-[0.12em] text-(--text-muted)"
+  >
+    {section.title}
+  </h2>
+
+  <div class="mt-6 space-y-6">
+    {
+      section.body.map((block) => {
+        if (block.kind === "p") {
+          return (
+            <p class="max-w-[65ch] text-[1rem] leading-8 text-(--text-primary)">
+              {block.text}
+            </p>
+          );
+        }
+
+        if (block.kind === "list") {
+          return (
+            <ul class="max-w-[65ch] list-disc space-y-3 pl-5 text-[1rem] leading-8 text-(--text-primary) marker:text-(--t2a-blue-dark) dark:marker:text-(--t2a-blue)">
+              {block.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          );
+        }
+
+        return (
+          <dl class="max-w-3xl">
+            {block.rows.map((row, rowIndex) => (
+              <div
+                class:list={[
+                  "grid gap-2 py-3 sm:grid-cols-[14rem_minmax(0,1fr)] sm:gap-6",
+                  rowIndex < block.rows.length - 1 &&
+                    "border-b border-(--trait)",
+                ]}
+              >
+                <dt class="text-[0.78rem] uppercase tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--text-muted)">
+                  {row.label}
+                </dt>
+                <dd class="min-w-0 text-[1rem] leading-7 text-(--text-primary) sm:text-right">
+                  {row.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        );
+      })
+    }
+  </div>
+</section>

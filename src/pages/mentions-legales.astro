@@ -1,17 +1,15 @@
 ---
-import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
+import LegalShell from "@/components/legal/LegalShell.astro";
+import { legalPageData } from "@/components/legal/legal.data";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout
-  title="Mentions légales | ATELIER TraiT D'ARCHITECTURE"
-  description="Informations légales de l'ATELIER TraiT D'ARCHITECTURE."
->
+<BaseLayout title={legalPageData.title} description={legalPageData.description}>
   <HeaderShell />
-  <main class="relative min-h-[200vh] overflow-hidden bg-(--bg-primary)">
-    <BackgroundDecorations />
+  <main class="relative overflow-x-clip bg-(--bg-primary)">
+    <LegalShell />
   </main>
   <Footer />
 </BaseLayout>

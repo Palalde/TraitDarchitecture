@@ -1,0 +1,26 @@
+---
+import LegalHero from "@/components/legal/blocks/LegalHero.astro";
+import LegalSection from "@/components/legal/blocks/LegalSection.astro";
+import { legalPageData } from "@/components/legal/legal.data";
+---
+
+<section
+  data-legal-shell
+  class="relative z-10 pb-[calc(var(--footer-root-overlap)+7rem)] sm:pb-[calc(var(--footer-root-overlap)+12rem)] lg:pb-[calc(var(--footer-root-overlap)+18rem)] 2xl:pb-[calc(var(--footer-root-overlap)+30rem)]"
+>
+  <div class="mx-auto w-full max-w-3xl px-6 sm:px-8 lg:px-10">
+    <LegalHero
+      heading={legalPageData.heading}
+      intro={legalPageData.intro}
+      updatedAt={legalPageData.updatedAt}
+    />
+
+    <div data-legal-body class="mt-12 sm:mt-14 lg:mt-16">
+      {
+        legalPageData.sections.map((section, index) => (
+          <LegalSection first={index === 0} section={section} />
+        ))
+      }
+    </div>
+  </div>
+</section>
