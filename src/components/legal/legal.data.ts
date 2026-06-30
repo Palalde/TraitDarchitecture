@@ -138,8 +138,7 @@ export const legalPageData: LegalPageData = {
             },
             {
               label: "Adresse",
-              value:
-                "⟦À VÉRIFIER sur la page légale de Vercel — ex. 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis⟧",
+              value: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
             },
             {
               label: "Site",
@@ -186,7 +185,7 @@ export const legalPageData: LegalPageData = {
         },
         {
           kind: "p",
-          text: "Vos données sont conservées par l'atelier pour la durée nécessaire au traitement de votre demande, puis ⟦À FOURNIR — durée, ex. « 3 ans à compter du dernier contact »⟧.",
+          text: "Vos données sont conservées par l'atelier pour la durée nécessaire au traitement de votre demande, puis 3 ans à compter du dernier contact.",
         },
         {
           kind: "p",
@@ -200,7 +199,7 @@ export const legalPageData: LegalPageData = {
       body: [
         {
           kind: "p",
-          text: "Ce site ne dépose aucun cookie publicitaire ni traceur tiers. La mesure d'audience est réalisée au moyen d'une solution respectueuse de la vie privée, sans cookie et sans identifiant persistant (⟦outil — Vercel Web Analytics⟧), qui ne nécessite pas votre consentement au sens des lignes directrices de la CNIL. Les statistiques produites sont agrégées et anonymes.",
+          text: "Ce site ne dépose aucun cookie publicitaire ni traceur tiers. La mesure d'audience est réalisée au moyen d'une solution respectueuse de la vie privée, sans cookie et sans identifiant persistant (Vercel Web Analytics), qui ne nécessite pas votre consentement au sens des lignes directrices de la CNIL. Les statistiques produites sont agrégées et anonymes.",
         },
       ],
     },
@@ -233,7 +232,7 @@ export const legalPageData: LegalPageData = {
           rows: [
             {
               label: "Conception & développement",
-              value: "⟦À FOURNIR — nom du concepteur du site⟧",
+              value: "Paul Alessandrini",
             },
             {
               label: "Photographies & illustrations",
