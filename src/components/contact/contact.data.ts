@@ -156,7 +156,7 @@ export const contactPageData: ContactPageData = {
     },
     privacy: {
       text: "En envoyant ce message, vous acceptez que vos coordonnées soient utilisées uniquement pour vous répondre.",
-      href: "/mentions-legales",
+      href: "/mentions-legales#donnees-personnelles",
       linkLabel: "Voir mentions légales",
     },
     messages: {
