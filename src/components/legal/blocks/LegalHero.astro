@@ -13,27 +13,52 @@ const { heading, intro, updatedAt }: Props = Astro.props;
   aria-labelledby="legal-page-title"
   class="relative z-10 w-full"
 >
+  <script is:inline data-astro-rerun>
+    (() => {
+      const revealSystem = window.__t2aReveal;
+      if (!revealSystem) return;
+
+      revealSystem
+        .createController({
+          id: "legal-head",
+          pathname: "/mentions-legales",
+          rootSelector: "[data-legal-head]",
+        })
+        ?.startAfterPageVisible(revealSystem.getResponsiveDelay());
+    })();
+  </script>
+
   <div
     class="pt-[calc(var(--header-height)+4rem)] pb-16 sm:pt-[calc(var(--header-height)+5rem)] sm:pb-18 lg:pt-[calc(var(--header-height)+6rem)] lg:pb-20"
   >
     <h1
       id="legal-page-title"
+      data-reveal="fade-up"
       class="max-w-3xl text-[clamp(2.75rem,10vw,5.5rem)] font-semibold uppercase leading-[0.95] tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      style="--reveal-delay:60ms;"
     >
       {heading}
     </h1>
 
-    <span aria-hidden="true" class="mt-5 block h-px w-24 bg-(--trait) sm:w-32"
+    <span
+      aria-hidden="true"
+      class="mt-5 block h-px w-24 bg-(--trait) sm:w-32"
+      data-reveal="bar-from-left"
+      style="--reveal-delay:140ms; --reveal-d:480ms;"
     ></span>
 
     <p
       class="mt-6 max-w-[65ch] text-[1rem] leading-8 text-(--text-secondary) sm:text-[1.05rem]"
+      data-reveal="fade-up"
+      style="--reveal-delay:220ms;"
     >
       {intro}
     </p>
 
     <p
       class="mt-5 text-[0.8rem] uppercase tracking-[0.12em] text-(--text-muted)"
+      data-reveal="fade-up"
+      style="--reveal-delay:300ms;"
     >
       Dernière mise à jour : {updatedAt}
     </p>

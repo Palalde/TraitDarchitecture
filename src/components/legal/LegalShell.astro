@@ -1,6 +1,6 @@
 ---
 import LegalHero from "@/components/legal/blocks/LegalHero.astro";
-import LegalSection from "@/components/legal/blocks/LegalSection.astro";
+import LegalSectionBlock from "@/components/legal/blocks/LegalSection.astro";
 import { legalPageData } from "@/components/legal/legal.data";
 ---
 
@@ -16,11 +16,27 @@ import { legalPageData } from "@/components/legal/legal.data";
     />
 
     <div data-legal-body class="mt-12 sm:mt-14 lg:mt-16">
+      <script is:inline data-astro-rerun>
+        (() => {
+          const revealSystem = window.__t2aReveal;
+          if (!revealSystem) return;
+
+          revealSystem
+            .createController({
+              id: "legal-body",
+              pathname: "/mentions-legales",
+              rootSelector: "[data-legal-body]",
+            })
+            ?.startAfterPageTransition(revealSystem.getResponsiveDelay());
+        })();
+      </script>
+
       {
         legalPageData.sections.map((section, index) => (
-          <LegalSection
+          <LegalSectionBlock
             email={legalPageData.email}
             first={index === 0}
+            revealIndex={index}
             section={section}
           />
         ))

@@ -7,10 +7,15 @@ import type {
 interface Props {
   email: LegalPageData["email"];
   first?: boolean;
+  revealIndex?: number;
   section: LegalSectionData;
 }
 
-const { email, first = false, section }: Props = Astro.props;
+const { email, first = false, revealIndex = 0, section }: Props = Astro.props;
+
+const sectionDelay = revealIndex * 90;
+const headingDelay = 80 + sectionDelay;
+const blockDelay = 160 + sectionDelay;
 ---
 
 <section
@@ -18,22 +23,39 @@ const { email, first = false, section }: Props = Astro.props;
   aria-labelledby={`${section.id}-title`}
   class:list={[
     "scroll-mt-[calc(var(--header-height)+2rem)]",
-    !first && "border-t border-(--trait) pt-10 sm:pt-12",
+    !first && "pt-10 sm:pt-12",
   ]}
 >
+  {!first && (
+    <span
+      aria-hidden="true"
+      class="mb-6 block h-px w-full bg-(--trait) sm:mb-7"
+      data-reveal="bar-from-left"
+      style={`--reveal-delay:${sectionDelay}ms; --reveal-d:480ms;`}
+    />
+  )}
+
   <h2
     id={`${section.id}-title`}
     class="max-w-[65ch] border-b border-(--border) pb-2 text-[0.75rem] font-normal uppercase tracking-[0.12em] text-(--text-muted)"
+    data-reveal="fade-up"
+    style={`--reveal-delay:${headingDelay}ms;`}
   >
     {section.title}
   </h2>
 
   <div class="mt-7 space-y-7 sm:mt-8 sm:space-y-8">
     {
-      section.body.map((block) => {
+      section.body.map((block, blockIndex) => {
+        const revealDelay = blockDelay + blockIndex * 80;
+
         if (block.kind === "p") {
           return (
-            <p class="max-w-[65ch] text-[1rem] leading-8 text-(--text-primary)">
+            <p
+              class="max-w-[65ch] text-[1rem] leading-8 text-(--text-primary)"
+              data-reveal="fade-up"
+              style={`--reveal-delay:${revealDelay}ms;`}
+            >
               {block.text}
             </p>
           );
@@ -41,7 +63,11 @@ const { email, first = false, section }: Props = Astro.props;
 
         if (block.kind === "list") {
           return (
-            <ul class="max-w-[65ch] list-disc space-y-3 pl-5 text-[1rem] leading-8 text-(--text-primary) marker:text-(--trait)">
+            <ul
+              class="max-w-[65ch] list-disc space-y-3 pl-5 text-[1rem] leading-8 text-(--text-primary) marker:text-(--trait)"
+              data-reveal="fade-up"
+              style={`--reveal-delay:${revealDelay}ms;`}
+            >
               {block.items.map((item) => (
                 <li>{item}</li>
               ))}
@@ -50,7 +76,11 @@ const { email, first = false, section }: Props = Astro.props;
         }
 
         const dlContent = (
-          <dl class="max-w-3xl">
+          <dl
+            class="max-w-3xl"
+            data-reveal="fade-up"
+            style={`--reveal-delay:${revealDelay}ms;`}
+          >
             {block.rows.map((row, rowIndex) => (
               <div
                 class:list={[
@@ -86,6 +116,7 @@ const { email, first = false, section }: Props = Astro.props;
             ))}
           </dl>
         );
+
         return section.id === "editeur" ? (
           <address class="not-italic">{dlContent}</address>
         ) : (
