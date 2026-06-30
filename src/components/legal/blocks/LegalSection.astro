@@ -26,14 +26,16 @@ const blockDelay = 160 + sectionDelay;
     !first && "pt-10 sm:pt-12",
   ]}
 >
-  {!first && (
-    <span
-      aria-hidden="true"
-      class="mb-6 block h-px w-full bg-(--trait) sm:mb-7"
-      data-reveal="bar-from-left"
-      style={`--reveal-delay:${sectionDelay}ms; --reveal-d:480ms;`}
-    />
-  )}
+  {
+    !first && (
+      <span
+        aria-hidden="true"
+        class="mb-6 block h-px w-full bg-(--trait) sm:mb-7"
+        data-reveal="bar-from-left"
+        style={`--reveal-delay:${sectionDelay}ms; --reveal-d:480ms;`}
+      />
+    )
+  }
 
   <h2
     id={`${section.id}-title`}
