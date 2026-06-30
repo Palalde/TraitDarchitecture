@@ -6,6 +6,7 @@ export type LegalBlock =
 export interface LegalDefinitionRow {
   label: string;
   value: string;
+  href?: string;
 }
 
 export interface LegalSection {
@@ -79,8 +80,7 @@ export const legalPageData: LegalPageData = {
             },
             {
               label: "Téléphone",
-              value:
-                "+33 6 30 58 99 81 — +33 6 72 31 04 21 ⟦confirmer s'il existe une ligne pro unique⟧",
+              value: "+33 6 30 58 99 81 — +33 6 72 31 04 21",
             },
             {
               label: "Adresse e-mail",
@@ -233,6 +233,7 @@ export const legalPageData: LegalPageData = {
             {
               label: "Conception & développement",
               value: "Paul Alessandrini",
+              href: "https://www.linkedin.com/in/paul-alessandrini",
             },
             {
               label: "Photographies & illustrations",
