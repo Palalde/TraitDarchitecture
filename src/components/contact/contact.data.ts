@@ -118,7 +118,7 @@ export const contactPageData: ContactPageData = {
     },
     {
       city: "CÔTE BLEUE",
-      addressLines: ["10 allée des églantiers", "13960 Sausset-les-Pins"],
+      addressLines: ["76 avenue Draio de la mar", "13620 Carry-le-Rouet"],
     },
     {
       city: "PROVENCE",

@@ -53,12 +53,11 @@ export const legalPageData: LegalPageData = {
             },
             {
               label: "Forme juridique",
-              value:
-                "⟦À FOURNIR — ex. SARL d'architecture / SAS / SCP / entreprise individuelle⟧",
+              value: "SARL d'architecture",
             },
             {
               label: "Capital social",
-              value: "⟦À FOURNIR si société⟧",
+              value: "2 000 €",
             },
             {
               label: "Siège social",
@@ -66,17 +65,15 @@ export const legalPageData: LegalPageData = {
             },
             {
               label: "SIRET (siège)",
-              value:
-                "⟦À FOURNIR — 14 chiffres (commence par le SIREN 989 997 572, à confirmer)⟧",
+              value: "989 997 572 00016",
             },
             {
               label: "RCS",
-              value:
-                "Bastia ⟦+ numéro : « RCS Bastia 989 997 572 » à confirmer⟧",
+              value: "R.C.S. Bastia 989 997 572",
             },
             {
               label: "N° TVA intracommunautaire",
-              value: "⟦À FOURNIR si assujetti⟧",
+              value: "FR 71 989 997 572",
             },
             {
               label: "Téléphone",
@@ -88,8 +85,7 @@ export const legalPageData: LegalPageData = {
             },
             {
               label: "Directeur / Responsable de la publication",
-              value:
-                "⟦À FOURNIR — personne physique : Théa BATTISTINI ou Titouan GRANET⟧",
+              value: "Théa BATTISTINI",
             },
           ],
         },
@@ -109,17 +105,22 @@ export const legalPageData: LegalPageData = {
             {
               label: "Théa BATTISTINI",
               value:
-                "Architecte HMONP — inscrite au Tableau de l'Ordre, n° ⟦À FOURNIR⟧, CROA ⟦région — ex. Corse / PACA⟧",
+                "Architecte HMONP — inscrite au Tableau de l'Ordre des architectes sous le n° 092906 (Conseil régional de l'Ordre des architectes de Corse).",
             },
             {
               label: "Titouan GRANET",
               value:
-                "Architecte DE — ⟦À FOURNIR : préciser l'inscription au Tableau (un architecte DE non HMONP exerce sous couvert d'une structure/d'un architecte inscrit) — n° + CROA, ou mention de la société d'architecture inscrite⟧",
+                "Architecte DE — exerce au sein de la société d'architecture ATELIER TraiT D'ARCHITECTURE, inscrite au Tableau de l'Ordre des architectes.",
+            },
+            {
+              label: "Société d'architecture",
+              value:
+                "ATELIER TraiT D'ARCHITECTURE — inscrite au Tableau de l'Ordre des architectes sous le n° S25949 (Conseil régional de l'Ordre des architectes de Corse).",
             },
             {
               label: "Assurance responsabilité civile professionnelle",
               value:
-                "⟦À FOURNIR — assureur (ex. MAF — Mutuelle des Architectes Français), n° de police, couverture géographique (ex. France)⟧",
+                "MAF — Mutuelle des Architectes Français, police n° 270210.",
             },
           ],
         },
@@ -200,26 +201,6 @@ export const legalPageData: LegalPageData = {
         {
           kind: "p",
           text: "Ce site ne dépose aucun cookie publicitaire ni traceur tiers. La mesure d'audience est réalisée au moyen d'une solution respectueuse de la vie privée, sans cookie et sans identifiant persistant (Vercel Web Analytics), qui ne nécessite pas votre consentement au sens des lignes directrices de la CNIL. Les statistiques produites sont agrégées et anonymes.",
-        },
-      ],
-    },
-    {
-      id: "mediation-consommation",
-      title: "Médiation de la consommation",
-      body: [
-        {
-          kind: "p",
-          text: "Conformément aux articles L.616-1 et R.616-1 du Code de la consommation, tout consommateur a le droit de recourir gratuitement à un médiateur de la consommation pour la résolution amiable d'un litige qui l'opposerait à l'atelier, après lui avoir adressé une réclamation écrite restée sans réponse satisfaisante.",
-        },
-        {
-          kind: "dl",
-          rows: [
-            {
-              label: "Médiateur de la consommation",
-              value:
-                "⟦À FOURNIR — nom, adresse postale et site internet du médiateur auquel l'atelier a adhéré (médiateur souvent proposé via l'assureur MAF ou un organisme agréé)⟧",
-            },
-          ],
         },
       ],
     },
