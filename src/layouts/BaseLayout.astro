@@ -19,6 +19,7 @@ const {
   noindex = false,
 } = Astro.props;
 
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 const overlayScrollbarsMediaQuery =
   "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
@@ -106,6 +107,7 @@ const overlayScrollbarsMediaQuery =
     />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL.href} />
     <meta name="robots" content={robots} />
     <meta property="og:site_name" content="ATELIER TraiT D'ARCHITECTURE" />
     <meta property="og:type" content="website" />
