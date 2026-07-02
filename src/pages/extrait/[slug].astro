@@ -4,7 +4,10 @@ import BackgroundDecorations from "@/components/ui/background/BackgroundDecorati
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import JsonLd from "@/components/ui/seo/JsonLd.astro";
-import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
+import {
+  buildArticleSchema,
+  buildBreadcrumbListSchema,
+} from "@/components/ui/seo/seo.data";
 import ArticleShell from "@/components/extrait/article/ArticleShell.astro";
 import { getSortedArticles } from "@/components/extrait/extrait.data";
 import BaseLayout from "@/layouts/BaseLayout.astro";
@@ -20,6 +23,22 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { title, excerpt, cover } = entry.data;
+const publishedDate = entry.data.publishedDate;
+const updatedDate = entry.data.updatedDate;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const articleImageUrl = new URL(
+  cover?.src ?? "/media/og/default-og.jpg",
+  Astro.site ?? Astro.url,
+).href;
+
+const articleJsonLd = buildArticleSchema(Astro.site ?? Astro.url, {
+  headline: title,
+  description: excerpt,
+  imageUrl: articleImageUrl,
+  canonicalUrl: canonicalURL,
+  publishedDate,
+  updatedDate,
+});
 
 const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
   { name: "Accueil", path: "/" },
@@ -34,9 +53,23 @@ const allArticles = await getSortedArticles();
   title={`${title} | ATELIER TraiT D'ARCHITECTURE`}
   description={excerpt}
   ogImage={cover?.src}
+  ogType="article"
 >
   <Fragment slot="head">
+    <JsonLd data={articleJsonLd} />
     <JsonLd data={breadcrumbJsonLd} />
+    <meta
+      property="article:published_time"
+      content={publishedDate.toISOString()}
+    />
+    {
+      updatedDate ? (
+        <meta
+          property="article:modified_time"
+          content={updatedDate.toISOString()}
+        />
+      ) : null
+    }
   </Fragment>
   <HeaderShell />
   <main class="relative overflow-x-clip bg-(--bg-primary)">

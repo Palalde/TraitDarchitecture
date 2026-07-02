@@ -6,10 +6,21 @@ const SITE_LOGO_PATH = "/media/favicon/favicon.svg";
 const INSTAGRAM_URL = "https://www.instagram.com/atelier.trait.darchitecture/";
 const OFFICE_NAMES = ["Bastia", "Carry-le-Rouet", "Mézel"] as const;
 const AREA_NAMES = ["Corse", "Côte Bleue", "Provence"] as const;
+const ORGANIZATION_ID_PATH = "/#organization";
+const WEBSITE_ID_PATH = "/#website";
 
 export interface BreadcrumbItemData {
   name: string;
   path: string;
+}
+
+export interface ArticleSchemaData {
+  headline: string;
+  description: string;
+  imageUrl: string;
+  canonicalUrl: URL;
+  publishedDate: Date;
+  updatedDate?: Date;
 }
 
 function isDefinitionListBlock(
@@ -62,7 +73,7 @@ export function buildOrganizationSchema(siteUrl: URL) {
   return {
     "@context": "https://schema.org",
     "@type": ["Organization", "ProfessionalService"],
-    "@id": new URL("/#organization", siteUrl).href,
+    "@id": new URL(ORGANIZATION_ID_PATH, siteUrl).href,
     name: SITE_NAME,
     url: new URL("/", siteUrl).href,
     logo: new URL(SITE_LOGO_PATH, siteUrl).href,
@@ -84,9 +95,34 @@ export function buildWebSiteSchema(siteUrl: URL) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": new URL("/#website", siteUrl).href,
+    "@id": new URL(WEBSITE_ID_PATH, siteUrl).href,
     name: SITE_NAME,
     url: new URL("/", siteUrl).href,
+  };
+}
+
+export function buildArticleSchema(siteUrl: URL, data: ArticleSchemaData) {
+  const organizationId = new URL(ORGANIZATION_ID_PATH, siteUrl).href;
+  const dateModified = data.updatedDate ?? data.publishedDate;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: data.headline,
+    description: data.description,
+    image: data.imageUrl,
+    url: data.canonicalUrl.href,
+    mainEntityOfPage: {
+      "@id": data.canonicalUrl.href,
+    },
+    datePublished: data.publishedDate.toISOString(),
+    dateModified: dateModified.toISOString(),
+    author: {
+      "@id": organizationId,
+    },
+    publisher: {
+      "@id": organizationId,
+    },
   };
 }
 

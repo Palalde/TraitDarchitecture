@@ -45,6 +45,8 @@ const articles = defineCollection({
       readingTime: z.number().int().positive().optional(),
       order: z.number(),
       home: z.number().int().positive().optional(),
+      publishedDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
       cover: image().optional(),
       coverAlt: z.string().optional(),
       draft: z.boolean().default(false),
