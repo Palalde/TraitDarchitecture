@@ -4,8 +4,25 @@ import BackgroundDecorations from "@/components/ui/background/BackgroundDecorati
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import JsonLd from "@/components/ui/seo/JsonLd.astro";
-import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
+import {
+  buildBreadcrumbListSchema,
+  buildItemListSchema,
+} from "@/components/ui/seo/seo.data";
+import { getSortedArticles } from "@/components/extrait/extrait.data";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const sortedArticles = await getSortedArticles();
+const articleListJsonLd = buildItemListSchema(
+  Astro.site ?? Astro.url,
+  sortedArticles.map((article) => {
+    const slug = article.id.replace(/\/index$/, "");
+    return {
+      name: article.data.title,
+      path: `/extrait/${slug}/`,
+    };
+  }),
+  "Articles",
+);
 
 const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
   { name: "Accueil", path: "/" },
@@ -18,6 +35,7 @@ const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
   description="Articles, réflexions et prises de position de l'ATELIER TraiT D'ARCHITECTURE."
 >
   <Fragment slot="head">
+    <JsonLd data={articleListJsonLd} />
     <JsonLd data={breadcrumbJsonLd} />
   </Fragment>
   <HeaderShell />

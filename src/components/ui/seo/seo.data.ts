@@ -23,6 +23,15 @@ export interface ArticleSchemaData {
   updatedDate?: Date;
 }
 
+export interface CreativeWorkSchemaData {
+  name: string;
+  imageUrl: string;
+  canonicalUrl: URL;
+  locationCreatedName: string;
+  creatorId: string;
+  dateCreated?: string;
+}
+
 function isDefinitionListBlock(
   block: LegalBlock,
 ): block is Extract<LegalBlock, { kind: "dl" }> {
@@ -123,6 +132,49 @@ export function buildArticleSchema(siteUrl: URL, data: ArticleSchemaData) {
     publisher: {
       "@id": organizationId,
     },
+  };
+}
+
+export function buildCreativeWorkSchema(
+  siteUrl: URL,
+  data: CreativeWorkSchemaData,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: data.name,
+    url: data.canonicalUrl.href,
+    image: data.imageUrl,
+    mainEntityOfPage: {
+      "@id": data.canonicalUrl.href,
+    },
+    locationCreated: {
+      "@type": "Place",
+      name: data.locationCreatedName,
+    },
+    creator: {
+      "@id": new URL(ORGANIZATION_ID_PATH, siteUrl).href,
+    },
+    ...(data.dateCreated ? { dateCreated: data.dateCreated } : {}),
+  };
+}
+
+export function buildItemListSchema(
+  siteUrl: URL,
+  items: readonly BreadcrumbItemData[],
+  listName?: string,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    ...(listName ? { name: listName } : {}),
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: new URL(item.path, siteUrl).href,
+    })),
   };
 }
 

@@ -4,7 +4,10 @@ import BackgroundDecorations from "@/components/ui/background/BackgroundDecorati
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import JsonLd from "@/components/ui/seo/JsonLd.astro";
-import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
+import {
+  buildBreadcrumbListSchema,
+  buildItemListSchema,
+} from "@/components/ui/seo/seo.data";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getSortedProjects } from "@/components/architecture/architecture.data";
 
@@ -12,6 +15,17 @@ import { getSortedProjects } from "@/components/architecture/architecture.data";
 // quand une image dédiée sera validée avec T&T.
 const sortedProjects = await getSortedProjects();
 const ogImage = sortedProjects[0]?.data.cover.src;
+const projectListJsonLd = buildItemListSchema(
+  Astro.site ?? Astro.url,
+  sortedProjects.map((project) => {
+    const slug = project.id.replace(/\/index$/, "");
+    return {
+      name: project.data.name,
+      path: `/architecture/${slug}/`,
+    };
+  }),
+  "Projets",
+);
 const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
   { name: "Accueil", path: "/" },
   { name: "Architecture", path: "/architecture/" },
@@ -24,6 +38,7 @@ const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
   ogImage={ogImage}
 >
   <Fragment slot="head">
+    <JsonLd data={projectListJsonLd} />
     <JsonLd data={breadcrumbJsonLd} />
   </Fragment>
   <HeaderShell />

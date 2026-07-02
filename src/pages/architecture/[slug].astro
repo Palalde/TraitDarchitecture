@@ -4,7 +4,10 @@ import BackgroundDecorations from "@/components/ui/background/BackgroundDecorati
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
 import JsonLd from "@/components/ui/seo/JsonLd.astro";
-import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
+import {
+  buildBreadcrumbListSchema,
+  buildCreativeWorkSchema,
+} from "@/components/ui/seo/seo.data";
 import ProjectShell from "@/components/architecture/project/ProjectShell.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
@@ -22,7 +25,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { name, city, dept, types, programs, cover } = entry.data;
+const { name, city, dept, types, programs, cover, year } = entry.data;
 
 // Generated description — stable even when labels are absent
 const typeLabels = (types ?? []).map((t) => TYPE_LABELS[t]).join(", ");
@@ -35,6 +38,17 @@ const description = [
 ]
   .filter(Boolean)
   .join(" ");
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const projectImageUrl = new URL(cover.src, Astro.site ?? Astro.url).href;
+const projectJsonLd = buildCreativeWorkSchema(Astro.site ?? Astro.url, {
+  name,
+  imageUrl: projectImageUrl,
+  canonicalUrl: canonicalURL,
+  locationCreatedName: `${city} (${dept})`,
+  creatorId: new URL("/#organization", Astro.site ?? Astro.url).href,
+  ...(year ? { dateCreated: String(year) } : {}),
+});
 
 const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
   { name: "Accueil", path: "/" },
@@ -52,6 +66,7 @@ const allProjects = await getSortedProjects();
   ogImage={cover.src}
 >
   <Fragment slot="head">
+    <JsonLd data={projectJsonLd} />
     <JsonLd data={breadcrumbJsonLd} />
   </Fragment>
   <HeaderShell />
