@@ -1,0 +1,14 @@
+---
+interface Props {
+  data: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const { data } = Astro.props;
+
+const serializedJsonLd = JSON.stringify(data)
+  .replaceAll("<", "\\u003c")
+  .replaceAll("\u2028", "\\u2028")
+  .replaceAll("\u2029", "\\u2029");
+---
+
+<script type="application/ld+json" set:html={serializedJsonLd} />
