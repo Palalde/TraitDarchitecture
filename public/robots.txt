@@ -3,6 +3,13 @@ User-agent: *
 Disallow: /
 
 # === PRODUCTION (to activate at launch) ===
+# Decision D2: all crawlers allowed, including AI bots.
 # User-agent: *
 # Allow: /
+# AI bots explicitly documented so they can be blocked later if needed:
+#   Search/response: OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User,
+#                   Claude-SearchBot, Claude-User, Applebot, Googlebot
+#   Training: GPTBot, ClaudeBot, anthropic-ai, CCBot, Google-Extended,
+#              Applebot-Extended, Bytespider, Amazonbot, meta-externalagent,
+#              cohere-ai, Diffbot
 # Sitemap: https://traitdarchitecture.com/sitemap-index.xml
