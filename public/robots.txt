@@ -1,3 +1,8 @@
 # Temporary pre-launch policy. Review before production.
 User-agent: *
 Disallow: /
+
+# === PRODUCTION (to activate at launch) ===
+# User-agent: *
+# Allow: /
+# Sitemap: https://traitdarchitecture.com/sitemap-index.xml
