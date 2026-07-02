@@ -3,7 +3,10 @@ import { ClientRouter } from "astro:transitions";
 import type { ImageMetadata } from "astro";
 import OverlayScrollbarsSetup from "@/components/ui/overlay/OverlayScrollbarsSetup";
 import JsonLd from "@/components/ui/seo/JsonLd.astro";
-import { buildOrganizationSchema } from "@/components/ui/seo/seo.data";
+import {
+  buildOrganizationSchema,
+  buildWebSiteSchema,
+} from "@/components/ui/seo/seo.data";
 import overlayScrollbarsCssUrl from "overlayscrollbars/styles/overlayscrollbars.css?url";
 import RevealSetup from "../components/ui/reveal/RevealSetup.astro";
 import "../styles/index.css";
@@ -30,6 +33,7 @@ const ogImageUrl = new URL(
   Astro.site ?? Astro.url,
 ).href;
 const organizationJsonLd = buildOrganizationSchema(Astro.site ?? Astro.url);
+const webSiteJsonLd = buildWebSiteSchema(Astro.site ?? Astro.url);
 const ogImageAlt = title;
 const ogImageWidth = "1200";
 const ogImageHeight = "630";
@@ -138,6 +142,7 @@ const overlayScrollbarsMediaQuery =
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:image:alt" content={ogImageAlt} />
     <JsonLd data={organizationJsonLd} />
+    <JsonLd data={webSiteJsonLd} />
     <!-- Keep this path close to Astro defaults. On iOS/WKWebView, native view
           transitions can still be disturbed by browser chrome changes that the
           page cannot control, notably the Google app reopening its URL bar and

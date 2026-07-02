@@ -3,11 +3,21 @@ import LegalShell from "@/components/legal/LegalShell.astro";
 import { legalPageData } from "@/components/legal/legal.data";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
+import JsonLd from "@/components/ui/seo/JsonLd.astro";
+import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
+
+const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
+  { name: "Accueil", path: "/" },
+  { name: "Mentions légales", path: "/mentions-legales/" },
+]);
 ---
 
 <BaseLayout title={legalPageData.title} description={legalPageData.description}>
+  <Fragment slot="head">
+    <JsonLd data={breadcrumbJsonLd} />
+  </Fragment>
   <HeaderShell />
   <main class="relative overflow-x-clip bg-(--bg-primary)">
     <BackgroundDecorations />

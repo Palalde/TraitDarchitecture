@@ -7,6 +7,11 @@ const INSTAGRAM_URL = "https://www.instagram.com/atelier.trait.darchitecture/";
 const OFFICE_NAMES = ["Bastia", "Carry-le-Rouet", "Mézel"] as const;
 const AREA_NAMES = ["Corse", "Côte Bleue", "Provence"] as const;
 
+export interface BreadcrumbItemData {
+  name: string;
+  path: string;
+}
+
 function isDefinitionListBlock(
   block: LegalBlock,
 ): block is Extract<LegalBlock, { kind: "dl" }> {
@@ -72,5 +77,31 @@ export function buildOrganizationSchema(siteUrl: URL) {
       name,
     })),
     sameAs: [contactPageData.googleReviewsUrl, INSTAGRAM_URL],
+  };
+}
+
+export function buildWebSiteSchema(siteUrl: URL) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": new URL("/#website", siteUrl).href,
+    name: SITE_NAME,
+    url: new URL("/", siteUrl).href,
+  };
+}
+
+export function buildBreadcrumbListSchema(
+  siteUrl: URL,
+  items: readonly BreadcrumbItemData[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: new URL(item.path, siteUrl).href,
+    })),
   };
 }

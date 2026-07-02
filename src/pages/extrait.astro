@@ -3,13 +3,23 @@ import ExtraitShell from "@/components/extrait/ExtraitShell.astro";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
+import JsonLd from "@/components/ui/seo/JsonLd.astro";
+import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
+  { name: "Accueil", path: "/" },
+  { name: "EXTraiT", path: "/extrait/" },
+]);
 ---
 
 <BaseLayout
   title="EXTraiT | ATELIER TraiT D'ARCHITECTURE"
   description="Articles, réflexions et prises de position de l'ATELIER TraiT D'ARCHITECTURE."
 >
+  <Fragment slot="head">
+    <JsonLd data={breadcrumbJsonLd} />
+  </Fragment>
   <HeaderShell />
   <main class="relative overflow-hidden bg-(--bg-primary)">
     <BackgroundDecorations />

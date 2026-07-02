@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
+import JsonLd from "@/components/ui/seo/JsonLd.astro";
+import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
 import ProjectShell from "@/components/architecture/project/ProjectShell.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
@@ -34,6 +36,12 @@ const description = [
   .filter(Boolean)
   .join(" ");
 
+const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
+  { name: "Accueil", path: "/" },
+  { name: "Architecture", path: "/architecture/" },
+  { name, path: Astro.url.pathname },
+]);
+
 // Pre-fetch all projects once for the similar projects section (step 7)
 const allProjects = await getSortedProjects();
 ---
@@ -43,6 +51,9 @@ const allProjects = await getSortedProjects();
   description={description}
   ogImage={cover.src}
 >
+  <Fragment slot="head">
+    <JsonLd data={breadcrumbJsonLd} />
+  </Fragment>
   <HeaderShell />
   <main class="relative overflow-x-clip bg-(--bg-primary)">
     <BackgroundDecorations />

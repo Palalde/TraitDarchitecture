@@ -4,10 +4,20 @@ import { traitPageData } from "@/components/trait/trait.data";
 import BackgroundDecorations from "@/components/ui/background/BackgroundDecorations.astro";
 import Footer from "@/components/ui/footer/Footer.astro";
 import HeaderShell from "@/components/ui/header/HeaderShell.astro";
+import JsonLd from "@/components/ui/seo/JsonLd.astro";
+import { buildBreadcrumbListSchema } from "@/components/ui/seo/seo.data";
 import BaseLayout from "@/layouts/BaseLayout.astro";
+
+const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
+  { name: "Accueil", path: "/" },
+  { name: "TraiT", path: "/trait/" },
+]);
 ---
 
 <BaseLayout title={traitPageData.title} description={traitPageData.description}>
+  <Fragment slot="head">
+    <JsonLd data={breadcrumbJsonLd} />
+  </Fragment>
   <HeaderShell />
   <main class="relative min-h-screen bg-(--bg-primary)">
     <BackgroundDecorations />
