@@ -46,7 +46,6 @@ const projectJsonLd = buildCreativeWorkSchema(Astro.site ?? Astro.url, {
   imageUrl: projectImageUrl,
   canonicalUrl: canonicalURL,
   locationCreatedName: `${city} (${dept})`,
-  creatorId: new URL("/#organization", Astro.site ?? Astro.url).href,
   ...(year ? { dateCreated: String(year) } : {}),
 });
 

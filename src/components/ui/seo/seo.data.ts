@@ -28,7 +28,6 @@ export interface CreativeWorkSchemaData {
   imageUrl: string;
   canonicalUrl: URL;
   locationCreatedName: string;
-  creatorId: string;
   dateCreated?: string;
 }
 
@@ -159,6 +158,18 @@ export function buildCreativeWorkSchema(
   };
 }
 
+function buildListItemElements(
+  siteUrl: URL,
+  items: readonly BreadcrumbItemData[],
+) {
+  return items.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.name,
+    item: new URL(item.path, siteUrl).href,
+  }));
+}
+
 export function buildItemListSchema(
   siteUrl: URL,
   items: readonly BreadcrumbItemData[],
@@ -169,12 +180,7 @@ export function buildItemListSchema(
     "@type": "ItemList",
     ...(listName ? { name: listName } : {}),
     numberOfItems: items.length,
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.name,
-      item: new URL(item.path, siteUrl).href,
-    })),
+    itemListElement: buildListItemElements(siteUrl, items),
   };
 }
 
@@ -185,11 +191,6 @@ export function buildBreadcrumbListSchema(
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      name: item.name,
-      item: new URL(item.path, siteUrl).href,
-    })),
+    itemListElement: buildListItemElements(siteUrl, items),
   };
 }
