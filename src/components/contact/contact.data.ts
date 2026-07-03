@@ -79,7 +79,7 @@ export interface ContactPageData {
 export const contactPageData: ContactPageData = {
   title: "Contact architecte Bastia | ATELIER TraiT D'ARCHITECTURE",
   description:
-    "Contactez l'ATELIER TraiT D'ARCHITECTURE pour une rénovation, une extension bois ou une construction neuve à Bastia, en Corse, sur la Côte Bleue ou en Provence.",
+    "Contactez Théa Battistini & Titouan Granet, architectes à Bastia, en Corse, sur la Côte Bleue et en Provence, pour votre projet. Réponse sous 48 h.",
   cartouche: {
     heading: "CONTACT",
     intro:
