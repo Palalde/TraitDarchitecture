@@ -26,6 +26,8 @@ const {
   plate,
 }: Props = Astro.props;
 
+const imageAlt = alt.trim() || caption?.trim() || title?.trim() || "";
+
 const resolvedLayout =
   layout === "wide" || layout === "aside-left" || layout === "aside-right"
     ? layout
@@ -96,7 +98,7 @@ const imageSizes =
             mobileOverflowPercent={0.04}
           >
             <img
-              alt={alt}
+              alt={imageAlt}
               class={imageClass}
               draggable="false"
               loading="lazy"
@@ -110,7 +112,7 @@ const imageSizes =
             mobileOverflowPercent={0.04}
           >
             <Image
-              alt={alt}
+              alt={imageAlt}
               class:list={[imageClass]}
               draggable="false"
               loading="lazy"
