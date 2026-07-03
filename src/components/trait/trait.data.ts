@@ -90,9 +90,9 @@ export interface TraitPageData {
 }
 
 export const traitPageData: TraitPageData = {
-  title: "TraiT | ATELIER TraiT D'ARCHITECTURE",
+  title: "TraiT Corse & Provence | ATELIER TraiT D'ARCHITECTURE",
   description:
-    "Découvrez la philosophie et la méthode d'ATELIER TraiT D'ARCHITECTURE. Un trait, trois temps : création, mise en oeuvre, réalisation.",
+    "Notre approche sensible de l'architecture : écoute, conception, chantier et accompagnement de projet en Corse, à Bastia, sur la Côte Bleue et en Provence.",
   opening: {
     heading: "TraiT",
     identity: {

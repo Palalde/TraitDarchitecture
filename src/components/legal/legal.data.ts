@@ -31,7 +31,7 @@ export interface LegalPageData {
 export const legalPageData: LegalPageData = {
   title: "Mentions légales | ATELIER TraiT D'ARCHITECTURE",
   description:
-    "Mentions légales, données personnelles et cookies du site de l'ATELIER TraiT D'ARCHITECTURE.",
+    "Mentions légales, données personnelles et cookies de l'ATELIER TraiT D'ARCHITECTURE, architectes à Bastia, en Corse, sur la Côte Bleue et en Provence.",
   heading: "MENTIONS LÉGALES",
   intro: "Informations légales du site de l'ATELIER TraiT D'ARCHITECTURE.",
   updatedAt: "⟦À FOURNIR — date de dernière mise à jour⟧",

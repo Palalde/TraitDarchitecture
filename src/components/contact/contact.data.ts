@@ -77,9 +77,9 @@ export interface ContactPageData {
 }
 
 export const contactPageData: ContactPageData = {
-  title: "Contact | ATELIER TraiT D'ARCHITECTURE",
+  title: "Contact architecte Bastia | ATELIER TraiT D'ARCHITECTURE",
   description:
-    "Une intention de projet, une question — écrivez à l'atelier. Réponse sous 48 h.",
+    "Contactez l'ATELIER TraiT D'ARCHITECTURE pour une rénovation, une extension bois ou une construction neuve à Bastia, en Corse, sur la Côte Bleue ou en Provence.",
   cartouche: {
     heading: "CONTACT",
     intro:

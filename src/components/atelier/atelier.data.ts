@@ -41,9 +41,9 @@ export interface AtelierPageData {
 }
 
 export const atelierPageData: AtelierPageData = {
-  title: "Atelier | ATELIER TraiT D'ARCHITECTURE",
+  title: "Atelier Corse & Provence | ATELIER TraiT D'ARCHITECTURE",
   description:
-    "Théa Battistini & Titouan Granet, deux architectes ancrés entre Corse et Provence. Découvrez l'atelier, sa vision sensible et engagée, et le duo qui le porte.",
+    "Deux architectes ancrés entre Bastia, la Côte Bleue et la Provence. Découvrez l'atelier, sa vision sensible et engagée, et le duo qui le porte.",
   heading: "ATELIER",
   duoFigure: {
     figureId: "Fig. I",
