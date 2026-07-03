@@ -75,7 +75,11 @@ const allArticles = await getSortedArticles();
     }
   </Fragment>
   <HeaderShell />
-  <main class="relative overflow-x-clip bg-(--bg-primary)">
+  <main
+    id="main-content"
+    tabindex="-1"
+    class="relative overflow-x-clip bg-(--bg-primary)"
+  >
     <BackgroundDecorations />
     <ArticleShell entry={entry} allArticles={allArticles} />
   </main>

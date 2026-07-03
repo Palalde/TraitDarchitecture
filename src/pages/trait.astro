@@ -19,7 +19,11 @@ const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
     <JsonLd data={breadcrumbJsonLd} />
   </Fragment>
   <HeaderShell />
-  <main class="relative min-h-screen bg-(--bg-primary)">
+  <main
+    id="main-content"
+    tabindex="-1"
+    class="relative min-h-screen bg-(--bg-primary)"
+  >
     <BackgroundDecorations />
     <TraitShell />
   </main>

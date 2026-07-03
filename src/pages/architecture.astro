@@ -45,7 +45,11 @@ const breadcrumbJsonLd = buildBreadcrumbListSchema(Astro.site ?? Astro.url, [
     <JsonLd data={breadcrumbJsonLd} />
   </Fragment>
   <HeaderShell />
-  <main class="relative overflow-hidden bg-(--bg-primary)">
+  <main
+    id="main-content"
+    tabindex="-1"
+    class="relative overflow-hidden bg-(--bg-primary)"
+  >
     <BackgroundDecorations />
     <ArchitectureShell />
   </main>

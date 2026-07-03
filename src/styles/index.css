@@ -254,6 +254,14 @@ html.is-landing-dismissed #landing-wrapper {
   opacity: 0.04;
 }
 
+/* Skip-link target: <main> receives programmatic focus (tabindex="-1") when
+   the "Aller au contenu" link is activated. It is not an interactive control,
+   so suppress the full-region focus ring — the skip link itself is the visible
+   affordance. */
+#main-content:focus {
+  outline: none;
+}
+
 /* ============================================
    HEADER — Tailles fixes par breakpoint
    ============================================ */
