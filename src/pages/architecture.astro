@@ -7,14 +7,17 @@ import JsonLd from "@/components/ui/seo/JsonLd.astro";
 import {
   buildBreadcrumbListSchema,
   buildItemListSchema,
+  buildSocialImagePath,
 } from "@/components/ui/seo/seo.data";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getSortedProjects } from "@/components/architecture/architecture.data";
 
-// OG social : première cover (premier projet trié par `order`). Swap simple
-// quand une image dédiée sera validée avec T&T.
+// OG social : première cover (premier projet trié par `order`), optimisée au
+// build (JPG 1200px — jamais l'original). Swap simple quand une image dédiée
+// sera validée avec T&T.
 const sortedProjects = await getSortedProjects();
-const ogImage = sortedProjects[0]?.data.cover.src;
+const firstCover = sortedProjects[0]?.data.cover;
+const ogImage = firstCover ? await buildSocialImagePath(firstCover) : undefined;
 const projectListJsonLd = buildItemListSchema(
   Astro.site ?? Astro.url,
   sortedProjects.map((project) => {

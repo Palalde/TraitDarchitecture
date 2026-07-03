@@ -1,5 +1,24 @@
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { contactPageData } from "@/components/contact/contact.data";
 import { legalPageData, type LegalBlock } from "@/components/legal/legal.data";
+
+/**
+ * Build-time optimized social image (1200px JPG). og:image and JSON-LD must
+ * never reference `ImageMetadata.src` directly: that ships the original
+ * multi-MB source file into dist/. Socials prefer JPG/PNG (~1200px wide).
+ */
+export async function buildSocialImagePath(
+  src: ImageMetadata,
+): Promise<string> {
+  const optimized = await getImage({
+    src,
+    width: 1200,
+    format: "jpg",
+    quality: 80,
+  });
+  return optimized.src;
+}
 
 const SITE_NAME = "ATELIER TraiT D'ARCHITECTURE";
 const SITE_LOGO_PATH = "/media/favicon/favicon.svg";

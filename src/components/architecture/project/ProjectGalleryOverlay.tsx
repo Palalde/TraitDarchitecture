@@ -6,6 +6,8 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export interface ProjectGallerySlide {
   src: string;
+  srcSet: string;
+  sizes: string;
   width: number;
   height: number;
   plate: string;
@@ -247,7 +249,9 @@ export function ProjectGalleryOverlay({ projectName, slides }: Props) {
                   height={slide.height}
                   loading={isNear ? "eager" : "lazy"}
                   onClick={(event) => event.stopPropagation()}
+                  sizes={slide.sizes}
                   src={slide.src}
+                  srcSet={slide.srcSet}
                   width={slide.width}
                 />
               </div>

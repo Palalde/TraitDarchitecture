@@ -7,6 +7,7 @@ import JsonLd from "@/components/ui/seo/JsonLd.astro";
 import {
   buildArticleSchema,
   buildBreadcrumbListSchema,
+  buildSocialImagePath,
 } from "@/components/ui/seo/seo.data";
 import ArticleShell from "@/components/extrait/article/ArticleShell.astro";
 import { getSortedArticles } from "@/components/extrait/extrait.data";
@@ -26,8 +27,9 @@ const { title, excerpt, cover } = entry.data;
 const publishedDate = entry.data.publishedDate;
 const updatedDate = entry.data.updatedDate;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImagePath = cover ? await buildSocialImagePath(cover) : undefined;
 const articleImageUrl = new URL(
-  cover?.src ?? "/media/og/default-og.jpg",
+  socialImagePath ?? "/media/og/default-og.jpg",
   Astro.site ?? Astro.url,
 ).href;
 
@@ -53,7 +55,7 @@ const allArticles = await getSortedArticles();
   title={`${title} | ATELIER TraiT D'ARCHITECTURE`}
   description={excerpt}
   author="ATELIER TraiT D'ARCHITECTURE"
-  ogImage={cover?.src}
+  ogImage={socialImagePath}
   ogType="article"
 >
   <Fragment slot="head">
