@@ -1,0 +1,33 @@
+# ATELIER TraiT D'ARCHITECTURE
+
+Site vitrine de l'ATELIER TraiT D'ARCHITECTURE, agence indépendante fondée par Théa Battistini et Titouan Granet. Le site présente l'atelier, sa méthode, ses projets, ses articles de fond et ses coordonnées, avec un ancrage entre Corse et Provence.
+
+## Pages clés
+
+- [Accueil](https://traitdarchitecture.com/) - Présentation du site et accès direct aux projets, à la méthode et aux articles.
+- [Atelier](https://traitdarchitecture.com/atelier/) - Le duo, son parcours, sa vision sensible et son ancrage territorial.
+- [TraiT](https://traitdarchitecture.com/trait/) - La philosophie et la méthode de l'atelier, en trois temps: création, mise en oeuvre, réalisation.
+- [Architecture](https://traitdarchitecture.com/architecture/) - Sélection de projets et réalisations de l'atelier.
+- [EXTraiT](https://traitdarchitecture.com/extrait/) - Articles de fond sur le métier, la construction et les choix architecturaux.
+- [Contact](https://traitdarchitecture.com/contact/) - Coordonnées et formulaire pour une intention de projet ou une question.
+- [Mentions légales](https://traitdarchitecture.com/mentions-legales/) - Informations légales, données personnelles et cookies du site.
+
+## Projets
+
+- [CASA OCANERA](https://traitdarchitecture.com/architecture/casa-ocanera/) - Surélévation en ossature bois d'un logement à Vignale, en Haute-Corse, avec chantier en site occupé.
+- [CASA V](https://traitdarchitecture.com/architecture/casa-v/) - Rénovation en pierre à Olmeta-di-Tuda, en contexte rural de Haute-Corse.
+- [MAISON T](https://traitdarchitecture.com/architecture/maison-t/) - Construction neuve à ossature bois à Thorame Basse, en Provence.
+- [LE BANCAOU](https://traitdarchitecture.com/architecture/le-bancaou/) - Rénovation en pierre à Sausset-les-Pins, sur la Côte Bleue.
+- [U SECAÏRE](https://traitdarchitecture.com/architecture/u-secaire/) - Rénovation en pierre à Mézel, en Provence.
+- [MAISON C](https://traitdarchitecture.com/architecture/maison-c/) - Construction neuve à ossature bois à Soleilhas, pour un logement rural.
+- [MAISON DES P'TITS LOUPS](https://traitdarchitecture.com/architecture/maison-des-ptits-loups/) - Rénovation en pierre à Sausset-les-Pins pour un équipement.
+- [U NIDU](https://traitdarchitecture.com/architecture/u-nidu/) - Rénovation en pierre à Bastia, dans le centre ancien.
+
+## Articles
+
+- [Pourquoi faire appel à un architecte ?](https://traitdarchitecture.com/extrait/pourquoi-faire-appel-a-un-architecte/) - Temps, budget et charge mentale: pourquoi l'architecte reste un investissement de maîtrise plutôt qu'un coût supplémentaire.
+- [Architecte d'intérieur, d'extérieur, DE, HMONP, DPLG…](https://traitdarchitecture.com/extrait/architecte-qui-fait-quoi/) - DE, HMONP, DPLG, maître d'oeuvre, constructeur: qui fait quoi, qui engage sa responsabilité, et pourquoi le titre compte.
+- [Auto-construction : Je veux faire mon chantier moi-même](https://traitdarchitecture.com/extrait/auto-construction-faire-son-chantier/) - Construire soi-même peut séduire, mais sans cadre, méthode et limites claires, le chantier devient long, risqué et épuisant.
+- [Je veux la clim ! Avec le réchauffement climatique…](https://traitdarchitecture.com/extrait/je-veux-la-clim/) - La clim, vraie solution ou symptôme de nos erreurs? Une architecture pensée pour le climat la rend rarement nécessaire.
+- [Le bois ça ne tient pas dans le temps](https://traitdarchitecture.com/extrait/le-bois-ne-tient-pas-dans-le-temps/) - Le bois vieillit, et il vieillit bien: retour sur une idée reçue, preuves et bonnes pratiques à l'appui.
+- [Un architecte coûte trop cher, ce n'est pas pour moi !](https://traitdarchitecture.com/extrait/un-architecte-coute-trop-cher/) - Honoraires, reprises et surcoûts invisibles: ce que coûte vraiment un projet mal cadré avant même le chantier.

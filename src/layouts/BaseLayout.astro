@@ -14,6 +14,7 @@ import "../styles/index.css";
 interface Props {
   title?: string;
   description?: string;
+  author?: string;
   ogImage?: string | ImageMetadata;
   ogType?: "website" | "article";
   noindex?: boolean;
@@ -22,6 +23,7 @@ interface Props {
 const {
   title = "ATELIER TraiT D'ARCHITECTURE",
   description = "Site vitrine de l'ATELIER TraiT D'ARCHITECTURE.",
+  author,
   ogImage = "/media/og/default-og.jpg",
   ogType = "website",
   noindex = false,
@@ -124,6 +126,7 @@ const overlayScrollbarsMediaQuery =
     />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {author ? <meta name="author" content={author} /> : null}
     <link rel="canonical" href={canonicalURL.href} />
     <meta name="robots" content={robots} />
     <meta property="og:site_name" content="ATELIER TraiT D'ARCHITECTURE" />
