@@ -40,6 +40,21 @@ export const STATUS_LABELS: Record<Status, string> = {
   livre: "Livré",
 };
 
+/**
+ * Joined type + program labels for a project (e.g. "Rénovation · Logement").
+ * Shared between the project page meta description and the LLM index.
+ */
+export function buildProjectLabelSummary(
+  project: CollectionEntry<"projects">,
+): string {
+  const { types, programs } = project.data;
+  const typeLabels = (types ?? []).map((type) => TYPE_LABELS[type]).join(", ");
+  const programLabels = (programs ?? [])
+    .map((program) => PROGRAM_LABELS[program])
+    .join(", ");
+  return [typeLabels, programLabels].filter(Boolean).join(" · ");
+}
+
 export async function getSortedProjects(): Promise<
   CollectionEntry<"projects">[]
 > {

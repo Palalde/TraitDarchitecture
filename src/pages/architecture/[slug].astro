@@ -11,9 +11,8 @@ import {
 import ProjectShell from "@/components/architecture/project/ProjectShell.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import {
+  buildProjectLabelSummary,
   getSortedProjects,
-  TYPE_LABELS,
-  PROGRAM_LABELS,
 } from "@/components/architecture/architecture.data";
 
 export async function getStaticPaths() {
@@ -25,12 +24,10 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { name, city, dept, types, programs, cover, year } = entry.data;
+const { name, city, dept, cover, year } = entry.data;
 
 // Generated description — stable even when labels are absent
-const typeLabels = (types ?? []).map((t) => TYPE_LABELS[t]).join(", ");
-const programLabels = (programs ?? []).map((p) => PROGRAM_LABELS[p]).join(", ");
-const labelParts = [typeLabels, programLabels].filter(Boolean).join(" · ");
+const labelParts = buildProjectLabelSummary(entry);
 const description = [
   `Projet ${name} à ${city} (${dept})`,
   labelParts ? `— ${labelParts}` : "",
