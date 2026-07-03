@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 interface UseHeaderAutoHideOptions {
   minDelta?: number;
@@ -7,6 +7,9 @@ interface UseHeaderAutoHideOptions {
 
 interface UseHeaderAutoHideResult {
   isHeaderVisible: boolean;
+  /** Force the header back on-screen — wire to onFocus so a keyboard user
+   *  tabbing into a nav link never lands on an off-canvas (invisible) target. */
+  showHeader: () => void;
 }
 
 export function useHeaderAutoHide(
@@ -72,5 +75,12 @@ export function useHeaderAutoHide(
     };
   }, [minDelta, topOffset]);
 
-  return { isHeaderVisible };
+  const showHeader = useCallback(() => {
+    downwardDistanceRef.current = 0;
+    upwardDistanceRef.current = 0;
+    lastScrollYRef.current = Math.max(window.scrollY, 0);
+    setIsHeaderVisible(true);
+  }, []);
+
+  return { isHeaderVisible, showHeader };
 }

@@ -4,6 +4,9 @@ interface HeaderHamburgerProps {
   label?: string;
 }
 
+/** Must match the `id` on the `<nav>` rendered by HeaderMobileMenu. */
+export const HEADER_MOBILE_NAV_ID = "header-mobile-nav";
+
 export function HeaderHamburger({
   isOpen,
   onClick,
@@ -11,6 +14,7 @@ export function HeaderHamburger({
 }: HeaderHamburgerProps) {
   return (
     <button
+      aria-controls={HEADER_MOBILE_NAV_ID}
       aria-expanded={isOpen}
       aria-label={isOpen ? "Fermer le menu mobile" : label}
       className="group relative inline-flex h-[calc(var(--header-height)*0.72)] w-[calc(var(--header-height)*0.72)] items-center justify-center text-(--t2a-blue-dark) transition-colors duration-200 ease-out hover:text-(--text-primary) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--trait) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary)"

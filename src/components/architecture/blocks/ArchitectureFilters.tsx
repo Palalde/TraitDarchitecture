@@ -339,6 +339,7 @@ export function ArchitectureFilters({
         </div>
 
         <p
+          aria-live="polite"
           data-reveal="fade-up"
           style={{ "--reveal-delay": "140ms" } as CSSProperties}
           className="relative z-10 text-xs uppercase tracking-[0.12em] text-(--text-muted)"

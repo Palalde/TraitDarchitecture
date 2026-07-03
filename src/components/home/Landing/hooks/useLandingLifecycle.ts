@@ -13,11 +13,15 @@ interface UseLandingLifecycleOptions {
 }
 
 const LANDING_DISMISSED_STORAGE_KEY = "t2a-landing-dismissed";
+// "Tab" is included so keyboard-only users don't land an invisible focus on
+// content hidden below the (scroll-locked) landing screen: Tab/Shift+Tab now
+// dismiss it just like any other "move forward" input (wheel, pointerdown).
 const LANDING_DISMISS_KEYS = new Set([
   "ArrowDown",
   "PageDown",
   " ",
   "Spacebar",
+  "Tab",
 ]);
 
 function subscribeToBrowserStorage() {

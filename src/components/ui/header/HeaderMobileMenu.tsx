@@ -4,6 +4,7 @@ import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { isPathActive } from "@/hooks/useCurrentPathname";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { HEADER_MOBILE_NAV_ID } from "./HeaderHamburger";
 import { HeaderSocialIcon } from "./HeaderSocialIcon";
 import { HeaderThemeToggle } from "./HeaderThemeToggle";
 import { FacebookLogo, InstagramLogo, LinkedInLogo } from "../social/logo";
@@ -151,6 +152,7 @@ export function HeaderMobileMenu({
         <nav
           aria-label="Menu mobile"
           className="relative z-10 px-6 pb-6 pt-5"
+          id={HEADER_MOBILE_NAV_ID}
           ref={navigationRef}
           tabIndex={-1}
         >

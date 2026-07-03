@@ -51,7 +51,7 @@ export function Header({
   const currentPathname = useCurrentPathname(pathname);
   const { closeMobileMenu, isMobileMenuOpen, toggleMobileMenu } =
     useHeaderMobileMenu(currentPathname);
-  const { isHeaderVisible } = useHeaderAutoHide();
+  const { isHeaderVisible, showHeader } = useHeaderAutoHide();
   const reducedMotion = useReducedMotion();
   const headerVisible = isHeaderVisible || isMobileMenuOpen;
   const [hasEnteredFromLanding, setHasEnteredFromLanding] =
@@ -115,6 +115,7 @@ export function Header({
     <header
       aria-label="En-tête principal"
       className="t2a-header-persist fixed inset-x-0 top-0 z-50 h-(--header-height) will-change-transform"
+      onFocus={showHeader}
       style={{
         transform: offscreen ? "translateY(-100%)" : "translateY(0)",
         transition: transitionActive
