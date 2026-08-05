@@ -135,15 +135,15 @@ export const legalPageData: LegalPageData = {
           rows: [
             {
               label: "Hébergeur",
-              value: "Vercel Inc.",
+              value: "Cloudflare, Inc.",
             },
             {
               label: "Adresse",
-              value: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
+              value: "101 Townsend Street, San Francisco, CA 94107, États-Unis",
             },
             {
               label: "Site",
-              value: "https://vercel.com",
+              value: "https://www.cloudflare.com",
             },
           ],
         },
@@ -200,7 +200,7 @@ export const legalPageData: LegalPageData = {
       body: [
         {
           kind: "p",
-          text: "Ce site ne dépose aucun cookie publicitaire ni traceur tiers. La mesure d'audience est réalisée au moyen d'une solution respectueuse de la vie privée, sans cookie et sans identifiant persistant (Vercel Web Analytics), qui ne nécessite pas votre consentement au sens des lignes directrices de la CNIL. Les statistiques produites sont agrégées et anonymes.",
+          text: "Ce site ne dépose aucun cookie publicitaire ni traceur tiers. La mesure d'audience est réalisée au moyen d'une solution respectueuse de la vie privée, sans cookie et sans identifiant persistant (Cloudflare Web Analytics), qui ne nécessite pas votre consentement au sens des lignes directrices de la CNIL. Les statistiques produites sont agrégées et anonymes.",
         },
       ],
     },

@@ -172,7 +172,7 @@ Exercice de la profession d'architecte:
 - Société d'architecture : ATELIER TraiT D'ARCHITECTURE — inscrite au Tableau de l'Ordre des architectes sous le n° S25949.
 - Assurance responsabilité civile professionnelle : MAF — Mutuelle des Architectes Français, police n° 270210.
 
-Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis.
+Hébergeur : Cloudflare, Inc., 101 Townsend Street, San Francisco, CA 94107, États-Unis.
 
 Le site collecte des données personnelles via le formulaire de contact uniquement pour traiter la demande. Le site n'utilise pas de cookies publicitaires ni de traceur tiers ; la mesure d'audience est réalisée sans cookie et sans identifiant persistant.
 
