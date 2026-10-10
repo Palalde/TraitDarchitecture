@@ -234,8 +234,8 @@ async function createContactSheet(sourceDirectory) {
     path.join(REPO_ROOT, "docs", "content"),
     indexPath,
   );
-  await checkOutputCollision(sheetPath, false);
-  await checkOutputCollision(indexPath, false);
+  await checkOutputCollision(sheetPath, true);
+  await checkOutputCollision(indexPath, true);
 
   const columns = Math.min(SHEET_COLUMNS, images.length);
   const rows = Math.ceil(images.length / columns);
@@ -442,7 +442,8 @@ async function loadManifest(manifestPath) {
   const resolvedManifestPath = path.resolve(process.cwd(), manifestPath);
   let data;
   try {
-    data = JSON.parse(await fs.readFile(resolvedManifestPath, "utf8"));
+    const raw = await fs.readFile(resolvedManifestPath, "utf8");
+    data = JSON.parse(raw.replace(/^\uFEFF/, ""));
   } catch (error) {
     throw new Error(
       `Could not read manifest ${manifestPath}: ${error.message}`,
@@ -509,19 +510,21 @@ async function loadManifest(manifestPath) {
   assertInside(CONTENT_ROOT, outputDirectory, "Content output directory");
   const coverDestination = path.join(outputDirectory, "cover.webp");
   const galleryDirectory = path.join(outputDirectory, "gallery");
-  const galleryRecords = gallerySources.map((source, index) => ({
-    ...source,
-    outputName:
+  const galleryRecords = gallerySources.map((source, index) => {
+    const number = String(index + 1).padStart(2, "0");
+    const outputName =
       data.collection === "projects"
-        ? `${String(index + 1).padStart(2, "0")}.webp`
-        : `figure-${String(index + 1).padStart(2, "0")}.webp`,
-    destination: path.join(
-      data.collection === "projects" ? galleryDirectory : outputDirectory,
-      data.collection === "projects"
-        ? `${String(index + 1).padStart(2, "0")}.webp`
-        : `figure-${String(index + 1).padStart(2, "0")}.webp`,
-    ),
-  }));
+        ? `${number}.webp`
+        : `figure-${number}.webp`;
+    return {
+      ...source,
+      outputName,
+      destination: path.join(
+        data.collection === "projects" ? galleryDirectory : outputDirectory,
+        outputName,
+      ),
+    };
+  });
   const coverRecord = {
     ...coverSource,
     ratio,
