@@ -27,6 +27,7 @@ const slug = entry.id.replace(/\/index$/, "");
 const galleryImages = getProjectGallery(entry);
 const secondaryEntry = await getProjectSecondary(slug);
 const hasGallery = galleryImages.length > 0;
+const hasNarrative = (entry.body ?? "").trim().length > 0;
 
 // Fullscreen overlay variants generated at build time. Never pass the raw
 // `ImageMetadata.src` to the island: it would ship the ORIGINAL files
@@ -79,9 +80,9 @@ const gallerySlides: ProjectGallerySlide[] = await Promise.all([
 >
   {
     /* Shared container — lg+ = 2-col grid for the block haut. Left column:
-      cartouche (row 1) + narrative (row 2) at a constant text width. Right
-      column: cover figure spanning rows 1-2, sticky inside that grid-area
-      runway. Below lg everything stacks in DOM order. */
+      cartouche (row 1) + optional narrative (row 2) at a constant text width.
+      Right column: cover figure spans the same rows, sticky inside that
+      grid-area runway. Below lg everything stacks in DOM order. */
   }
   <div
     class="relative z-10 mx-auto w-full max-w-7xl px-6 pb-36 pt-[calc(var(--header-height)+2rem)] sm:px-8 sm:pb-60 sm:pt-[calc(var(--header-height)+2.5rem)] lg:grid lg:grid-cols-2 lg:gap-x-10 lg:px-10 lg:pb-85 lg:pt-[calc(var(--header-height)+3rem)] 2xl:pb-150"
@@ -112,7 +113,11 @@ const gallerySlides: ProjectGallerySlide[] = await Promise.all([
         })();
       </script>
 
-      <ProjectHero entry={entry} hasGallery={hasGallery} />
+      <ProjectHero
+        entry={entry}
+        hasGallery={hasGallery}
+        hasNarrative={hasNarrative}
+      />
     </div>
 
     {
@@ -141,14 +146,20 @@ const gallerySlides: ProjectGallerySlide[] = await Promise.all([
         })();
       </script>
 
-      <section aria-labelledby="project-body-heading" class="lg:contents">
-        <h2 id="project-body-heading" class="sr-only">Description du projet</h2>
+      {
+        hasNarrative && (
+          <section aria-labelledby="project-body-heading" class="lg:contents">
+            <h2 id="project-body-heading" class="sr-only">
+              Description du projet
+            </h2>
 
-        {/* Narrative — left column, row 2, under the cartouche */}
-        <div class="mt-8 sm:mt-12 lg:col-start-1 lg:row-start-2 lg:mt-16">
-          <ProjectNarrative entry={entry} />
-        </div>
-      </section>
+            {/* Narrative — left column, row 2, under the cartouche */}
+            <div class="mt-8 sm:mt-12 lg:col-start-1 lg:row-start-2 lg:mt-16">
+              <ProjectNarrative entry={entry} />
+            </div>
+          </section>
+        )
+      }
 
       <ProjectGallery images={galleryImages} />
 

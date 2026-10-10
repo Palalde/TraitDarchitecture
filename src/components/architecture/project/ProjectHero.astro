@@ -12,9 +12,10 @@ import {
 interface Props {
   entry: CollectionEntry<"projects">;
   hasGallery?: boolean;
+  hasNarrative: boolean;
 }
 
-const { entry, hasGallery = false }: Props = Astro.props;
+const { entry, hasGallery = false, hasNarrative }: Props = Astro.props;
 const {
   name,
   city,
@@ -138,18 +139,24 @@ const stickyFigureStyle = [
 
 {
   /* Hero cover — plate figure 01 (LCP image).
-    Desktop: the cover lives in the right grid column.
+    Desktop: the cover lives in the right grid column and spans the cartouche
+    and narrative rows only when a narrative exists.
     ⚠️ The sticky figure is wrapped in a REAL (non display:contents) block that
-    occupies the grid area (col 2, rows 1-2 = cartouche + narrative). Why: the
+    occupies its grid area (cartouche + narrative when present). Why: the
     figure's box-tree parent ([data-project-head]) is lg:contents, and Chrome
     then bounds a sticky grid item to the GRID CONTAINER (which spans the facts
     row) instead of its grid area → the cover ran all the way under the whole
     fiche technique. Giving the figure an explicit block containing block makes
-    it release exactly at the wrapper bottom = top of the facts row.
+    it release exactly at the wrapper bottom.
     Width capped per ratio (--project-cover-max-width) so image + figcaption fit
     the viewport. Sticky + parallax combine as on /atelier. */
 }
-<div class="lg:col-start-2 lg:row-span-2 lg:row-start-1">
+<div
+  class:list={[
+    "lg:col-start-2 lg:row-start-1",
+    hasNarrative ? "lg:row-span-2" : "lg:row-span-1",
+  ]}
+>
   <figure
     class:list={[
       "mt-8 w-full sm:mt-12 lg:sticky lg:top-(--project-cover-top) lg:mx-auto lg:mt-0 lg:max-w-(--project-cover-max-width)",
