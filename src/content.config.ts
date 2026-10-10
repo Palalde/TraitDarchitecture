@@ -12,6 +12,10 @@ const projects = defineCollection({
       cover: image(),
       coverRatio: z.enum(["1/1", "5/4", "4/5"]),
       coverAlt: z.string(),
+      tagline: z.string().optional(),
+      gallery: z
+        .array(z.object({ src: image(), caption: z.string().optional() }))
+        .default([]),
       order: z.number(),
       // Projet vedette home : position (1, 2, 3). Absent = non vedette.
       home: z.number().int().positive().optional(),
@@ -19,10 +23,22 @@ const projects = defineCollection({
         .array(z.enum(["neuf", "renovation", "extension", "surelevation"]))
         .optional(),
       materials: z
-        .array(z.enum(["pierre", "bois", "biosource", "reemploi"]))
+        .array(
+          z.enum([
+            "pierre",
+            "bois",
+            "biosource",
+            "reemploi",
+            "brique",
+            "metal",
+          ]),
+        )
         .optional(),
-      programs: z.array(z.enum(["logement", "equipement", "rural"])).optional(),
-      status: z.enum(["etude", "chantier", "livre"]).optional(),
+      programs: z
+        .array(z.enum(["logement", "equipement", "rural", "commerce"]))
+        .optional(),
+      status: z.enum(["etude", "chantier", "realise"]).optional(),
+      phase: z.string().optional(),
       year: z.number().optional(),
       // Project sheet fields — all optional, absent = line not rendered
       surface: z.string().optional(),
@@ -30,6 +46,7 @@ const projects = defineCollection({
       client: z.string().optional(),
       budget: z.string().optional(),
       partners: z.array(z.string()).optional(),
+      companies: z.array(z.string()).optional(),
       draft: z.boolean().default(false),
     }),
 });

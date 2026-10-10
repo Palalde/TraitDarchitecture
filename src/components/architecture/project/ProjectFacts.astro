@@ -20,6 +20,7 @@ const {
   zone,
   year,
   status,
+  phase,
   types,
   materials,
   programs,
@@ -28,6 +29,7 @@ const {
   client,
   budget,
   partners,
+  companies,
 } = entry.data;
 
 // Helpers to build "·"-joined label strings
@@ -43,20 +45,24 @@ const programLabel =
   programs && programs.length > 0
     ? programs.map((g) => PROGRAM_LABELS[g]).join(" · ")
     : null;
+const statusLabel =
+  status != null
+    ? [STATUS_LABELS[status], phase].filter(Boolean).join(" — ")
+    : null;
 
 // Ordered rows — filtered before render so the reveal stagger has no holes
 const rows = [
   { label: "Lieu", value: `${city} (${dept})` },
   { label: "Zone", value: ZONE_LABELS[zone] },
   { label: "Année", value: year != null ? String(year) : null },
-  { label: "Statut", value: status != null ? STATUS_LABELS[status] : null },
+  { label: "Statut", value: statusLabel },
   { label: "Type", value: typeLabel },
   { label: "Matériaux", value: materialLabel },
   { label: "Programme", value: programLabel },
   { label: "Surface", value: surface ?? null },
   { label: "Mission", value: mission ?? null },
   { label: "Maîtrise d'ouvrage", value: client ?? null },
-  { label: "Budget", value: budget ?? null },
+  { label: "Montant des travaux", value: budget ?? null },
 ] satisfies Array<{ label: string; value: string | null }>;
 
 const visibleRows = rows.filter(
@@ -65,9 +71,12 @@ const visibleRows = rows.filter(
 
 // Partners rendered separately (one row per entry)
 const partnerRows = partners ?? [];
+const companyRows = companies ?? [];
 
 // Per-row reveal stagger (ms per row); partners block continues the sequence
 const ROW_STAGGER = 40;
+const companyDelay =
+  (visibleRows.length + (partnerRows.length > 0 ? 1 : 0)) * ROW_STAGGER;
 const gridClass = compact
   ? "grid grid-cols-2 gap-x-4 sm:gap-x-8"
   : "grid grid-cols-2 gap-x-4 sm:gap-x-8 lg:grid-cols-3 xl:grid-cols-4";
@@ -127,6 +136,25 @@ const gridClass = compact
           {partnerRows.map((partner) => (
             <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
               {partner}
+            </dd>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      companyRows.length > 0 && (
+        <div
+          class="flex flex-col gap-0.5 border-b border-(--border) py-2.5"
+          data-reveal="fade-up"
+          style={`--reveal-delay:${companyDelay}ms;`}
+        >
+          <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
+            Entreprises
+          </dt>
+          {companyRows.map((company) => (
+            <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
+              {company}
             </dd>
           ))}
         </div>

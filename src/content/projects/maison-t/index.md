@@ -6,6 +6,10 @@ zone: "provence"
 cover: "./cover.jpg"
 coverRatio: "5/4"
 coverAlt: "Maison T à Thorame Basse, construction neuve à ossature bois"
+gallery:
+  - src: "./gallery/10.jpg"
+  - src: "./gallery/20.png"
+  - src: "./gallery/30.png"
 order: 30
 types: ["neuf"]
 materials: ["bois", "biosource"]

@@ -1,5 +1,4 @@
 import { getCollection, type CollectionEntry } from "astro:content";
-import type { ImageMetadata } from "astro";
 
 type ProjectData = CollectionEntry<"projects">["data"];
 type Zone = ProjectData["zone"];
@@ -26,18 +25,21 @@ export const MATERIAL_LABELS: Record<Material, string> = {
   bois: "Bois",
   biosource: "Biosourcé",
   reemploi: "Réemploi",
+  brique: "Brique",
+  metal: "Métal",
 };
 
 export const PROGRAM_LABELS: Record<Program, string> = {
   logement: "Logement",
   equipement: "Équipement",
   rural: "Rural",
+  commerce: "Commerce",
 };
 
 export const STATUS_LABELS: Record<Status, string> = {
-  etude: "En étude",
+  etude: "Étude",
   chantier: "En chantier",
-  livre: "Livré",
+  realise: "Réalisé",
 };
 
 /**
@@ -141,49 +143,27 @@ export async function getSimilarProjects(
 }
 
 export interface GalleryImage {
-  src: ImageMetadata;
+  src: CollectionEntry<"projects">["data"]["gallery"][number]["src"];
   /** Plate number label shown in FigCaption (02, 03, …). */
   plate: string;
-  /** Optional caption extracted from the filename ("03 - Caption.jpg" → "Caption"). */
+  /** Optional caption declared in the project frontmatter. */
   caption: string;
   /** Alt text: caption if present, otherwise generated from project name + index. */
   alt: string;
 }
 
-// Import all gallery images eagerly at build time.
-// Vite resolves the glob; we filter by slug at runtime (build time for SSG).
-const allGalleryImages = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/content/projects/*/gallery/*",
-  { eager: true },
-);
-
 /**
- * Returns the ordered gallery images for a given project slug.
- * Files are sorted alphabetically (rely on numeric prefix: 01, 02, …).
- * Filename convention: "NN - Caption.ext" or "NN.ext" (caption optional).
+ * Returns the ordered gallery images declared in a project entry.
  */
 export function getProjectGallery(
-  slug: string,
-  projectName: string,
+  entry: CollectionEntry<"projects">,
 ): GalleryImage[] {
-  const prefix = `/src/content/projects/${slug}/gallery/`;
-
-  const entries = Object.entries(allGalleryImages)
-    .filter(([path]) => path.startsWith(prefix))
-    .sort(([a], [b]) => a.localeCompare(b));
-
-  return entries.map(([path, mod], i) => {
-    const filename = path.slice(prefix.length);
-    // Strip extension
-    const basename = filename.replace(/\.[^.]+$/, "");
-    // Try to extract caption after "NN - " or "NN-" prefix
-    const captionMatch = basename.match(/^\d+\s*[-–]\s*(.+)$/);
-    const caption = captionMatch ? captionMatch[1].trim() : "";
-    // Plate number: hero is 01, gallery starts at 02
-    const plateNum = i + 2;
+  return entry.data.gallery.map((image, index) => {
+    const caption = image.caption ?? "";
+    const plateNum = index + 2;
     const plate = String(plateNum).padStart(2, "0");
-    const alt = caption || `${projectName} — vue ${plateNum}`;
+    const alt = caption || `${entry.data.name} — vue ${plateNum}`;
 
-    return { src: mod.default, plate, caption, alt };
+    return { src: image.src, plate, caption, alt };
   });
 }

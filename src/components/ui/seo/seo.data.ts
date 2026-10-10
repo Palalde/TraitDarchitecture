@@ -44,6 +44,7 @@ export interface ArticleSchemaData {
 
 export interface CreativeWorkSchemaData {
   name: string;
+  description?: string;
   imageUrl: string;
   canonicalUrl: URL;
   locationCreatedName: string;
@@ -161,6 +162,7 @@ export function buildCreativeWorkSchema(
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     name: data.name,
+    ...(data.description ? { description: data.description } : {}),
     url: data.canonicalUrl.href,
     image: data.imageUrl,
     mainEntityOfPage: {
