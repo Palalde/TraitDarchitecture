@@ -25,18 +25,21 @@ export const MATERIAL_LABELS: Record<Material, string> = {
   bois: "Bois",
   biosource: "Biosourcé",
   reemploi: "Réemploi",
+  brique: "Brique",
+  metal: "Métal",
 };
 
 export const PROGRAM_LABELS: Record<Program, string> = {
   logement: "Logement",
   equipement: "Équipement",
   rural: "Rural",
+  commerce: "Commerce",
 };
 
 export const STATUS_LABELS: Record<Status, string> = {
-  etude: "En étude",
+  etude: "Étude",
   chantier: "En chantier",
-  livre: "Livré",
+  realise: "Réalisé",
 };
 
 /**
