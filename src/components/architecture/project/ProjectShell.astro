@@ -24,7 +24,7 @@ interface Props {
 
 const { entry, allProjects } = Astro.props;
 const slug = entry.id.replace(/\/index$/, "");
-const galleryImages = getProjectGallery(slug, entry.data.name);
+const galleryImages = getProjectGallery(entry);
 const secondaryEntry = await getProjectSecondary(slug);
 const hasGallery = galleryImages.length > 0;
 

@@ -6,6 +6,14 @@ zone: "corse"
 cover: "./cover.webp"
 coverRatio: "1/1"
 coverAlt: "Surélévation bois de la Casa Ocanera à Vignale"
+gallery:
+  - src: "./gallery/10.png"
+  - src: "./gallery/20.png"
+  - src: "./gallery/30.png"
+  - src: "./gallery/40.png"
+  - src: "./gallery/50.jpg"
+  - src: "./gallery/60.jpg"
+  - src: "./gallery/70.jpg"
 order: 10
 types: ["surelevation"]
 materials: ["bois", "biosource"]
