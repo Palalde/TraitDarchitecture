@@ -15,8 +15,18 @@ interface Props {
 }
 
 const { entry, hasGallery = false }: Props = Astro.props;
-const { name, city, dept, zone, year, status, cover, coverAlt, coverRatio } =
-  entry.data;
+const {
+  name,
+  city,
+  dept,
+  zone,
+  year,
+  status,
+  cover,
+  coverAlt,
+  coverRatio,
+  tagline,
+} = entry.data;
 
 const locationLine = `${city} (${dept}) — ${ZONE_LABELS[zone]}`;
 
@@ -111,6 +121,16 @@ const stickyFigureStyle = [
         data-reveal="fade-up"
       >
         {metaLine}
+      </p>
+    )
+  }
+  {
+    tagline && (
+      <p
+        class="mt-4 max-w-[40ch] text-[1rem] leading-7 text-(--text-secondary) [--reveal-delay:300ms] sm:text-[1.05rem]"
+        data-reveal="fade-up"
+      >
+        «&nbsp;{tagline}&nbsp;»
       </p>
     )
   }
