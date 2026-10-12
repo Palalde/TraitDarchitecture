@@ -113,6 +113,9 @@
 
 :root {
   --font-reading: "T2A", "DM Sans", sans-serif;
+  /* 65ch as T2A renders it (0.4492em per "0"), kept in em so the column does
+     not widen when a wider reading font replaces T2A. */
+  --reading-measure: 29.2em;
   --reading-body-size: 1rem;
   --reading-body-leading: 1.75rem;
   --reading-prose-size: 1.0625rem;
@@ -181,6 +184,16 @@
     --reading-body-size: 1.15625rem;
     --reading-prose-size: 1.1875rem;
     --reading-lead-size: 1.3359375rem;
+  }
+}
+
+/* B and C hold ~65 characters per line at this measure, so T2A's airy leading
+   (~1.9) would look loose: they are set tighter from lg up. */
+@media (min-width: 1024px) {
+  :root:is([data-typo="b"], [data-typo="c"]) {
+    --reading-body-leading: calc(var(--reading-body-size) * 1.7);
+    --reading-prose-leading: calc(var(--reading-prose-size) * 1.7);
+    --reading-lead-leading: calc(var(--reading-lead-size) * 1.6);
   }
 }
 
