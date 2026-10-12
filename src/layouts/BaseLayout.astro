@@ -42,6 +42,7 @@ const ogImageHeight = "630";
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 const overlayScrollbarsMediaQuery =
   "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
+const isDevelopment = import.meta.env.DEV;
 ---
 
 <!doctype html>
@@ -102,7 +103,80 @@ const overlayScrollbarsMediaQuery =
         });
       })();
     </script>
-    <link rel="icon" type="image/svg+xml" href="/media/favicon/favicon.svg" />
+      {
+        isDevelopment && (
+          <script is:inline>
+            (() => {
+              if (window.__t2aTypographyCalibrationInit) return;
+              window.__t2aTypographyCalibrationInit = true;
+
+              const STORAGE_KEY = "t2a-typo";
+              const SOURCE_SANS_LINK_ID = "t2a-typography-source-sans";
+              const SOURCE_SANS_STYLESHEET =
+                "https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap";
+              const isVariant = (value) =>
+                value === "a" || value === "b" || value === "c";
+
+              const readStoredVariant = () => {
+                try {
+                  const stored = sessionStorage.getItem(STORAGE_KEY);
+                  return isVariant(stored) ? stored : null;
+                } catch {
+                  return null;
+                }
+              };
+
+              const storeVariant = (variant) => {
+                try {
+                  sessionStorage.setItem(STORAGE_KEY, variant);
+                } catch {
+                  // The selected variant still applies until this page unloads.
+                }
+              };
+
+              const applyTypography = (targetDocument, targetUrl) => {
+                const requestedVariant = targetUrl.searchParams.get("typo");
+                if (isVariant(requestedVariant)) {
+                  storeVariant(requestedVariant);
+                }
+
+                const variant = isVariant(requestedVariant)
+                  ? requestedVariant
+                  : (readStoredVariant() ?? "a");
+                const root = targetDocument.documentElement;
+                root.dataset.typo = variant;
+
+                if (targetUrl.searchParams.get("legendes") === "1") {
+                  root.dataset.legendes = "1";
+                } else {
+                  delete root.dataset.legendes;
+                }
+
+                const sourceSansLink =
+                  targetDocument.getElementById(SOURCE_SANS_LINK_ID);
+                if (variant === "c" && !sourceSansLink) {
+                  const link = targetDocument.createElement("link");
+                  link.id = SOURCE_SANS_LINK_ID;
+                  link.rel = "stylesheet";
+                  link.href = SOURCE_SANS_STYLESHEET;
+                  targetDocument.head.append(link);
+                } else if (variant !== "c") {
+                  sourceSansLink?.remove();
+                }
+              };
+
+              applyTypography(document, new URL(window.location.href));
+              document.addEventListener("astro:before-swap", (event) => {
+                applyTypography(event.newDocument, new URL(event.newDocument.URL));
+              });
+              document.addEventListener("astro:after-swap", () => {
+                applyTypography(document, new URL(window.location.href));
+              });
+            })();
+          </script>
+        )
+      }
+      <link rel="icon" type="image/svg+xml" href="/media/favicon/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     <link
       rel="apple-touch-icon"

@@ -121,6 +121,7 @@
   --reading-lead-leading: 2rem;
 }
 
+/* Variant B is one size step below A; C uses A's sizes with Source Sans 3. */
 @media (min-width: 640px) {
   :root {
     --reading-body-size: 1.05rem;
@@ -141,6 +142,12 @@
     --reading-lead-size: 1.265625rem;
     --reading-lead-leading: 2.375rem;
   }
+
+  :root[data-typo="b"] {
+    --reading-body-size: 1.0625rem;
+    --reading-prose-size: 1.09375rem;
+    --reading-lead-size: 1.23046875rem;
+  }
 }
 
 @media (min-width: 1280px) {
@@ -151,6 +158,12 @@
     --reading-prose-leading: 2.25rem;
     --reading-lead-size: 1.30078125rem;
     --reading-lead-leading: 2.5rem;
+  }
+
+  :root[data-typo="b"] {
+    --reading-body-size: 1.09375rem;
+    --reading-prose-size: 1.125rem;
+    --reading-lead-size: 1.265625rem;
   }
 }
 
@@ -163,6 +176,25 @@
     --reading-lead-size: 1.37109375rem;
     --reading-lead-leading: 2.625rem;
   }
+
+  :root[data-typo="b"] {
+    --reading-body-size: 1.15625rem;
+    --reading-prose-size: 1.1875rem;
+    --reading-lead-size: 1.3359375rem;
+  }
+}
+
+:root[data-typo="b"] {
+  --font-reading: "DM Sans", "T2A", sans-serif;
+}
+
+:root[data-typo="c"] {
+  --font-reading: "Source Sans 3", "T2A", sans-serif;
+}
+
+:root[data-legendes="1"] figcaption,
+:root[data-legendes="1"] [data-typo-meta] {
+  font-size: 0.75rem;
 }
 
 @utility text-body {

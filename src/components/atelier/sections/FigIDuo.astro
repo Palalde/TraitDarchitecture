@@ -15,7 +15,7 @@ const duoFrameStyle =
   "background-color: color-mix(in srgb, var(--bg-primary) 5%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);";
 const duoFigureStyle = "--atelier-duo-max-width: min(100%, 45rem);";
 const richParagraphClass =
-  "mx-auto max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold";
+  "mx-auto max-w-3xl text-body text-(--text-primary) [&_strong]:font-semibold";
 const richPivotClass =
   "mx-auto mt-4 max-w-4xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic sm:text-[1.05rem] sm:leading-8 dark:text-(--t2a-blue) [&_strong]:font-semibold";
 ---
@@ -32,6 +32,7 @@ const richPivotClass =
       <span
         class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
         data-reveal="fade"
+        data-typo-meta
       >
         {section.figureId}
       </span>

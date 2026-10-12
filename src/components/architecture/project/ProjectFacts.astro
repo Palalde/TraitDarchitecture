@@ -94,6 +94,7 @@ const gridClass = compact
   <h3
     id="project-facts-heading"
     class="mb-3 text-[0.65rem] font-normal uppercase tracking-[0.14em] text-(--text-muted)"
+    data-typo-meta
   >
     Fiche technique
   </h3>
@@ -112,7 +113,10 @@ const gridClass = compact
           data-reveal="fade-up"
           style={`--reveal-delay:${index * ROW_STAGGER}ms;`}
         >
-          <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
+          <dt
+            class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)"
+            data-typo-meta
+          >
             {label}
           </dt>
           <dd class="text-[0.875rem] leading-5 text-(--text-primary)">
@@ -130,7 +134,10 @@ const gridClass = compact
           data-reveal="fade-up"
           style={`--reveal-delay:${visibleRows.length * ROW_STAGGER}ms;`}
         >
-          <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
+          <dt
+            class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)"
+            data-typo-meta
+          >
             Partenaires
           </dt>
           {partnerRows.map((partner) => (
@@ -149,7 +156,10 @@ const gridClass = compact
           data-reveal="fade-up"
           style={`--reveal-delay:${companyDelay}ms;`}
         >
-          <dt class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)">
+          <dt
+            class="text-[0.65rem] uppercase tracking-widest text-(--text-muted)"
+            data-typo-meta
+          >
             Entreprises
           </dt>
           {companyRows.map((company) => (
