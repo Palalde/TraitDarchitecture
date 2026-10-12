@@ -108,6 +108,82 @@
 }
 
 /* ============================================
+   TYPOGRAPHY — Reading tokens
+   ============================================ */
+
+:root {
+  --font-reading: "T2A", "DM Sans", sans-serif;
+  --reading-body-size: 1rem;
+  --reading-body-leading: 1.75rem;
+  --reading-prose-size: 1.0625rem;
+  --reading-prose-leading: 2rem;
+  --reading-lead-size: 1.15rem;
+  --reading-lead-leading: 2rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --reading-body-size: 1.05rem;
+    --reading-body-leading: 2rem;
+    --reading-prose-size: 1.0625rem;
+    --reading-prose-leading: 2rem;
+    --reading-lead-size: 1.2rem;
+    --reading-lead-leading: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --reading-body-size: 1.09375rem;
+    --reading-body-leading: 2.125rem;
+    --reading-prose-size: 1.125rem;
+    --reading-prose-leading: 2.125rem;
+    --reading-lead-size: 1.265625rem;
+    --reading-lead-leading: 2.375rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --reading-body-size: 1.125rem;
+    --reading-body-leading: 2.25rem;
+    --reading-prose-size: 1.15625rem;
+    --reading-prose-leading: 2.25rem;
+    --reading-lead-size: 1.30078125rem;
+    --reading-lead-leading: 2.5rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --reading-body-size: 1.1875rem;
+    --reading-body-leading: 2.375rem;
+    --reading-prose-size: 1.21875rem;
+    --reading-prose-leading: 2.375rem;
+    --reading-lead-size: 1.37109375rem;
+    --reading-lead-leading: 2.625rem;
+  }
+}
+
+@utility text-body {
+  font-family: var(--font-reading);
+  font-size: var(--reading-body-size);
+  line-height: var(--reading-body-leading);
+}
+
+@utility text-prose {
+  font-family: var(--font-reading);
+  font-size: var(--reading-prose-size);
+  line-height: var(--reading-prose-leading);
+}
+
+@utility text-lead {
+  font-family: var(--font-reading);
+  font-size: var(--reading-lead-size);
+  line-height: var(--reading-lead-leading);
+}
+
+/* ============================================
    CSS VARIABLES � Light / Dark mode
    ============================================ */
 
