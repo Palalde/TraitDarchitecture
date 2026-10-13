@@ -148,6 +148,7 @@
    Reading tokens, px at base / sm / lg / xl / 2xl:
      body   16   / 16.8 / 17   / 17.5 / 18.5
      small  15.7 / 16   / 16.5 / 17   / 18
+     xs     15   / 15   / 15   / 15.5 / 15.5 (compact card blurbs)
      prose  17   / 17   / 17.5 / 18   / 19
      lead   18.4 / 19.2 / 19.7 / 20.3 / 21.4
      label  14   / 14   / 15   / 15   / 16   (T2A Demi-Bold, uppercase)
@@ -174,6 +175,10 @@
   --reading-body-leading: 1.75rem;
   --reading-small-size: 0.98rem;
   --reading-small-leading: 1.75rem;
+  /* Compact card blurbs: stays under the card title and keeps the home
+     EXTraiT cards as tall as the editorial block beside them. */
+  --reading-xs-size: 0.9375rem;
+  --reading-xs-leading: 1.5rem;
   --reading-prose-size: 1.0625rem;
   --reading-prose-leading: 2rem;
   --reading-lead-size: 1.15rem;
@@ -209,6 +214,7 @@
     --reading-lead-size: 1.23046875rem;
     --reading-body-leading: calc(var(--reading-body-size) * 1.7);
     --reading-small-leading: calc(var(--reading-small-size) * 1.7);
+    --reading-xs-leading: calc(var(--reading-xs-size) * 1.6);
     --reading-prose-leading: calc(var(--reading-prose-size) * 1.7);
     --reading-lead-leading: calc(var(--reading-lead-size) * 1.6);
     --label-size: 0.9375rem;
@@ -220,6 +226,7 @@
   :root {
     --reading-body-size: 1.09375rem;
     --reading-small-size: 1.0625rem;
+    --reading-xs-size: 0.96875rem;
     --reading-prose-size: 1.125rem;
     --reading-lead-size: 1.265625rem;
   }
@@ -248,6 +255,13 @@
   font-size: var(--reading-small-size);
   font-weight: var(--reading-weight);
   line-height: var(--reading-small-leading);
+}
+
+@utility text-body-xs {
+  font-family: var(--font-reading);
+  font-size: var(--reading-xs-size);
+  font-weight: var(--reading-weight);
+  line-height: var(--reading-xs-leading);
 }
 
 @utility text-prose {
@@ -303,6 +317,8 @@
   --text-reading: #2a303b;
   /* Texte secondaire (descriptions, dates, lieux) */
   --text-secondary: #6b7280;
+  /* Compact home article summaries stay lighter than their T2A titles. */
+  --text-card-summary: #626b79;
   /* Texte discret (légendes, metas) — WCAG AA sur fond clair */
   --text-muted: #6b7585;
   /* Bordures, séparateurs (gris bleuté doux) */
@@ -390,6 +406,8 @@ html.is-landing-dismissed #landing-wrapper {
   /* Same luminance as --t2a-blue-dark here (12.2:1) */
   --text-reading: #c9d0da;
   --text-secondary: #8b95a5;
+  /* Stay darker than the T2A title while retaining AA contrast on dark cards. */
+  --text-card-summary: #748091;
   --text-muted: #8691a0;
   --border: #252d3a;
   --trait: #8a9bb5;
