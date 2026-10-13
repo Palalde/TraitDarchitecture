@@ -59,11 +59,12 @@ const COVER_SIZES =
 // top = 0 → the cover sticks to the very top of the viewport (the auto-hide
 // header slides over it when it comes back, as on /atelier narrow mobile).
 // max-width is height-driven so image + figcaption together fill the whole
-// viewport height: image height = 100dvh − 2.5rem (the figcaption block),
+// viewport height: image height = 100dvh − 2.7rem (the figcaption block:
+// 1rem margin + two 12px lines),
 // then width = height × fit.
 const stickyFigureStyle = [
   "--project-cover-top: 5px",
-  `--project-cover-max-width: min(100%, calc((100dvh - 2.5rem) * ${ratio.fit}))`,
+  `--project-cover-max-width: min(100%, calc((100dvh - 2.7rem) * ${ratio.fit}))`,
 ].join("; ");
 ---
 

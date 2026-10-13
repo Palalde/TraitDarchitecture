@@ -108,13 +108,13 @@ const extraitArticles = (await getHomeFeaturedArticles()).map((article) => {
               editorialTags
                 .slice(0, -1)
                 .map((tag) => (
-                  <span class="border border-(--border) px-3 py-1 text-[0.72rem] uppercase tracking-[0.12em] text-(--text-muted)">
+                  <span class="border border-(--border) px-3 py-1 text-[0.75rem] uppercase tracking-[0.12em] text-(--text-muted)">
                     {tag}
                   </span>
                 ))
             }
             <span
-              class="px-2 py-1 text-[0.72rem] italic tracking-[0.06em] text-(--text-muted)"
+              class="px-2 py-1 text-[0.75rem] italic tracking-[0.06em] text-(--text-muted)"
             >
               {editorialTags[editorialTags.length - 1]}
             </span>
