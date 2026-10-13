@@ -36,17 +36,13 @@ const linkLabel = `Lire l'article ${article.data.title}`;
       <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <span
           class="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
-          data-typo-meta
         >
           {article.data.category}
         </span>
 
         {
           readingTimeLabel && (
-            <span
-              class="text-[0.74rem] tracking-[0.12em] text-(--text-muted)"
-              data-typo-meta
-            >
+            <span class="text-[0.74rem] tracking-[0.12em] text-(--text-muted)">
               {readingTimeLabel}
             </span>
           )

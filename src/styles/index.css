@@ -109,26 +109,35 @@
 
 /* ============================================
    TYPOGRAPHY — Reading tokens
+   DM Sans carries running text; T2A stays on titles, menus, labels, captions.
+   px at base / sm / lg / xl / 2xl:
+     body   16   / 16.8 / 17   / 17.5 / 18.5
+     small  15.7 / 16   / 16.5 / 17   / 18
+     prose  17   / 17   / 17.5 / 18   / 19
+     lead   18.4 / 19.2 / 19.7 / 20.3 / 21.4
    ============================================ */
 
 :root {
-  --font-reading: "T2A", "DM Sans", sans-serif;
-  /* 65ch as T2A renders it (0.4492em per "0"), kept in em so the column does
-     not widen when a wider reading font replaces T2A. */
+  --font-reading: "DM Sans", sans-serif;
+  /* About 64 DM Sans characters per line. In em so the column does not depend
+     on which font (DM Sans or its fallback) is currently rendering. */
   --reading-measure: 29.2em;
   --reading-body-size: 1rem;
   --reading-body-leading: 1.75rem;
+  --reading-small-size: 0.98rem;
+  --reading-small-leading: 1.75rem;
   --reading-prose-size: 1.0625rem;
   --reading-prose-leading: 2rem;
   --reading-lead-size: 1.15rem;
   --reading-lead-leading: 2rem;
 }
 
-/* Variant B is one size step below A; C uses A's sizes with Source Sans 3. */
 @media (min-width: 640px) {
   :root {
     --reading-body-size: 1.05rem;
     --reading-body-leading: 2rem;
+    --reading-small-size: 1rem;
+    --reading-small-leading: 2rem;
     --reading-prose-size: 1.0625rem;
     --reading-prose-leading: 2rem;
     --reading-lead-size: 1.2rem;
@@ -136,35 +145,24 @@
   }
 }
 
+/* From lg up the leading is a ratio of the size: xl and 2xl only set sizes. */
 @media (min-width: 1024px) {
   :root {
-    --reading-body-size: 1.09375rem;
-    --reading-body-leading: 2.125rem;
-    --reading-prose-size: 1.125rem;
-    --reading-prose-leading: 2.125rem;
-    --reading-lead-size: 1.265625rem;
-    --reading-lead-leading: 2.375rem;
-  }
-
-  :root[data-typo="b"] {
     --reading-body-size: 1.0625rem;
+    --reading-small-size: 1.03125rem;
     --reading-prose-size: 1.09375rem;
     --reading-lead-size: 1.23046875rem;
+    --reading-body-leading: calc(var(--reading-body-size) * 1.7);
+    --reading-small-leading: calc(var(--reading-small-size) * 1.7);
+    --reading-prose-leading: calc(var(--reading-prose-size) * 1.7);
+    --reading-lead-leading: calc(var(--reading-lead-size) * 1.6);
   }
 }
 
 @media (min-width: 1280px) {
   :root {
-    --reading-body-size: 1.125rem;
-    --reading-body-leading: 2.25rem;
-    --reading-prose-size: 1.15625rem;
-    --reading-prose-leading: 2.25rem;
-    --reading-lead-size: 1.30078125rem;
-    --reading-lead-leading: 2.5rem;
-  }
-
-  :root[data-typo="b"] {
     --reading-body-size: 1.09375rem;
+    --reading-small-size: 1.0625rem;
     --reading-prose-size: 1.125rem;
     --reading-lead-size: 1.265625rem;
   }
@@ -172,48 +170,23 @@
 
 @media (min-width: 1536px) {
   :root {
-    --reading-body-size: 1.1875rem;
-    --reading-body-leading: 2.375rem;
-    --reading-prose-size: 1.21875rem;
-    --reading-prose-leading: 2.375rem;
-    --reading-lead-size: 1.37109375rem;
-    --reading-lead-leading: 2.625rem;
-  }
-
-  :root[data-typo="b"] {
     --reading-body-size: 1.15625rem;
+    --reading-small-size: 1.125rem;
     --reading-prose-size: 1.1875rem;
     --reading-lead-size: 1.3359375rem;
   }
-}
-
-/* B and C hold ~65 characters per line at this measure, so T2A's airy leading
-   (~1.9) would look loose: they are set tighter from lg up. */
-@media (min-width: 1024px) {
-  :root:is([data-typo="b"], [data-typo="c"]) {
-    --reading-body-leading: calc(var(--reading-body-size) * 1.7);
-    --reading-prose-leading: calc(var(--reading-prose-size) * 1.7);
-    --reading-lead-leading: calc(var(--reading-lead-size) * 1.6);
-  }
-}
-
-:root[data-typo="b"] {
-  --font-reading: "DM Sans", "T2A", sans-serif;
-}
-
-:root[data-typo="c"] {
-  --font-reading: "Source Sans 3", "T2A", sans-serif;
-}
-
-:root[data-legendes="1"] figcaption,
-:root[data-legendes="1"] [data-typo-meta] {
-  font-size: 0.75rem;
 }
 
 @utility text-body {
   font-family: var(--font-reading);
   font-size: var(--reading-body-size);
   line-height: var(--reading-body-leading);
+}
+
+@utility text-body-sm {
+  font-family: var(--font-reading);
+  font-size: var(--reading-small-size);
+  line-height: var(--reading-small-leading);
 }
 
 @utility text-prose {

@@ -42,7 +42,6 @@ const ogImageHeight = "630";
 const robots = noindex ? "noindex, nofollow" : "index, follow";
 const overlayScrollbarsMediaQuery =
   "(min-width: 1024px) and (hover: hover) and (pointer: fine)";
-const isDevelopment = import.meta.env.DEV;
 ---
 
 <!doctype html>
@@ -103,89 +102,6 @@ const isDevelopment = import.meta.env.DEV;
         });
       })();
     </script>
-    {
-      isDevelopment && (
-        <script is:inline>
-          (() => {
-            if (window.__t2aTypographyCalibrationInit) return;
-            window.__t2aTypographyCalibrationInit = true;
-
-            const VARIANT_KEY = "t2a-typo";
-            const FLOOR_KEY = "t2a-typo-legendes";
-            const SOURCE_SANS_LINK_ID = "t2a-typography-source-sans";
-            const SOURCE_SANS_STYLESHEET =
-              "https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap";
-            const isVariant = (value) =>
-              value === "a" || value === "b" || value === "c";
-            const isFlag = (value) => value === "0" || value === "1";
-
-            const readStored = (key, isValid) => {
-              try {
-                const stored = sessionStorage.getItem(key);
-                return isValid(stored) ? stored : null;
-              } catch {
-                return null;
-              }
-            };
-
-            const store = (key, value) => {
-              try {
-                sessionStorage.setItem(key, value);
-              } catch {
-                // The choice still applies until this page unloads.
-              }
-            };
-
-            // ?typo=a|b|c and ?legendes=1|0 are remembered for the whole session.
-            const applyTypography = (targetDocument, targetUrl) => {
-              const requestedVariant = targetUrl.searchParams.get("typo");
-              const requestedFloor = targetUrl.searchParams.get("legendes");
-              if (isVariant(requestedVariant)) {
-                store(VARIANT_KEY, requestedVariant);
-              }
-              if (isFlag(requestedFloor)) {
-                store(FLOOR_KEY, requestedFloor);
-              }
-
-              const variant = isVariant(requestedVariant)
-                ? requestedVariant
-                : (readStored(VARIANT_KEY, isVariant) ?? "a");
-              const floor = isFlag(requestedFloor)
-                ? requestedFloor
-                : (readStored(FLOOR_KEY, isFlag) ?? "0");
-              const root = targetDocument.documentElement;
-              root.dataset.typo = variant;
-
-              if (floor === "1") {
-                root.dataset.legendes = "1";
-              } else {
-                delete root.dataset.legendes;
-              }
-
-              const sourceSansLink =
-                targetDocument.getElementById(SOURCE_SANS_LINK_ID);
-              if (variant === "c" && !sourceSansLink) {
-                const link = targetDocument.createElement("link");
-                link.id = SOURCE_SANS_LINK_ID;
-                link.rel = "stylesheet";
-                link.href = SOURCE_SANS_STYLESHEET;
-                targetDocument.head.append(link);
-              } else if (variant !== "c") {
-                sourceSansLink?.remove();
-              }
-            };
-
-            applyTypography(document, new URL(window.location.href));
-            document.addEventListener("astro:before-swap", (event) => {
-              applyTypography(event.newDocument, event.to);
-            });
-            document.addEventListener("astro:after-swap", () => {
-              applyTypography(document, new URL(window.location.href));
-            });
-          })();
-        </script>
-      )
-    }
     <link rel="icon" type="image/svg+xml" href="/media/favicon/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
     <link

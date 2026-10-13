@@ -199,26 +199,17 @@ export function ProjectGalleryOverlay({ projectName, slides }: Props) {
         onClick={(event) => event.stopPropagation()}
       >
         <div className="min-w-0">
-          <p
-            className="text-[0.65rem] uppercase tracking-[0.14em] text-(--text-muted)"
-            data-typo-meta
-          >
+          <p className="text-[0.65rem] uppercase tracking-[0.14em] text-(--text-muted)">
             Galerie
           </p>
-          <p
-            className="mt-1 truncate text-[0.72rem] uppercase tracking-[0.12em] text-(--text-secondary)"
-            data-typo-meta
-          >
+          <p className="mt-1 truncate text-[0.72rem] uppercase tracking-[0.12em] text-(--text-secondary)">
             {projectName}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {hasMultipleSlides && (
-            <span
-              className="min-w-22 text-center text-[0.65rem] uppercase tracking-[0.14em] text-(--text-muted)"
-              data-typo-meta
-            >
+            <span className="min-w-22 text-center text-[0.65rem] uppercase tracking-[0.14em] text-(--text-muted)">
               {counterLabel}
             </span>
           )}
