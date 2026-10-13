@@ -216,7 +216,7 @@ export function ProjectGalleryOverlay({ projectName, slides }: Props) {
 
           <button
             aria-label="Fermer la galerie"
-            className="inline-flex h-9 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) px-3 text-[0.65rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
+            className="inline-flex h-9 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) px-3 text-[0.75rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
             onClick={() => setIsOpen(false)}
             type="button"
           >
@@ -283,7 +283,7 @@ export function ProjectGalleryOverlay({ projectName, slides }: Props) {
           <div className="flex items-center gap-3 border-t border-(--trait) px-4 py-3 sm:px-6 md:hidden">
             <button
               aria-label="Image précédente"
-              className="inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) bg-(--bg-primary) text-[0.65rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35"
+              className="inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) bg-(--bg-primary) text-[0.75rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35"
               disabled={activeIndex === 0}
               onClick={(event) => {
                 event.stopPropagation();
@@ -299,7 +299,7 @@ export function ProjectGalleryOverlay({ projectName, slides }: Props) {
 
             <button
               aria-label="Image suivante"
-              className="inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) bg-(--bg-primary) text-[0.65rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35"
+              className="inline-flex h-11 flex-1 cursor-pointer items-center justify-center gap-1.5 border border-(--trait) bg-(--bg-primary) text-[0.75rem] uppercase tracking-[0.12em] text-(--text-primary) transition-colors duration-200 can-hover:hover:text-(--t2a-blue) disabled:cursor-default disabled:opacity-35"
               disabled={activeIndex >= slides.length - 1}
               onClick={(event) => {
                 event.stopPropagation();
