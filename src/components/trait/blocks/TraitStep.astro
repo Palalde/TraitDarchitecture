@@ -83,7 +83,7 @@ const imageAlt = `Document de travail pour l'étape ${step.id} : ${step.title}`;
         </figure>
 
         <p
-          class="mt-7 max-w-184 text-[0.98rem] leading-7 text-(--text-primary) sm:mt-8 sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)"
+          class="mt-7 max-w-(--reading-measure) text-body-sm text-(--text-reading) sm:mt-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)"
           data-reveal="fade-up"
           set:html={step.body}
           style="--reveal-delay:260ms;--reveal-d:560ms;"

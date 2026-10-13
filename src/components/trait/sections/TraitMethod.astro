@@ -19,11 +19,11 @@ interface Props {
 const { callout, method }: Props = Astro.props;
 
 const richParagraphClass =
-  "max-w-[46rem] text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
+  "max-w-(--reading-measure) text-body text-(--text-reading) [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
 const calloutBodyClass =
-  "max-w-[40rem] text-[0.98rem] leading-7 text-(--text-secondary) sm:text-[1rem] sm:leading-8 [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
+  "max-w-(--reading-measure) text-body-sm text-(--text-reading) [&_strong]:font-semibold [&_strong]:text-(--text-primary)";
 const ctaPromptClass =
-  "max-w-[38rem] text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8";
+  "max-w-(--reading-measure) text-body text-(--text-reading)";
 ---
 
 <section aria-labelledby="trait-method-title" class="relative w-full">
@@ -171,7 +171,7 @@ const ctaPromptClass =
 
         <a
           href={method.cta.href}
-          class="mt-6 inline-flex items-center justify-center border border-(--t2a-blue) bg-transparent px-6 py-3 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 ease-out hover:bg-(--t2a-blue-wash) hover:text-(--t2a-blue-dark) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--trait) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary) dark:text-(--t2a-blue) dark:hover:bg-(--t2a-blue-pale) dark:hover:text-(--t2a-blue-dark)"
+          class="mt-6 inline-flex items-center justify-center border border-(--t2a-blue) bg-transparent px-6 py-3 text-label text-(--t2a-blue-dark) transition-colors duration-200 ease-out hover:bg-(--t2a-blue-wash) hover:text-(--t2a-blue-dark) focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-(--trait) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary) dark:text-(--t2a-blue) dark:hover:bg-(--t2a-blue-pale) dark:hover:text-(--t2a-blue-dark)"
           data-reveal="fade"
           style="--reveal-delay:120ms;--reveal-d:480ms;"
         >
