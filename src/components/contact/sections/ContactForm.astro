@@ -306,7 +306,7 @@ const lineClass =
       formBody.hidden = false;
       setSubmitting(false);
       feedback.className =
-        "mt-6 flex flex-col items-center gap-4 text-center text-[0.95rem] leading-7 text-(--t2a-blue-dark) dark:text-(--text-primary)";
+        "mt-6 flex flex-col items-center gap-4 text-center text-body-sm text-(--text-reading)";
 
       const trait = createElement("span", "block h-0.5 w-16 bg-(--t2a-blue)");
       trait.setAttribute("aria-hidden", "true");
@@ -340,7 +340,7 @@ const lineClass =
       );
       const body = createElement(
         "p",
-        "max-w-md text-[1rem] leading-7 text-(--text-secondary) dark:text-(--text-muted)",
+        "max-w-md text-body text-(--text-reading)",
         successBody,
       );
       const retryButton = createElement(
