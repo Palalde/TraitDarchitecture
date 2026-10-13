@@ -178,6 +178,7 @@
   --reading-prose-leading: 2rem;
   --reading-lead-size: 1.15rem;
   --reading-lead-leading: 2rem;
+  --reading-quote-size: clamp(1.375rem, 1.8vw, 1.625rem);
   --label-size: 0.875rem;
   --label-sm-size: 0.8125rem;
 }
@@ -289,6 +290,7 @@
   --t2a-blue-wash: #edf0f5;
   /*  Texte sur fond clair, titres forts, active states */
   --t2a-blue-dark: #3e5170;
+  --text-quote: var(--t2a-blue-dark);
 
   /* Fond principal */
   --bg-primary: #ffffff;
@@ -380,6 +382,7 @@ html.is-landing-dismissed #landing-wrapper {
   --t2a-blue-pale: #2d3748;
   --t2a-blue-wash: #1a2030;
   --t2a-blue-dark: #c8d1de;
+  --text-quote: var(--t2a-blue);
 
   --bg-primary: #0d1117;
   --bg-secondary: #161b25;
