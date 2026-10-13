@@ -10,7 +10,7 @@ const { class: className, ...rest }: Props = Astro.props;
 <div
   {...rest}
   class:list={[
-    "prose-body max-w-4xl text-prose text-(--text-primary)",
+    "prose-body max-w-4xl text-prose text-(--text-reading)",
     className,
   ]}
 >
@@ -21,7 +21,7 @@ const { class: className, ...rest }: Props = Astro.props;
   .prose-body :global(p:not([data-lead])) {
     max-width: var(--reading-measure);
     margin-bottom: 1.5rem;
-    color: var(--text-primary);
+    color: var(--text-reading);
   }
 
   .prose-body :global(strong) {
@@ -29,19 +29,31 @@ const { class: className, ...rest }: Props = Astro.props;
     color: inherit;
   }
 
-  /* Section labels keep the T2A identity font, whatever the reading font is. */
+  /* Intertitles stay in T2A (identity) but Demi-Bold, label-sized and in the
+     strong accent so they hold their rank over the DM Sans paragraphs (same
+     declarations as the text-label utility). Their column matches the text. */
   .prose-body :global(:is(h2, h3)) {
-    max-width: var(--reading-measure);
-    margin-top: 2.5rem;
-    margin-bottom: 0.5rem;
+    max-width: calc(var(--reading-measure-ratio) * var(--reading-prose-size));
+    color: var(--t2a-blue-dark);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .prose-body :global(h2) {
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border);
-    color: var(--text-muted);
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: var(--label-size);
+  }
+
+  .prose-body :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--label-sm-size);
   }
 
   .prose-body :global(:is(ul, ol)) {

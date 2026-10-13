@@ -140,20 +140,36 @@
 }
 
 /* ============================================
-   TYPOGRAPHY — Reading tokens
-   DM Sans carries running text; T2A stays on titles, menus, labels, captions.
-   px at base / sm / lg / xl / 2xl:
+   TYPOGRAPHY — Two fonts, two roles
+   T2A (identity): titles, taglines and manifesto phrases, pull quotes,
+   uppercase labels (intertitles, CTAs, metas, captions), numbers.
+   DM Sans (reading): paragraphs, presentations, project and article text.
+
+   Reading tokens, px at base / sm / lg / xl / 2xl:
      body   16   / 16.8 / 17   / 17.5 / 18.5
      small  15.7 / 16   / 16.5 / 17   / 18
      prose  17   / 17   / 17.5 / 18   / 19
      lead   18.4 / 19.2 / 19.7 / 20.3 / 21.4
+     label  14   / 14   / 15   / 15   / 16   (T2A Demi-Bold, uppercase)
+
+   Pairing rule. T2A strokes are very thin (Light 0.0225em, Regular 0.032em)
+   while DM Sans 400 is 0.084em: next to reading text, a T2A stroke must stay
+   above ~0.7px or it looks washed out. So T2A Light only from 2rem, Regular
+   from 1.375rem, Demi-Bold below (labels, CTAs, intertitles). Small muted
+   metas and captions are the only exception. T2A inside a reading block
+   sets its own weight: the dark-mode reading weight (350) would otherwise
+   select T2A Light.
    ============================================ */
 
 :root {
   --font-reading: "DM Sans", sans-serif;
-  /* About 64 DM Sans characters per line. In em so the column does not depend
-     on which font (DM Sans or its fallback) is currently rendering. */
-  --reading-measure: 29.2em;
+  /* Light text on a dark background looks bolder: dark mode reads at 350. */
+  --reading-weight: 400;
+  /* About 64 DM Sans characters per line, in em so the column does not depend
+     on which font is rendering. Elements set in another size (intertitles)
+     use the ratio with --reading-prose-size to keep the same column. */
+  --reading-measure-ratio: 29.2;
+  --reading-measure: calc(var(--reading-measure-ratio) * 1em);
   --reading-body-size: 1rem;
   --reading-body-leading: 1.75rem;
   --reading-small-size: 0.98rem;
@@ -162,6 +178,12 @@
   --reading-prose-leading: 2rem;
   --reading-lead-size: 1.15rem;
   --reading-lead-leading: 2rem;
+  --label-size: 0.875rem;
+  --label-sm-size: 0.8125rem;
+}
+
+:root[data-theme="dark"] {
+  --reading-weight: 350;
 }
 
 @media (min-width: 640px) {
@@ -188,6 +210,8 @@
     --reading-small-leading: calc(var(--reading-small-size) * 1.7);
     --reading-prose-leading: calc(var(--reading-prose-size) * 1.7);
     --reading-lead-leading: calc(var(--reading-lead-size) * 1.6);
+    --label-size: 0.9375rem;
+    --label-sm-size: 0.875rem;
   }
 }
 
@@ -206,31 +230,47 @@
     --reading-small-size: 1.125rem;
     --reading-prose-size: 1.1875rem;
     --reading-lead-size: 1.3359375rem;
+    --label-size: 1rem;
+    --label-sm-size: 0.9375rem;
   }
 }
 
 @utility text-body {
   font-family: var(--font-reading);
   font-size: var(--reading-body-size);
+  font-weight: var(--reading-weight);
   line-height: var(--reading-body-leading);
 }
 
 @utility text-body-sm {
   font-family: var(--font-reading);
   font-size: var(--reading-small-size);
+  font-weight: var(--reading-weight);
   line-height: var(--reading-small-leading);
 }
 
 @utility text-prose {
   font-family: var(--font-reading);
   font-size: var(--reading-prose-size);
+  font-weight: var(--reading-weight);
   line-height: var(--reading-prose-leading);
 }
 
 @utility text-lead {
   font-family: var(--font-reading);
   font-size: var(--reading-lead-size);
+  font-weight: var(--reading-weight);
   line-height: var(--reading-lead-leading);
+}
+
+/* T2A uppercase label beside reading text: CTAs, intertitles, section labels. */
+@utility text-label {
+  font-family: var(--font-sans);
+  font-size: var(--label-size);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 /* ============================================
@@ -256,6 +296,9 @@
   --bg-secondary: #f7f8fa;
   /* Texte principal (noir bleuté, pas noir pur) */
   --text-primary: #1a1d24;
+  /* Texte de lecture DM Sans (paragraphes) — un cran plus doux que
+     text-primary pour ne pas écraser les titres T2A (13,3:1) */
+  --text-reading: #2a303b;
   /* Texte secondaire (descriptions, dates, lieux) */
   --text-secondary: #6b7280;
   /* Texte discret (légendes, metas) — WCAG AA sur fond clair */
@@ -341,6 +384,8 @@ html.is-landing-dismissed #landing-wrapper {
   --bg-primary: #0d1117;
   --bg-secondary: #161b25;
   --text-primary: #e2e5eb;
+  /* Same luminance as --t2a-blue-dark here (12.2:1) */
+  --text-reading: #c9d0da;
   --text-secondary: #8b95a5;
   --text-muted: #8691a0;
   --border: #252d3a;

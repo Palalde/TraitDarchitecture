@@ -66,7 +66,7 @@ const linkLabel = `Lire l'article ${article.data.title}`;
         </div>
 
         <h2
-          class="max-w-4xl text-[clamp(1.4rem,3.4vw,2.15rem)] font-light leading-[1.1] tracking-[0.01em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+          class="max-w-4xl text-[clamp(1.5rem,3.4vw,2.5rem)] font-normal leading-[1.1] tracking-[0.01em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
           data-reveal="fade-up"
           style={`--reveal-delay:${rowDelay + 120}ms;`}
         >
@@ -80,7 +80,7 @@ const linkLabel = `Lire l'article ${article.data.title}`;
         </h2>
 
         <p
-          class="max-w-3xl text-[0.98rem] leading-7 text-(--text-secondary) sm:text-[1.02rem] sm:leading-8"
+          class="max-w-(--reading-measure) text-body-sm text-(--text-secondary)"
           data-reveal="fade-up"
           style={`--reveal-delay:${rowDelay + 180}ms;`}
         >
@@ -88,7 +88,7 @@ const linkLabel = `Lire l'article ${article.data.title}`;
         </p>
 
         <div
-          class="flex items-center gap-3 text-[0.82rem] uppercase tracking-[0.16em] text-(--text-muted) transition-colors duration-300 group-hover:text-(--trait)"
+          class="flex items-center gap-3 text-label text-(--text-muted) transition-colors duration-300 group-hover:text-(--trait)"
           data-reveal="fade-up"
           style={`--reveal-delay:${rowDelay + 240}ms;`}
         >
