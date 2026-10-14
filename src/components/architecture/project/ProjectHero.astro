@@ -59,11 +59,12 @@ const COVER_SIZES =
 // top = 0 → the cover sticks to the very top of the viewport (the auto-hide
 // header slides over it when it comes back, as on /atelier narrow mobile).
 // max-width is height-driven so image + figcaption together fill the whole
-// viewport height: image height = 100dvh − 2.5rem (the figcaption block),
+// viewport height: image height = 100dvh − 2.7rem (the figcaption block:
+// 1rem margin + two 12px lines),
 // then width = height × fit.
 const stickyFigureStyle = [
   "--project-cover-top: 5px",
-  `--project-cover-max-width: min(100%, calc((100dvh - 2.5rem) * ${ratio.fit}))`,
+  `--project-cover-max-width: min(100%, calc((100dvh - 2.7rem) * ${ratio.fit}))`,
 ].join("; ");
 ---
 
@@ -128,7 +129,7 @@ const stickyFigureStyle = [
   {
     tagline && (
       <p
-        class="mt-4 max-w-[40ch] text-[1rem] leading-7 text-(--text-secondary) [--reveal-delay:300ms] sm:text-[1.05rem]"
+        class="mt-4 max-w-[32rem] font-sans text-[clamp(1.375rem,1.85vw,1.625rem)] font-normal leading-[1.35] text-(--t2a-blue-dark) [--reveal-delay:300ms] dark:text-(--t2a-blue)"
         data-reveal="fade-up"
       >
         «&nbsp;{tagline}&nbsp;»
@@ -203,7 +204,7 @@ const stickyFigureStyle = [
             aria-label={`Agrandir la photo — ${coverAlt}`}
             data-gallery-open="0"
           >
-            <span class="pointer-events-none inline-flex items-center gap-1 border border-(--trait) bg-(--bg-primary)/80 px-2 py-1 text-[0.6rem] uppercase tracking-[0.14em] text-(--t2a-blue) opacity-0 transition-opacity duration-200 can-hover:group-hover:opacity-100 focus-visible:opacity-100">
+            <span class="pointer-events-none inline-flex items-center gap-1 border border-(--trait) bg-(--bg-primary)/80 px-2 py-1 text-[0.75rem] uppercase tracking-[0.14em] text-(--t2a-blue) opacity-0 transition-opacity duration-200 can-hover:group-hover:opacity-100 focus-visible:opacity-100">
               <span aria-hidden="true" class="text-[0.85rem] leading-none">
                 ↗
               </span>

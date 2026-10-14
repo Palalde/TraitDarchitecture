@@ -81,18 +81,21 @@ const extraitArticles = (await getHomeFeaturedArticles()).map((article) => {
       </div>
 
       <div
-        class="relative z-10 flex h-fit border border-(--border) bg-(--bg-primary) p-5 sm:p-6 lg:mr-6 lg:p-7 max-lg:[--reveal-start-opacity:1]"
+        class="relative z-10 flex border border-(--border) bg-(--bg-primary) p-5 sm:p-6 lg:mr-6 lg:p-7 max-lg:[--reveal-start-opacity:1]"
         data-reveal="fade-up"
         data-reveal-group
       >
         <div class="flex flex-col">
-          <p
-            class="text-[0.8rem] uppercase tracking-[0.16em] text-(--text-muted)"
-          >
+          <p class="text-label text-(--t2a-blue-dark)">
             {editorialLabel}
           </p>
+          {
+            /* lg:grow — when the article cards are the taller column, the
+              block stretches to match them and the extra height goes under
+              the paragraph, keeping tags + CTA aligned with the last card. */
+          }
           <p
-            class="mt-4 text-[0.98rem] leading-7 text-(--text-primary) sm:text-[1.02rem] sm:leading-8"
+            class="mt-4 text-body-sm text-(--text-reading) lg:grow"
             data-reveal="fade-up"
             data-reveal-independent
           >
@@ -108,13 +111,13 @@ const extraitArticles = (await getHomeFeaturedArticles()).map((article) => {
               editorialTags
                 .slice(0, -1)
                 .map((tag) => (
-                  <span class="border border-(--border) px-3 py-1 text-[0.72rem] uppercase tracking-[0.12em] text-(--text-muted)">
+                  <span class="border border-(--border) px-3 py-1 text-[0.75rem] uppercase tracking-[0.12em] text-(--text-muted)">
                     {tag}
                   </span>
                 ))
             }
             <span
-              class="px-2 py-1 text-[0.72rem] italic tracking-[0.06em] text-(--text-muted)"
+              class="px-2 py-1 text-[0.75rem] italic tracking-[0.06em] text-(--text-muted)"
             >
               {editorialTags[editorialTags.length - 1]}
             </span>
@@ -128,7 +131,7 @@ const extraitArticles = (await getHomeFeaturedArticles()).map((article) => {
           >
             <a
               href="/extrait"
-              class="group inline-flex items-center gap-2 text-[0.82rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
+              class="group inline-flex items-center gap-2 text-label text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
             >
               <span class="relative">
                 {editorialCtaLabel}

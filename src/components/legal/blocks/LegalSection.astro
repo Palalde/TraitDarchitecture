@@ -54,7 +54,7 @@ const blockDelay = 160 + sectionDelay;
         if (block.kind === "p") {
           return (
             <p
-              class="max-w-[65ch] text-[1rem] leading-8 text-(--text-primary)"
+              class="max-w-(--reading-measure) text-body text-(--text-reading)"
               data-reveal="fade-up"
               style={`--reveal-delay:${revealDelay}ms;`}
             >
@@ -66,7 +66,7 @@ const blockDelay = 160 + sectionDelay;
         if (block.kind === "list") {
           return (
             <ul
-              class="max-w-[65ch] list-disc space-y-3 pl-5 text-[1rem] leading-8 text-(--text-primary) marker:text-(--trait)"
+              class="max-w-(--reading-measure) list-disc space-y-3 pl-5 text-body text-(--text-reading) marker:text-(--trait)"
               data-reveal="fade-up"
               style={`--reveal-delay:${revealDelay}ms;`}
             >
@@ -94,7 +94,7 @@ const blockDelay = 160 + sectionDelay;
                 <dt class="text-[0.78rem] uppercase tracking-[0.12em] text-(--t2a-blue-dark) dark:text-(--text-muted)">
                   {row.label}
                 </dt>
-                <dd class="min-w-0 text-[1rem] leading-7 text-(--text-primary) sm:text-right">
+                <dd class="min-w-0 text-body text-(--text-reading) sm:text-right">
                   {section.id === "editeur" &&
                   row.label === "Adresse e-mail" ? (
                     <span class="inline-flex flex-wrap items-baseline gap-x-2 gap-y-1 sm:justify-end">

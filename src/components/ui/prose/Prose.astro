@@ -10,7 +10,7 @@ const { class: className, ...rest }: Props = Astro.props;
 <div
   {...rest}
   class:list={[
-    "prose-body max-w-4xl text-[1.0625rem] leading-8 text-(--text-primary)",
+    "prose-body max-w-4xl text-prose text-(--text-reading)",
     className,
   ]}
 >
@@ -19,9 +19,9 @@ const { class: className, ...rest }: Props = Astro.props;
 
 <style>
   .prose-body :global(p:not([data-lead])) {
-    max-width: 65ch;
+    max-width: var(--reading-measure);
     margin-bottom: 1.5rem;
-    color: var(--text-primary);
+    color: var(--text-reading);
   }
 
   .prose-body :global(strong) {
@@ -29,21 +29,35 @@ const { class: className, ...rest }: Props = Astro.props;
     color: inherit;
   }
 
+  /* Intertitles stay in T2A (identity) but Demi-Bold, label-sized and in the
+     strong accent so they hold their rank over the DM Sans paragraphs (same
+     declarations as the text-label utility). Their column matches the text. */
   .prose-body :global(:is(h2, h3)) {
-    max-width: 65ch;
-    margin-top: 2.5rem;
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
+    max-width: calc(var(--reading-measure-ratio) * var(--reading-prose-size));
+    color: var(--t2a-blue-dark);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
   }
 
+  .prose-body :global(h2) {
+    margin-top: 2.75rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    font-size: var(--label-size);
+  }
+
+  .prose-body :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-size: var(--label-sm-size);
+  }
+
   .prose-body :global(:is(ul, ol)) {
-    max-width: 65ch;
+    max-width: var(--reading-measure);
     margin-bottom: 1.5rem;
     padding-left: 1.25rem;
   }
@@ -53,17 +67,22 @@ const { class: className, ...rest }: Props = Astro.props;
   }
 
   .prose-body :global(blockquote:not([data-pullquote])) {
-    max-width: 65ch;
+    max-width: var(--reading-measure);
     margin: 2rem 0;
     padding: 0.25rem 0 0.25rem 1.25rem;
     border-left: 1px solid var(--border);
-    color: var(--text-secondary);
+    color: var(--text-quote);
+    font-family: var(--font-sans);
+    font-size: var(--reading-quote-size);
+    font-weight: 400;
+    line-height: 1.35;
+    letter-spacing: 0.01em;
   }
 
   .prose-body :global(blockquote:not([data-pullquote]) p) {
     margin-bottom: 1rem;
     color: inherit;
-    font-size: 0.9375rem;
+    font-size: inherit;
   }
 
   .prose-body

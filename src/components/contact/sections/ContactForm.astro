@@ -16,7 +16,7 @@ const fallbackEmail = email.href.startsWith("mailto:")
 
 const fieldClass = "flex flex-col gap-1";
 const labelClass =
-  "text-[0.72rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--text-muted)";
+  "text-[0.75rem] uppercase tracking-[0.14em] text-(--t2a-blue-dark) dark:text-(--text-muted)";
 const inputClass =
   "peer border-0 bg-transparent py-2 pl-1 text-[1rem] text-(--text-primary) placeholder:text-(--text-secondary) focus:outline-none";
 const lineClass =
@@ -306,7 +306,7 @@ const lineClass =
       formBody.hidden = false;
       setSubmitting(false);
       feedback.className =
-        "mt-6 flex flex-col items-center gap-4 text-center text-[0.95rem] leading-7 text-(--t2a-blue-dark) dark:text-(--text-primary)";
+        "mt-6 flex flex-col items-center gap-4 text-center text-body-sm text-(--text-reading)";
 
       const trait = createElement("span", "block h-0.5 w-16 bg-(--t2a-blue)");
       trait.setAttribute("aria-hidden", "true");
@@ -340,7 +340,7 @@ const lineClass =
       );
       const body = createElement(
         "p",
-        "max-w-md text-[1rem] leading-7 text-(--text-secondary) dark:text-(--text-muted)",
+        "max-w-md text-body text-(--text-reading)",
         successBody,
       );
       const retryButton = createElement(

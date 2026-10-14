@@ -15,9 +15,9 @@ const duoFrameStyle =
   "background-color: color-mix(in srgb, var(--bg-primary) 5%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);";
 const duoFigureStyle = "--atelier-duo-max-width: min(100%, 45rem);";
 const richParagraphClass =
-  "mx-auto max-w-3xl text-[1rem] leading-7 text-(--text-primary) sm:text-[1.05rem] sm:leading-8 [&_strong]:font-semibold";
+  "mx-auto max-w-3xl text-body text-(--text-reading) [&_strong]:font-semibold";
 const richPivotClass =
-  "mx-auto mt-4 max-w-4xl text-[1rem] leading-7 text-(--t2a-blue-dark) italic sm:text-[1.05rem] sm:leading-8 dark:text-(--t2a-blue) [&_strong]:font-semibold";
+  "mx-auto mt-4 max-w-4xl text-[clamp(1.375rem,1.8vw,1.625rem)] font-normal leading-[1.35] tracking-[0.01em] text-(--text-quote) [&_strong]:font-semibold";
 ---
 
 <section
@@ -30,7 +30,7 @@ const richPivotClass =
   >
     <div class="flex min-w-0 items-center gap-2">
       <span
-        class="shrink-0 text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:text-[0.72rem]"
+        class="shrink-0 text-[0.75rem] uppercase tracking-[0.16em] text-(--text-muted)"
         data-reveal="fade"
       >
         {section.figureId}
@@ -58,7 +58,7 @@ const richPivotClass =
       </div>
       <span
         aria-hidden="true"
-        class="invisible shrink-0 text-[0.68rem] uppercase tracking-[0.16em] sm:text-[0.72rem]"
+        class="invisible shrink-0 text-[0.75rem] uppercase tracking-[0.16em]"
       >
         {section.figureId}
       </span>
@@ -122,7 +122,7 @@ const richPivotClass =
     showBorder={false}
   >
     <p
-      class="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
+      class="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) dark:text-(--t2a-blue)"
       data-reveal="fade"
     >
       {section.pivotTitle}

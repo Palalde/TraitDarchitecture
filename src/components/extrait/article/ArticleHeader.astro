@@ -14,7 +14,7 @@ const readingTimeLabel = formatReadingTime(readingTime);
 <header class="flex flex-col" aria-labelledby="article-page-title">
   <a
     href="/extrait"
-    class="group mb-6 inline-flex w-fit items-center gap-1.5 text-[0.78rem] uppercase tracking-widest text-(--text-muted) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
+    class="group mb-6 inline-flex w-fit items-center gap-1.5 text-label text-(--text-muted) transition-colors duration-200 can-hover:hover:text-(--t2a-blue)"
     data-reveal="fade"
     style="--reveal-delay:0ms;"
   >
@@ -29,7 +29,7 @@ const readingTimeLabel = formatReadingTime(readingTime);
   </a>
 
   <p
-    class="text-[0.72rem] uppercase tracking-[0.16em] text-(--text-muted) [--reveal-delay:40ms]"
+    class="text-[0.75rem] font-semibold uppercase tracking-[0.16em] text-(--t2a-blue-dark) [--reveal-delay:40ms] dark:text-(--t2a-blue)"
     data-reveal="fade"
   >
     {category}
@@ -60,7 +60,7 @@ const readingTimeLabel = formatReadingTime(readingTime);
   }
 
   <p
-    class="mt-6 max-w-[65ch] text-[1.0625rem] leading-8 text-(--text-secondary) [--reveal-delay:280ms]"
+    class="mt-6 max-w-(--reading-measure) text-prose text-(--text-secondary) [--reveal-delay:280ms]"
     data-reveal="fade-up"
   >
     {excerpt}

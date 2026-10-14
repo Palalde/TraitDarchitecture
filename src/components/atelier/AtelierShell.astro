@@ -52,4 +52,45 @@ const [titouanSection, theaSection] = atelierPageData.people;
       </div>
     </div>
   </div>
+
+  <script is:inline data-astro-rerun>
+    // Narrow-tall mobile: the sticky portrait must leave with the last text
+    // card, i.e. release one card height before the end of the stack. The
+    // cards share one height (auto-rows-fr) that depends on the text wrap
+    // (width, font loading, theme weight): measure it as --atelier-card-h.
+    (() => {
+      const groups = Array.from(
+        document.querySelectorAll("[data-atelier-person]"),
+      );
+      if (!groups.length) return;
+
+      const sync = (group) => {
+        const card = group.querySelector("[data-atelier-card]");
+        if (card) {
+          group.style.setProperty("--atelier-card-h", `${card.offsetHeight}px`);
+        }
+      };
+
+      groups.forEach(sync);
+      if (!("ResizeObserver" in window)) return;
+
+      const observer = new ResizeObserver((entries) => {
+        entries.forEach((entry) => {
+          const group = entry.target.closest("[data-atelier-person]");
+          if (group) sync(group);
+        });
+      });
+
+      groups.forEach((group) => {
+        const card = group.querySelector("[data-atelier-card]");
+        if (card) observer.observe(card);
+      });
+
+      document.addEventListener(
+        "astro:before-swap",
+        () => observer.disconnect(),
+        { once: true },
+      );
+    })();
+  </script>
 </section>
