@@ -29,14 +29,10 @@ const { name, city, dept, cover, year, tagline } = entry.data;
 
 // Generated description — stable even when labels are absent
 const labelParts = buildProjectLabelSummary(entry);
-const generatedDescription = [
-  `Projet ${name} à ${city} (${dept})`,
-  labelParts ? `— ${labelParts}` : "",
-  "Par l'ATELIER TraiT D'ARCHITECTURE.",
-]
-  .filter(Boolean)
-  .join(" ");
-const description = [tagline, generatedDescription].filter(Boolean).join(" ");
+const generatedDescription = `Projet ${name} à ${city} (${dept})${
+  labelParts ? ` — ${labelParts}` : ""
+}. Par l'ATELIER TraiT D'ARCHITECTURE.`;
+const description = tagline ?? generatedDescription;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImagePath = await buildSocialImagePath(cover);
