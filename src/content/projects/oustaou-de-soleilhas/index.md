@@ -44,7 +44,7 @@ gallery:
     caption: "Schémas de conception : du volume de ferme aux pignons en retrait"
   - src: "./gallery/18.webp"
     caption: "Schémas bioclimatiques : orientation, soleil et ventilation"
-order: 20
+order: 30
 types: ["neuf"]
 materials: ["brique"]
 programs: ["logement"]

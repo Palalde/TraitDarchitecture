@@ -32,7 +32,7 @@ gallery:
     caption: "Coupe transversale sur la parcelle"
   - src: "./gallery/12.webp"
     caption: "Coupe longitudinale : rez-de-chaussée et étage"
-order: 80
+order: 125
 types: ["neuf"]
 materials: ["bois"]
 programs: ["logement"]
