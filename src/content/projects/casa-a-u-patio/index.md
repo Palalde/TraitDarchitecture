@@ -18,7 +18,7 @@ gallery:
     caption: "Coupe longitudinale dans le paysage"
   - src: "./gallery/05.webp"
     caption: "Profil du terrain et implantation dans la longueur"
-order: 30
+order: 20
 home: 1
 types: ["neuf"]
 materials: ["pierre", "bois"]
