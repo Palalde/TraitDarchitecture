@@ -6,7 +6,7 @@ zone: "provence"
 cover: "./cover.webp"
 coverRatio: "5/4"
 coverAlt: "Vue aérienne de l’Oustaou Maure : l’extension en bois brûlé accolée à la maison en pierre"
-tagline: "Respecter le patrimoine pré-alpin sans l’imiter. Une extension contemporaine au service de son Histoire"
+tagline: "Respecter le patrimoine pré-alpin sans l’imiter. Une extension contemporaine au service de son histoire"
 gallery:
   - src: "./gallery/01.webp"
     caption: "Le séjour sous le pignon vitré, cadré sur le paysage"
