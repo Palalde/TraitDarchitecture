@@ -129,6 +129,36 @@ async function checkOutputCollision(filePath, force) {
   }
 }
 
+async function findExistingCover(outputDirectory) {
+  let entries;
+  try {
+    entries = await fs.readdir(outputDirectory, { withFileTypes: true });
+  } catch (error) {
+    if (error.code === "ENOENT") return null;
+    throw error;
+  }
+
+  const candidates = entries.filter((entry) => /^cover\.[^.]+$/i.test(entry.name));
+  if (candidates.length > 1) {
+    throw new Error(
+      `Multiple existing cover files found in ${outputDirectory}; specify cover in the manifest.`,
+    );
+  }
+  if (candidates.length === 0) return null;
+
+  const coverEntry = candidates[0];
+  const coverPath = path.join(outputDirectory, coverEntry.name);
+  if (!SUPPORTED_EXTENSIONS.has(path.extname(coverEntry.name).toLowerCase())) {
+    throw new Error(`Existing cover uses an unsupported image format: ${coverPath}`);
+  }
+
+  const stat = await fs.lstat(coverPath);
+  if (stat.isSymbolicLink() || !stat.isFile()) {
+    throw new Error(`Existing cover is not a regular file: ${coverPath}`);
+  }
+  return coverPath;
+}
+
 async function walkFiles(directory) {
   const entries = await fs.readdir(directory, { withFileTypes: true });
   const nested = await Promise.all(
@@ -151,6 +181,162 @@ function sortByRelativePath(files, root) {
       firstRelative.localeCompare(secondRelative)
     );
   });
+}
+
+function sourcePathKey(sourceRoot, filePath) {
+  const relativePath = path
+    .relative(sourceRoot, filePath)
+    .split(path.sep)
+    .join("/");
+  return process.platform === "win32"
+    ? relativePath.toLowerCase()
+    : relativePath;
+}
+
+function resolveSourceFilePath(sourceRoot, file) {
+  if (typeof file !== "string" || file.length === 0 || path.isAbsolute(file)) {
+    throw new Error(
+      "Image file paths must be non-empty and relative to sourceDir.",
+    );
+  }
+
+  const filePath = path.resolve(sourceRoot, file);
+  assertInside(sourceRoot, filePath, "Manifest source file");
+  return filePath;
+}
+
+async function validateSourceCompleteness(sourceRoot, references) {
+  const files = sortByRelativePath(await walkFiles(sourceRoot), sourceRoot);
+  const sourceImages = [];
+  const sourcePdfs = [];
+  const unsupportedFiles = [];
+
+  for (const filePath of files) {
+    const extension = path.extname(filePath).toLowerCase();
+    if (SUPPORTED_EXTENSIONS.has(extension)) {
+      sourceImages.push(filePath);
+    } else if (extension === ".pdf") {
+      sourcePdfs.push(filePath);
+    } else {
+      unsupportedFiles.push(filePath);
+    }
+  }
+
+  const problems = [];
+  if (unsupportedFiles.length > 0) {
+    problems.push(
+      `Unsupported source files (convert HEIC/HEIF to JPG and remove other non-images):\n${unsupportedFiles
+        .map((filePath) => `  - ${path.relative(sourceRoot, filePath)}`)
+        .join("\n")}`,
+    );
+  }
+
+  const pdfPageProblems = [];
+  for (const pdfPath of sourcePdfs) {
+    const pdfDirectory = path.join(sourceRoot, "_pdf");
+    const pdfDirectoryKey = sourcePathKey(sourceRoot, pdfDirectory);
+    const filePrefix = `${path.basename(pdfPath, path.extname(pdfPath))}-`;
+    const normalizedPrefix =
+      process.platform === "win32" ? filePrefix.toLowerCase() : filePrefix;
+    const pageNumbers = [];
+
+    for (const imagePath of sourceImages) {
+      if (
+        sourcePathKey(sourceRoot, path.dirname(imagePath)) !== pdfDirectoryKey
+      ) {
+        continue;
+      }
+
+      const fileName =
+        process.platform === "win32"
+          ? path.basename(imagePath).toLowerCase()
+          : path.basename(imagePath);
+      if (!fileName.startsWith(normalizedPrefix)) continue;
+
+      const pageMatch = fileName
+        .slice(normalizedPrefix.length)
+        .match(/^(\d+)\.png$/i);
+      if (!pageMatch) continue;
+
+      const pageNumber = Number(pageMatch[1]);
+      if (Number.isSafeInteger(pageNumber) && pageNumber > 0) {
+        pageNumbers.push(pageNumber);
+      }
+    }
+
+    if (pageNumbers.length === 0) {
+      pdfPageProblems.push(
+        `  - ${path.relative(sourceRoot, pdfPath)} (no converted pages in ${path.relative(sourceRoot, pdfDirectory)})`,
+      );
+      continue;
+    }
+
+    const uniquePageNumbers = new Set(pageNumbers);
+    const maxPageNumber = Math.max(...pageNumbers);
+    const missingPages = [];
+    for (let page = 1; page <= maxPageNumber; page += 1) {
+      if (!uniquePageNumbers.has(page)) missingPages.push(page);
+    }
+    if (missingPages.length > 0) {
+      pdfPageProblems.push(
+        `  - ${path.relative(sourceRoot, pdfPath)} (missing converted page(s): ${missingPages.join(", ")})`,
+      );
+    }
+  }
+  if (pdfPageProblems.length > 0) {
+    problems.push(`PDFs without complete converted pages:\n${pdfPageProblems.join("\n")}`);
+  }
+
+  const imageByKey = new Map(
+    sourceImages.map((filePath) => [
+      sourcePathKey(sourceRoot, filePath),
+      filePath,
+    ]),
+  );
+  const referenceCounts = new Map();
+  const unknownReferences = [];
+
+  for (const reference of references) {
+    const filePath = resolveSourceFilePath(sourceRoot, reference.file);
+    const key = sourcePathKey(sourceRoot, filePath);
+    if (!imageByKey.has(key)) {
+      unknownReferences.push(`  - ${reference.label}: ${reference.file}`);
+      continue;
+    }
+    referenceCounts.set(key, (referenceCounts.get(key) ?? 0) + 1);
+  }
+
+  if (unknownReferences.length > 0) {
+    problems.push(`Unknown image references:\n${unknownReferences.join("\n")}`);
+  }
+
+  const duplicateReferences = [...referenceCounts.entries()]
+    .filter(([, count]) => count > 1)
+    .map(
+      ([key, count]) =>
+        `  - ${path.relative(sourceRoot, imageByKey.get(key))} (${count} references)`,
+    );
+  if (duplicateReferences.length > 0) {
+    problems.push(
+      `Images referenced more than once:\n${duplicateReferences.join("\n")}`,
+    );
+  }
+
+  const unreferencedImages = sourceImages
+    .filter(
+      (filePath) =>
+        !referenceCounts.has(sourcePathKey(sourceRoot, filePath)),
+    )
+    .map((filePath) => `  - ${path.relative(sourceRoot, filePath)}`);
+  if (unreferencedImages.length > 0) {
+    problems.push(`Unreferenced images:\n${unreferencedImages.join("\n")}`);
+  }
+
+  if (problems.length > 0) {
+    throw new Error(
+      `Source completeness check failed:\n${problems.join("\n")}`,
+    );
+  }
 }
 
 function getDisplayDimensions(metadata) {
@@ -323,14 +509,7 @@ function parseRatio(value) {
 }
 
 async function resolveSourceImage(sourceRoot, file) {
-  if (typeof file !== "string" || file.length === 0 || path.isAbsolute(file)) {
-    throw new Error(
-      "Image file paths must be non-empty and relative to sourceDir.",
-    );
-  }
-
-  const filePath = path.resolve(sourceRoot, file);
-  assertInside(sourceRoot, filePath, "Manifest source file");
+  const filePath = resolveSourceFilePath(sourceRoot, file);
   const extension = path.extname(filePath).toLowerCase();
   if (UNSUPPORTED_EXTENSIONS.has(extension)) {
     throw new Error(
@@ -413,9 +592,12 @@ function yamlString(value) {
   return JSON.stringify(value);
 }
 
-function printManifestOutputs(collection, gallery) {
+function printManifestOutputs(collection, gallery, coverAlt) {
   if (collection === "projects") {
-    process.stdout.write("\nYAML gallery block for index.md:\n");
+    process.stdout.write("\nYAML frontmatter block for index.md:\n");
+    if (coverAlt !== undefined) {
+      process.stdout.write(`coverAlt: ${yamlString(coverAlt)}\n`);
+    }
     if (gallery.length === 0) {
       process.stdout.write("gallery: []\n");
       return;
@@ -428,6 +610,11 @@ function printManifestOutputs(collection, gallery) {
       process.stdout.write(`    caption: ${yamlString(item.caption)}\n`);
     }
     return;
+  }
+
+  if (coverAlt !== undefined) {
+    process.stdout.write("\nYAML coverAlt for article frontmatter:\n");
+    process.stdout.write(`coverAlt: ${yamlString(coverAlt)}\n`);
   }
 
   if (gallery.length > 0) {
@@ -469,17 +656,33 @@ async function loadManifest(manifestPath) {
     throw new Error(`sourceDir is not a directory: ${sourceRoot}`);
   }
 
-  if (
-    !data.cover ||
-    typeof data.cover !== "object" ||
-    Array.isArray(data.cover)
-  ) {
-    throw new Error("cover must be an object with a file property.");
+  const coverData = data.cover;
+  let ratio;
+  let position;
+  if (coverData !== undefined) {
+    if (
+      !coverData ||
+      typeof coverData !== "object" ||
+      Array.isArray(coverData)
+    ) {
+      throw new Error("cover must be an object with a file property.");
+    }
+    if (typeof coverData.file !== "string" || coverData.file.length === 0) {
+      throw new Error("cover.file must be a non-empty relative image path.");
+    }
+    ratio = parseRatio(coverData.ratio);
+    position = coverData.position ?? "center";
+    if (!["center", "centre", "attention"].includes(position)) {
+      throw new Error('cover.position must be "center" or "attention".');
+    }
   }
-  const ratio = parseRatio(data.cover.ratio);
-  const position = data.cover.position ?? "center";
-  if (!["center", "centre", "attention"].includes(position)) {
-    throw new Error('cover.position must be "center" or "attention".');
+
+  let coverAlt = data.coverAlt;
+  if (coverAlt !== undefined) {
+    if (typeof coverAlt !== "string" || coverAlt.trim().length === 0) {
+      throw new Error("coverAlt must be a non-empty string when provided.");
+    }
+    coverAlt = coverAlt.trim();
   }
 
   const galleryData = data.gallery ?? [];
@@ -487,19 +690,40 @@ async function loadManifest(manifestPath) {
     throw new Error("gallery must be an array.");
   }
 
-  const coverSource = await resolveSourceImage(sourceRoot, data.cover.file);
-  const gallerySources = [];
+  const galleryInputs = [];
   for (const [index, item] of galleryData.entries()) {
     if (!item || typeof item !== "object" || Array.isArray(item)) {
       throw new Error(`gallery[${index}] must be an object.`);
     }
+    if (typeof item.file !== "string" || item.file.length === 0) {
+      throw new Error(`gallery[${index}].file must be a non-empty path.`);
+    }
     if (typeof item.caption !== "string" || item.caption.trim().length === 0) {
       throw new Error(`gallery[${index}] requires a non-empty caption.`);
     }
-    gallerySources.push({
-      ...(await resolveSourceImage(sourceRoot, item.file)),
+    galleryInputs.push({
+      file: item.file,
       caption: item.caption.trim(),
     });
+  }
+
+  const excludedData =
+    data.excluded === undefined ? [] : data.excluded;
+  if (!Array.isArray(excludedData)) {
+    throw new Error("excluded must be an array of { file, reason } objects.");
+  }
+  const excluded = [];
+  for (const [index, item] of excludedData.entries()) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      throw new Error(`excluded[${index}] must be an object.`);
+    }
+    if (typeof item.file !== "string" || item.file.length === 0) {
+      throw new Error(`excluded[${index}].file must be a non-empty path.`);
+    }
+    if (typeof item.reason !== "string" || item.reason.trim().length === 0) {
+      throw new Error(`excluded[${index}] requires a non-empty reason.`);
+    }
+    excluded.push({ file: item.file, reason: item.reason.trim() });
   }
 
   const outputDirectory = path.resolve(
@@ -509,6 +733,47 @@ async function loadManifest(manifestPath) {
   );
   assertInside(CONTENT_ROOT, outputDirectory, "Content output directory");
   const coverDestination = path.join(outputDirectory, "cover.webp");
+  const references = [
+    ...(coverData ? [{ file: coverData.file, label: "cover.file" }] : []),
+    ...galleryInputs.map((item, index) => ({
+      file: item.file,
+      label: `gallery[${index}].file`,
+    })),
+    ...excluded.map((item, index) => ({
+      file: item.file,
+      label: `excluded[${index}].file`,
+    })),
+  ];
+  await validateSourceCompleteness(sourceRoot, references);
+
+  const coverSource = coverData
+    ? await resolveSourceImage(sourceRoot, coverData.file)
+    : null;
+  const gallerySources = [];
+  for (const item of galleryInputs) {
+    gallerySources.push({
+      ...(await resolveSourceImage(sourceRoot, item.file)),
+      caption: item.caption,
+    });
+  }
+
+  const cover =
+    coverSource === null
+      ? null
+      : {
+          ...coverSource,
+          ratio,
+          position,
+          destination: coverDestination,
+        };
+  const preservedCover =
+    cover === null ? await findExistingCover(outputDirectory) : null;
+  if (cover === null && preservedCover === null) {
+    throw new Error(
+      `No existing cover found for ${data.collection}/${data.slug}; provide cover in the manifest.`,
+    );
+  }
+
   const galleryDirectory = path.join(outputDirectory, "gallery");
   const galleryRecords = gallerySources.map((source, index) => {
     const number = String(index + 1).padStart(2, "0");
@@ -525,14 +790,8 @@ async function loadManifest(manifestPath) {
       ),
     };
   });
-  const coverRecord = {
-    ...coverSource,
-    ratio,
-    position,
-    destination: coverDestination,
-  };
   const outputs = [
-    coverDestination,
+    ...(cover ? [cover.destination] : []),
     ...galleryRecords.map((item) => item.destination),
   ];
 
@@ -543,11 +802,24 @@ async function loadManifest(manifestPath) {
   return {
     collection: data.collection,
     slug: data.slug,
-    cover: coverRecord,
+    cover,
+    preservedCover,
+    coverAlt,
     gallery: galleryRecords,
+    excluded,
     outputDirectory,
     outputs,
   };
+}
+
+function printManifestSummary(plan) {
+  const coverLabel = plan.cover
+    ? `${plan.cover.file} -> ${path.relative(REPO_ROOT, plan.cover.destination)}`
+    : `retained (${path.relative(REPO_ROOT, plan.preservedCover)})`;
+  process.stdout.write("\nManifest summary:\n");
+  process.stdout.write(`  Cover: ${coverLabel}\n`);
+  process.stdout.write(`  Gallery images: ${plan.gallery.length}\n`);
+  process.stdout.write(`  Excluded images: ${plan.excluded.length}\n`);
 }
 
 async function runManifest(options) {
@@ -560,7 +832,7 @@ async function runManifest(options) {
 
   if (options.dryRun) {
     process.stdout.write(`Dry run: ${plan.collection}/${plan.slug}\n`);
-    process.stdout.write(`Cover: ${plan.cover.file} -> ${plan.outputs[0]}\n`);
+    printManifestSummary(plan);
     for (const [index, item] of plan.gallery.entries()) {
       process.stdout.write(
         `Gallery ${String(index + 1).padStart(2, "0")}: ${item.file} -> ${item.destination}\n`,
@@ -571,11 +843,12 @@ async function runManifest(options) {
         `Would replace ${collisions.length} existing output(s) with --force.\n`,
       );
     }
-    printManifestOutputs(plan.collection, plan.gallery);
+    printManifestOutputs(plan.collection, plan.gallery, plan.coverAlt);
     return;
   }
 
-  const converted = [await convertImage(plan.cover, true)];
+  const converted = [];
+  if (plan.cover) converted.push(await convertImage(plan.cover, true));
   for (const image of plan.gallery) {
     converted.push(await convertImage(image, false));
   }
@@ -593,7 +866,8 @@ async function runManifest(options) {
       `${path.relative(REPO_ROOT, image.destination)} — ${image.width}x${image.height}, ${formatBytes(image.data.length)}\n`,
     );
   }
-  printManifestOutputs(plan.collection, plan.gallery);
+  printManifestSummary(plan);
+  printManifestOutputs(plan.collection, plan.gallery, plan.coverAlt);
 }
 
 async function main() {
