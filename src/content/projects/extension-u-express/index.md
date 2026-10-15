@@ -19,7 +19,7 @@ gallery:
     caption: "Le barreaudage ferme l’abri sans masquer la vue"
   - src: "./gallery/06.webp"
     caption: "Entre les barreaux, l’espace de stockage protégé"
-order: 100
+order: 110
 types: ["extension"]
 materials: ["metal"]
 programs: ["commerce"]

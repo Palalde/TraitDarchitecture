@@ -13,7 +13,7 @@ gallery:
     caption: "Plan de plain-pied : pièces de vie au sud, chambres à l’est et au nord"
   - src: "./gallery/03.webp"
     caption: "Coupes : le débord de toiture protège les baies du soleil d’été"
-order: 110
+order: 100
 types: ["neuf"]
 materials: ["bois"]
 programs: ["logement"]
