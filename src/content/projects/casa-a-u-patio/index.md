@@ -38,7 +38,3 @@ Le terrain s’inscrit dans une forte pente, interrompue en partie haute par un 
 ## Pensée
 
 La maison assume une écriture contemporaine tout en puisant dans une matérialité plus traditionnelle. La pierre en façade et le bois patiné permettent au volume de s’inscrire dans le paysage sans chercher à s’y effacer. Le plan longitudinal est ponctué de plusieurs patios qui fragmentent la profondeur de la maison et créent des vues traversantes. Ces espaces extérieurs introduisent le paysage au cœur du projet.
-
-## Matière
-
-La maison est ainsi organisée entre espaces intérieurs ouverts et extérieurs couverts. Ces espaces intermédiaires permettent de varier les rapports au paysage et au jardin : cadré depuis une pièce, traversé ou prolongé par une terrasse couverte. Plutôt qu’une séparation nette entre dedans et dehors, le projet construit ainsi une succession de seuils qui accompagne les usages et les saisons.

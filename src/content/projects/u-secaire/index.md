@@ -51,7 +51,3 @@ Longtemps habitée, cette maison mitoyenne typique de centre-bourg provençal a 
 ## Pensée
 
 La surélévation s’inspire des séchoirs à pistoles, une forme vernaculaire caractéristique de la Haute-Provence et particulièrement présente dans les villages du territoire dignois. Comme eux, le nouvel attique est légèrement retraité de la façade principale, reprenant une disposition que l’on retrouve sur plusieurs maisons de la Grand Rue et du centre ancien de Mézel. Cette référence historique permet de se réapproprier une typologie locale aujourd’hui oubliée dans un usage contemporain. Les logements sont également prolongés vers l’extérieur : le balcon existant est restauré, la terrasse du premier étage retrouve sa composition originelle et une nouvelle terrasse est créée au dernier niveau, protégée par le prolongement de la toiture.
-
-## Matière
-
-Le projet repose sur un important travail de curetage afin de retrouver la capacité respirante des murs anciens, notamment par la dépose des enduits ciment et des contre-cloisons non perspirantes. La surélévation est réalisée en construction bois afin de limiter les charges reportées sur l’existant et de faciliter le chantier dans un centre ancien aux rues étroites et aux accès contraints. Les nouveaux murs expérimentent enfin un enduit terre-paille de lavande, en écho aux ressources et savoir-faire du territoire mézélien.

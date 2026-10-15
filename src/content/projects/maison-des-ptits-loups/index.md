@@ -45,7 +45,3 @@ Construite dans les années 1970-80, cette maison devait initialement être agra
 ## Pensée
 
 Le séjour constitue le point de départ de cette transformation. La cheminée existante, particulièrement imposante, est remplacée par un insert plus compact afin de libérer l’espace. Une partie du mur arrondi est déposée pour ouvrir le volume de la pièce et permettre une nouvelle organisation autour du canapé. Un linéaire de rangements vient compléter l’aménagement et participe à une lecture plus claire du volume. Le projet travaille également les relations avec l’extérieur : la séquence d’entrée est recomposée et enrichie de rangements, tandis que l’ancienne véranda laisse place à un jardin d’hiver, conçu comme un nouvel espace intermédiaire entre la maison et le jardin.
-
-## Matière
-
-L’intervention privilégie ainsi la transformation ciblée plutôt que l’agrandissement. En intervenant sur les éléments structurants de la maison comme les volumes, les circulations, le rapport intérieur/extérieur, le projet permet de répondre au programme initial sans construire davantage d’espaces inefficaces.

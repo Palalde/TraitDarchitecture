@@ -30,8 +30,6 @@ Implantée dans la commune de Thorame-Haute, la maison adopte un plan en L de pl
 
 ## Pensée
 
-La forme en L permet d’accompagner la topographie naturelle du terrain et d’organiser les différents espaces autour d’un rapport privilégié à la vallée. Les grandes ouvertures des pièces de vie sont protégées par un débord de toiture dont les proportions et la profondeur ont été étudiées pour apporter une protection solaire adaptée aux différentes saisons. L’orientation devient ainsi un véritable outil de conception, à la fois pour cadrer le paysage, maîtriser les apports solaires et organiser les usages de la maison.
+La forme en L permet d’accompagner la topographie naturelle du terrain et d’organiser les différents espaces autour d’un rapport privilégié à la vallée. Les grandes ouvertures des pièces de vie sont protégées par un débord de toiture dont les proportions et la profondeur ont été étudiées pour apporter une protection solaire adaptée aux différentes saisons.
 
-## Matière
-
-Ce volume simple est couvert d’une toiture traditionnelle à deux pentes en bac acier. Les débords de toiture se prolongent de part et d’autre du volume et assurent une continuité visuelle entre les différents éléments de la construction. Ce choix maintient une géométrie volontairement sobre tout en donnant à la maison une présence cohérente avec son implantation dans le relief.
+> L’orientation devient un véritable outil de conception, à la fois pour cadrer le paysage, maîtriser les apports solaires et organiser les usages de la maison.

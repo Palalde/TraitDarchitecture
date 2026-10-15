@@ -70,7 +70,3 @@ Dans un environnement rural, au bord d’une rivière, cette maison individuelle
 ## Pensée
 
 Le projet prévoit la suite parentale dans un volume simple en demi-pignon, qui reprend la volumétrie de la maison tout en se distinguant par sa matérialité. Entre le séjour existant et la nouvelle chambre, un espace de bureau jouant le rôle de jardin d’hiver forme un espace intermédiaire. Largement vitré et complété par une ouverture zénithale, il apporte lumière et ventilation naturelle au nouvel espace sans assombrir le salon existant. Cette séquence permet ainsi de créer de l’intimité en mettant la chambre à distance tout en créant une continuité intérieure.
-
-## Matière
-
-Le bois s’impose à la fois comme une réponse constructive évidente et comme une continuité dans le rapport des propriétaires au vivant. La construction sèche limite les charges sur l’existant et permet une intervention légère, tandis que l’écriture du volume évoque l’univers de la ruche. La terrasse existante est conservée et son garde-corps, dessiné sur mesure, assure également les fonctions de couvertine et de goutte d’eau. Un dispositif unique qui simplifie la mise en œuvre et participe à la maîtrise du coût du projet.

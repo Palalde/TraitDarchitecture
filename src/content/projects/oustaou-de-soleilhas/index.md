@@ -71,8 +71,8 @@ Implantée dans une vallée reculée des Alpes-de-Haute-Provence, au cœur d’u
 
 ## Pensée
 
-La maison reprend les principes du corps de ferme : un volume unique, lisible et orienté sud-est. Son implantation en demi-niveaux limite les terrassements tout en permettant de créer des espaces extérieurs en lien avec les différents niveaux de vie. Malgré ses deux étages, la maison conserve ainsi une sensation de plain-pied. Les pignons, travaillés en retrait des façades, introduisent une certaine épaisseur dans cette volumétrie simple. À l’ouest, celui de la suite parentale forme une terrasse protégée et libère des ouvertures toute hauteur. À l’est, un grand pignon vitré ouvre la double hauteur de salon sur la montagne. Le bureau, au centre, surplombe le séjour et offre un espace de travail distinct sans l’isoler de la vie de la maison ni de la chaleur de la cheminée centrale.
+La maison reprend les principes du corps de ferme : un volume unique, lisible et orienté sud-est. Son implantation en demi-niveaux limite les terrassements tout en permettant de créer des espaces extérieurs en lien avec les différents niveaux de vie.
 
-## Matière
+> Malgré ses deux étages, la maison conserve une sensation de plain-pied.
 
-La construction repose sur une brique monomur isolée Climamur, qui associe structure, isolation et inertie dans un même élément. Cette solution permet de limiter les couches constructives, d’optimiser la surface intérieure et les coûts associés, sans ajouter de contre-cloison ni d’isolation intérieure. Les murs reçoivent simplement un enduit de finition assurant leur étanchéité et un aspect lisse. Une construction volontairement simple, où la matière constructive participe directement à la sobriété du projet.
+Les pignons, travaillés en retrait des façades, introduisent une certaine épaisseur dans cette volumétrie simple. À l’ouest, celui de la suite parentale forme une terrasse protégée et libère des ouvertures toute hauteur. À l’est, un grand pignon vitré ouvre la double hauteur de salon sur la montagne. Le bureau, au centre, surplombe le séjour et offre un espace de travail distinct sans l’isoler de la vie de la maison ni de la chaleur de la cheminée centrale.

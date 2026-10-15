@@ -57,7 +57,3 @@ Pensé pour accueillir leurs enfants et petits-enfants pendant les vacances tout
 ## Pensée
 
 Le projet prend alors la forme d’un mur en pierre habité, qui suit les courbes naturelles du jardin et s’inscrit dans sa topographie, établissant un discours calme et respectueux avec son environnement. Malgré une emprise discrète, le programme reste complet : deux chambres, une salle d’eau, un WC et un séjour avec kitchenette. Deux accès sont aménagés depuis le jardin, de part et d’autre du mur, l’un par un escalier paysager, l’autre par une pente plus douce. Une unique façade vient éclairer les espaces intérieurs tout en maintenant la présence végétale du jardin.
-
-## Matière
-
-La modestie apparente du projet dissimule une mise en œuvre particulièrement complexe : construction enterrée à proximité immédiate de la piscine, gestion des terres et des eaux, insertion entre les grands pins existants, etc. Né du remblai important sur cette terre calcaire, le projet a pris forme grâce aux pierres issues du site depuis lesquelles de larges ouvertures en bois cadrent sur le paysage naturel du jardin.
