@@ -36,7 +36,12 @@ const generatedDescription = [
 ]
   .filter(Boolean)
   .join(" ");
-const description = [tagline, generatedDescription].filter(Boolean).join(" ");
+// Taglines are published without a final period: close the sentence before appending the generated one
+const taglineSentence =
+  tagline && !/[.!?…]$/.test(tagline) ? `${tagline}.` : tagline;
+const description = [taglineSentence, generatedDescription]
+  .filter(Boolean)
+  .join(" ");
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImagePath = await buildSocialImagePath(cover);
