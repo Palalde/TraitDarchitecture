@@ -66,6 +66,7 @@ const articles = defineCollection({
       updatedDate: z.coerce.date().optional(),
       cover: image().optional(),
       coverAlt: z.string().optional(),
+      coverProject: z.string().optional(),
       draft: z.boolean().default(false),
     }),
 });
