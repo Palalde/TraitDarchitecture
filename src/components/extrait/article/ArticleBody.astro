@@ -1,5 +1,7 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
+import Compare from "@/components/extrait/mdx/Compare.astro";
+import CompareColumn from "@/components/extrait/mdx/CompareColumn.astro";
 import Figure from "@/components/extrait/mdx/Figure.astro";
 import Lead from "@/components/extrait/mdx/Lead.astro";
 import Note from "@/components/extrait/mdx/Note.astro";
@@ -14,7 +16,15 @@ const { entry }: Props = Astro.props;
 const { Content } = await render(entry);
 // `img: Figure` makes Markdown images `![légende](./x.webp)` render through Figure.
 // `Figure` (named) lets authors place layout placeholders (`<Figure layout="aside" />`).
-const mdxComponents = { img: Figure, Figure, Lead, Note, Pullquote };
+const mdxComponents = {
+  img: Figure,
+  Figure,
+  Lead,
+  Note,
+  Pullquote,
+  Compare,
+  CompareColumn,
+};
 ---
 
 <section aria-labelledby="article-body-heading" class="mt-10 sm:mt-12 lg:mt-16">
