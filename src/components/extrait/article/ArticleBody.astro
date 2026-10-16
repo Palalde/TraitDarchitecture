@@ -15,7 +15,7 @@ interface Props {
 const { entry }: Props = Astro.props;
 const { Content } = await render(entry);
 // `img: Figure` makes Markdown images `![légende](./x.webp)` render through Figure.
-// `Figure` (named) lets authors place layout placeholders (`<Figure layout="aside" />`).
+// `Figure` (named) lets authors control image layout and project links.
 const mdxComponents = {
   img: Figure,
   Figure,
