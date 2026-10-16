@@ -13,7 +13,7 @@ interface Props {
 }
 
 const { entry, allArticles }: Props = Astro.props;
-const { cover, coverAlt } = entry.data;
+const { cover, coverAlt, coverProject } = entry.data;
 ---
 
 <article
@@ -44,7 +44,17 @@ const { cover, coverAlt } = entry.data;
 
       <ArticleHeader entry={entry} />
 
-      {cover && <Figure src={cover} caption={coverAlt} layout="wide" />}
+      {
+        cover && (
+          <Figure
+            src={cover}
+            caption={coverAlt}
+            layout="wide"
+            ratio="16 / 9"
+            project={coverProject}
+          />
+        )
+      }
     </div>
 
     <div data-article-body>

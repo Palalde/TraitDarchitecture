@@ -1,0 +1,49 @@
+---
+import { resolveFigureProject } from "@/components/extrait/figure.data";
+
+interface Props {
+  labelId?: string;
+  caption?: string;
+  project?: string;
+}
+
+const { labelId, caption, project } = Astro.props;
+const captionText = caption?.trim();
+const projectEntry = await resolveFigureProject(project);
+const hasCaption = Boolean(captionText || projectEntry);
+
+const captionClass = hasCaption
+  ? [
+      "mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-[0.75rem] font-normal uppercase tracking-[0.12em] text-(--text-muted)",
+      projectEntry ? "justify-between" : "justify-start",
+    ]
+  : [];
+
+const labelClass = [
+  projectEntry
+    ? "min-w-0 flex-1 text-left"
+    : "max-w-full text-left",
+  "leading-tight",
+];
+const projectLinkClass =
+  "shrink-0 font-sans text-[0.75rem] font-normal uppercase tracking-[0.18em] text-(--t2a-blue-dark) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)";
+---
+
+{
+  hasCaption && (
+    <figcaption class:list={captionClass}>
+      {captionText && (
+        <span id={labelId} class:list={labelClass}>
+          {captionText}
+        </span>
+      )}
+      {projectEntry && (
+        <a class={projectLinkClass} href={`/architecture/${projectEntry.slug}`}>
+          <span class="sr-only">Voir le projet </span>
+          {projectEntry.name}
+          <span aria-hidden="true"> →</span>
+        </a>
+      )}
+    </figcaption>
+  )
+}

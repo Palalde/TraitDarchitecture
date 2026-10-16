@@ -56,6 +56,7 @@ const articles = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      seoTitle: z.string().max(60).optional(),
       excerpt: z.string(),
       category: z.string(),
       tags: z.array(z.string()).default([]),
@@ -66,6 +67,7 @@ const articles = defineCollection({
       updatedDate: z.coerce.date().optional(),
       cover: image().optional(),
       coverAlt: z.string().optional(),
+      coverProject: z.string().optional(),
       draft: z.boolean().default(false),
     }),
 });

@@ -1,18 +1,19 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import T2AMotifPattern from "@/components/ui/background/T2AMotifPattern.astro";
+import FigureCaption from "@/components/extrait/mdx/FigureCaption.astro";
 import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 
 interface Props {
   class?: string;
-  src?: ImageMetadata | string;
+  src: ImageMetadata | string;
   alt?: string;
   caption?: string;
   title?: string;
   ratio?: string;
   layout?: "full" | "wide" | "aside-left" | "aside-right";
-  plate?: number | string;
+  parallax?: boolean;
+  project?: string;
 }
 
 const {
@@ -21,12 +22,22 @@ const {
   alt = "",
   caption,
   title,
-  ratio = "16/9",
+  ratio,
   layout = "full",
-  plate,
+  parallax = true,
+  project,
 }: Props = Astro.props;
 
+if (!src) {
+  throw new Error("Figure: src is required.");
+}
+
 const imageAlt = alt.trim() || caption?.trim() || title?.trim() || "";
+const resolvedRatio =
+  ratio ??
+  (typeof src !== "string"
+    ? `${src.width} / ${src.height}`
+    : "16 / 9");
 
 const resolvedLayout =
   layout === "wide" || layout === "aside-left" || layout === "aside-right"
@@ -39,10 +50,7 @@ const isAside =
 const captionText = [caption, title, alt]
   .find((value) => Boolean(value?.trim()))
   ?.trim();
-const plateLabel =
-  plate !== undefined ? `Fig. ${String(plate).padStart(2, "0")}` : undefined;
-const hasCaption = Boolean(captionText || plateLabel);
-const captionId = hasCaption
+const captionId = captionText
   ? `figure-${crypto.randomUUID().slice(0, 8)}`
   : undefined;
 
@@ -57,19 +65,6 @@ const figureClass = isAside
     ? ["my-12 w-full max-w-4xl"]
     : ["my-10 w-full max-w-(--reading-measure)"];
 
-const captionClass = hasCaption
-  ? [
-      "mt-4 flex items-center gap-4 font-sans text-[0.75rem] font-normal uppercase tracking-[0.12em] text-(--text-muted)",
-      plateLabel ? "justify-between" : "justify-start",
-    ]
-  : [];
-
-const plateClass = ["shrink-0", "leading-tight"];
-const labelClass = [
-  plateLabel ? "max-w-[70%] text-right" : "max-w-full text-left",
-  "leading-tight",
-];
-
 const imageClass = "h-full w-full object-cover object-center";
 const imageSizes =
   resolvedLayout === "wide"
@@ -80,18 +75,17 @@ const imageSizes =
 ---
 
 <figure
-  aria-labelledby={hasCaption ? captionId : undefined}
-  aria-hidden={hasCaption ? undefined : "true"}
+  aria-labelledby={captionText ? captionId : undefined}
   class:list={[figureClass, className]}
   data-reveal="fade-up"
 >
   <div
     class="relative w-full overflow-hidden border border-(--trait) bg-(--t2a-blue-wash)"
-    style={`aspect-ratio: ${ratio};`}
+    style={`aspect-ratio: ${resolvedRatio};`}
   >
     {
-      src ? (
-        typeof src === "string" ? (
+      typeof src === "string" ? (
+        parallax ? (
           <ParallaxFrame
             client:visible
             overflowPercent={0.025}
@@ -106,35 +100,49 @@ const imageSizes =
             />
           </ParallaxFrame>
         ) : (
-          <ParallaxFrame
-            client:visible
-            overflowPercent={0.025}
-            mobileOverflowPercent={0.04}
-          >
-            <Image
-              alt={imageAlt}
-              class:list={[imageClass]}
-              draggable="false"
-              loading="lazy"
-              quality={85}
-              sizes={imageSizes}
-              src={src}
-              widths={[480, 640, 900, 1200, 1600]}
-            />
-          </ParallaxFrame>
+          <img
+            alt={imageAlt}
+            class={imageClass}
+            draggable="false"
+            loading="lazy"
+            src={src}
+          />
         )
+      ) : parallax ? (
+        <ParallaxFrame
+          client:visible
+          overflowPercent={0.025}
+          mobileOverflowPercent={0.04}
+        >
+          <Image
+            alt={imageAlt}
+            class:list={[imageClass]}
+            draggable="false"
+            loading="lazy"
+            quality={85}
+            sizes={imageSizes}
+            src={src}
+            widths={[480, 640, 900, 1200, 1600]}
+          />
+        </ParallaxFrame>
       ) : (
-        <T2AMotifPattern />
+        <Image
+          alt={imageAlt}
+          class:list={[imageClass]}
+          draggable="false"
+          loading="lazy"
+          quality={85}
+          sizes={imageSizes}
+          src={src}
+          widths={[480, 640, 900, 1200, 1600]}
+        />
       )
     }
   </div>
 
-  {
-    hasCaption && (
-      <figcaption id={captionId} class:list={captionClass}>
-        {plateLabel && <span class:list={plateClass}>{plateLabel}</span>}
-        {captionText && <span class:list={labelClass}>{captionText}</span>}
-      </figcaption>
-    )
-  }
+  <FigureCaption
+    labelId={captionId}
+    caption={captionText}
+    project={project}
+  />
 </figure>
