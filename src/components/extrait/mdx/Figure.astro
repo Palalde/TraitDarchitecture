@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
 import type { ImageMetadata } from "astro";
+import FigureCaption from "@/components/extrait/mdx/FigureCaption.astro";
 import T2AMotifPattern from "@/components/ui/background/T2AMotifPattern.astro";
 import { ParallaxFrame } from "@/components/ui/media/ParallaxFrame";
 
@@ -31,21 +31,6 @@ const {
   project,
 }: Props = Astro.props;
 
-const projectSlug = project?.trim();
-if (project !== undefined && !projectSlug) {
-  throw new Error("Figure: project slug must not be empty.");
-}
-
-const projectEntry = projectSlug
-  ? (await getCollection("projects", ({ data }) => !data.draft)).find(
-      (entry) => entry.id.replace(/\/index$/, "") === projectSlug,
-    )
-  : undefined;
-
-if (projectSlug && !projectEntry) {
-  throw new Error(`Figure: unknown project "${projectSlug}".`);
-}
-
 const imageAlt = alt.trim() || caption?.trim() || title?.trim() || "";
 const resolvedRatio =
   ratio ??
@@ -65,11 +50,10 @@ const captionText = [caption, title, alt]
   .find((value) => Boolean(value?.trim()))
   ?.trim();
 const plateLabel =
-  plate !== undefined && !projectEntry
+  plate !== undefined && !project?.trim()
     ? `Fig. ${String(plate).padStart(2, "0")}`
     : undefined;
-const hasCaption = Boolean(captionText || plateLabel || projectEntry);
-const captionId = hasCaption
+const captionId = captionText
   ? `figure-${crypto.randomUUID().slice(0, 8)}`
   : undefined;
 
@@ -84,26 +68,7 @@ const figureClass = isAside
     ? ["my-12 w-full max-w-4xl"]
     : ["my-10 w-full max-w-(--reading-measure)"];
 
-const captionClass = hasCaption
-  ? [
-      "mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 font-sans text-[0.75rem] font-normal uppercase tracking-[0.12em] text-(--text-muted)",
-      plateLabel || projectEntry ? "justify-between" : "justify-start",
-    ]
-  : [];
-
-const plateClass = ["shrink-0", "leading-tight"];
-const labelClass = [
-  projectEntry
-    ? "min-w-0 flex-1 text-left"
-    : plateLabel
-      ? "max-w-[70%] text-right"
-      : "max-w-full text-left",
-  "leading-tight",
-];
-
 const imageClass = "h-full w-full object-cover object-center";
-const projectLinkClass =
-  "shrink-0 font-sans text-[0.75rem] font-normal uppercase tracking-[0.18em] text-(--t2a-blue-dark) underline decoration-current/35 underline-offset-4 transition-colors duration-200 hover:text-(--text-primary) focus-visible:outline-2 focus-visible:outline-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)";
 const imageSizes =
   resolvedLayout === "wide"
     ? "(min-width: 1024px) 56rem, 100vw"
@@ -113,8 +78,8 @@ const imageSizes =
 ---
 
 <figure
-  aria-labelledby={hasCaption ? captionId : undefined}
-  aria-hidden={hasCaption ? undefined : "true"}
+  aria-labelledby={captionText ? captionId : undefined}
+  aria-hidden={!src ? "true" : undefined}
   class:list={[figureClass, className]}
   data-reveal="fade-up"
 >
@@ -185,19 +150,10 @@ const imageSizes =
     }
   </div>
 
-  {
-    hasCaption && (
-      <figcaption id={captionId} class:list={captionClass}>
-        {plateLabel && <span class:list={plateClass}>{plateLabel}</span>}
-        {captionText && <span class:list={labelClass}>{captionText}</span>}
-        {projectEntry && (
-          <a class={projectLinkClass} href={`/architecture/${projectSlug}`}>
-            <span class="sr-only">Voir le projet </span>
-            {projectEntry.data.name}
-            <span aria-hidden="true"> →</span>
-          </a>
-        )}
-      </figcaption>
-    )
-  }
+  <FigureCaption
+    labelId={captionId}
+    caption={captionText}
+    plateLabel={plateLabel}
+    project={project}
+  />
 </figure>

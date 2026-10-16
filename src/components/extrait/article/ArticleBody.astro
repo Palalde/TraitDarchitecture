@@ -3,6 +3,7 @@ import { render, type CollectionEntry } from "astro:content";
 import Compare from "@/components/extrait/mdx/Compare.astro";
 import CompareColumn from "@/components/extrait/mdx/CompareColumn.astro";
 import Figure from "@/components/extrait/mdx/Figure.astro";
+import FigurePair from "@/components/extrait/mdx/FigurePair.astro";
 import Lead from "@/components/extrait/mdx/Lead.astro";
 import Note from "@/components/extrait/mdx/Note.astro";
 import Pullquote from "@/components/extrait/mdx/Pullquote.astro";
@@ -19,6 +20,7 @@ const { Content } = await render(entry);
 const mdxComponents = {
   img: Figure,
   Figure,
+  FigurePair,
   Lead,
   Note,
   Pullquote,
