@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, excerpt, cover } = entry.data;
+const { title, seoTitle, excerpt, cover } = entry.data;
 const publishedDate = entry.data.publishedDate;
 const updatedDate = entry.data.updatedDate;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -52,7 +52,7 @@ const allArticles = await getSortedArticles();
 ---
 
 <BaseLayout
-  title={`${title} | ATELIER TraiT D'ARCHITECTURE`}
+  title={`${seoTitle ?? title} | ATELIER TraiT D'ARCHITECTURE`}
   description={excerpt}
   author="ATELIER TraiT D'ARCHITECTURE"
   ogImage={socialImagePath}
