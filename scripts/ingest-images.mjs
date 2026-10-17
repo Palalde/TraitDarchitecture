@@ -23,6 +23,7 @@ const SUPPORTED_EXTENSIONS = new Set([
   ".webp",
 ]);
 const UNSUPPORTED_EXTENSIONS = new Set([".heic", ".heif", ".pdf"]);
+const SYSTEM_FILE_NAMES = new Set([".ds_store", "thumbs.db", "desktop.ini"]);
 const collator = new Intl.Collator("fr", {
   numeric: true,
   sensitivity: "base",
@@ -163,6 +164,14 @@ async function walkFiles(directory) {
   const entries = await fs.readdir(directory, { withFileTypes: true });
   const nested = await Promise.all(
     entries.map(async (entry) => {
+      const normalizedName = entry.name.toLowerCase();
+      if (
+        SYSTEM_FILE_NAMES.has(normalizedName) ||
+        normalizedName.startsWith("._")
+      ) {
+        return [];
+      }
+
       const fullPath = path.join(directory, entry.name);
       if (entry.isDirectory()) return walkFiles(fullPath);
       if (entry.isFile()) return [fullPath];
@@ -649,6 +658,10 @@ async function loadManifest(manifestPath) {
       "sourceDir must be a non-empty path relative to the repository root.",
     );
   }
+  const start = data.start === undefined ? 1 : data.start;
+  if (!Number.isSafeInteger(start) || start < 1) {
+    throw new Error("start must be an integer greater than or equal to 1.");
+  }
 
   const sourceRoot = path.resolve(REPO_ROOT, data.sourceDir);
   const sourceStat = await fs.stat(sourceRoot);
@@ -705,6 +718,12 @@ async function loadManifest(manifestPath) {
       file: item.file,
       caption: item.caption.trim(),
     });
+  }
+  if (
+    galleryInputs.length > 0 &&
+    !Number.isSafeInteger(start + galleryInputs.length - 1)
+  ) {
+    throw new Error("start and gallery length must produce safe integers.");
   }
 
   const excludedData =
@@ -776,7 +795,7 @@ async function loadManifest(manifestPath) {
 
   const galleryDirectory = path.join(outputDirectory, "gallery");
   const galleryRecords = gallerySources.map((source, index) => {
-    const number = String(index + 1).padStart(2, "0");
+    const number = String(start + index).padStart(2, "0");
     const outputName =
       data.collection === "projects"
         ? `${number}.webp`
@@ -833,9 +852,9 @@ async function runManifest(options) {
   if (options.dryRun) {
     process.stdout.write(`Dry run: ${plan.collection}/${plan.slug}\n`);
     printManifestSummary(plan);
-    for (const [index, item] of plan.gallery.entries()) {
+    for (const item of plan.gallery) {
       process.stdout.write(
-        `Gallery ${String(index + 1).padStart(2, "0")}: ${item.file} -> ${item.destination}\n`,
+        `Gallery ${item.outputName}: ${item.file} -> ${item.destination}\n`,
       );
     }
     if (collisions.length > 0) {
