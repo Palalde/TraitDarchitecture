@@ -5,7 +5,7 @@ import titouanPhoto from "@/assets/photos/atelier/Titouan.jpg";
 
 interface AtelierFigureImage {
   alt: string;
-  aspectRatio: "7:5" | "8:5" | "5:4" | "4:5";
+  aspectRatio: "2:1" | "7:5" | "8:5" | "5:4" | "4:5";
   src: ImageMetadata;
 }
 
@@ -53,8 +53,8 @@ export const atelierPageData: AtelierPageData = {
     image: {
       src: duoPhoto,
       label: "Titouan & Théa",
-      aspectRatio: "7:5",
-      alt: "Titouan Granet et Théa Battistini, architectes, devant un mur ocre et une porte en bois patinée bleue",
+      aspectRatio: "2:1",
+      alt: "Titouan Granet et Théa Battistini, architectes, au bord de la Méditerranée, devant un rocher",
     },
   },
   people: [

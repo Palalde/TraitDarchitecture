@@ -30,10 +30,12 @@ const captionClass = overlay
       hasFigureId ? "justify-between" : "justify-start",
     ];
 
+// Light tone sits on busy photos (white shirts, rock): a blurred tinted chip
+// keeps the label readable whatever is behind it.
 const overlayTextClass =
   overlayTone === "dark"
     ? "text-[#1A1D24] [text-shadow:0_1px_2px_rgb(255_255_255/0.65)]"
-    : "text-white [text-shadow:0_1px_2px_rgb(0_0_0/0.5)]";
+    : "bg-[#1A1D24]/30 px-2 py-1 text-white backdrop-blur-sm [text-shadow:0_1px_2px_rgb(0_0_0/0.5)]";
 
 const figureIdClass = overlay ? ["shrink-0", overlayTextClass] : ["shrink-0"];
 const labelClass = overlay
