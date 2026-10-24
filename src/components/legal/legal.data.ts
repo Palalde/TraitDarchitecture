@@ -157,10 +157,6 @@ export const legalPageData: LegalPageData = {
           kind: "p",
           text: "L'ensemble du présent site — sa structure, ses textes, ses visuels, son logo et ses illustrations — est protégé par le droit d'auteur et, le cas échéant, le droit des marques. Toute reproduction, représentation, modification ou diffusion, totale ou partielle, sans autorisation écrite préalable de l'ATELIER TraiT D'ARCHITECTURE est interdite et constituerait une contrefaçon.",
         },
-        {
-          kind: "p",
-          text: "⟦À COMPLÉTER si nécessaire — crédits photographiques spécifiques.⟧",
-        },
       ],
     },
     {
@@ -218,7 +214,7 @@ export const legalPageData: LegalPageData = {
             },
             {
               label: "Photographies & illustrations",
-              value: "⟦À FOURNIR — crédits⟧",
+              value: "Théa BATTISTINI & Titouan GRANET",
             },
           ],
         },

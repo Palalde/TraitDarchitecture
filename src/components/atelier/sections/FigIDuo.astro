@@ -13,7 +13,6 @@ interface Props {
 const { heading, section }: Props = Astro.props;
 const duoFrameStyle =
   "background-color: color-mix(in srgb, var(--bg-primary) 5%, transparent); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);";
-const duoFigureStyle = "--atelier-duo-max-width: min(100%, 45rem);";
 const richParagraphClass =
   "mx-auto max-w-3xl text-body text-(--text-reading) [&_strong]:font-semibold";
 const richPivotClass =
@@ -80,12 +79,8 @@ const richPivotClass =
     />
   </CotationFrame>
 
-  <!-- image -->
-  <figure
-    class="relative mx-auto w-full max-w-232 lg:max-w-(--atelier-duo-max-width)"
-    data-reveal="fade-up"
-    style={duoFigureStyle}
-  >
+  <!-- image (2:1, aligned on the max-w-4xl text frames) -->
+  <figure class="relative mx-auto w-full max-w-4xl" data-reveal="fade-up">
     <CotationFrame aspectRatio={section.image.aspectRatio}>
       <ParallaxFrame
         client:visible
@@ -100,7 +95,7 @@ const richPivotClass =
           format="webp"
           loading="eager"
           quality={72}
-          sizes="(min-width: 1024px) 45rem, (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
+          sizes="(min-width: 1024px) 56rem, (min-width: 640px) calc(100vw - 5rem), calc(100vw - 3rem)"
           src={section.image.src}
           widths={[360, 480, 640, 720, 900]}
         />
