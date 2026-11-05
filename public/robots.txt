@@ -1,26 +1,11 @@
-# Temporary pre-launch policy. Review before production.
-# Social link-preview bots are allowed so shared URLs render a card (Open Graph).
-# They only fetch the page on share; they do not index. Search engines stay blocked.
-User-agent: LinkedInBot
-User-agent: facebookexternalhit
-User-agent: Twitterbot
-User-agent: WhatsApp
-User-agent: Slackbot
-User-agent: Discordbot
-User-agent: TelegramBot
-Allow: /
-
-User-agent: *
-Disallow: /
-
-# === PRODUCTION (to activate at launch) ===
-# Decision D2: all crawlers allowed, including AI bots.
-# User-agent: *
-# Allow: /
-# AI bots explicitly documented so they can be blocked later if needed:
+# Production policy: all crawlers allowed, including AI bots (decision D2).
+# AI bots are documented below so they can be blocked later if needed:
 #   Search/response: OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User,
 #                   Claude-SearchBot, Claude-User, Applebot, Googlebot
 #   Training: GPTBot, ClaudeBot, anthropic-ai, CCBot, Google-Extended,
 #              Applebot-Extended, Bytespider, Amazonbot, meta-externalagent,
 #              cohere-ai, Diffbot
-# Sitemap: https://traitdarchitecture.com/sitemap-index.xml
+User-agent: *
+Allow: /
+
+Sitemap: https://traitdarchitecture.com/sitemap-index.xml
