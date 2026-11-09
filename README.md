@@ -1,9 +1,6 @@
 # Atelier Trait d'Architecture — showcase website
 
-Showcase website for an architecture studio, designed and built end to end: **traitdarchitecture.com** _(launch in progress)_
-
-<!-- TODO(v2 lot 6): replace with a link to https://traitdarchitecture.com once the domain points to Cloudflare -->
-
+Showcase website for an architecture studio, designed and built end to end: **[traitdarchitecture.com](https://traitdarchitecture.com)**
 ![Home page](screenshot.png)
 
 Pro bono project for an architecture studio at launch, based in Corsica and Provence. I designed and built the whole site — design system, pages, content integration, SEO and deployment — iterating with the two architects from the initial brief to a first release (March–July 2026), then a second release built around their real content: 13 projects, 6 articles, a reading typeface and a repeatable content-update workflow (autumn 2026). The studio provides the content and the visual identity.
