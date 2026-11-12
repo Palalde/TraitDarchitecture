@@ -24,6 +24,8 @@ export default defineConfig({
       config: {
         // Sharp encodes WebP alpha losslessly by default, so `quality` alone
         // barely shrinks transparent illustrations. Photos have no alpha.
+        // Not part of Astro's output filename hash: after changing it, bump the
+        // illustrations' `quality` so cached transforms are re-encoded.
         webp: { alphaQuality: 50 },
       },
     },
