@@ -12,8 +12,9 @@ interface Props {
 const { class: className }: Props = Astro.props;
 
 // Theme is driven by [data-theme] (the `dark:` variant), not media queries:
-// both light and dark sets are rendered and toggled via opacity. Desktop vs
-// mobile stays a real responsive concern handled by widths + sizes.
+// both sets are rendered, the inactive one is display:none. Combined with
+// loading="lazy", browsers never fetch a display:none image, so only the
+// active theme's variant is downloaded. Responsive stays on widths + sizes.
 const topoSizes = "(min-width: 1024px) 1350px, 100vw";
 const topoWidths = [320, 480, 640, 960, 1350];
 const coupeMerSizes = "(min-width: 1600px) 1600px, 100vw";
@@ -40,11 +41,11 @@ const coupeMerWidths = [480, 640, 960, 1280, 1600];
       <div class="grid w-full">
         <Image
           alt=""
-          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-100 dark:opacity-0"
+          class="col-start-1 row-start-1 block h-auto w-full max-w-none dark:hidden"
           draggable={false}
           fetchpriority="low"
           format="webp"
-          loading="eager"
+          loading="lazy"
           quality={2}
           sizes={topoSizes}
           src={topoLightPng}
@@ -52,7 +53,7 @@ const coupeMerWidths = [480, 640, 960, 1280, 1600];
         />
         <Image
           alt=""
-          class="col-start-1 row-start-1 h-auto w-full max-w-none opacity-0 dark:opacity-100"
+          class="col-start-1 row-start-1 hidden h-auto w-full max-w-none dark:block"
           draggable={false}
           fetchpriority="low"
           format="webp"
@@ -70,7 +71,7 @@ const coupeMerWidths = [480, 640, 960, 1280, 1600];
     <div class="grid w-full">
       <Image
         alt=""
-        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-[0.7] dark:opacity-0"
+        class="col-start-1 row-start-1 block w-full max-w-none object-cover object-bottom opacity-[0.7] dark:hidden"
         draggable={false}
         format="webp"
         loading="lazy"
@@ -81,7 +82,7 @@ const coupeMerWidths = [480, 640, 960, 1280, 1600];
       />
       <Image
         alt=""
-        class="col-start-1 row-start-1 w-full max-w-none object-cover object-bottom opacity-0 dark:opacity-[0.6]"
+        class="col-start-1 row-start-1 hidden w-full max-w-none object-cover object-bottom opacity-[0.6] dark:block"
         draggable={false}
         format="webp"
         loading="lazy"
