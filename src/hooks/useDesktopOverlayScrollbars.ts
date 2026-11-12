@@ -31,6 +31,62 @@ function clearInitializeAttributes() {
   document.body.removeAttribute(INITIALIZE_ATTRIBUTE);
 }
 
+interface CssAnimationSnapshot {
+  target: Element;
+  pseudoElement: string | null;
+  animationName: string;
+  currentTime: CSSNumberish | null;
+}
+
+function getCssAnimationKey(animation: Animation) {
+  if (!(animation instanceof CSSAnimation)) return null;
+
+  const effect = animation.effect;
+  if (!(effect instanceof KeyframeEffect) || !effect.target) return null;
+
+  return {
+    target: effect.target,
+    pseudoElement: effect.pseudoElement,
+    animationName: animation.animationName,
+  };
+}
+
+// On init/destroy OverlayScrollbars re-appends every child of <body>, and a
+// re-inserted node restarts its CSS animations: already played reveals would
+// replay. Carry each animation's progress over to its re-created instance.
+function preserveCssAnimations(moveDom: () => void) {
+  if (typeof document.getAnimations !== "function") {
+    moveDom();
+    return;
+  }
+
+  const snapshots: CssAnimationSnapshot[] = [];
+  for (const animation of document.getAnimations()) {
+    const key = getCssAnimationKey(animation);
+    if (key) snapshots.push({ ...key, currentTime: animation.currentTime });
+  }
+
+  moveDom();
+
+  if (snapshots.length === 0) return;
+
+  for (const animation of document.getAnimations()) {
+    const key = getCssAnimationKey(animation);
+    if (!key) continue;
+
+    const snapshot = snapshots.find(
+      (candidate) =>
+        candidate.target === key.target &&
+        candidate.pseudoElement === key.pseudoElement &&
+        candidate.animationName === key.animationName,
+    );
+
+    if (snapshot && snapshot.currentTime !== null) {
+      animation.currentTime = snapshot.currentTime;
+    }
+  }
+}
+
 export function useDesktopOverlayScrollbars() {
   useLayoutEffect(() => {
     if (typeof window === "undefined") {
@@ -41,7 +97,10 @@ export function useDesktopOverlayScrollbars() {
     let instance: ReturnType<typeof OverlayScrollbars> | null = null;
 
     const destroy = () => {
-      instance?.destroy();
+      const currentInstance = instance;
+      if (currentInstance) {
+        preserveCssAnimations(() => currentInstance.destroy());
+      }
       instance = null;
       clearInitializeAttributes();
     };
@@ -52,15 +111,17 @@ export function useDesktopOverlayScrollbars() {
       }
 
       setInitializeAttributes();
-      instance = OverlayScrollbars(
-        {
-          target: document.body,
-          cancel: {
-            body: false,
+      preserveCssAnimations(() => {
+        instance = OverlayScrollbars(
+          {
+            target: document.body,
+            cancel: {
+              body: false,
+            },
           },
-        },
-        overlayScrollbarsOptions,
-      );
+          overlayScrollbarsOptions,
+        );
+      });
       clearInitializeAttributes();
     };
 

@@ -1093,6 +1093,29 @@ astro-slot {
   html::-webkit-scrollbar {
     display: none;
   }
+
+  /* OverlayScrollbars uses <html> as its viewport and flags it `noContent`
+     while measuring (init + first update). Its stylesheet then hides <body>
+     and zeroes the root font-size for an instant, which restarts every CSS
+     animation: already played reveals replay on (re)load. Keep the document
+     as is — the measurement only needs the scroll reset, unaffected in LTR. */
+  html[data-overlayscrollbars-viewport~="noContent"]:not(#t2a-os) {
+    font-size: medium !important;
+    line-height: 1.5 !important;
+  }
+
+  html[data-overlayscrollbars-viewport~="noContent"]:not(#t2a-os)
+    > body:not(#t2a-os) {
+    display: block !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+  }
 }
 
 /* ============================================
