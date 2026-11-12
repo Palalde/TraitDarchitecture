@@ -166,7 +166,7 @@ export function HeaderMobileMenu({
               isActive={isPathActive(pathname, "/contact")}
               label="Contact"
               onClick={onClose}
-              to="/contact"
+              to="/contact/"
             />
             <div
               aria-hidden="true"
@@ -177,7 +177,7 @@ export function HeaderMobileMenu({
               isEmphasized
               label="EXTraiT"
               onClick={onClose}
-              to="/extrait"
+              to="/extrait/"
             />
           </div>
           <div className="mt-6 flex items-center justify-center gap-5 border-t border-(--trait) pt-5">
