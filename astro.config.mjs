@@ -18,6 +18,16 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "viewport",
   },
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+      config: {
+        // Sharp encodes WebP alpha losslessly by default, so `quality` alone
+        // barely shrinks transparent illustrations. Photos have no alpha.
+        webp: { alphaQuality: 50 },
+      },
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
     resolve: {
