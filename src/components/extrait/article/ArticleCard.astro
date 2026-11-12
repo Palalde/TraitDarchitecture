@@ -18,7 +18,7 @@ const {
 }: Props = Astro.props;
 
 const slug = article.id.replace(/\/index$/, "");
-const articleHref = href ?? `/extrait/${slug}`;
+const articleHref = href ?? `/extrait/${slug}/`;
 const readingTimeLabel = formatReadingTime(article.data.readingTime);
 const linkLabel = `Lire l'article ${article.data.title}`;
 ---

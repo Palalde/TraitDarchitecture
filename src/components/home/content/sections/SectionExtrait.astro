@@ -34,7 +34,7 @@ const extraitArticles = (await getHomeFeaturedArticles()).map((article) => {
   return {
     title: article.data.title,
     summary: article.data.excerpt,
-    href: `/extrait/${slug}`,
+    href: `/extrait/${slug}/`,
   };
 });
 ---
@@ -130,7 +130,7 @@ const extraitArticles = (await getHomeFeaturedArticles()).map((article) => {
             data-reveal-independent
           >
             <a
-              href="/extrait"
+              href="/extrait/"
               class="group inline-flex items-center gap-2 text-label text-(--t2a-blue-dark) transition-colors duration-200 hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
             >
               <span class="relative">

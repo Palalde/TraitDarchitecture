@@ -38,7 +38,7 @@ const architectureCards = featuredProjects.map((project, index) => {
     imageClassName: "object-cover object-center",
     label: name,
     subtitle: `${city} (${dept})`,
-    href: `/architecture/${slug}`,
+    href: `/architecture/${slug}/`,
     ...REVEAL_CONFIG[index],
   };
 });
@@ -124,7 +124,7 @@ const architectureCards = featuredProjects.map((project, index) => {
     <!-- cta -->
     <div class="relative z-10 mt-10 flex justify-center sm:mt-12">
       <a
-        href="/architecture"
+        href="/architecture/"
         class="group inline-flex items-center gap-2 border border-(--border) bg-(--bg-primary) px-6 py-3 text-label text-(--t2a-blue-dark) transition-colors hover:text-(--t2a-blue) dark:text-(--t2a-blue) dark:hover:text-(--t2a-blue-light)"
         data-reveal="fade"
       >

@@ -144,7 +144,7 @@ export const traitPageData: TraitPageData = {
       prompt:
         "Notre atelier est prêt à vous accompagner dans toutes vos démarches.",
       label: "Prenez rendez-vous",
-      href: "/contact",
+      href: "/contact/",
     },
   },
   phases: [

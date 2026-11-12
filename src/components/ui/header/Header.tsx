@@ -146,18 +146,18 @@ export function Header({
           <HeaderNavItem
             label="ATELIER"
             pathname={currentPathname}
-            to="/atelier"
+            to="/atelier/"
           />
           <HeaderNavItem
             activePath="/trait"
             label="TraiT"
             pathname={currentPathname}
-            to="/trait"
+            to="/trait/"
           />
           <HeaderNavItem
             label="D'ARCHITECTURE"
             pathname={currentPathname}
-            to="/architecture"
+            to="/architecture/"
           />
         </nav>
         {/* Contact · social (RS) · theme toggle — one right-anchored flex
@@ -175,7 +175,7 @@ export function Header({
             label="Contact"
             pathname={currentPathname}
             style={{ marginRight: HEADER_RIGHT.contactToSocial }}
-            to="/contact"
+            to="/contact/"
           />
           <HeaderSocialIcon
             href="https://www.instagram.com/atelier.trait.darchitecture/"
@@ -217,7 +217,7 @@ export function Header({
           <HeaderExtraitItem
             label="EXTraiT"
             pathname={currentPathname}
-            to="/extrait"
+            to="/extrait/"
           />
         </div>
         {/* mobile menu */}
