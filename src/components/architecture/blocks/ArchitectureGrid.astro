@@ -9,7 +9,11 @@ interface Props {
 
 const { projects } = Astro.props;
 
-const INDEX_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
+// Real rendered cover width (container padding, grid gap, card padding and
+// borders), × 1.08 for the parallax overflow (object-cover on a taller frame)
+// and the desktop hover scale.
+const INDEX_SIZES =
+  "(min-width: 1280px) 15.75rem, (min-width: 1024px) calc((25vw - 5.5rem) * 1.08), (min-width: 640px) calc((50vw - 5.5rem) * 1.08), calc((100vw - 5.25rem) * 1.08)";
 ---
 
 <div
@@ -39,7 +43,7 @@ const INDEX_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";
               href={`/architecture/${slug}/`}
               sizes={INDEX_SIZES}
               showTouchArrow={false}
-              priority={index < 4}
+              priority={index === 0}
               parallax
               alwaysClickable
             />
