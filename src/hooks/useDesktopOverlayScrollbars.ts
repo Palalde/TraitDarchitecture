@@ -51,8 +51,8 @@ function getCssAnimationKey(animation: Animation) {
   };
 }
 
-// OverlayScrollbars wraps/unwraps the body content, which re-inserts every
-// node: browsers then restart their CSS animations, so already played reveals
+// On init/destroy OverlayScrollbars re-appends every child of <body>, and a
+// re-inserted node restarts its CSS animations: already played reveals would
 // replay. Carry each animation's progress over to its re-created instance.
 function preserveCssAnimations(moveDom: () => void) {
   if (typeof document.getAnimations !== "function") {
